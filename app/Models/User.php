@@ -45,4 +45,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    //Relacion con tabla de archivos
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'mediable');
+    }
 }
