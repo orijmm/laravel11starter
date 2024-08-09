@@ -3,17 +3,26 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use Illuminate\Http\Request;
+use Nnjeim\World\World;
 
-class Setting extends Controller
+class SettingController extends Controller
 {
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Setting $setting)
     {
-        //mostrar configuracion inicial de page
+        $world =  World::countries();
+
+        if ($world->success) {
+
+            $countries = $world->data;
+        }
+
+        return sendResponse([$countries, $setting], 'Usuario agregado exitosamente');
     }
 
     /**

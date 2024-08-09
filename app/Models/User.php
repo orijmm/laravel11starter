@@ -51,4 +51,15 @@ class User extends Authenticatable
     {
         return $this->morphMany(Media::class, 'mediable');
     }
+
+    //user relacion polymorps
+    // $user = User::find(1);
+    // $media = new Media([
+    //     'type' => 1,
+    //     'filename' => 'example.jpg',
+    //     'extension' => 'jpg',
+    //     'file_path' => '/path/to/example.jpg'
+    // ]);
+    // $user->media()->save($media);
+
 }
