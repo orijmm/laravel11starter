@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('filename');
-            $table->text('description')->nullable(); 
+            $table->text('description')->nullable();
+            $table->softDeletes(); 
             $table->timestamps();
         });
     }

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('order');
             $table->foreignId('section_id')->constrained('sections')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

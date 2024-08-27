@@ -19,8 +19,8 @@ class DatabaseSeeder extends Seeder
             // Llama a otros seeders aquí
             $this->call([
                 UserSeeder::class,
-                SettingSeeder::class,
-                WorldSeeder::class
+                WorldSeeder::class,
+                SettingSeeder::class
             ]);
 
             // Mensaje si todo salió bien

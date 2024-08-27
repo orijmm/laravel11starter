@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description'); 
             $table->string('slug')->unique();
             $table->foreignId('template_id')->constrained('templates');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

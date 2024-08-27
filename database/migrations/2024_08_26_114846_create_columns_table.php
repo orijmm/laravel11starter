@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('width'); 
             $table->integer('order');  
             $table->foreignId('row_id')->constrained('rows')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

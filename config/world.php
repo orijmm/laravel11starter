@@ -18,6 +18,7 @@ return [
         'CR', // Costa Rica
         'CU', // Cuba
         'DO', // República Dominicana
+        'ES', // España
         'EC', // Ecuador
         'SV', // El Salvador
         'GT', // Guatemala
@@ -28,6 +29,7 @@ return [
         'PY', // Paraguay
         'PE', // Perú
         'PR', // Puerto Rico
+		'US', //United States
         'UY', // Uruguay
         'VE', // Venezuela
 

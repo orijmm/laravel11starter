@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('order');
             $table->foreignId('column_id')->constrained('columns')->onDelete('cascade');
             $table->foreignId('component_type_id')->constrained('component_types')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
