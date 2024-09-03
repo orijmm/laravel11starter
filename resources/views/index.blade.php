@@ -19,6 +19,7 @@
             locales: {
                 en: {!! json_encode(\Illuminate\Support\Facades\Lang::get('frontend', [], 'en')) !!},
                 mk: {!! json_encode(\Illuminate\Support\Facades\Lang::get('frontend', [], 'mk')) !!},
+                es: {!! json_encode(\Illuminate\Support\Facades\Lang::get('frontend', [], 'es')) !!},
             }
         }
     </script>
