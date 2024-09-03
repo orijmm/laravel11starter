@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder
 
         Bouncer::assign('admin')->to($users->first());
 
-        $others = User::factory(20)->create();
+        $others = User::factory(2)->create();
         foreach ($others as $model) {
             Bouncer::assign('regular')->to($model);
         }
