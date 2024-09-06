@@ -49,6 +49,9 @@ return [
         'name' => 'Mensaje',
     ],
     'global' => [
+        'menu' => [
+            'setting' => 'Configuración'
+        ],
         'pages' => [
             'home' => 'Panel de control',
             'users' => 'Usuarios',

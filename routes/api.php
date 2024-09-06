@@ -5,6 +5,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Nnjeim\World\World;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,4 +37,10 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
      * Roles
      */
     Route::get('/roles/search', [RoleController::class, 'search'])->middleware('throttle:400,1');
+});
+
+Route::get('testing', function () {
+    $countries = World::countries();
+
+    return response()->json(['data' => $countries], 200);
 });

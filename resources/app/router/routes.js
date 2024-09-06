@@ -6,6 +6,7 @@ import {default as PageNotFound} from "@/views/pages/shared/404/Main";
 
 import {default as PageDashboard} from "@/views/pages/private/dashboard/Main";
 import {default as PageProfile} from "@/views/pages/private/profile/Main";
+import {default as PageSetting} from "@/views/pages/private/settings/Index";
 
 import {default as PageUsers} from "@/views/pages/private/users/Index";
 import {default as PageUsersCreate} from "@/views/pages/private/users/Create";
@@ -58,6 +59,12 @@ const routes = [
                         component: PageUsersEdit,
                     },
                 ]
+            },
+            {
+                name: "settings",
+                path: "settings",
+                meta: {requiresAuth: true},
+                component: PageSetting,
             },
         ]
     },
