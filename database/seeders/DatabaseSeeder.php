@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             BouncerSeeder::class,
             UsersTableSeeder::class,
+            WorldSeeder::class,
+            SettingSeeder::class
         ]);
     }
 }

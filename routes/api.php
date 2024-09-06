@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,10 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
      * Roles
      */
     Route::get('/roles/search', [RoleController::class, 'search'])->middleware('throttle:400,1');
+
+    Route::apiResource('settingad', SettingController::class);
+
+
 });
 
 Route::get('testing', function () {

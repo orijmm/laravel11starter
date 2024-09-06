@@ -24,6 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('city_id');
             $table->unsignedBigInteger('country_id');
             $table->unsignedBigInteger('currency_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

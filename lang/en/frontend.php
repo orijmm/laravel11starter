@@ -86,6 +86,7 @@ return [
             'record_not_created' => 'Unable to create record.',
             'record_updated' => 'Record updated successfully.',
             'record_not_updated' => 'Unable to update record.',
+            'record_deleted' => 'Record deleted successfully.',
             'file_uploaded' => 'File uploaded successfully',
             'file_not_uploaded' => 'Unable to upload file',
             'password_updated' => 'Password updated successfully',

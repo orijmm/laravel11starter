@@ -1,23 +1,113 @@
 <template>
-    <Page>
-        <div class="w-1/2 m-auto text-center pt-10">
-            <h1 class="text-6xl mb-4 font-bold text-gray-600">Configuraciones</h1>
-        </div>
+    <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction">
+        <Panel>
+            <Form id="create-setting" @submit.prevent="onSubmit">
+                <TextInput class="mb-4" type="text" :required="true" name="name_company" v-model="form.name_company"
+                    :label="trans('users.labels.first_name')" />
+                <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
+                    :label="trans('users.labels.description')" />
+                <TextInput class="mb-4" type="text" :required="true" name="address" v-model="form.address"
+                    :label="trans('users.labels.address')" />
+                <TextInput class="mb-4" type="text" :required="true" name="phone" v-model="form.phone"
+                    :label="trans('users.labels.phone')" />
+                <TextInput class="mb-4" type="text" :required="true" name="email" v-model="form.email"
+                    :label="trans('users.labels.email')" />
+                <Dropdown class="mb-4" multiple="multiple" :server="'roles/search'" :server-per-page="15"
+                    :required="true" name="type" v-model="locale" :label="trans('users.labels.locale')" />
+                <Dropdown class="mb-4" multiple="multiple" :server="'roles/search'" :server-per-page="15"
+                    :required="true" name="type" v-model="timezone" :label="trans('users.labels.timezone')" />
+                <Dropdown class="mb-4" multiple="multiple" :server="'roles/search'" :server-per-page="15"
+                    :required="true" name="type" v-model="state_id" :label="trans('users.labels.state')" />
+                <Dropdown class="mb-4" multiple="multiple" :server="'roles/search'" :server-per-page="15"
+                    :required="true" name="type" v-model="city_id" :label="trans('users.labels.city')" />
+                <Dropdown class="mb-4" multiple="multiple" :server="'roles/search'" :server-per-page="15"
+                    :required="true" name="type" v-model="country_id" :label="trans('users.labels.country')" />
+                <Dropdown class="mb-4" multiple="multiple" :server="'roles/search'" :server-per-page="15"
+                    :required="true" name="type" v-model="currency_id" :label="trans('users.labels.currency')" />
+            </Form>
+        </Panel>
     </Page>
 </template>
 
 <script>
-import {defineComponent} from 'vue';
-import {trans} from "@/helpers/i18n";
+import { defineComponent, reactive } from "vue";
+import { trans } from "@/helpers/i18n";
+import { useAuthStore } from "@/stores/auth";
+import Button from "@/views/components/input/Button";
+import TextInput from "@/views/components/input/TextInput";
+import Dropdown from "@/views/components/input/Dropdown";
+import Alert from "@/views/components/Alert";
+import Panel from "@/views/components/Panel";
 import Page from "@/views/layouts/Page";
+import SettingService from "@/services/SettingService";
+import { clearObject, reduceProperties } from "@/helpers/data";
+import { toUrl } from "@/helpers/routing";
+import Form from "@/views/components/Form";
 
 export default defineComponent({
-    components: {
-        Page
-    },
+    components: { Form, Panel, Alert, Dropdown, TextInput, Button, Page },
     setup() {
+        const { user } = useAuthStore();
+        //Datos delformularo
+        const form = reactive({
+            name_company: undefined,
+            description: undefined,
+            address: undefined,
+            phone: undefined,
+            email: undefined,
+            locale: undefined,
+            timezone: undefined,
+            state_id: undefined,
+            city_id: undefined,
+            country_id: undefined,
+            currency_id: undefined
+        });
+
+        //Configuracion del breadcrumbs (navegacion y botones superiores) 
+        const page = reactive({
+            id: 'create_setting',
+            title: trans('global.pages.settings_create'),
+            filters: false,
+            breadcrumbs: [
+                {
+                    name: trans('global.pages.settings'),
+                    to: toUrl('/settings'),
+                }
+            ],
+            actions: [
+                {
+                    id: 'submit',
+                    name: trans('global.buttons.save'),
+                    icon: "fa fa-save",
+                    type: 'submit',
+                }
+            ]
+        });
+
+        const service = new SettingService();
+
+        function onAction(data) {
+            switch (data.action.id) {
+                case 'submit':
+                    onSubmit();
+                    break;
+            }
+        }
+
+        function onSubmit() {
+            service.handleCreate('create-setting', reduceProperties(form, 'roles', 'id')).then(() => {
+                clearObject(form)
+            })
+            return false;
+        }
+
         return {
-            trans
+            trans,
+            user,
+            form,
+            page,
+            onSubmit,
+            onAction,
         }
     }
 });
