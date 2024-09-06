@@ -173,22 +173,22 @@ along with Laravel Vue Starter. If not, see <https://www.gnu.org/licenses/>.
 en App.vue: agregar atributo para el elemento del menú:
 ```
 {
-    name: trans('global.menu.setting'),
+    name: trans('global.menu.newmodule'),
     icon: 'tachometer',
     showDesktop: true,
     showMobile: true,
     requiresAbility: false,
-    to: '/panel/settings',//Nombre ruta,
+    to: '/panel/newmodule',//Nombre ruta,
     children: []//submenus
 },
 ```
 Agregar en router/routes.js:
 ```
 {
-    name: "settings",
-    path: "settings",
+    name: "newmodules",
+    path: "newmodules",
     meta: {requiresAuth: true},
-    component: PageSetting,
+    component: PageNewModule,
 },
 ```
 crear el componente en resources/app/views/pages/ruta/Componente.vue
