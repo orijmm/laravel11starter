@@ -168,3 +168,52 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Laravel Vue Starter. If not, see <https://www.gnu.org/licenses/>.
 ```
+
+## Agregar elementos al menú panel de control
+en App.vue: agregar atributo para el elemento del menú:
+```
+{
+    name: trans('global.menu.setting'),
+    icon: 'tachometer',
+    showDesktop: true,
+    showMobile: true,
+    requiresAbility: false,
+    to: '/panel/settings',//Nombre ruta,
+    children: []//submenus
+},
+```
+Agregar en router/routes.js:
+```
+{
+    name: "settings",
+    path: "settings",
+    meta: {requiresAuth: true},
+    component: PageSetting,
+},
+```
+crear el componente en resources/app/views/pages/ruta/Componente.vue
+
+
+## Ciclo de vida y props
+```
+export default defineComponent({
+    components: {
+        Page
+    },
+    props: {
+        myProp: {
+            type: String,
+            required: true
+        }
+    },
+    setup(props) {
+        // Puedes acceder a props directamente en setup
+        console.log(props.myProp);
+
+        return {
+            trans
+        };
+    }
+});
+
+```

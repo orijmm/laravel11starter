@@ -168,6 +168,14 @@ export default {
                     ]
                 },
                 {
+                    name: trans('global.menu.setting'),
+                    icon: 'tachometer',
+                    showDesktop: true,
+                    showMobile: true,
+                    requiresAbility: false,
+                    to: '/panel/settings',
+                },
+                {
                     name: trans('global.phrases.sign_out'),
                     icon: 'sign-out',
                     showDesktop: false,
