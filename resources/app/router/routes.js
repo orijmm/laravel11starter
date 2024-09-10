@@ -62,8 +62,8 @@ const routes = [
             },
             {
                 name: "settings",
-                path: "settings",
-                meta: {requiresAuth: true},
+                path: "settings/:id/edit",
+                meta: {requiresAuth: true, requiresAbility: abilities.CREATE_SETTING},
                 component: PageSetting,
             },
         ]

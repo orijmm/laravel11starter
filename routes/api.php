@@ -39,7 +39,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
      */
     Route::get('/roles/search', [RoleController::class, 'search'])->middleware('throttle:400,1');
 
-    Route::apiResource('settingad', SettingController::class);
+    Route::resource('settingad', SettingController::class);
 
 
 });

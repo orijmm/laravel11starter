@@ -172,8 +172,8 @@ export default {
                     icon: 'tachometer',
                     showDesktop: true,
                     showMobile: true,
-                    requiresAbility: false,
-                    to: '/panel/settings',
+                    requiresAbility: getAbilitiesForRoute(['settingad.edit']),
+                    to: '/panel/settings/1/edit',
                 },
                 {
                     name: trans('global.phrases.sign_out'),

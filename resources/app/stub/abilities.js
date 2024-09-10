@@ -4,6 +4,7 @@ const abilities = {
     DELETE_USER: 'delete_user',
     VIEW_USER: 'view_user',
     LIST_USER: 'list_user',
+    CREATE_SETTING: 'create_setting'
 }
 
 export default abilities;

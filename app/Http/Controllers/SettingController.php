@@ -23,35 +23,6 @@ class SettingController extends Controller
         $this->settingService = $settingService;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     *
-     * @throws AuthorizationException
-     */
-    public function index(Request $request)
-    {
-        $this->authorize('list', Setting::class);
-
-        return $this->settingService->index($request->all());
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreSettingRequest $request)
-    {
-        $this->authorize('setting-create', Setting::class);
-
-        $input = $request->validated();
-        $record = $this->settingService->create($input);
-        if (! is_null($record)) {
-            return $this->responseStoreSuccess(['record' => $record]);
-        } else {
-            return $this->responseStoreFail();
-        }
-    }
 
     /**
      *  Show the form for editing the specified resource.
@@ -68,6 +39,21 @@ class SettingController extends Controller
         $model = $this->settingService->get($settingad);
 
         return $this->responseDataSuccess(['model' => $model, 'properties' => $this->properties()]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     *
+     * @return JsonResponse|\Illuminate\Http\Response
+     *
+     * @throws AuthorizationException
+     */
+    public function edit(Setting $settingad)
+    {
+        $this->authorize('edit', Setting::class);
+
+        return $this->show($settingad);
     }
 
     /**

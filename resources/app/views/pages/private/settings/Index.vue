@@ -1,5 +1,5 @@
 <template>
-    <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction">
+    <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction" :is-loading="page.loading">
         <Panel>
             <Form id="create-setting" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="name_company" v-model="form.name_company"
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { defineComponent, reactive } from "vue";
+import { defineComponent, onBeforeMount, reactive } from "vue";
 import { trans } from "@/helpers/i18n";
 import { useAuthStore } from "@/stores/auth";
 import Button from "@/views/components/input/Button";
@@ -40,14 +40,18 @@ import Alert from "@/views/components/Alert";
 import Panel from "@/views/components/Panel";
 import Page from "@/views/layouts/Page";
 import SettingService from "@/services/SettingService";
-import { clearObject, reduceProperties } from "@/helpers/data";
+import {fillObject, reduceProperties} from "@/helpers/data"
 import { toUrl } from "@/helpers/routing";
 import Form from "@/views/components/Form";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
+    name: 'settingindex',
     components: { Form, Panel, Alert, Dropdown, TextInput, Button, Page },
     setup() {
         const { user } = useAuthStore();
+        //Router vue
+        const route = useRoute();
         //Datos delformularo
         const form = reactive({
             name_company: undefined,
@@ -84,7 +88,20 @@ export default defineComponent({
             ]
         });
 
+        //Se obtiene la data de setting
         const service = new SettingService();
+
+        onBeforeMount(() => {
+            service.edit(route.params.id)
+            .then((response) => {
+                console.log('onBeforeMount', response);
+
+                //helper ordena y asigna la data desde el back
+                fillObject(form, response.data.model);
+                //
+                page.loading = false;
+            })
+        });
 
         function onAction(data) {
             switch (data.action.id) {
