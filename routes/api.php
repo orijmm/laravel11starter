@@ -42,8 +42,6 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
     Route::get('/roles/search', [RoleController::class, 'search'])->middleware('throttle:400,1');
 
     Route::resource('settingad', SettingController::class);
-
-
 });
 
 Route::get('testing', function () {
@@ -53,14 +51,38 @@ Route::get('testing', function () {
 });
 
 ## Ubicaciones
-Route::get('languages', function () {
-    return response()->json(['data' => World::languages()], 200);
+Route::get('languages', function (Request $request) {
+    $languages = [];
+    $action = World::languages([
+        'search' => $request->search, // Aquí pasas el término de búsqueda
+    ]);
+    if ($action->success) {
+        //Se trasnforma a id/label
+        $languages = Data::formatCollectionForSelect($action->data,'code', 'name_native');
+    }
+    return response()->json(['data' => $languages], 200);
 });
-Route::get('timezones', function () {
-    return response()->json(['data' => World::timezones()], 200);
+Route::get('timezones', function (Request $request) {
+    $timezones = [];
+    $action = World::timezones([
+        'search' => $request->search, // Aquí pasas el término de búsqueda
+    ]);
+    if ($action->success) {
+        //Se trasnforma a id/label
+        $timezones = Data::formatCollectionForSelect($action->data);
+    }
+    return response()->json(['data' => $timezones], 200);
 });
-Route::get('currencies', function () {
-    return response()->json(['data' => World::currencies()], 200);
+Route::get('currencies', function (Request $request) {
+    $currencies = [];
+    $action = World::currencies([
+        'search' => $request->search, // Aquí pasas el término de búsqueda
+    ]);
+    if ($action->success) {
+        //Se trasnforma a id/label
+        $currencies = Data::formatCollectionForSelect($action->data);
+    }
+    return response()->json(['data' => $currencies], 200);
 });
 Route::get('countries', function (Request $request) {
     $countries = [];
@@ -73,9 +95,25 @@ Route::get('countries', function (Request $request) {
     }
     return response()->json(['data' => $countries], 200);
 });
-Route::get('states', function () {
-    return response()->json(['data' => World::states()], 200);
+Route::get('states', function (Request $request) {
+    $states = [];
+    $action = World::states([
+        'search' => $request->search, // Aquí pasas el término de búsqueda
+    ]);
+    if ($action->success) {
+        //Se trasnforma a id/label
+        $states = Data::formatCollectionForSelect($action->data);
+    }
+    return response()->json(['data' => $states], 200);
 });
-Route::get('cities', function () {
-    return response()->json(['data' => World::cities()], 200);
+Route::get('cities', function (Request $request) {
+    $cities = [];
+    $action = World::cities([
+        'search' => $request->search, // Aquí pasas el término de búsqueda
+    ]);
+    if ($action->success) {
+        //Se trasnforma a id/label
+        $cities = Data::formatCollectionForSelect($action->data);
+    }
+    return response()->json(['data' => $cities], 200);
 });

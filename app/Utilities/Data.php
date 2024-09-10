@@ -2,7 +2,9 @@
 
 namespace App\Utilities;
 
+use Exception;
 use Illuminate\Support\Collection;
+use Nnjeim\World\World;
 
 class Data
 {
@@ -15,11 +17,11 @@ class Data
     {
         return $collection->map(function ($entry) use ($value, $label) {
             $id = $entry->$value ?? null;
-            $label = $label === 'trans' ? trans('frontend.users.roles.'.$id) : ($entry->$label ?? $entry->$id);
+            $label = $label === 'trans' ? trans('frontend.users.roles.' . $id) : ($entry->$label ?? $entry->$id);
 
             return [
                 'id' => $id,
-                'label' => $label,
+                'name' => $label,
             ];
         });
     }
@@ -37,7 +39,7 @@ class Data
 
             return [
                 'id' => $id,
-                'label' => $label,
+                'name' => $label,
             ];
         });
     }
@@ -57,5 +59,17 @@ class Data
         }
 
         return null;
+    }
+
+    public static function getSelectedLocation($data, $selected,$typeValue = 'id', $typelabel = 'name')
+    {
+        $result = [];
+
+        $result = collect($data)->firstWhere($typeValue, $selected);
+
+        if($typelabel !== 'name'){
+            $result = self::formatCollectionForSelect(collect([$result]),$typeValue,$typelabel);
+        }
+        return $result;
     }
 }

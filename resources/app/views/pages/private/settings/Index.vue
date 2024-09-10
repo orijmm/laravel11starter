@@ -2,7 +2,7 @@
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction"
         :is-loading="page.loading">
         <Panel>
-            <Form id="create-setting" @submit.prevent="onSubmit">
+            <Form id="edit-setting" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="name_company" v-model="form.name_company"
                     :label="trans('users.labels.first_name')" />
                 <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
@@ -14,17 +14,17 @@
                 <TextInput class="mb-4" type="text" :required="true" name="email" v-model="form.email"
                     :label="trans('users.labels.email')" />
                 <Dropdown class="mb-4" :server="'languages'" :server-per-page="15"
-                    :required="true" name="type" v-model="locale" :label="trans('users.labels.locale')" />
+                    :required="true" name="type" v-model="form.locale" :label="trans('users.labels.locale')" />
                 <Dropdown class="mb-4" :server="'timezones'" :server-per-page="15"
-                    :required="true" name="type" v-model="timezone" :label="trans('users.labels.timezone')" />
+                    :required="true" name="type" v-model="form.timezone" :label="trans('users.labels.timezone')" />
                 <Dropdown class="mb-4" :server="'countries'" :server-per-page="15"
-                    :required="true" name="type" v-model="country_id" :label="trans('users.labels.country')" />
+                    :required="true" name="type" v-model="form.country_id" :label="trans('users.labels.country')" />
                 <Dropdown class="mb-4" :server="'states'" :server-per-page="15"
-                    :required="true" name="type" v-model="state_id" :label="trans('users.labels.state')" />
+                    :required="true" name="type" v-model="form.state_id" :label="trans('users.labels.state')" />
                 <Dropdown class="mb-4" :server="'cities'" :server-per-page="15"
-                    :required="true" name="type" v-model="city_id" :label="trans('users.labels.city')" />
+                    :required="true" name="type" v-model="form.city_id" :label="trans('users.labels.city')" />
                 <Dropdown class="mb-4" :server="'currencies'" :server-per-page="15"
-                    :required="true" name="type" v-model="currency_id" :label="trans('users.labels.currency')" />
+                    :required="true" name="type" v-model="form.currency_id" :label="trans('users.labels.currency')" />
             </Form>
         </Panel>
     </Page>
@@ -112,9 +112,7 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleCreate('create-setting', reduceProperties(form, 'roles', 'id')).then(() => {
-                clearObject(form)
-            })
+            service.handleUpdate('edit-setting', route.params.id, reduceProperties(form, [], 'id'));
             return false;
         }
 
