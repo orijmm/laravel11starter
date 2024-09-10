@@ -91,8 +91,6 @@ export default defineComponent({
 
         onBeforeMount(() => {
             service.edit(route.params.id).then((response) => {
-                console.log('onBeforeMount', response);
-
                 fillObject(form, response.data.model);
                 page.loading = false;
             })

@@ -1,5 +1,6 @@
 <template>
-    <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction" :is-loading="page.loading">
+    <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction"
+        :is-loading="page.loading">
         <Panel>
             <Form id="create-setting" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="name_company" v-model="form.name_company"
@@ -12,17 +13,17 @@
                     :label="trans('users.labels.phone')" />
                 <TextInput class="mb-4" type="text" :required="true" name="email" v-model="form.email"
                     :label="trans('users.labels.email')" />
-                <Dropdown class="mb-4" multiple="multiple" :server="'roles/search'" :server-per-page="15"
+                <Dropdown class="mb-4" :server="'languages'" :server-per-page="15"
                     :required="true" name="type" v-model="locale" :label="trans('users.labels.locale')" />
-                <Dropdown class="mb-4" multiple="multiple" :server="'roles/search'" :server-per-page="15"
+                <Dropdown class="mb-4" :server="'timezones'" :server-per-page="15"
                     :required="true" name="type" v-model="timezone" :label="trans('users.labels.timezone')" />
-                <Dropdown class="mb-4" multiple="multiple" :server="'roles/search'" :server-per-page="15"
-                    :required="true" name="type" v-model="state_id" :label="trans('users.labels.state')" />
-                <Dropdown class="mb-4" multiple="multiple" :server="'roles/search'" :server-per-page="15"
-                    :required="true" name="type" v-model="city_id" :label="trans('users.labels.city')" />
-                <Dropdown class="mb-4" multiple="multiple" :server="'roles/search'" :server-per-page="15"
+                <Dropdown class="mb-4" :server="'countries'" :server-per-page="15"
                     :required="true" name="type" v-model="country_id" :label="trans('users.labels.country')" />
-                <Dropdown class="mb-4" multiple="multiple" :server="'roles/search'" :server-per-page="15"
+                <Dropdown class="mb-4" :server="'states'" :server-per-page="15"
+                    :required="true" name="type" v-model="state_id" :label="trans('users.labels.state')" />
+                <Dropdown class="mb-4" :server="'cities'" :server-per-page="15"
+                    :required="true" name="type" v-model="city_id" :label="trans('users.labels.city')" />
+                <Dropdown class="mb-4" :server="'currencies'" :server-per-page="15"
                     :required="true" name="type" v-model="currency_id" :label="trans('users.labels.currency')" />
             </Form>
         </Panel>
@@ -40,7 +41,7 @@ import Alert from "@/views/components/Alert";
 import Panel from "@/views/components/Panel";
 import Page from "@/views/layouts/Page";
 import SettingService from "@/services/SettingService";
-import {fillObject, reduceProperties} from "@/helpers/data"
+import { fillObject, reduceProperties } from "@/helpers/data"
 import { toUrl } from "@/helpers/routing";
 import Form from "@/views/components/Form";
 import { useRoute } from "vue-router";
@@ -92,15 +93,14 @@ export default defineComponent({
         const service = new SettingService();
 
         onBeforeMount(() => {
+            //Se consume el servicio de route.param.id (se puede personalizar): service.edit(RutaBack)
             service.edit(route.params.id)
-            .then((response) => {
-                console.log('onBeforeMount', response);
-
-                //helper ordena y asigna la data desde el back
-                fillObject(form, response.data.model);
-                //
-                page.loading = false;
-            })
+                .then((response) => {
+                    //helper ordena y asigna la data desde el back
+                    fillObject(form, response.data.model);
+                    //
+                    page.loading = false;
+                })
         });
 
         function onAction(data) {

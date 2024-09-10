@@ -7,11 +7,11 @@ use Illuminate\Support\Collection;
 class Data
 {
     /**
-     * Formats collection for select field
+     * Formats collection ROLE for select field
      *
      * @return Collection
      */
-    public static function formatCollectionForSelect(Collection $collection, $value = 'id', $label = 'trans')
+    public static function formatRoleCollectionForSelect(Collection $collection, $value = 'id', $label = 'trans')
     {
         return $collection->map(function ($entry) use ($value, $label) {
             $id = $entry->$value ?? null;
@@ -19,7 +19,25 @@ class Data
 
             return [
                 'id' => $id,
-                'title' => $label,
+                'label' => $label,
+            ];
+        });
+    }
+
+    /**
+     * Formats any for select field
+     *
+     * @return Collection
+     */
+    public static function formatCollectionForSelect(Collection $collection, $value = 'id', $label = 'name')
+    {
+        return $collection->map(function ($entry) use ($value, $label) {
+            $id = $entry[$value] ?? null;
+            $label = $entry[$label] ?? $entry[$id];
+
+            return [
+                'id' => $id,
+                'label' => $label,
             ];
         });
     }
