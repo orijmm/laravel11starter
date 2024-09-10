@@ -26,7 +26,7 @@ class SettingResource extends JsonResource
         $cities = World::cities();
 
         $data = $this->resource->toArray();
-        $data['locale'] = Data::getSelectedLocation($languages->data, $this->locale, 'code', 'name_native');
+        $data['locale'] = Data::getSelectedLocation($languages->data, $this->locale, 'code', 'name');
         $data['timezone'] = Data::getSelectedLocation($timezones->data, $this->timezone, 'name', 'name');
         $data['currency_id'] = Data::getSelectedLocation($currencies->data, $this->currency_id);
         $data['country_id'] = Data::getSelectedLocation($countries->data, $this->country_id);

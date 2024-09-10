@@ -43,13 +43,75 @@ class Setting extends Model
         parent::boot();
     }
 
-    public function scopeListado($query)
+    public function setLocaleAttribute($value)
     {
-        // Define the listado scope
+        // Verifica si $value es un array y si contiene la clave 'id'
+        if (is_array($value) && isset($value['id'])) {
+            // Guarda solo el valor de 'id'
+            $this->attributes['locale'] = $value['id'];
+        } else {
+            // Si no es un array válido, guarda el valor tal como es
+            $this->attributes['locale'] = $value;
+        }
     }
 
-    public function scopeSearch($query, $term)
+    public function setTimezoneAttribute($value)
     {
-        // Define the search scope
+        // Verifica si $value es un array y si contiene la clave 'name'
+        if (is_array($value) && isset($value['name'])) {
+            // Guarda solo el valor de 'name'
+            $this->attributes['timezone'] = $value['name'];
+        } else {
+            // Si no es un array válido, guarda el valor tal como es
+            $this->attributes['timezone'] = $value;
+        }
+    }
+
+    public function setCurrencyIdAttribute($value)
+    {
+        // Verifica si $value es un array y si contiene la clave 'id'
+        if (is_array($value) && isset($value['id'])) {
+            // Guarda solo el valor de 'id'
+            $this->attributes['currency_id'] = $value['id'];
+        } else {
+            // Si no es un array válido, guarda el valor tal como es
+            $this->attributes['currency_id'] = $value;
+        }
+    }
+
+    public function setCountryIdAttribute($value)
+    {
+        // Verifica si $value es un array y si contiene la clave 'id'
+        if (is_array($value) && isset($value['id'])) {
+            // Guarda solo el valor de 'id'
+            $this->attributes['country_id'] = $value['id'];
+        } else {
+            // Si no es un array válido, guarda el valor tal como es
+            $this->attributes['country_id'] = $value;
+        }
+    }
+
+    public function setStateIdAttribute($value)
+    {
+        // Verifica si $value es un array y si contiene la clave 'id'
+        if (is_array($value) && isset($value['id'])) {
+            // Guarda solo el valor de 'id'
+            $this->attributes['state_id'] = $value['id'];
+        } else {
+            // Si no es un array válido, guarda el valor tal como es
+            $this->attributes['state_id'] = $value;
+        }
+    }
+
+    public function setCityIdAttribute($value)
+    {
+        // Verifica si $value es un array y si contiene la clave 'id'
+        if (is_array($value) && isset($value['id'])) {
+            // Guarda solo el valor de 'id'
+            $this->attributes['city_id'] = $value['id'];
+        } else {
+            // Si no es un array válido, guarda el valor tal como es
+            $this->attributes['city_id'] = $value;
+        }
     }
 }
