@@ -12,6 +12,9 @@ import {default as PageUsers} from "@/views/pages/private/users/Index";
 import {default as PageUsersCreate} from "@/views/pages/private/users/Create";
 import {default as PageUsersEdit} from "@/views/pages/private/users/Edit";
 
+import {default as PageAbility} from "@/views/pages/private/abilities/Index";
+
+
 import abilities from "@/stub/abilities";
 
 const routes = [
@@ -65,6 +68,20 @@ const routes = [
                 path: "settings/:id/edit",
                 meta: {requiresAuth: true, requiresAbility: abilities.CREATE_SETTING},
                 component: PageSetting,
+            },
+            {
+                name: "abilities",
+                path: "abilities",
+                meta: {requiresAuth: true, requiresAbility: abilities.CREATE_SETTING},
+                component: PageAbility,
+                children: [
+                    {
+                        name: "roles",
+                        path: "oles.search",
+                        meta: {requiresAuth: true},
+                        component: PageAbility,
+                    }
+                ]
             },
         ]
     },

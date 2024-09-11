@@ -69,8 +69,18 @@ return [
             'users_create' => 'Nuevo usuario',
             'users_edit' => 'Editar usuario',
 
+            'abilities' => 'Roles y Permisos',
+            
+            'roles' => 'Roles',
+            'roles_create' => 'Nuevo rol',
+            'roles_edit' => 'Editar rol',
+
+            'permission' => 'Permisos',
+            'permission_create' => 'Nuevo permiso',
+            'permission_edit' => 'Editar permiso',
+
             'settings' => 'Configuración',
-            'settings_create' => 'Nueva configuración',
+            'general_info' => 'Información General',
             'settings_edit' => 'Editar configuración',
 
             'name_company' => 'Nombre empresa',

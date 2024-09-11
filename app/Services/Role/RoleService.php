@@ -27,4 +27,65 @@ class RoleService
 
         return RoleResource::collection($query->paginate($per_page));
     }
+
+    /**
+     * Creates resource in the database
+     *
+     *
+     * @return Builder|Model|null
+     *
+     */
+    public function create(array $data)
+    {
+        $data = $this->clean($data);
+
+        $record = Role::query()->create($data);
+        if (! empty($record)) {
+            return $record->fresh();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Updates resource in the database
+     *
+     *
+     * @return bool
+     *
+     */
+    public function update(Role $role, array $data)
+    {
+        $data = $this->clean($data);
+
+        return $role->update($data);
+    }
+
+    /**
+     * Deletes resource in the database
+     *
+     * @param  Role|Model  $role
+     * @return bool
+     */
+    public function delete(Role $role)
+    {
+        return $role->delete();
+    }
+
+    /**
+     * Clean the data
+     *
+     *
+     * @return array
+     */
+    private function clean(array $data)
+    {
+        foreach ($data as $i => $row) {
+            if ($row === 'null') {
+                $data[$i] = null;
+            }
+        }
+
+        return $data;
+    }
 }
