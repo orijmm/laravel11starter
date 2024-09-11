@@ -38,6 +38,9 @@ class ModelTableResourceControllerCommand extends Command
                 '--resource' => true
             ]);
 
+            // Crear el FormRequest
+            //$this->call('make:request', ['name' => "{$name}Request"]);
+
             // Obtener columnas de la tabla correspondiente
             $columns = Schema::getColumnListing($tableName);
 
