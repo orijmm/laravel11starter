@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\UserController;
 use App\Utilities\Data;
@@ -42,6 +43,8 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
     Route::get('/roles/search', [RoleController::class, 'search'])->middleware('throttle:400,1');
 
     Route::resource('settingad', SettingController::class);
+
+    Route::apiResource('templates', TemplateController::class);
 });
 
 Route::get('testing', function () {
