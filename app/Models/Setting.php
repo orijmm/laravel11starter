@@ -19,7 +19,26 @@ class Setting extends Model
 
     protected $primaryKey = 'id';
 
-     /**
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name_company',
+        'description',
+        'address',
+        'phone',
+        'email',
+        'locale',
+        'timezone',
+        'state_id',
+        'city_id',
+        'country_id',
+        'currency_id'
+    ];
+
+    /**
      * ALlowed search fields
      *
      * @var string[]

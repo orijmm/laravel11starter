@@ -71,7 +71,7 @@ export default defineComponent({
         //Configuracion del breadcrumbs (navegacion y botones superiores) 
         const page = reactive({
             id: 'create_setting',
-            title: trans('global.pages.settings_create'),
+            title: trans('global.pages.settings_edit'),
             filters: false,
             breadcrumbs: [
                 {

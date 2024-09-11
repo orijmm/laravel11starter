@@ -57,6 +57,7 @@ export default abstract class ModelService extends BaseService {
     }
 
     public handleUpdate(ui_element_id, object_id, data) {
+        console.log(data, 'dataaaa');
         const alertStore = useAlertStore();
         const globalUserState = useGlobalStateStore();
         globalUserState.loadingElements[ui_element_id] = true;

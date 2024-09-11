@@ -33,7 +33,7 @@ class Data
      */
     public static function formatCollectionForSelect(Collection $collection, $value = 'id', $label = 'name')
     {
-        return $collection->map(function ($entry) use ($value, $label) {
+        $result = $collection->map(function ($entry) use ($value, $label) {
             $id = $entry[$value] ?? null;
             $label = $entry[$label] ?? $entry[$id];
 
@@ -42,6 +42,8 @@ class Data
                 'name' => $label,
             ];
         });
+
+        return $result->first();
     }
 
     /**
@@ -64,10 +66,9 @@ class Data
     public static function getSelectedLocation($data, $selected,$typeValue = 'id', $typelabel = 'name')
     {
         $result = [];
-
         $result = collect($data)->firstWhere($typeValue, $selected);
 
-        if($typelabel !== 'name'){
+        if($typeValue !== 'id'){
             $result = self::formatCollectionForSelect(collect([$result]),$typeValue,$typelabel);
         }
         return $result;

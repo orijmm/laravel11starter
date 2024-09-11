@@ -15,6 +15,10 @@ class UpdateSettingRequest extends FormRequest
     {
         return [
             'name_company' => 'required',
+            'description' => 'nullable',
+            'address' => 'nullable',
+            'phone' => 'nullable',
+            'email' => 'nullable',
             'locale' => 'required',
             'timezone' => 'required',
             'state_id' => 'required',
