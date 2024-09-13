@@ -41,20 +41,26 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
     /**
      * Roles
      */
-    Route::post('/roles', [RoleController::class, 'store']);
-    Route::put('/roles/{role}', [RoleController::class, 'update']);
-    Route::delete('/roles/{role}', [RoleController::class, 'destroy']);
     Route::get('/roles/search', [RoleController::class, 'search'])->middleware('throttle:400,1')->name('roles.search');
+    Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
+    Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+    //Abilities (Permissions)
+    Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+    Route::post('/roles/{role}/abilitytorole', [RoleController::class, 'assignAbilityToRole'])->name('roles.ability.role');
+    Route::post('/roles/add/ability', [RoleController::class, 'createAbility'])->name('roles.create.ability');
+    Route::put('/roles/{ability}/editability', [RoleController::class, 'updateAbility'])->name('roles.ability.update');
+    Route::delete('/roles/{ability}/deleteability', [RoleController::class, 'deleteAbility'])->name('roles.ability.delete');
 
+    
+    /**
+     * Settings Admin
+     */
     Route::resource('settingad', SettingController::class);
 
+    /**
+     * Pages and Templates
+     */
     Route::apiResource('templates', TemplateController::class);
-});
-
-Route::get('testing', function () {
-    $countries = World::countries();
-
-    return response()->json(['data' => $countries], 200);
 });
 
 ## Ubicaciones
@@ -65,7 +71,7 @@ Route::get('languages', function (Request $request) {
     ]);
     if ($action->success) {
         //Se trasnforma a id/label
-        $languages = Data::formatCollectionForSelect($action->data,'code', 'name_native');
+        $languages = Data::formatCollectionForSelect($action->data, 'code', 'name_native');
     }
     return response()->json(['data' => $languages], 200);
 });
@@ -123,4 +129,10 @@ Route::get('cities', function (Request $request) {
         $cities = Data::formatCollectionForSelect($action->data);
     }
     return response()->json(['data' => $cities], 200);
+});
+
+Route::get('testing', function () {
+    //Testing route
+
+    return response()->json(['data' => 'test'], 200);
 });

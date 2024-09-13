@@ -3,7 +3,9 @@
 namespace App\Services\Role;
 
 use App\Http\Resources\RoleResource;
+use App\Models\Ability;
 use App\Models\Role;
+use Bouncer;
 
 class RoleService
 {
@@ -70,6 +72,48 @@ class RoleService
     public function delete(Role $role)
     {
         return $role->delete();
+    }
+
+        /**
+     * Asign permission to role
+     *
+     *
+     * @return Builder|Model|null
+     *
+     */
+    public function assignAbility(Role $role, array $data)
+    {
+        $data = $this->clean($data);
+
+        //se agrega la habilidad al rol
+        $record = Bouncer::allow($role)->to($data);
+
+        if (! empty($record)) {
+            return $record;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Asign permission to role
+     *
+     *
+     * @return Builder|Model|null
+     *
+     */
+    public function createAbility($data)
+    {
+        $ability = Bouncer::ability()->firstOrCreate([
+            'name' => $data['name'],
+            'title' => $data['title'],
+        ]);
+        
+        if (! empty($ability)) {
+            return $ability;
+        } else {
+            return null;
+        }
     }
 
     /**

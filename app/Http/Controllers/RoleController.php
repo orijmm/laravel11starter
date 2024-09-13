@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AbilityToRoleRequest;
+use App\Http\Requests\StoreAbilityRequest;
 use App\Http\Requests\StoreRoleRequest;
+use App\Http\Requests\UpdateAbilityRequest;
 use App\Http\Requests\UpdateRoleRequest;
+use App\Models\Ability;
 use App\Models\Role;
 use App\Services\Role\RoleService;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -85,6 +89,69 @@ class RoleController extends Controller
 
         if ($this->roleService->delete($role)) {
             return $this->responseDeleteSuccess(['record' => $role]);
+        }
+
+        return $this->responseDeleteFail();
+    }
+
+    /**
+     * Add Ability to rol.
+     */
+    public function assignAbilityToRole(AbilityToRoleRequest $request, Role $role)
+    {
+        $this->authorize('edit', Role::class);
+
+        $data = $request->validated();
+        if ($this->roleService->assignAbility($role, $data)) {
+            return $this->responseUpdateSuccess(['record' => $role->fresh()]);
+        } else {
+            return $this->responseUpdateFail();
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function createAbility(StoreAbilityRequest $request)
+    {
+        $this->authorize('edit', Role::class);
+
+        $data = $request->validated();
+
+        $ability = $this->roleService->createAbility($data);
+
+        if ($ability) {
+            return $this->responseUpdateSuccess(['record' => $ability]);
+        } else {
+            return $this->responseUpdateFail();
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function updateAbility(UpdateAbilityRequest $request, Ability $ability)
+    {
+        $this->authorize('edit', Role::class);
+
+        $data = $request->validated();
+
+        if ($ability->update($data)) {
+            return $this->responseUpdateSuccess(['record' => $ability->fresh()]);
+        } else {
+            return $this->responseUpdateFail();
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function deleteAbility(Ability $ability)
+    {
+        $this->authorize('delete', Role::class);
+            
+        if ($ability->delete()) {
+            return $this->responseDeleteSuccess(['record' => $ability]);
         }
 
         return $this->responseDeleteFail();

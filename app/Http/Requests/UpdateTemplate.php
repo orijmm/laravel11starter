@@ -13,7 +13,7 @@ class Template extends BaseRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:templates,name,'.$this->request->get('name'),
+            'name' => 'required|unique:templates,name,'.$this->route('template')->id,
             'filename' => 'required|unique:templates,filename,'.$this->request->get('filename'),
             'description' => 'required',
         ];

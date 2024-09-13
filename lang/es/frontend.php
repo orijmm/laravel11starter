@@ -117,6 +117,7 @@ return [
             'record_updated' => 'Registro actualizado con éxito.',
             'record_not_updated' => 'No se pudo actualizar el registro.',
             'record_deleted' => 'Registro eliminado con éxito.',
+            'record_not_deleted' => 'No se pudo eliminar el registro.',
             'file_uploaded' => 'Archivo subido con éxito',
             'file_not_uploaded' => 'No se pudo subir el archivo',
             'password_updated' => 'Contraseña actualizada con éxito',
