@@ -41,6 +41,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
     /**
      * Roles
      */
+    Route::get('/roles/list', [RoleController::class, 'index'])->name('roles.index');
     Route::get('/roles/search', [RoleController::class, 'search'])->middleware('throttle:400,1')->name('roles.search');
     Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
     Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');

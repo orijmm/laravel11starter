@@ -77,7 +77,7 @@ const routes = [
                 children: [
                     {
                         name: "roles",
-                        path: "oles.search",
+                        path: "roles.index",
                         meta: {requiresAuth: true},
                         component: PageAbility,
                     }

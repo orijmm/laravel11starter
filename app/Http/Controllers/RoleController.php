@@ -29,6 +29,20 @@ class RoleController extends Controller
     {
         $this->roleService = $service;
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     *
+     * @throws AuthorizationException
+     */
+    public function index(Request $request)
+    {
+        $this->authorize('list', Role::class);
+
+        return $this->roleService->index($request->all());
+    }
     
     /**
      * Handle search data
@@ -41,7 +55,7 @@ class RoleController extends Controller
     {
         $this->authorize('search', Role::class);
 
-        return $this->roleService->index($request->all());
+        return $this->roleService->search($request->all());
     }
 
     /**

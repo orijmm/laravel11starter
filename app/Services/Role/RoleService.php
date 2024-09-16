@@ -3,7 +3,7 @@
 namespace App\Services\Role;
 
 use App\Http\Resources\RoleResource;
-use App\Models\Ability;
+use App\Http\Resources\RoleSearchResource;
 use App\Models\Role;
 use Bouncer;
 
@@ -18,6 +18,26 @@ class RoleService
     public function index($data)
     {
         $query = Role::query();
+
+        if (! empty($data['search'])) {
+            $query = $query->search($data['search']);
+        }
+        if (! empty($data['sort_by']) && ! empty($data['sort'])) {
+            $query = $query->orderBy($data['sort_by'], $data['sort']);
+        }
+
+        return RoleResource::collection($query->paginate(10));
+    }
+
+    /**
+     * Get resource index from the database
+     *
+     * @param  $query
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function search($data)
+    {
+        $query = Role::query();
         $per_page = isset($data['per_page']) && is_numeric($data['per_page']) ? intval($data['per_page']) : 10;
 
         if (! empty($data['search'])) {
@@ -27,7 +47,7 @@ class RoleService
             $query = $query->orderBy($data['sort_by'], $data['sort']);
         }
 
-        return RoleResource::collection($query->paginate($per_page));
+        return RoleSearchResource::collection($query->paginate($per_page));
     }
 
     /**
@@ -86,7 +106,7 @@ class RoleService
         $data = $this->clean($data);
 
         //se agrega la habilidad al rol
-        $record = Bouncer::allow($role)->to($data);
+        $record = Bouncer::allow($role)->to($data['name']);
 
         if (! empty($record)) {
             return $record;

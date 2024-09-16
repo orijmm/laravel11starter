@@ -5,49 +5,27 @@
             <Filters @clear="onFiltersClear">
                 <FiltersRow>
                     <FiltersCol>
-                        <TextInput name="first_name" :label="trans('users.labels.first_name')" v-model="mainQuery.filters.first_name.value"></TextInput>
+                        <TextInput name="name" :label="trans('users.labels.first_name')"
+                            v-model="mainQuery.filters.name.value"></TextInput>
                     </FiltersCol>
                     <FiltersCol>
-                        <TextInput name="last_name" :label="trans('users.labels.last_name')" v-model="mainQuery.filters.last_name.value"></TextInput>
-                    </FiltersCol>
-                    <FiltersCol>
-                        <TextInput name="email" type="email" :label="trans('users.labels.email')" v-model="mainQuery.filters.email.value"></TextInput>
-                    </FiltersCol>
-                    <FiltersCol>
-                        <Dropdown name="role" server="roles/search" :multiple="true" :label="trans('users.labels.role')" v-model="mainQuery.filters.role.value"></Dropdown>
+                        <TextInput name="title" :label="trans('users.labels.title')"
+                            v-model="mainQuery.filters.title.value"></TextInput>
                     </FiltersCol>
                 </FiltersRow>
             </Filters>
         </template>
 
         <template #default>
-            <Table :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" :actions="table.actions" :records="table.records" :pagination="table.pagination" :is-loading="table.loading" @page-changed="onTablePageChange" @action="onTableAction" @sort="onTableSort">
-                <template v-slot:content-id="props">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0 h-10 w-10">
-                            <img v-if="props.item.avatar_thumb_url" :src="props.item.avatar_thumb_url" class="h-10 w-10 rounded-full" alt=""/>
-                            <Avatar v-else class="w-10 h-10 text-gray-400 rounded-full"/>
-                        </div>
-                        <div class="ml-4">
-                            <div class="text-sm font-medium text-gray-900">
-                                {{ props.item.full_name }}
-                            </div>
-                            <div class="text-sm text-gray-500">
-                                {{ trans('users.labels.id') + ': ' + props.item.id }}
-                            </div>
-                        </div>
+            <Table :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" :actions="table.actions"
+                :records="table.records" :pagination="table.pagination" :is-loading="table.loading"
+                @page-changed="onTablePageChange" @action="onTableAction" @sort="onTableSort">
+                <template v-slot:content-abilities="props">
+                    <div>
+                        <span  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800" v-for="(entry, index) in props.item.abilities" :key="index">
+                            {{ entry.name }}<span v-if="index < props.item.abilities.length - 1"> </span>
+                        </span>
                     </div>
-                </template>
-                <template v-slot:content-status="props">
-                    <span v-if="props.item.email_verified_at" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800" v-html="trans('users.status.verified')"></span>
-                    <span v-else class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800" v-html="trans('users.status.not_verified')"></span>
-                </template>
-                <template v-slot:content-role="props">
-                    {{
-                        props.item.roles.map((entry) => {
-                            return entry.name
-                        }).join(', ')
-                    }}
                 </template>
             </Table>
         </template>
@@ -56,12 +34,11 @@
 
 <script>
 
-import {trans} from "@/helpers/i18n";
-import UserService from "@/services/UserService";
-import {watch, onMounted, defineComponent, reactive, ref} from 'vue';
-import {getResponseError, prepareQuery} from "@/helpers/api";
-import {toUrl} from "@/helpers/routing";
-import {useAlertStore} from "@/stores";
+import { trans } from "@/helpers/i18n";
+import { watch, onMounted, defineComponent, reactive, ref } from 'vue';
+import { getResponseError, prepareQuery } from "@/helpers/api";
+import { toUrl } from "@/helpers/routing";
+import { useAlertStore } from "@/stores";
 import alertHelpers from "@/helpers/alert";
 import Page from "@/views/layouts/Page";
 import Table from "@/views/components/Table";
@@ -70,11 +47,10 @@ import Filters from "@/views/components/filters/Filters";
 import FiltersRow from "@/views/components/filters/FiltersRow";
 import FiltersCol from "@/views/components/filters/FiltersCol";
 import TextInput from "@/views/components/input/TextInput";
-import Dropdown from "@/views/components/input/Dropdown";
+import RoleService from "@/services/RoleService";
 
 export default defineComponent({
     components: {
-        Dropdown,
         TextInput,
         FiltersCol,
         FiltersRow,
@@ -84,26 +60,18 @@ export default defineComponent({
         Avatar
     },
     setup() {
-        const service = new UserService();
+        const service = new RoleService();
         const alertStore = useAlertStore();
         const mainQuery = reactive({
             page: 1,
             search: '',
             sort: '',
             filters: {
-                first_name: {
+                name: {
                     value: '',
                     comparison: '='
                 },
-                last_name: {
-                    value: '',
-                    comparison: '='
-                },
-                role: {
-                    value: '',
-                    comparison: '='
-                },
-                email: {
+                title: {
                     value: '',
                     comparison: '='
                 }
@@ -111,12 +79,12 @@ export default defineComponent({
         });
 
         const page = reactive({
-            id: 'list_users',
-            title: trans('global.pages.users'),
+            id: 'list_roles',
+            title: trans('global.pages.roles'),
             breadcrumbs: [
                 {
-                    name: trans('global.pages.users'),
-                    to: toUrl('/users'),
+                    name: trans('global.pages.roles'),
+                    to: toUrl('/abilities'),
                     active: true,
                 }
             ],
@@ -131,7 +99,7 @@ export default defineComponent({
                     id: 'new',
                     name: trans('global.buttons.add_new'),
                     icon: "fa fa-plus",
-                    to: toUrl('/users/create')
+                    to: toUrl('/roles/create')
                 }
             ],
             toggleFilters: false,
@@ -140,15 +108,12 @@ export default defineComponent({
         const table = reactive({
             headers: {
                 id: trans('users.labels.id_pound'),
-                first_name: trans('users.labels.first_name'),
-                last_name: trans('users.labels.last_name'),
-                email: trans('users.labels.email'),
-                status: trans('users.labels.status'),
-                role: trans('users.labels.role'),
+                name: trans('users.labels.first_name'),
+                title: trans('users.labels.title'),
+                abilities: trans('global.pages.permission'),
             },
             sorting: {
-                first_name: true,
-                last_name: true
+                roles: true,
             },
             pagination: {
                 meta: null,
@@ -160,7 +125,7 @@ export default defineComponent({
                     name: trans('global.actions.edit'),
                     icon: "fa fa-edit",
                     showName: false,
-                    to: toUrl('/users/{id}/edit')
+                    to: toUrl('/roles/{id}/edit')
                 },
                 delete: {
                     id: 'delete',
@@ -204,7 +169,7 @@ export default defineComponent({
 
         function onFiltersClear() {
             let clonedFilters = mainQuery.filters;
-            for(let key in clonedFilters) {
+            for (let key in clonedFilters) {
                 clonedFilters[key].value = '';
             }
             mainQuery.filters = clonedFilters;
@@ -217,6 +182,7 @@ export default defineComponent({
             service
                 .index(query)
                 .then((response) => {
+                    console.log(response, 'response');
                     table.records = response.data.data;
                     table.pagination.meta = response.data.meta;
                     table.pagination.links = response.data.links;

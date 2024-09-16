@@ -26,6 +26,7 @@ return [
             'id_pound' => '#',
             'first_name' => 'Nombre',
             'last_name' => 'Apellido',
+            'title' => 'Título',
             'middle_name' => 'Segundo nombre',
             'name' => 'Nombre completo',
             'avatar' => 'Avatar',
