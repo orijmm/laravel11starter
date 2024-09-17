@@ -1,18 +1,21 @@
-import {default as PageLogin} from "@/views/pages/auth/login/Main";
-import {default as PageRegister} from "@/views/pages/auth/register/Main";
-import {default as PageResetPassword} from "@/views/pages/auth/reset-password/Main";
-import {default as PageForgotPassword} from "@/views/pages/auth/forgot-password/Main";
-import {default as PageNotFound} from "@/views/pages/shared/404/Main";
+import { default as PageLogin } from "@/views/pages/auth/login/Main";
+import { default as PageRegister } from "@/views/pages/auth/register/Main";
+import { default as PageResetPassword } from "@/views/pages/auth/reset-password/Main";
+import { default as PageForgotPassword } from "@/views/pages/auth/forgot-password/Main";
+import { default as PageNotFound } from "@/views/pages/shared/404/Main";
 
-import {default as PageDashboard} from "@/views/pages/private/dashboard/Main";
-import {default as PageProfile} from "@/views/pages/private/profile/Main";
-import {default as PageSetting} from "@/views/pages/private/settings/Index";
+import { default as PageDashboard } from "@/views/pages/private/dashboard/Main";
+import { default as PageProfile } from "@/views/pages/private/profile/Main";
+import { default as PageSetting } from "@/views/pages/private/settings/Index";
 
-import {default as PageUsers} from "@/views/pages/private/users/Index";
-import {default as PageUsersCreate} from "@/views/pages/private/users/Create";
-import {default as PageUsersEdit} from "@/views/pages/private/users/Edit";
+import { default as PageUsers } from "@/views/pages/private/users/Index";
+import { default as PageUsersCreate } from "@/views/pages/private/users/Create";
+import { default as PageUsersEdit } from "@/views/pages/private/users/Edit";
 
-import {default as PageAbility} from "@/views/pages/private/abilities/Index";
+import { default as PageAbility } from "@/views/pages/private/roles/Index";
+import { default as PageAbilityCreate } from "@/views/pages/private/roles/Create";
+import { default as PageAbilityEdit } from "@/views/pages/private/roles/Edit";
+
 
 
 import abilities from "@/stub/abilities";
@@ -21,7 +24,7 @@ const routes = [
     {
         name: "home",
         path: "/",
-        meta: {requiresAuth: false, isPublicAuthPage: true},
+        meta: { requiresAuth: false, isPublicAuthPage: true },
         component: PageLogin,
     },
     {
@@ -31,13 +34,13 @@ const routes = [
             {
                 name: "dashboard",
                 path: "dashboard",
-                meta: {requiresAuth: true},
+                meta: { requiresAuth: true },
                 component: PageDashboard,
             },
             {
                 name: "profile",
                 path: "profile",
-                meta: {requiresAuth: true, isOwner: true},
+                meta: { requiresAuth: true, isOwner: true },
                 component: PageProfile,
             },
             {
@@ -46,19 +49,19 @@ const routes = [
                     {
                         name: "users.list",
                         path: "list",
-                        meta: {requiresAuth: true, requiresAbility: abilities.LIST_USER},
+                        meta: { requiresAuth: true, requiresAbility: abilities.LIST_USER },
                         component: PageUsers,
                     },
                     {
                         name: "users.create",
                         path: "create",
-                        meta: {requiresAuth: true, requiresAbility: abilities.CREATE_USER},
+                        meta: { requiresAuth: true, requiresAbility: abilities.CREATE_USER },
                         component: PageUsersCreate,
                     },
                     {
                         name: "users.edit",
                         path: ":id/edit",
-                        meta: {requiresAuth: true, requiresAbility: abilities.EDIT_USER},
+                        meta: { requiresAuth: true, requiresAbility: abilities.EDIT_USER },
                         component: PageUsersEdit,
                     },
                 ]
@@ -66,53 +69,62 @@ const routes = [
             {
                 name: "settings",
                 path: "settings/:id/edit",
-                meta: {requiresAuth: true, requiresAbility: abilities.CREATE_SETTING},
+                meta: { requiresAuth: true, requiresAbility: abilities.CREATE_SETTING },
                 component: PageSetting,
             },
             {
-                name: "abilities",
-                path: "abilities",
-                meta: {requiresAuth: true, requiresAbility: abilities.CREATE_SETTING},
-                component: PageAbility,
+                path: "roles",
                 children: [
                     {
-                        name: "roles",
-                        path: "roles.index",
-                        meta: {requiresAuth: true},
+                        name: "roles.list",
+                        path: "list",
+                        meta: { requiresAuth: true, requiresAbility: abilities.LIST_USER },
                         component: PageAbility,
-                    }
+                    },
+                    {
+                        name: "roles.create",
+                        path: "create",
+                        meta: { requiresAuth: true, requiresAbility: abilities.CREATE_USER },
+                        component: PageAbilityCreate,
+                    },
+                    {
+                        name: "roles.edit",
+                        path: ":id/edit",
+                        meta: { requiresAuth: true, requiresAbility: abilities.EDIT_USER },
+                        component: PageAbilityEdit,
+                    },
                 ]
-            },
+            }
         ]
     },
     {
         path: "/login",
         name: "login",
-        meta: {requiresAuth: false, isPublicAuthPage: true},
+        meta: { requiresAuth: false, isPublicAuthPage: true },
         component: PageLogin,
     },
     {
         path: "/register",
         name: "register",
-        meta: {requiresAuth: false, isPublicAuthPage: true},
+        meta: { requiresAuth: false, isPublicAuthPage: true },
         component: PageRegister,
     },
     {
         path: "/reset-password",
         name: "resetPassword",
-        meta: {requiresAuth: false, isPublicAuthPage: true},
+        meta: { requiresAuth: false, isPublicAuthPage: true },
         component: PageResetPassword,
     },
     {
         path: "/forgot-password",
         name: "forgotPassword",
-        meta: {requiresAuth: false, isPublicAuthPage: true},
+        meta: { requiresAuth: false, isPublicAuthPage: true },
         component: PageForgotPassword,
     },
     {
         path: "/:catchAll(.*)",
         name: "notFound",
-        meta: {requiresAuth: false},
+        meta: { requiresAuth: false },
         component: PageNotFound,
     },
 ]

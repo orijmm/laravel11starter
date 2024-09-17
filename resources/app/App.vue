@@ -177,7 +177,7 @@ export default {
                         },
                         {
                             name: trans('global.pages.users'),
-                            icon: 'users',
+                            icon: '',
                             showDesktop: true,
                             showMobile: true,
                             requiresAbility: getAbilitiesForRoute(['users.list', 'users.create', 'users.edit']),
@@ -202,12 +202,22 @@ export default {
                             ]
                         },
                         {
-                            name: trans('global.pages.abilities'),
-                            icon: 'tachometer',
+                            name: trans('global.pages.roles'),
+                            icon: '',
                             showDesktop: true,
                             showMobile: true,
-                            requiresAbility: false,
-                            to: '/panel/abilities',
+                            requiresAbility: getAbilitiesForRoute(['roles.edit']),
+                            to: '/panel/roles/list',
+                            children: [
+                                {
+                                    name: trans('global.phrases.add_new'),
+                                    icon: '',
+                                    showDesktop: true,
+                                    showMobile: true,
+                                    requiresAbility: getAbilitiesForRoute('users.list'),
+                                    to: '/panel/roles/create',
+                                }
+                            ]
                         }
                     ]
                 },

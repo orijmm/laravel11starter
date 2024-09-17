@@ -1,7 +1,7 @@
 <template>
-    <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction">
+    <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction" :is-loading="page.loading">
         <Panel>
-            <Form id="create-role" @submit.prevent="onSubmit">
+            <Form id="edit-role" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name" :label="trans('users.labels.name')"/>
                 <TextInput class="mb-4" type="text" :required="true" name="title" v-model="form.title" :label="trans('users.labels.title')"/>
             </Form>
@@ -10,41 +10,53 @@
 </template>
 
 <script>
-import {defineComponent, reactive} from "vue";
+import {defineComponent, onBeforeMount, reactive, ref} from "vue";
 import {trans} from "@/helpers/i18n";
+import {fillObject, reduceProperties} from "@/helpers/data"
+import {useRoute} from "vue-router";
 import {useAuthStore} from "@/stores/auth";
+import {toUrl} from "@/helpers/routing";
 import Button from "@/views/components/input/Button";
 import TextInput from "@/views/components/input/TextInput";
+import Dropdown from "@/views/components/input/Dropdown";
 import Alert from "@/views/components/Alert";
 import Panel from "@/views/components/Panel";
 import Page from "@/views/layouts/Page";
 import FileInput from "@/views/components/input/FileInput";
-import {clearObject, reduceProperties} from "@/helpers/data";
-import {toUrl} from "@/helpers/routing";
 import Form from "@/views/components/Form";
-import RolesService from "@/services/RoleService";
+import RoleService from "@/services/RoleService";
 
 export default defineComponent({
-    components: {Form, FileInput, Panel, Alert, TextInput, Button, Page},
+    components: {
+        Form,
+        FileInput,
+        Panel,
+        Alert,
+        Dropdown,
+        TextInput,
+        Button,
+        Page
+    },
     setup() {
         const {user} = useAuthStore();
+        const route = useRoute();
         const form = reactive({
             name: '',
             title: '',
         });
 
         const page = reactive({
-            id: 'create_roles',
-            title: trans('global.pages.roles_create'),
+            id: 'edit_role',
+            title: trans('global.pages.roles_edit'),
             filters: false,
+            loading: true,
             breadcrumbs: [
                 {
                     name: trans('global.pages.roles'),
-                    to: toUrl('/abilities'),
-
+                    to: toUrl('/roles'),
                 },
                 {
-                    name: trans('global.pages.roles_create'),
+                    name: trans('global.pages.roles_edit'),
                     active: true,
                 }
             ],
@@ -53,19 +65,26 @@ export default defineComponent({
                     id: 'back',
                     name: trans('global.buttons.back'),
                     icon: "fa fa-angle-left",
-                    to: toUrl('/abilities'),
+                    to: toUrl('/roles'),
                     theme: 'outline',
                 },
                 {
                     id: 'submit',
-                    name: trans('global.buttons.save'),
+                    name: trans('global.buttons.update'),
                     icon: "fa fa-save",
-                    type: 'submit',
+                    type: 'submit'
                 }
             ]
         });
 
-        const service = new RolesService();
+        const service = new RoleService();
+
+        onBeforeMount(() => {
+            service.edit(route.params.id).then((response) => {
+                fillObject(form, response.data.model);
+                page.loading = false;
+            })
+        });
 
         function onAction(data) {
             switch(data.action.id) {
@@ -76,9 +95,7 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleCreate('create-role', reduceProperties(form, 'roles', 'id')).then(() => {
-                clearObject(form)
-            })
+            service.handleUpdate('edit-role', route.params.id, reduceProperties(form, ['roles'], 'id'));
             return false;
         }
 
@@ -86,9 +103,9 @@ export default defineComponent({
             trans,
             user,
             form,
-            page,
             onSubmit,
             onAction,
+            page
         }
     }
 })

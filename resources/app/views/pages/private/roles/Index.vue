@@ -84,7 +84,7 @@ export default defineComponent({
             breadcrumbs: [
                 {
                     name: trans('global.pages.roles'),
-                    to: toUrl('/abilities'),
+                    to: toUrl('/roles'),
                     active: true,
                 }
             ],
@@ -182,7 +182,6 @@ export default defineComponent({
             service
                 .index(query)
                 .then((response) => {
-                    console.log(response, 'response');
                     table.records = response.data.data;
                     table.pagination.meta = response.data.meta;
                     table.pagination.links = response.data.links;
