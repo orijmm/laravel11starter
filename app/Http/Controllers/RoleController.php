@@ -80,6 +80,38 @@ class RoleController extends Controller
     }
 
     /**
+     *  Show the form for editing the specified resource.
+     *
+     *
+     * @return RoleResource|JsonResponse
+     *
+     * @throws AuthorizationException
+     */
+    public function show(Role $user)
+    {
+        $this->authorize('view', Role::class);
+
+        $model = $this->roleService->get($user);
+
+        return $this->responseDataSuccess(['model' => $model, 'properties' => $this->properties()]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     *
+     * @return JsonResponse|\Illuminate\Http\Response
+     *
+     * @throws AuthorizationException
+     */
+    public function edit(Role $role)
+    {
+        $this->authorize('edit', Role::class);
+
+        return $this->show($role);
+    }
+
+    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateRoleRequest $request, Role $role)
@@ -169,5 +201,15 @@ class RoleController extends Controller
         }
 
         return $this->responseDeleteFail();
+    }
+
+    /**
+     * Render properties
+     *
+     * @return array
+     */
+    public function properties()
+    {
+        return [];
     }
 }

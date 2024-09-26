@@ -43,8 +43,9 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
      */
     Route::get('/roles/list', [RoleController::class, 'index'])->name('roles.index');
     Route::get('/roles/search', [RoleController::class, 'search'])->middleware('throttle:400,1')->name('roles.search');
+    Route::get('/roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
     Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
-    Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+    Route::patch('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
     //Abilities (Permissions)
     Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
     Route::post('/roles/{role}/abilitytorole', [RoleController::class, 'assignAbilityToRole'])->name('roles.ability.role');

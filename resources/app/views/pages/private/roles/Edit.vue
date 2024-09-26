@@ -2,7 +2,7 @@
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction" :is-loading="page.loading">
         <Panel>
             <Form id="edit-role" @submit.prevent="onSubmit">
-                <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name" :label="trans('users.labels.name')"/>
+                <TextInput class="mb-4" type="text" :required="true" :inputconvert="convertToLowercase" name="name" v-model="form.name" :label="trans('users.labels.first_name')"/>
                 <TextInput class="mb-4" type="text" :required="true" name="title" v-model="form.title" :label="trans('users.labels.title')"/>
             </Form>
         </Panel>
@@ -65,7 +65,7 @@ export default defineComponent({
                     id: 'back',
                     name: trans('global.buttons.back'),
                     icon: "fa fa-angle-left",
-                    to: toUrl('/roles'),
+                    to: toUrl('/roles/list'),
                     theme: 'outline',
                 },
                 {
@@ -99,13 +99,18 @@ export default defineComponent({
             return false;
         }
 
+        function convertToLowercase(value) {
+            return value.toLowerCase(); // Convierte el valor a minúsculas
+        }
+
         return {
             trans,
             user,
             form,
             onSubmit,
             onAction,
-            page
+            page,
+            convertToLowercase
         }
     }
 })

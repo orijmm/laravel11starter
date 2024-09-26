@@ -74,10 +74,19 @@ export default defineComponent({
             type: String,
             default: null,
         },
+        inputconvert: {
+            type: Function,
+            default: null,
+        },
     },
     emits: ['update:modelValue'],
     setup(props, {emit}) {
         function onInput(event) {
+            let value = event?.target?.value || '';
+            if (props.inputconvert) {
+                value = props.inputconvert(value);
+            }
+
             emit("update:modelValue", event.target.value);
         }
 

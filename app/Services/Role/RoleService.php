@@ -30,6 +30,17 @@ class RoleService
     }
 
     /**
+     * Get a single resource from the database
+     *
+     *
+     * @return RoleResource
+     */
+    public function get(Role $role)
+    {
+        return new RoleResource($role);
+    }
+
+    /**
      * Get resource index from the database
      *
      * @param  $query
