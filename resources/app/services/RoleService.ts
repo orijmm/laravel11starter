@@ -7,10 +7,13 @@ export default class RoleService extends ModelService {
         this.url = '/roles';
     }
 
-    public list(query) {
-        this.url = '/roles/list';
-
-        return this.index(query);
+    public list(params) {
+        let path = '/roles/list';
+        let query = new URLSearchParams(params).toString();
+        if (query) {
+            path += '?' + query
+        }
+        return this.get(path, {});
     }
 
 }

@@ -8,18 +8,11 @@
                 <TextInput class="mb-4" type="text" :required="true" name="title" v-model="form.title"
                     :label="trans('users.labels.title')" />
             </Form>
-            {{ table }}
-            <Table :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" :actions="table.actions"
-                :records="table.records" :pagination="table.pagination" :is-loading="table.loading"
-                @page-changed="onTablePageChange" @action="onTableAction" @sort="onTableSort">
-                <!-- <template v-slot:content-abilities="props">
-                    <div>
-                        <span  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800" v-for="(entry, index) in props.item.abilities" :key="index">
-                            {{ entry.name }}<span v-if="index < props.item.abilities.length - 1"> </span>
-                        </span>
-                    </div>
-                </template> -->
-            </Table>
+        </Panel>
+        <Panel title="Lista de permisos">
+            <TableSimple :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" :actions="table.actions"
+                :records="table.records" :pagination="table.pagination" :is-loading="table.loading">
+            </TableSimple>
         </Panel>
     </Page>
 </template>
@@ -33,6 +26,7 @@ import { useAuthStore } from "@/stores/auth";
 import { toUrl } from "@/helpers/routing";
 import Button from "@/views/components/input/Button";
 import TextInput from "@/views/components/input/TextInput";
+import TableSimple from "@/views/components/TableSimple";
 import Dropdown from "@/views/components/input/Dropdown";
 import Alert from "@/views/components/Alert";
 import Panel from "@/views/components/Panel";
@@ -50,7 +44,8 @@ export default defineComponent({
         Dropdown,
         TextInput,
         Button,
-        Page
+        Page,
+        TableSimple
     },
     setup() {
         const { user } = useAuthStore();
@@ -92,14 +87,12 @@ export default defineComponent({
             ]
         });
 
+        //Tabla de permisos / abilidades
         const table = reactive({
             headers: {
                 id: trans('users.labels.id_pound'),
                 name: trans('users.labels.first_name'),
                 title: trans('users.labels.title'),
-            },
-            sorting: {
-                name: true,
             },
             pagination: {
                 meta: null,
@@ -124,6 +117,8 @@ export default defineComponent({
             //Cargar datos del rol
             service.edit(route.params.id).then((response) => {
                 fillObject(form, response.data.model);
+                //data de habilidades
+                table.records = response.data.model.abilities;
                 page.loading = false;
             })
         });
@@ -144,30 +139,10 @@ export default defineComponent({
                     reduceProperties(form, ['roles'], 'id')
                 );
                 fillObject(form, response.data.record);
-                console.log('Response:', response);  
             } catch (error) {
                 console.error('Error:', error);
             }
             return false;
-        }
-
-        //Cargar abilidades / permisos
-        function fetchPage(params) {
-            // table.records = [];
-            // table.loading = true;
-            // let query = prepareQuery(params);
-            // service
-            //     .index(query)
-            //     .then((response) => {
-            //         table.records = response.data.data;
-            //         table.pagination.meta = response.data.meta;
-            //         table.pagination.links = response.data.links;
-            //         table.loading = false;
-            //     })
-            //     .catch((error) => {
-            //         alertStore.error(getResponseError(error));
-            //         table.loading = false;
-            //     });
         }
 
         return {
@@ -178,7 +153,6 @@ export default defineComponent({
             onAction,
             page,
             table,
-            fetchPage
         }
     }
 })
