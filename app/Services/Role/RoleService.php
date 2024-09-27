@@ -6,6 +6,9 @@ use App\Http\Resources\RoleResource;
 use App\Http\Resources\RoleSearchResource;
 use App\Models\Role;
 use Bouncer;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
+use App\Traits\Filterable;
 
 class RoleService
 {
@@ -18,9 +21,11 @@ class RoleService
     public function index($data)
     {
         $query = Role::query();
-
         if (! empty($data['search'])) {
             $query = $query->search($data['search']);
+        }
+        if (! empty($data['filters'])) {
+            $this->filter($query, $data['filters']);
         }
         if (! empty($data['sort_by']) && ! empty($data['sort'])) {
             $query = $query->orderBy($data['sort_by'], $data['sort']);
@@ -164,5 +169,27 @@ class RoleService
         }
 
         return $data;
+    }
+
+    /**
+     * Filter resources
+     *
+     * @return void
+     */
+    private function filter(Builder &$query, $filters)
+    {
+        $query->filter(Arr::except($filters, ['role']));
+
+        if (! empty($filters['role'])) {
+            $roleFilter = Filterable::parseFilter($filters['role']);
+            if (! empty($roleFilter)) {
+                if (is_array($roleFilter[2])) {
+                    $query->whereIs(...$roleFilter[2]);
+                } else {
+                    $query->whereIs($roleFilter[2]);
+                }
+            }
+        }
+
     }
 }

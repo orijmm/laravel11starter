@@ -180,7 +180,7 @@ export default defineComponent({
             table.loading = true;
             let query = prepareQuery(params);
             service
-                .index(query)
+                .list(query)
                 .then((response) => {
                     table.records = response.data.data;
                     table.pagination.meta = response.data.meta;
