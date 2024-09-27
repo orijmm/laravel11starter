@@ -71,7 +71,6 @@ export default defineComponent({
 
         const router = useRouter();
         const authStore = useAuthStore();
-        console.log(router.getRoutes(), 'rutas');
 
         function isActive(obj) {
 

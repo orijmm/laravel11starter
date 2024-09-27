@@ -63,6 +63,7 @@ export default abstract class ModelService extends BaseService {
         return this.update(object_id, data).then((response) => {
             let answer = response.data;
             alertStore.success(answer.message);
+            return response;
         }).catch((error) => {
             alertStore.error(getResponseError(error));
         }).finally(() => {

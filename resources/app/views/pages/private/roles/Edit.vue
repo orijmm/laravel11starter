@@ -1,21 +1,24 @@
 <template>
-    <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction" :is-loading="page.loading">
+    <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction"
+        :is-loading="page.loading">
         <Panel>
             <Form id="edit-role" @submit.prevent="onSubmit">
-                <TextInput class="mb-4" type="text" :required="true" :inputconvert="convertToLowercase" name="name" v-model="form.name" :label="trans('users.labels.first_name')"/>
-                <TextInput class="mb-4" type="text" :required="true" name="title" v-model="form.title" :label="trans('users.labels.title')"/>
+                <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name"
+                    :label="trans('users.labels.first_name')" />
+                <TextInput class="mb-4" type="text" :required="true" name="title" v-model="form.title"
+                    :label="trans('users.labels.title')" />
             </Form>
         </Panel>
     </Page>
 </template>
 
 <script>
-import {defineComponent, onBeforeMount, reactive, ref} from "vue";
-import {trans} from "@/helpers/i18n";
-import {fillObject, reduceProperties} from "@/helpers/data"
-import {useRoute} from "vue-router";
-import {useAuthStore} from "@/stores/auth";
-import {toUrl} from "@/helpers/routing";
+import { defineComponent, onBeforeMount, reactive, ref } from "vue";
+import { trans } from "@/helpers/i18n";
+import { fillObject, reduceProperties } from "@/helpers/data"
+import { useRoute } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+import { toUrl } from "@/helpers/routing";
 import Button from "@/views/components/input/Button";
 import TextInput from "@/views/components/input/TextInput";
 import Dropdown from "@/views/components/input/Dropdown";
@@ -38,7 +41,7 @@ export default defineComponent({
         Page
     },
     setup() {
-        const {user} = useAuthStore();
+        const { user } = useAuthStore();
         const route = useRoute();
         const form = reactive({
             name: '',
@@ -87,21 +90,28 @@ export default defineComponent({
         });
 
         function onAction(data) {
-            switch(data.action.id) {
+            switch (data.action.id) {
                 case 'submit':
                     onSubmit();
                     break;
             }
         }
 
-        function onSubmit() {
-            service.handleUpdate('edit-role', route.params.id, reduceProperties(form, ['roles'], 'id'));
+        async function onSubmit() {
+            try {
+                let response = await service.handleUpdate(
+                    'edit-role',
+                    route.params.id,//url la toma de la ruta actual
+                    reduceProperties(form, ['roles'], 'id')
+                );
+                fillObject(form, response.data.record);
+                console.log('Response:', response);  
+            } catch (error) {
+                console.error('Error:', error);
+            }
             return false;
         }
 
-        function convertToLowercase(value) {
-            return value.toLowerCase(); // Convierte el valor a minúsculas
-        }
 
         return {
             trans,
@@ -109,13 +119,10 @@ export default defineComponent({
             form,
             onSubmit,
             onAction,
-            page,
-            convertToLowercase
+            page
         }
     }
 })
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

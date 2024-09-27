@@ -71,7 +71,8 @@ class RoleService
     public function create(array $data)
     {
         $data = $this->clean($data);
-
+        //nombre del rol en minusculas
+        $data['name'] = strtolower($data['name']);
         $record = Role::query()->create($data);
         if (! empty($record)) {
             return $record->fresh();
@@ -90,7 +91,8 @@ class RoleService
     public function update(Role $role, array $data)
     {
         $data = $this->clean($data);
-
+        //nombre del rol en minusculas
+        $data['name'] = strtolower($data['name']);
         return $role->update($data);
     }
 

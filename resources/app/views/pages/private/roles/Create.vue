@@ -2,7 +2,7 @@
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction">
         <Panel>
             <Form id="create-role" @submit.prevent="onSubmit">
-                <TextInput class="mb-4" type="text" :required="true" :inputconvert="convertToLowercase" name="name" v-model="form.name" :label="trans('users.labels.name')"/>
+                <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name" :label="trans('users.labels.first_name')" :labelsmall="trans('global.pages.lowercase')"/>
                 <TextInput class="mb-4" type="text" :required="true" name="title" v-model="form.title" :label="trans('users.labels.title')"/>
             </Form>
         </Panel>
@@ -68,10 +68,6 @@ export default defineComponent({
 
         const service = new RolesService();
 
-        function convertToLowercase(value) {
-            return value.toLowerCase(); // Convierte el valor a minúsculas
-        }
-
         function onAction(data) {
             switch(data.action.id) {
                 case 'submit':
@@ -93,8 +89,7 @@ export default defineComponent({
             form,
             page,
             onSubmit,
-            onAction,
-            convertToLowercase
+            onAction
         }
     }
 })

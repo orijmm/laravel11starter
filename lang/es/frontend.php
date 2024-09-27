@@ -91,6 +91,8 @@ return [
             'logout' => 'Cerrar sesión',
             'forgot_password' => 'Olvidé mi contraseña',
             'reset_password' => 'Restablecer contraseña',
+            'lowercase'   => 'Minúsculas',
+            'uppercase'   => 'Mayúsculas'
         ],
         'phrases' => [
             'clear_filters' => 'Limpiar todo',
