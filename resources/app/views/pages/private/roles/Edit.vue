@@ -8,6 +8,18 @@
                 <TextInput class="mb-4" type="text" :required="true" name="title" v-model="form.title"
                     :label="trans('users.labels.title')" />
             </Form>
+            {{ table }}
+            <Table :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" :actions="table.actions"
+                :records="table.records" :pagination="table.pagination" :is-loading="table.loading"
+                @page-changed="onTablePageChange" @action="onTableAction" @sort="onTableSort">
+                <!-- <template v-slot:content-abilities="props">
+                    <div>
+                        <span  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800" v-for="(entry, index) in props.item.abilities" :key="index">
+                            {{ entry.name }}<span v-if="index < props.item.abilities.length - 1"> </span>
+                        </span>
+                    </div>
+                </template> -->
+            </Table>
         </Panel>
     </Page>
 </template>
@@ -80,9 +92,36 @@ export default defineComponent({
             ]
         });
 
+        const table = reactive({
+            headers: {
+                id: trans('users.labels.id_pound'),
+                name: trans('users.labels.first_name'),
+                title: trans('users.labels.title'),
+            },
+            sorting: {
+                name: true,
+            },
+            pagination: {
+                meta: null,
+                links: null,
+            },
+            actions: {
+                delete: {
+                    id: 'delete',
+                    name: trans('global.actions.delete'),
+                    icon: "fa fa-trash",
+                    showName: false,
+                    danger: true,
+                }
+            },
+            loading: false,
+            records: null
+        })
+
         const service = new RoleService();
 
         onBeforeMount(() => {
+            //Cargar datos del rol
             service.edit(route.params.id).then((response) => {
                 fillObject(form, response.data.model);
                 page.loading = false;
@@ -112,6 +151,24 @@ export default defineComponent({
             return false;
         }
 
+        //Cargar abilidades / permisos
+        function fetchPage(params) {
+            // table.records = [];
+            // table.loading = true;
+            // let query = prepareQuery(params);
+            // service
+            //     .index(query)
+            //     .then((response) => {
+            //         table.records = response.data.data;
+            //         table.pagination.meta = response.data.meta;
+            //         table.pagination.links = response.data.links;
+            //         table.loading = false;
+            //     })
+            //     .catch((error) => {
+            //         alertStore.error(getResponseError(error));
+            //         table.loading = false;
+            //     });
+        }
 
         return {
             trans,
@@ -119,7 +176,9 @@ export default defineComponent({
             form,
             onSubmit,
             onAction,
-            page
+            page,
+            table,
+            fetchPage
         }
     }
 })

@@ -150,7 +150,7 @@ export default defineComponent({
         function onTableAction(params) {
             switch (params.action.id) {
                 case 'delete':
-                    alertHelpers.confirmDanger(function () {
+                    alertHelpers.confirmWarning(function () {
                         service.delete(params.item.id).then(function (response) {
                             fetchPage(mainQuery);
                         });
