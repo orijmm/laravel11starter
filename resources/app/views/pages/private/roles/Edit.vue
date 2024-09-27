@@ -10,15 +10,19 @@
             </Form>
         </Panel>
         <Panel title="Lista de permisos">
-            <TableSimple :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" :actions="table.actions"
-                :records="table.records" :pagination="table.pagination" :is-loading="table.loading">
+            <div class="mb-4">
+                <TextInput v-model="search" name="search" placeholder="Filtrar por título" />
+            </div>
+            <TableSimple :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" 
+                :actions="table.actions" :records="filteredRecords" :pagination="table.pagination" 
+                :is-loading="table.loading">
             </TableSimple>
         </Panel>
     </Page>
 </template>
 
 <script>
-import { defineComponent, onBeforeMount, reactive, ref } from "vue";
+import { computed, defineComponent, onBeforeMount, reactive, ref } from "vue";
 import { trans } from "@/helpers/i18n";
 import { fillObject, reduceProperties } from "@/helpers/data"
 import { useRoute } from "vue-router";
@@ -111,6 +115,19 @@ export default defineComponent({
             records: null
         })
 
+        //Buscador
+        const search = ref('');
+        // Computed para filtrar los registros según el valor del input
+        const filteredRecords = computed(() => {
+            if (!search.value) {
+                return table.records; // Si no hay filtro, retorna todos los registros
+            }
+            return table.records.filter(record => 
+                record.title.toLowerCase().includes(search.value.toLowerCase())
+                || record.name.toLowerCase().includes(search.value.toLowerCase())
+            );
+        });
+
         const service = new RoleService();
 
         onBeforeMount(() => {
@@ -153,6 +170,8 @@ export default defineComponent({
             onAction,
             page,
             table,
+            search,
+            filteredRecords, // devuelve los registros filtrados
         }
     }
 })
