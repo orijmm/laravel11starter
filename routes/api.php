@@ -6,7 +6,6 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Pages\TemplateController;
-
 use App\Utilities\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -49,11 +48,12 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
     Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
 
     //Abilities (Permissions)
+    Route::get('/roles/allbilities', [RoleController::class, 'allAbilities'])->name('roles.ability.all');
     Route::post('/roles/{role}/abilitytorole', [RoleController::class, 'assignAbilityToRole'])->name('roles.ability.role');
     Route::post('/roles/add/ability', [RoleController::class, 'createAbility'])->name('roles.create.ability');
     Route::put('/roles/{ability}/editability', [RoleController::class, 'updateAbility'])->name('roles.ability.update');
     Route::delete('/roles/{ability}/deleteability', [RoleController::class, 'deleteAbility'])->name('roles.ability.delete');
-
+    Route::get('/roles/abilities/select', [RoleController::class, 'abilitiesSelect'])->name('roles.ability.select');
     
     /**
      * Settings Admin

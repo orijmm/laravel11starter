@@ -1,5 +1,8 @@
 <template>
     <div class="w-full shadow border-b border-gray-200 mb-8 sm:rounded-lg overflow-auto">
+        <div v-if="filter" class="mb-4">
+            <TextInput v-model="search" name="search" placeholder="Filtrar por título" />
+        </div>
         <table class="w-full divide-y divide-gray-200 table-auto">
             <thead class="bg-gray-50">
             <tr>
@@ -13,8 +16,8 @@
                 </th>
             </tr>
             </thead>
-            <tbody v-if="records && records.length && !$props.isLoading" class="bg-white divide-y divide-gray-200">
-            <tr v-for="(record, i) in records">
+            <tbody v-if="filteredRecords && filteredRecords.length && !$props.isLoading" class="bg-white divide-y divide-gray-200">
+            <tr v-for="(record, i) in filteredRecords">
                 <td v-for="(header, j) in headers" class="px-6 py-4 whitespace-nowrap text-sm">
                     <slot :item="record" :name="'content-'+j">
                         {{ record && record.hasOwnProperty(j) ? record[j] : '' }}
@@ -54,12 +57,13 @@
 
 <script>
 import {trans} from "@/helpers/i18n";
-import {computed, defineComponent} from "vue";
+import {computed, defineComponent, ref} from "vue";
 import Pager from "@/views/components/Pager";
 import Spinner from "@/views/components/icons/Spinner";
+import TextInput from "@/views/components/input/TextInput";
 
 export default defineComponent({
-    components: {Spinner, Pager},
+    components: {Spinner, Pager, TextInput},
     emits: ['pageChanged', 'action', 'sort'],
     props: {
         id: {
@@ -96,6 +100,10 @@ export default defineComponent({
             type: Boolean,
             default: false,
         },
+        filter: {
+            type: Boolean,
+            default: false,
+        }
     },
     setup(props, {emit}) {
 
@@ -140,12 +148,27 @@ export default defineComponent({
             emit('action', params)
         }
 
+        //Buscador
+        const search = ref('');
+        // Computed para filtrar los registros según el valor del input
+        const filteredRecords = computed(() => {
+            if (!search.value) {
+                return props.records; // Si no hay filtro, retorna todos los registros
+            }
+            return props.records.filter(record => 
+                record.title.toLowerCase().includes(search.value.toLowerCase())
+                || record.name.toLowerCase().includes(search.value.toLowerCase())
+            );
+        });
+
         return {
             getActionClass,
             getActionPage,
             onActionClick,
             headersLength,
             trans,
+            search,
+            filteredRecords, // devuelve los registros filtrados
         }
     }
 });

@@ -43,6 +43,26 @@ class Data
             ];
         });
 
+        return $result;
+    }
+
+    /**
+     * Formats any for select field. Para los seleccionados. Solo uno
+     *
+     * @return Collection
+     */
+    public static function formatCollectionForSelected(Collection $collection, $value = 'id', $label = 'name')
+    {
+        $result = $collection->map(function ($entry) use ($value, $label) {
+            $id = $entry[$value] ?? null;
+            $label = $entry[$label] ?? $entry[$id];
+
+            return [
+                'id' => $id,
+                'name' => $label,
+            ];
+        });
+
         return $result->first();
     }
 
@@ -69,7 +89,7 @@ class Data
         $result = collect($data)->firstWhere($typeValue, $selected);
 
         if($typeValue !== 'id'){
-            $result = self::formatCollectionForSelect(collect([$result]),$typeValue,$typelabel);
+            $result = self::formatCollectionForSelected(collect([$result]),$typeValue,$typelabel);
         }
         return $result;
     }

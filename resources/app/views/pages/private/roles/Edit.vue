@@ -1,6 +1,7 @@
 <template>
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction"
         :is-loading="page.loading">
+        {{ form }}
         <Panel>
             <Form id="edit-role" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name"
@@ -9,20 +10,23 @@
                     :label="trans('users.labels.title')" />
             </Form>
         </Panel>
-        <Panel title="Lista de permisos">
-            <div class="mb-4">
-                <TextInput v-model="search" name="search" placeholder="Filtrar por título" />
-            </div>
+        <Panel title="Permisos">
+            <Dropdown class="mb-4" :server="'roles/abilities/select'" :multiple="true" :server-per-page="15" :required="true" name="type" 
+            v-model="form.abilities" :label="trans('global.pages.abilities')"  :serverSearchMinCharacters="2"/>
+            <Button class="" :title="trans('global.buttons.add_new')" icon="fa fa-plus" :label="trans('global.buttons.add_new')">
+
+            </Button>
+            <div class="border border-gray-200 mb-3"></div>
             <TableSimple :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" 
-                :actions="table.actions" :records="filteredRecords" :pagination="table.pagination" 
-                :is-loading="table.loading">
+                :actions="table.actions" :records="table.records" :pagination="table.pagination" 
+                filter="true" :is-loading="table.loading">
             </TableSimple>
         </Panel>
     </Page>
 </template>
 
 <script>
-import { computed, defineComponent, onBeforeMount, reactive, ref } from "vue";
+import { defineComponent, onBeforeMount, reactive, ref } from "vue";
 import { trans } from "@/helpers/i18n";
 import { fillObject, reduceProperties } from "@/helpers/data"
 import { useRoute } from "vue-router";
@@ -57,6 +61,7 @@ export default defineComponent({
         const form = reactive({
             name: '',
             title: '',
+            abilities: []
         });
 
         const page = reactive({
@@ -115,19 +120,6 @@ export default defineComponent({
             records: null
         })
 
-        //Buscador
-        const search = ref('');
-        // Computed para filtrar los registros según el valor del input
-        const filteredRecords = computed(() => {
-            if (!search.value) {
-                return table.records; // Si no hay filtro, retorna todos los registros
-            }
-            return table.records.filter(record => 
-                record.title.toLowerCase().includes(search.value.toLowerCase())
-                || record.name.toLowerCase().includes(search.value.toLowerCase())
-            );
-        });
-
         const service = new RoleService();
 
         onBeforeMount(() => {
@@ -169,9 +161,7 @@ export default defineComponent({
             onSubmit,
             onAction,
             page,
-            table,
-            search,
-            filteredRecords, // devuelve los registros filtrados
+            table
         }
     }
 })

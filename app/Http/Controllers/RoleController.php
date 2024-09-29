@@ -10,8 +10,10 @@ use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Ability;
 use App\Models\Role;
 use App\Services\Role\RoleService;
+use App\Utilities\Data;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class RoleController extends Controller
 {
@@ -153,6 +155,33 @@ class RoleController extends Controller
         } else {
             return $this->responseUpdateFail();
         }
+    }
+
+    public function allAbilities(Request $request)
+    {
+        $this->authorize('list', Role::class);
+
+        $query = Ability::query();
+        if (! empty($request['search'])) {
+            $query = $query->search($request['search']);
+        }
+
+        //Response json con paginación
+        return responseMetaLinks($query, 10);
+    }
+
+    public function abilitiesSelect(Request $request)
+    {
+        $abilities = [];
+        $query = Ability::query();
+        if (! empty($request['search'])) {
+            $query = $query->search($request['search']);
+        }
+        if ($query) {
+            //Se trasnforma a id/label
+            $abilities = Data::formatCollectionForSelect($query->get());
+        }
+        return response()->json(['data' => $abilities], 200);
     }
 
     /**
