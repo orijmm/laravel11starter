@@ -13,3 +13,15 @@ if (!function_exists('responseMetaLinks')) {
         }
     }
 }
+
+if (!function_exists('responseJsonGet')) {
+    function responseJsonGet($query)
+    {
+        try {
+            $jsonResource = new JsonResource($query);
+            return $jsonResource->collection($query);
+        } catch (\Exception $e) {
+            return response()->json(['Error' => $e->getMessage()]);
+        }
+    }
+}

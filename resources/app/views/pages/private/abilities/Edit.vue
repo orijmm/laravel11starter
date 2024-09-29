@@ -1,26 +1,13 @@
 <template>
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction"
         :is-loading="page.loading">
-        {{ form }}
         <Panel>
-            <Form id="edit-role" @submit.prevent="onSubmit">
+            <Form id="edit-ability" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name"
                     :label="trans('users.labels.first_name')" />
                 <TextInput class="mb-4" type="text" :required="true" name="title" v-model="form.title"
                     :label="trans('users.labels.title')" />
             </Form>
-        </Panel>
-        <Panel title="Permisos">
-            <Dropdown class="mb-4" :server="'roles/abilities/select'" :multiple="true" :server-per-page="15" :required="true" name="type" 
-            v-model="form.abilities" :label="trans('global.pages.abilities')"  :serverSearchMinCharacters="2"/>
-            <Button class="" :title="trans('global.buttons.add_new')" icon="fa fa-plus" :label="trans('global.buttons.add_new')">
-
-            </Button>
-            <div class="border border-gray-200 mb-3"></div>
-            <TableSimple :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" 
-                :actions="table.actions" :records="table.records" :pagination="table.pagination" 
-                filter="true" :is-loading="table.loading">
-            </TableSimple>
         </Panel>
     </Page>
 </template>
@@ -34,8 +21,6 @@ import { useAuthStore } from "@/stores/auth";
 import { toUrl } from "@/helpers/routing";
 import Button from "@/views/components/input/Button";
 import TextInput from "@/views/components/input/TextInput";
-import TableSimple from "@/views/components/TableSimple";
-import Dropdown from "@/views/components/input/Dropdown";
 import Alert from "@/views/components/Alert";
 import Panel from "@/views/components/Panel";
 import Page from "@/views/layouts/Page";
@@ -49,11 +34,9 @@ export default defineComponent({
         FileInput,
         Panel,
         Alert,
-        Dropdown,
         TextInput,
         Button,
         Page,
-        TableSimple
     },
     setup() {
         const { user } = useAuthStore();
@@ -61,20 +44,21 @@ export default defineComponent({
         const form = reactive({
             name: '',
             title: '',
+            abilities: []
         });
 
         const page = reactive({
-            id: 'edit_role',
-            title: trans('global.pages.roles_edit'),
+            id: 'edit_ability',
+            title: trans('global.pages.permission_edit'),
             filters: false,
             loading: true,
             breadcrumbs: [
                 {
-                    name: trans('global.pages.roles'),
-                    to: toUrl('/roles'),
+                    name: trans('global.pages.permission'),
+                    to: toUrl('/roles/allbilities'),
                 },
                 {
-                    name: trans('global.pages.roles_edit'),
+                    name: trans('global.pages.permission_edit'),
                     active: true,
                 }
             ],
@@ -83,7 +67,7 @@ export default defineComponent({
                     id: 'back',
                     name: trans('global.buttons.back'),
                     icon: "fa fa-angle-left",
-                    to: toUrl('/roles/list'),
+                    to: toUrl('/roles/allbilities'),
                     theme: 'outline',
                 },
                 {
@@ -123,7 +107,7 @@ export default defineComponent({
 
         onBeforeMount(() => {
             //Cargar datos del rol
-            service.edit(route.params.id).then((response) => {
+            service.editAbility(route.params.id).then((response) => {
                 fillObject(form, response.data.model);
                 //data de habilidades
                 table.records = response.data.model.abilities;
@@ -142,9 +126,9 @@ export default defineComponent({
         async function onSubmit() {
             try {
                 let response = await service.handleUpdate(
-                    'edit-role',
+                    'edit-ability',
                     route.params.id,//url la toma de la ruta actual
-                    reduceProperties(form, ['roles'], 'id')
+                    reduceProperties(form, ['abilities'], 'id')
                 );
                 fillObject(form, response.data.record);
             } catch (error) {

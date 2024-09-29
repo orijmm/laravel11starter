@@ -1,7 +1,7 @@
 <template>
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction">
         <Panel>
-            <Form id="create-role" @submit.prevent="onSubmit">
+            <Form id="create-ability" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name" :label="trans('users.labels.first_name')" :labelsmall="trans('global.pages.lowercase')"/>
                 <TextInput class="mb-4" type="text" :required="true" name="title" v-model="form.title" :label="trans('users.labels.title')"/>
             </Form>
@@ -35,17 +35,17 @@ export default defineComponent({
         });
 
         const page = reactive({
-            id: 'create_roles',
-            title: trans('global.pages.roles_create'),
+            id: 'create_abilities',
+            title: trans('global.pages.permission_create'),
             filters: false,
             breadcrumbs: [
                 {
-                    name: trans('global.pages.roles'),
-                    to: toUrl('/roles'),
+                    name: trans('global.pages.abilities'),
+                    to: toUrl('/roles/allbilities'),
 
                 },
                 {
-                    name: trans('global.pages.roles_create'),
+                    name: trans('global.pages.permission_create'),
                     active: true,
                 }
             ],
@@ -54,7 +54,7 @@ export default defineComponent({
                     id: 'back',
                     name: trans('global.buttons.back'),
                     icon: "fa fa-angle-left",
-                    to: toUrl('/roles/list'),
+                    to: toUrl('/roles/allbilities'),
                     theme: 'outline',
                 },
                 {
@@ -77,7 +77,7 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleCreate('create-role', reduceProperties(form, [], 'id')).then(() => {
+            service.handleCreate('create-ability', reduceProperties(form, [], 'id'), '/roles/add/ability').then(() => {
                 clearObject(form)
             })
             return false;

@@ -203,6 +203,21 @@ class RoleController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     *
+     * @return JsonResponse|\Illuminate\Http\Response
+     *
+     * @throws AuthorizationException
+     */
+    public function editAbility(Ability $ability)
+    {
+        $this->authorize('edit', Ability::class);
+
+        return $this->responseDataSuccess(['model' => $ability, 'properties' => $this->properties()]);
+    }
+
+    /**
      * Update the specified resource in storage.
      */
     public function updateAbility(UpdateAbilityRequest $request, Ability $ability)

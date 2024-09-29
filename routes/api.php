@@ -50,6 +50,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
     //Abilities (Permissions)
     Route::get('/roles/allbilities', [RoleController::class, 'allAbilities'])->name('roles.ability.all');
     Route::post('/roles/{role}/abilitytorole', [RoleController::class, 'assignAbilityToRole'])->name('roles.ability.role');
+    Route::get('/roles/{ability}/editability', [RoleController::class, 'editAbility'])->name('roles.ability.edit');
     Route::post('/roles/add/ability', [RoleController::class, 'createAbility'])->name('roles.create.ability');
     Route::put('/roles/{ability}/editability', [RoleController::class, 'updateAbility'])->name('roles.ability.update');
     Route::delete('/roles/{ability}/deleteability', [RoleController::class, 'deleteAbility'])->name('roles.ability.delete');

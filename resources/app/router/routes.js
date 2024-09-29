@@ -12,9 +12,13 @@ import { default as PageUsers } from "@/views/pages/private/users/Index";
 import { default as PageUsersCreate } from "@/views/pages/private/users/Create";
 import { default as PageUsersEdit } from "@/views/pages/private/users/Edit";
 
-import { default as PageAbility } from "@/views/pages/private/roles/Index";
-import { default as PageAbilityCreate } from "@/views/pages/private/roles/Create";
-import { default as PageAbilityEdit } from "@/views/pages/private/roles/Edit";
+import { default as PageRole } from "@/views/pages/private/roles/Index";
+import { default as PageRoleCreate } from "@/views/pages/private/roles/Create";
+import { default as PageRoleEdit } from "@/views/pages/private/roles/Edit";
+
+import { default as PageAbility } from "@/views/pages/private/abilities/Index";
+import { default as PageAbilityCreate } from "@/views/pages/private/abilities/Create";
+import { default as PageAbilityEdit } from "@/views/pages/private/abilities/Edit";
 
 
 
@@ -79,17 +83,35 @@ const routes = [
                         name: "roles.list",
                         path: "list",
                         meta: { requiresAuth: true, requiresAbility: abilities.LIST_USER },
-                        component: PageAbility,
+                        component: PageRole,
                     },
                     {
                         name: "roles.create",
                         path: "create",
                         meta: { requiresAuth: true, requiresAbility: abilities.CREATE_USER },
-                        component: PageAbilityCreate,
+                        component: PageRoleCreate,
                     },
                     {
                         name: "roles.edit",
                         path: ":id/edit",
+                        meta: { requiresAuth: true, requiresAbility: abilities.EDIT_USER },
+                        component: PageRoleEdit,
+                    },
+                    {
+                        name: "roles.allbilities",
+                        path: "allbilities",
+                        meta: { requiresAuth: true, requiresAbility: abilities.CREATE_USER },
+                        component: PageAbility,
+                    },
+                    {
+                        name: "roles.create.ability",
+                        path: "add/ability",
+                        meta: { requiresAuth: true, requiresAbility: abilities.CREATE_USER },
+                        component: PageAbilityCreate,
+                    },
+                    {
+                        name: "roles.ability.edit",
+                        path: ":id/editability",
                         meta: { requiresAuth: true, requiresAbility: abilities.EDIT_USER },
                         component: PageAbilityEdit,
                     },

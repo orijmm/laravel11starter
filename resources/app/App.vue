@@ -218,6 +218,24 @@ export default {
                                     to: '/panel/roles/create',
                                 }
                             ]
+                        },
+                        {
+                            name: trans('global.pages.permission'),
+                            icon: '',
+                            showDesktop: true,
+                            showMobile: true,
+                            requiresAbility: getAbilitiesForRoute(['roles.edit']),
+                            to: '/panel/roles/allbilities',
+                            children: [
+                                {
+                                    name: trans('global.phrases.add_new'),
+                                    icon: '',
+                                    showDesktop: true,
+                                    showMobile: true,
+                                    requiresAbility: getAbilitiesForRoute('roles.list'),
+                                    to: '/panel/roles/add/ability',
+                                }
+                            ]
                         }
                     ]
                 },
@@ -231,12 +249,12 @@ export default {
                     to: '',
                 }
             ],
-            headerLeftLink: {
-                name: trans('global.buttons.new_record'),
-                icon: 'plus',
-                to: '',
-                href: '#',
-            },
+            // headerLeftLink: {
+            //     name: trans('global.buttons.new_record'),
+            //     icon: 'plus',
+            //     to: '',
+            //     href: '#',
+            // },
             footerLeftLink: {
                 name: trans('global.buttons.documentation'),
                 icon: 'paperclip',
