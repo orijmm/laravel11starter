@@ -164,7 +164,7 @@ export default {
                     icon: 'tachometer',
                     showDesktop: true,
                     showMobile: true,
-                    requiresAbility: getAbilitiesForRoute(['settingad.edit']),
+                    requiresAbility: getAbilitiesForRoute(['edit.setting']),
                     to: '/panel/settings/1/edit',
                     children: [
                         {
@@ -172,7 +172,7 @@ export default {
                             icon: 'tachometer',
                             showDesktop: true,
                             showMobile: true,
-                            requiresAbility: getAbilitiesForRoute(['settingad.edit']),
+                            requiresAbility: getAbilitiesForRoute(['edit.setting']),
                             to: '/panel/settings/1/edit',
                         },
                         {
@@ -206,7 +206,7 @@ export default {
                             icon: '',
                             showDesktop: true,
                             showMobile: true,
-                            requiresAbility: getAbilitiesForRoute(['roles.edit']),
+                            requiresAbility: getAbilitiesForRoute(['roles.list']),
                             to: '/panel/roles/list',
                             children: [
                                 {
@@ -214,7 +214,7 @@ export default {
                                     icon: '',
                                     showDesktop: true,
                                     showMobile: true,
-                                    requiresAbility: getAbilitiesForRoute('users.list'),
+                                    requiresAbility: getAbilitiesForRoute('roles.create'),
                                     to: '/panel/roles/create',
                                 }
                             ]
@@ -224,7 +224,7 @@ export default {
                             icon: '',
                             showDesktop: true,
                             showMobile: true,
-                            requiresAbility: getAbilitiesForRoute(['roles.edit']),
+                            requiresAbility: getAbilitiesForRoute(['roles.allbilities']),
                             to: '/panel/roles/allbilities',
                             children: [
                                 {
@@ -232,7 +232,7 @@ export default {
                                     icon: '',
                                     showDesktop: true,
                                     showMobile: true,
-                                    requiresAbility: getAbilitiesForRoute('roles.list'),
+                                    requiresAbility: getAbilitiesForRoute('roles.create.ability'),
                                     to: '/panel/roles/add/ability',
                                 }
                             ]

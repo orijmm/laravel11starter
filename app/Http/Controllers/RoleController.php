@@ -41,7 +41,7 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('list', Role::class);
+        $this->authorize('list_role');
 
         return $this->roleService->index($request->all());
     }
@@ -55,7 +55,7 @@ class RoleController extends Controller
      */
     public function search(Request $request)
     {
-        $this->authorize('search', Role::class);
+        $this->authorize('list_role');
 
         return $this->roleService->search($request->all());
     }
@@ -70,7 +70,7 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request)
     {
-        $this->authorize('create', Role::class);
+        $this->authorize('create');
 
         $input = $request->validated();
         $record = $this->roleService->create($input);
@@ -91,7 +91,7 @@ class RoleController extends Controller
      */
     public function show(Role $user)
     {
-        $this->authorize('view', Role::class);
+        $this->authorize('view');
 
         $model = $this->roleService->get($user);
 
@@ -108,7 +108,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $this->authorize('edit', Role::class);
+        $this->authorize('edit');
 
         return $this->show($role);
     }
@@ -118,7 +118,7 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        $this->authorize('edit', Role::class);
+        $this->authorize('edit');
 
         $data = $request->validated();
         if ($this->roleService->update($role, $data)) {
@@ -133,7 +133,7 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        $this->authorize('delete', Role::class);
+        $this->authorize('delete');
 
         if ($this->roleService->delete($role)) {
             return $this->responseDeleteSuccess(['record' => $role]);
@@ -148,7 +148,7 @@ class RoleController extends Controller
     public function assignAbilityToRole(AbilityToRoleRequest $request, Role $role)
     {
         try {
-            $this->authorize('edit', Role::class);
+            $this->authorize('edit');
 
             $data = $request->validated();
             $result = $this->roleService->assignAbility($role, $data);
@@ -161,7 +161,7 @@ class RoleController extends Controller
 
     public function allAbilities(Request $request)
     {
-        $this->authorize('list', Role::class);
+        $this->authorize('list');
 
         $query = Ability::query();
         if (! empty($request['search'])) {
@@ -191,7 +191,7 @@ class RoleController extends Controller
      */
     public function createAbility(StoreAbilityRequest $request)
     {
-        $this->authorize('edit', Role::class);
+        $this->authorize('edit');
 
         $data = $request->validated();
 
@@ -224,7 +224,7 @@ class RoleController extends Controller
      */
     public function updateAbility(UpdateAbilityRequest $request, Ability $ability)
     {
-        $this->authorize('edit', Role::class);
+        $this->authorize('edit');
 
         $data = $request->validated();
 
@@ -240,7 +240,7 @@ class RoleController extends Controller
      */
     public function deleteAbility(Ability $ability)
     {
-        $this->authorize('delete', Role::class);
+        $this->authorize('delete');
 
         if ($ability->delete()) {
             return $this->responseDeleteSuccess(['record' => $ability]);

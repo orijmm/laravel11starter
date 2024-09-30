@@ -71,9 +71,9 @@ const routes = [
                 ]
             },
             {
-                name: "settings",
+                name: "edit.setting",
                 path: "settings/:id/edit",
-                meta: { requiresAuth: true, requiresAbility: abilities.CREATE_SETTING },
+                meta: { requiresAuth: true, requiresAbility: abilities.EDIT_SETTING },
                 component: PageSetting,
             },
             {
@@ -106,13 +106,13 @@ const routes = [
                     {
                         name: "roles.create.ability",
                         path: "add/ability",
-                        meta: { requiresAuth: true, requiresAbility: abilities.CREATE_USER },
+                        meta: { requiresAuth: true, requiresAbility: abilities.EDIT_ROLE },
                         component: PageAbilityCreate,
                     },
                     {
                         name: "roles.ability.edit",
                         path: ":id/editability",
-                        meta: { requiresAuth: true, requiresAbility: abilities.EDIT_USER },
+                        meta: { requiresAuth: true, requiresAbility: abilities.EDIT_ROLE },
                         component: PageAbilityEdit,
                     },
                 ]

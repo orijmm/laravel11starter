@@ -125,9 +125,18 @@ class RoleService
         $data = $this->clean($data);
 
         //se agrega la habilidad al rol
-        $record = Bouncer::allow($role->name)->to($data['name'], User::class);
+        $ability = Bouncer::ability()->where('name', $data['name'])->first();
 
-        return $record;
+        if ($ability) {
+            // Si la habilidad ya existe, la asignamos al rol
+            $record = Bouncer::allow($role->name)->to($ability, User::class);
+
+            return $record;
+        } else {
+            abort(404, 'La habilidad no existe');
+        }
+
+        
     }
 
     /**
@@ -187,6 +196,5 @@ class RoleService
                 }
             }
         }
-
     }
 }
