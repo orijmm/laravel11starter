@@ -70,7 +70,7 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request)
     {
-        $this->authorize('create');
+        $this->authorize('list_role');
 
         $input = $request->validated();
         $record = $this->roleService->create($input);
@@ -91,7 +91,7 @@ class RoleController extends Controller
      */
     public function show(Role $user)
     {
-        $this->authorize('view');
+        $this->authorize('list_role');
 
         $model = $this->roleService->get($user);
 
@@ -108,7 +108,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $this->authorize('edit');
+        $this->authorize('list_role');
 
         return $this->show($role);
     }
@@ -118,7 +118,7 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        $this->authorize('edit');
+        $this->authorize('list_role');
 
         $data = $request->validated();
         if ($this->roleService->update($role, $data)) {
@@ -133,7 +133,7 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        $this->authorize('delete');
+        $this->authorize('delete_role');
 
         if ($this->roleService->delete($role)) {
             return $this->responseDeleteSuccess(['record' => $role]);
@@ -148,7 +148,7 @@ class RoleController extends Controller
     public function assignAbilityToRole(AbilityToRoleRequest $request, Role $role)
     {
         try {
-            $this->authorize('edit');
+            $this->authorize('list_role');
 
             $data = $request->validated();
             $result = $this->roleService->assignAbility($role, $data);
@@ -161,7 +161,7 @@ class RoleController extends Controller
 
     public function allAbilities(Request $request)
     {
-        $this->authorize('list');
+        $this->authorize('list_role');
 
         $query = Ability::query();
         if (! empty($request['search'])) {
@@ -183,7 +183,7 @@ class RoleController extends Controller
             //Se trasnforma a id/label
             $abilities = Data::formatCollectionForSelect($query->get());
         }
-        return response()->json(['data' => $abilities], 200);
+        return response()->json($abilities, 200);
     }
 
     /**
@@ -191,7 +191,7 @@ class RoleController extends Controller
      */
     public function createAbility(StoreAbilityRequest $request)
     {
-        $this->authorize('edit');
+        $this->authorize('list_role');
 
         $data = $request->validated();
 
@@ -214,7 +214,7 @@ class RoleController extends Controller
      */
     public function editAbility(Ability $ability)
     {
-        $this->authorize('edit', Ability::class);
+        $this->authorize('list_role', Ability::class);
 
         return $this->responseDataSuccess(['model' => $ability, 'properties' => $this->properties()]);
     }
@@ -224,7 +224,7 @@ class RoleController extends Controller
      */
     public function updateAbility(UpdateAbilityRequest $request, Ability $ability)
     {
-        $this->authorize('edit');
+        $this->authorize('list_role');
 
         $data = $request->validated();
 
@@ -240,7 +240,7 @@ class RoleController extends Controller
      */
     public function deleteAbility(Ability $ability)
     {
-        $this->authorize('delete');
+        $this->authorize('delete_role');
 
         if ($ability->delete()) {
             return $this->responseDeleteSuccess(['record' => $ability]);

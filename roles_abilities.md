@@ -1,5 +1,13 @@
 # Uso
 
+Modificar AppServiceProvider
+
+```
+Bouncer::useRoleModel(Role::class);
+
+Relation::morphMap([Role::class]);
+```
+
 
 ## Creación de roles y habilidades
 Creemos un rol llamado admin y démosle la capacidad ban-user:

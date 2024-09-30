@@ -15,4 +15,6 @@ class Role extends BaseRole
     use HasRolesAndAbilities;
 
     protected $searchFields = ['name', 'title'];
+
+    
 }

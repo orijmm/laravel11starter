@@ -82,37 +82,37 @@ const routes = [
                     {
                         name: "roles.list",
                         path: "list",
-                        meta: { requiresAuth: true, requiresAbility: abilities.LIST_USER },
+                        meta: { requiresAuth: true, requiresAbility: abilities.LIST_ROLE },
                         component: PageRole,
                     },
                     {
                         name: "roles.create",
                         path: "create",
-                        meta: { requiresAuth: true, requiresAbility: abilities.CREATE_USER },
+                        meta: { requiresAuth: true, requiresAbility: abilities.LIST_ROLE },
                         component: PageRoleCreate,
                     },
                     {
                         name: "roles.edit",
                         path: ":id/edit",
-                        meta: { requiresAuth: true, requiresAbility: abilities.EDIT_USER },
+                        meta: { requiresAuth: true, requiresAbility: abilities.LIST_ROLE },
                         component: PageRoleEdit,
                     },
                     {
                         name: "roles.allbilities",
                         path: "allbilities",
-                        meta: { requiresAuth: true, requiresAbility: abilities.CREATE_USER },
+                        meta: { requiresAuth: true, requiresAbility: abilities.LIST_ROLE },
                         component: PageAbility,
                     },
                     {
                         name: "roles.create.ability",
                         path: "add/ability",
-                        meta: { requiresAuth: true, requiresAbility: abilities.EDIT_ROLE },
+                        meta: { requiresAuth: true, requiresAbility: abilities.LIST_ROLE },
                         component: PageAbilityCreate,
                     },
                     {
                         name: "roles.ability.edit",
                         path: ":id/editability",
-                        meta: { requiresAuth: true, requiresAbility: abilities.EDIT_ROLE },
+                        meta: { requiresAuth: true, requiresAbility: abilities.LIST_ROLE },
                         component: PageAbilityEdit,
                     },
                 ]

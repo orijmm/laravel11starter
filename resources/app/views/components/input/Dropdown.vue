@@ -70,7 +70,6 @@ export default defineComponent({
     },
     emits: ['update:modelValue', 'input'],
     setup(props, {emit}) {
-
         let selectOptionsArr = ref(props.options);
         let isLoading = ref(false);
 

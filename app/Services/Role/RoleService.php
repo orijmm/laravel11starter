@@ -129,7 +129,7 @@ class RoleService
 
         if ($ability) {
             // Si la habilidad ya existe, la asignamos al rol
-            $record = Bouncer::allow($role->name)->to($ability, User::class);
+            $record = Bouncer::allow($role->name)->to($ability, Role::class);
 
             return $record;
         } else {

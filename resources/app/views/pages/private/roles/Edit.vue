@@ -1,7 +1,8 @@
 <template>
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction"
         :is-loading="page.loading">
-        {{ form }}
+        {{ allAbilities.records }}
+        {{ form.abilities }}
         <Panel>
             <Form id="edit-role" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name"
@@ -10,29 +11,39 @@
                     :label="trans('users.labels.title')" />
             </Form>
         </Panel>
-        <Panel title="Permisos">
-            <Dropdown class="mb-4" :server="'roles/abilities/select'" :multiple="true" :server-per-page="15" :required="true" name="type" 
-            v-model="form.abilities" :label="trans('global.pages.abilities')"  :serverSearchMinCharacters="2"/>
-            <Button class="" :title="trans('global.buttons.add_new')" icon="fa fa-plus" :label="trans('global.buttons.add_new')">
-
+        <Panel title="Permisos" height="h-[500px]">
+            <Dropdown class="mb-4" :options="filteredRecords" :required="true" name="type"
+                v-model="abilitySelected.value" :label="trans('global.pages.abilities')" />
+            <Button class="mb-4" :title="trans('global.buttons.add_new')" @click="addAbility" icon="fa fa-plus"
+                :label="trans('global.buttons.add_new')">
             </Button>
-            <div class="border border-gray-200 mb-3"></div>
-            <TableSimple :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" 
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <Badge theme="info" rounded="rounded-full" class="flex items-center justify-between"
+                    v-for="(item, index) in form.abilities" :key="item.id">
+                    <div >{{ item.name }}</div>
+                    <span @click="removeAbility(index)"
+                        class="flex justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-400 bg-blue-300 rounded-full">
+                        x
+                    </span>
+                </Badge>
+            </div>
+            <!-- <TableSimple :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" 
                 :actions="table.actions" :records="table.records" :pagination="table.pagination" 
                 filter="true" :is-loading="table.loading">
-            </TableSimple>
+            </TableSimple> -->
         </Panel>
     </Page>
 </template>
 
 <script>
-import { defineComponent, onBeforeMount, reactive, ref } from "vue";
+import { computed, defineComponent, onBeforeMount, reactive, ref } from "vue";
 import { trans } from "@/helpers/i18n";
 import { fillObject, reduceProperties } from "@/helpers/data"
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { toUrl } from "@/helpers/routing";
 import Button from "@/views/components/input/Button";
+import Badge from "@/views/components/Badge";
 import TextInput from "@/views/components/input/TextInput";
 import TableSimple from "@/views/components/TableSimple";
 import Dropdown from "@/views/components/input/Dropdown";
@@ -53,7 +64,8 @@ export default defineComponent({
         TextInput,
         Button,
         Page,
-        TableSimple
+        TableSimple,
+        Badge
     },
     setup() {
         const { user } = useAuthStore();
@@ -61,6 +73,7 @@ export default defineComponent({
         const form = reactive({
             name: '',
             title: '',
+            abilities: []
         });
 
         const page = reactive({
@@ -117,7 +130,17 @@ export default defineComponent({
             },
             loading: false,
             records: null
-        })
+        });
+
+        //listado de todos los permisos
+        const allAbilities = reactive({
+            records: null
+        });
+
+        //Permiso elegido
+        const abilitySelected = reactive({
+            value: null
+        });
 
         const service = new RoleService();
 
@@ -128,7 +151,19 @@ export default defineComponent({
                 //data de habilidades
                 table.records = response.data.model.abilities;
                 page.loading = false;
-            })
+            });
+
+            service
+                .find('abilities/select')
+                .then((response) => {
+                    allAbilities.records = response.data;
+                });
+        });
+
+        const filteredRecords = computed(() => {
+            return allAbilities.records.filter(item1 => 
+                !form.abilities.some(item2 => item1.id === item2.id && item1.name === item2.name)
+            );
         });
 
         function onAction(data) {
@@ -153,6 +188,14 @@ export default defineComponent({
             return false;
         }
 
+        function addAbility() {
+            form.abilities.push(abilitySelected.value);
+        }
+
+        function removeAbility(index) {
+            this.form.abilities.splice(index, 1); // Elimina la habilidad del array
+        }
+
         return {
             trans,
             user,
@@ -160,7 +203,12 @@ export default defineComponent({
             onSubmit,
             onAction,
             page,
-            table
+            table,
+            allAbilities,
+            abilitySelected,
+            addAbility,
+            removeAbility,
+            filteredRecords
         }
     }
 })
