@@ -45,7 +45,7 @@ class RoleController extends Controller
 
         return $this->roleService->index($request->all());
     }
-    
+
     /**
      * Handle search data
      *
@@ -147,13 +147,15 @@ class RoleController extends Controller
      */
     public function assignAbilityToRole(AbilityToRoleRequest $request, Role $role)
     {
-        $this->authorize('edit', Role::class);
+        try {
+            $this->authorize('edit', Role::class);
 
-        $data = $request->validated();
-        if ($this->roleService->assignAbility($role, $data)) {
+            $data = $request->validated();
+            $result = $this->roleService->assignAbility($role, $data);
+
             return $this->responseUpdateSuccess(['record' => $role->fresh()]);
-        } else {
-            return $this->responseUpdateFail();
+        } catch (\Exception $e) {
+            return $this->responseUpdateFail(['error' => $e->getMessage()]);
         }
     }
 
@@ -239,7 +241,7 @@ class RoleController extends Controller
     public function deleteAbility(Ability $ability)
     {
         $this->authorize('delete', Role::class);
-            
+
         if ($ability->delete()) {
             return $this->responseDeleteSuccess(['record' => $ability]);
         }

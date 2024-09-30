@@ -5,6 +5,7 @@ namespace App\Services\Role;
 use App\Http\Resources\RoleResource;
 use App\Http\Resources\RoleSearchResource;
 use App\Models\Role;
+use App\Models\User;
 use Bouncer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
@@ -112,7 +113,7 @@ class RoleService
         return $role->delete();
     }
 
-        /**
+    /**
      * Asign permission to role
      *
      *
@@ -124,13 +125,9 @@ class RoleService
         $data = $this->clean($data);
 
         //se agrega la habilidad al rol
-        $record = Bouncer::allow($role)->to($data['name']);
+        $record = Bouncer::allow($role->name)->to($data['name'], User::class);
 
-        if (! empty($record)) {
-            return $record;
-        } else {
-            return null;
-        }
+        return $record;
     }
 
     /**
@@ -146,7 +143,7 @@ class RoleService
             'name' => $data['name'],
             'title' => $data['title'],
         ]);
-        
+
         if (! empty($ability)) {
             return $ability;
         } else {
