@@ -124,11 +124,13 @@ export default defineComponent({
         }
 
         async function onSubmit() {
+            console.log(`/roles/${route.params.id}/editability`);
             try {
-                let response = await service.handleUpdate(
+                let response = await service.handleUpdatePut(
                     'edit-ability',
                     route.params.id,//url la toma de la ruta actual
-                    reduceProperties(form, ['abilities'], 'id')
+                    reduceProperties(form, ['abilities'], 'id'),
+                    `/roles/${route.params.id}/editability`
                 );
                 fillObject(form, response.data.record);
             } catch (error) {
