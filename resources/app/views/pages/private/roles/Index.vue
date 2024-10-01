@@ -22,8 +22,15 @@
                 @page-changed="onTablePageChange" @action="onTableAction" @sort="onTableSort">
                 <template v-slot:content-abilities="props">
                     <div>
-                        <span  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800" v-for="(entry, index) in props.item.abilities" :key="index">
-                            {{ entry.name }}<span v-if="index < props.item.abilities.length - 1"> </span>
+                        <span
+                            class="px-2 mr-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
+                            v-for="(entry, index) in limitedAbilities(props.item.abilities)" :key="index">
+                            {{ entry.name }}
+                        </span>
+
+                        <span v-if="remainingAbilities(props.item.abilities) > 0"
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-200 text-gray-800">
+                            + {{ remainingAbilities(props.item.abilities) }}
                         </span>
                     </div>
                 </template>
@@ -35,7 +42,7 @@
 <script>
 
 import { trans } from "@/helpers/i18n";
-import { watch, onMounted, defineComponent, reactive, ref } from 'vue';
+import { watch, onMounted, defineComponent, reactive } from 'vue';
 import { getResponseError, prepareQuery } from "@/helpers/api";
 import { toUrl } from "@/helpers/routing";
 import { useAlertStore } from "@/stores";
@@ -193,6 +200,16 @@ export default defineComponent({
                 });
         }
 
+        //limitar abilities mostradas en la tabla
+        function limitedAbilities(abilities) {
+            // Muestra solo los primeros 6 elementos
+            return abilities.slice(0, 5);
+        };
+        function remainingAbilities(abilities) {
+            // Calcula cuántos elementos quedan sin mostrar
+            return abilities.length - 5;
+        };
+
         watch(mainQuery, (newTableState) => {
             fetchPage(mainQuery);
         });
@@ -210,7 +227,9 @@ export default defineComponent({
             onTableSort,
             onPageAction,
             onFiltersClear,
-            mainQuery
+            mainQuery,
+            remainingAbilities,
+            limitedAbilities
         }
 
     },
