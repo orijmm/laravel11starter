@@ -31,16 +31,20 @@ class Data
      *
      * @return Collection
      */
-    public static function formatCollectionForSelect(Collection $collection, $value = 'id', $label = 'name')
+    public static function formatCollectionForSelect(Collection $collection, $value = 'id', $label = 'name', $extra = null)
     {
-        $result = $collection->map(function ($entry) use ($value, $label) {
+        $result = $collection->map(function ($entry) use ($value, $label, $extra) {
             $id = $entry[$value] ?? null;
             $label = $entry[$label] ?? $entry[$id];
 
-            return [
+            $data = [
                 'id' => $id,
                 'name' => $label,
             ];
+            if($extra){
+                $data[$extra] = $entry[$extra] ?? null;
+            }
+            return $data;
         });
 
         return $result;

@@ -79,6 +79,7 @@ return [
             'permission' => 'Permisos',
             'permission_create' => 'Nuevo permiso',
             'permission_edit' => 'Editar permiso',
+            'permission_asigned' => 'Permisos Asignados',
 
             'settings' => 'Configuración',
             'general_info' => 'Información General',
@@ -151,6 +152,8 @@ return [
             'upload' => 'Subir',
             'update' => 'Actualizar',
             'change_avatar' => 'Cambiar avatar',
+            'add' => 'Agregar',
+            'remove' => 'Quitar'
         ],
         'actions' => [
             'name' => 'Acciones',

@@ -6,7 +6,7 @@
         <table class="w-full divide-y divide-gray-200 table-auto">
             <thead class="bg-gray-50">
             <tr>
-                <th v-for="(item, i) in headers" scope="col" class="align-middle px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider relative">
+                <th v-for="(item, i) in headers" scope="col" class="align-middle px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider relative">
                     <slot :name="'header-'+i">
                         <div class="leading-loose inline-block">{{ item }}</div>
                     </slot>
@@ -18,12 +18,12 @@
             </thead>
             <tbody v-if="filteredRecords && filteredRecords.length && !$props.isLoading" class="bg-white divide-y divide-gray-200">
             <tr v-for="(record, i) in filteredRecords">
-                <td v-for="(header, j) in headers" class="px-6 py-4 whitespace-nowrap text-sm">
+                <td v-for="(header, j) in headers" class="px-6 py-1 whitespace-nowrap text-sm">
                     <slot :item="record" :name="'content-'+j">
                         {{ record && record.hasOwnProperty(j) ? record[j] : '' }}
                     </slot>
                 </td>
-                <td v-if="actions" class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <td v-if="actions" class="px-6 whitespace-nowrap text-right text-sm font-medium" :class="colheight">
                     <slot :name="'actions-'+j" v-for="(action, j) in actions">
                         <router-link v-if="action.hasOwnProperty('to') && action.to" :to="getActionPage(action, record)" :class="getActionClass(action)" :title="action.name">
                             <i v-if="action.icon" :class="action.icon"></i>
@@ -103,6 +103,10 @@ export default defineComponent({
         filter: {
             type: Boolean,
             default: false,
+        },
+        colheight: {
+            type: String,
+            default: '',
         }
     },
     setup(props, {emit}) {

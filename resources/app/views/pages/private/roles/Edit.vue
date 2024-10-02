@@ -1,8 +1,6 @@
 <template>
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction"
         :is-loading="page.loading">
-        {{ allAbilities.records }}
-        {{ form.abilities }}
         <Panel>
             <Form id="edit-role" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name"
@@ -11,32 +9,36 @@
                     :label="trans('users.labels.title')" />
             </Form>
         </Panel>
-        <Panel title="Permisos" height="h-[500px]">
-            <Dropdown class="mb-4" :options="filteredRecords" :required="true" name="type"
-                v-model="abilitySelected.value" :label="trans('global.pages.abilities')" />
-            <Button class="mb-4" :title="trans('global.buttons.add_new')" @click="addAbility" icon="fa fa-plus"
-                :label="trans('global.buttons.add_new')">
-            </Button>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                <Badge theme="info" rounded="rounded-full" class="flex items-center justify-between"
-                    v-for="(item, index) in form.abilities" :key="item.id">
-                    <div >{{ item.name }}</div>
-                    <span @click="removeAbility(index)"
-                        class="flex justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-400 bg-blue-300 rounded-full">
-                        x
-                    </span>
-                </Badge>
+        {{ form.abilities }}
+
+        <Panel title="Permisos">
+            <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-3">
+                <div>
+                    <TableSimple :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting"
+                        :actions="table.actions" :records="table.records" :pagination="table.pagination" filter="true"
+                        :is-loading="table.loading" @action="onTableAction">
+                    </TableSimple>
+                </div>
+                <div class="border-solid border-2 border-slate-100 rounded-md p-3">
+                    <div class="my-3 text-lg">{{ trans('global.pages.permission_asigned') }}</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
+                        <Badge theme="info" rounded="rounded-full" class="flex items-center justify-between"
+                            v-for="(item, index) in form.abilities" :key="item.id">
+                            <div>{{ item.name }}</div>
+                            <span @click="removeAbility(index)"
+                                class="flex justify-center cursor-pointer w-4 h-4 ms-2 text-xs font-semibold text-blue-400 bg-blue-300 rounded-full">
+                                x
+                            </span>
+                        </Badge>
+                    </div>
+                </div>
             </div>
-            <!-- <TableSimple :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" 
-                :actions="table.actions" :records="table.records" :pagination="table.pagination" 
-                filter="true" :is-loading="table.loading">
-            </TableSimple> -->
         </Panel>
     </Page>
 </template>
 
 <script>
-import { computed, defineComponent, onBeforeMount, reactive, ref } from "vue";
+import { defineComponent, onBeforeMount, reactive } from "vue";
 import { trans } from "@/helpers/i18n";
 import { fillObject, reduceProperties } from "@/helpers/data"
 import { useRoute } from "vue-router";
@@ -53,6 +55,7 @@ import Page from "@/views/layouts/Page";
 import FileInput from "@/views/components/input/FileInput";
 import Form from "@/views/components/Form";
 import RoleService from "@/services/RoleService";
+import Tooltip from "@/views/components/Tooltip";
 
 export default defineComponent({
     components: {
@@ -65,7 +68,8 @@ export default defineComponent({
         Button,
         Page,
         TableSimple,
-        Badge
+        Badge,
+        Tooltip
     },
     setup() {
         const { user } = useAuthStore();
@@ -120,10 +124,10 @@ export default defineComponent({
                 links: null,
             },
             actions: {
-                delete: {
-                    id: 'delete',
-                    name: trans('global.actions.delete'),
-                    icon: "fa fa-trash",
+                add: {
+                    id: 'add',
+                    name: trans('global.buttons.add'),
+                    icon: "fa fa-plus",
                     showName: false,
                     danger: true,
                 }
@@ -137,33 +141,28 @@ export default defineComponent({
             records: null
         });
 
-        //Permiso elegido
-        const abilitySelected = reactive({
-            value: null
-        });
+        function onTableAction(params) {
+            switch (params.action.id) {
+                case 'add':
+                    addAbility(params.item);
+                    break;
+            }
+        }
 
         const service = new RoleService();
 
         onBeforeMount(() => {
-            //Cargar datos del rol
-            service.edit(route.params.id).then((response) => {
-                fillObject(form, response.data.model);
-                //data de habilidades
-                table.records = response.data.model.abilities;
-                page.loading = false;
-            });
-
-            service
-                .find('abilities/select')
+            //Todos los permisos
+            service.find('abilities/select')
                 .then((response) => {
                     allAbilities.records = response.data;
                 });
-        });
-
-        const filteredRecords = computed(() => {
-            return allAbilities.records.filter(item1 => 
-                !form.abilities.some(item2 => item1.id === item2.id && item1.name === item2.name)
-            );
+            //Cargar datos del rol
+            service.edit(route.params.id).then((response) => {
+                fillObject(form, response.data.model);
+                page.loading = false;
+                getAllAbilities();
+            });
         });
 
         function onAction(data) {
@@ -179,7 +178,7 @@ export default defineComponent({
                 let response = await service.handleUpdate(
                     'edit-role',
                     route.params.id,//url la toma de la ruta actual
-                    reduceProperties(form, ['roles'], 'id')
+                    reduceProperties(form, ['abilities'], 'name')
                 );
                 fillObject(form, response.data.record);
             } catch (error) {
@@ -188,12 +187,20 @@ export default defineComponent({
             return false;
         }
 
-        function addAbility() {
-            form.abilities.push(abilitySelected.value);
+        function addAbility(value) {
+            form.abilities.push(value);
+            getAllAbilities();
         }
 
         function removeAbility(index) {
-            this.form.abilities.splice(index, 1); // Elimina la habilidad del array
+            form.abilities.splice(index, 1); // Elimina la habilidad del array
+            getAllAbilities();
+        }
+
+        function getAllAbilities() {
+            table.records = allAbilities.records.filter(item1 =>
+                !form.abilities.some(item2 => item1.id === item2.id && item1.name === item2.name)
+            );
         }
 
         return {
@@ -205,10 +212,10 @@ export default defineComponent({
             page,
             table,
             allAbilities,
-            abilitySelected,
             addAbility,
             removeAbility,
-            filteredRecords
+            onTableAction,
+            getAllAbilities
         }
     }
 })

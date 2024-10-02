@@ -16,7 +16,7 @@ class RoleResource extends JsonResource
     {
         $data = $this->resource->toArray();
         //obtener las abilidades y formatear en id/name
-        $data['abilities'] = Data::formatCollectionForSelect($this->getAbilities());
+        $data['abilities'] = Data::formatCollectionForSelect($this->getAbilities(), 'id', 'name', 'title');
 
         return $data;
     }

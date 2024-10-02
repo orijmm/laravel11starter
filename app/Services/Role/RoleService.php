@@ -10,6 +10,7 @@ use Bouncer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use App\Traits\Filterable;
+use App\Utilities\Data;
 
 class RoleService
 {
@@ -99,6 +100,12 @@ class RoleService
         $data = $this->clean($data);
         //nombre del rol en minusculas
         $data['name'] = strtolower($data['name']);
+        $abilities = Data::take($data, 'abilities');
+
+        if (! empty($abilities)) {
+            Bouncer::sync($role)->abilities($abilities);
+        }
+
         return $role->update($data);
     }
 

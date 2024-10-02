@@ -181,7 +181,7 @@ class RoleController extends Controller
         }
         if ($query) {
             //Se trasnforma a id/label
-            $abilities = Data::formatCollectionForSelect($query->get());
+            $abilities = Data::formatCollectionForSelect($query->get(), 'id', 'name', 'title');
         }
         return response()->json($abilities, 200);
     }
