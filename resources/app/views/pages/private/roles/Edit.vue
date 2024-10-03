@@ -20,11 +20,11 @@
                 <div class="border-solid border-2 border-slate-100 rounded-md p-3">
                     <div class="my-3 text-lg">{{ trans('global.pages.permission_asigned') }}</div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
-                        <Badge theme="info" rounded="rounded-full" class="flex flex-wrap items-center justify-between"
-                            v-for="(item, index) in form.abilities" :key="item.id">
-                            <div class="break-words">{{ item.name }}</div>
+                        <Badge theme="info" rounded="rounded-full" class="flex flex-wrap items-center justify-between" v-for="(item, index) in form.abilities"
+                            :key="item.id">
+                            <div class="w-50 truncate">{{ item.name }}</div>
                             <span @click="removeAbility(index)"
-                                class="flex-shrink-0 flex justify-center cursor-pointer w-4 h-4 ms-2 text-xs font-semibold text-blue-400 bg-blue-300 rounded-full">
+                                class="flex justify-center cursor-pointer w-4 h-4 ms-2 text-xs font-semibold text-blue-400 bg-blue-300 rounded-full">
                                 x
                             </span>
                         </Badge>
