@@ -9,8 +9,6 @@
                     :label="trans('users.labels.title')" />
             </Form>
         </Panel>
-        {{ form.abilities }}
-
         <Panel title="Permisos">
             <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-3">
                 <div>
@@ -22,14 +20,15 @@
                 <div class="border-solid border-2 border-slate-100 rounded-md p-3">
                     <div class="my-3 text-lg">{{ trans('global.pages.permission_asigned') }}</div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
-                        <Badge theme="info" rounded="rounded-full" class="flex items-center justify-between"
+                        <Badge theme="info" rounded="rounded-full" class="flex flex-wrap items-center justify-between"
                             v-for="(item, index) in form.abilities" :key="item.id">
-                            <div>{{ item.name }}</div>
+                            <div class="break-words">{{ item.name }}</div>
                             <span @click="removeAbility(index)"
-                                class="flex justify-center cursor-pointer w-4 h-4 ms-2 text-xs font-semibold text-blue-400 bg-blue-300 rounded-full">
+                                class="flex-shrink-0 flex justify-center cursor-pointer w-4 h-4 ms-2 text-xs font-semibold text-blue-400 bg-blue-300 rounded-full">
                                 x
                             </span>
                         </Badge>
+
                     </div>
                 </div>
             </div>
