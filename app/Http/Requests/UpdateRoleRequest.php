@@ -15,7 +15,8 @@ class UpdateRoleRequest extends FormRequest
     {
         return [
             'name' => 'required|alpha_dash|unique:roles,name,'.$this->route('role')->id,
-            'title' => 'required'
+            'title' => 'required',
+            'abilities' => 'nullable'
         ];
     }
 }

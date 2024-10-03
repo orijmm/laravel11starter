@@ -177,7 +177,7 @@ export default defineComponent({
                 let response = await service.handleUpdate(
                     'edit-role',
                     route.params.id,//url la toma de la ruta actual
-                    reduceProperties(form, ['abilities'], 'name')
+                    reduceProperties(form, ['abilities'], 'id')
                 );
                 fillObject(form, response.data.record);
             } catch (error) {
