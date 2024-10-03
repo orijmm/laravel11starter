@@ -5,7 +5,9 @@
             class="text-sm text-gray-500"
             :class="{ 'sr-only': !showLabel }"
             v-if="label">
-            {{ label }}<span class="text-red-600" v-if="$props.required">*</span>
+            {{ label }}
+            <small class="text-gray-300" v-if="labelsmall">{{ labelsmall }}</small>
+            <span class="text-red-600" v-if="$props.required">*</span>
         </label>
         <input v-if="type !== 'textarea'"
                :id="name"
@@ -45,6 +47,10 @@ export default defineComponent({
         label: {
             type: String,
             default: "",
+        },
+        labelsmall: {
+            type: String,
+            default: null,
         },
         modelValue: {
             default: "",

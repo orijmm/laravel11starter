@@ -4,7 +4,7 @@
             <div v-if="$props.title" class="bg-gray-50 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 {{ $props.title }}
             </div>
-            <div class="whitespace-nowrap bg-white" :class="$props.bodyPadding ? 'px-6 py-4' : ''">
+            <div class="whitespace-nowrap bg-white" :class="$props.bodyPadding ? 'px-6 py-4' : '', $props.height ? $props.height : ''">
                 <template v-if="isElementLoading">
                     <div class="pt-10 pb-6 text-center">
                         <Spinner/>
@@ -40,6 +40,10 @@ export default defineComponent({
         bodyPadding: {
             type: Boolean,
             default: true,
+        },
+        height: {
+            type: String,
+            default: ''
         }
     },
     setup(props) {

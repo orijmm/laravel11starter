@@ -23,6 +23,7 @@
                     </ol>
                 </nav>
             </div>
+            <!-- Acciones Top página-->
             <div class="flex items-center" v-if="$props.actions.length > 0">
                 <slot v-for="(action, j) in $props.actions" :name="'page-actions-'+action.id">
                     <Button v-if="action.hasOwnProperty('to') && action.to" :class="{'mr-3' : j < ($props.actions.length-1)}" :to="action.to" :title="action.name" :icon="action.hasOwnProperty('icon') ? action.icon : null" :theme="action.hasOwnProperty('theme') ? action.theme : null" :label="action.name"/>

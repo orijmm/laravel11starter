@@ -1,4 +1,5 @@
 import {trans} from "@/helpers/i18n";
+import Swal from 'sweetalert2';
 
 /**
  * Custom alert message
@@ -42,37 +43,45 @@ const _confirm = function (func_if_yes, func_if_cancel, msg, title, type) {
         title = trans('global.alerts.confirm');
     }
     msg = title + ' - ' + msg;
-    if (window.confirm(msg)) {
-        if (func_if_yes) {
-            func_if_yes();
-        }
-    } else {
-        if (func_if_cancel) {
-            func_if_cancel();
-        }
-    }
+    // if (window.confirm(msg)) {
+    //     if (func_if_yes) {
+    //         func_if_yes();
+    //     }
+    // } else {
+    //     if (func_if_cancel) {
+    //         func_if_cancel();
+    //     }
+    // }
     // Swal implementation
-    /*
-    swal($.extend({
-            title: title,
-            text: msg,
-            type: type,
-            showCancelButton: true,
-            cancelButtonText: "Cancelar",
-            confirmButtonText: "Ok",
-            allowEscapeKey: false,
-            allowOutsideClick: false
-        }, params || {})
-    ).then(function(isConfirm) {
-        if (isConfirm && func_if_yes instanceof Function){
-            func_if_yes();
-        }
-    }, function(dismiss) {
-        // dismiss can be 'cancel', 'overlay', 'close', 'timer'
-        if (dismiss === 'cancel' && func_if_cancel instanceof Function) {
-            func_if_cancel()
-        }
-    })*/
+    
+    showAlert(
+        title, 
+        msg, 
+        type, 
+        {},  // Aquí podrías pasar parámetros adicionales si los tienes
+        func_if_yes,  // Función que se ejecuta si se presiona "Ok"
+        func_if_cancel   // Función que se ejecuta si se presiona "Cancelar"
+    );
+    // swal($.extend({
+    //         title: title,
+    //         text: msg,
+    //         type: type,
+    //         showCancelButton: true,
+    //         cancelButtonText: "Cancelar",
+    //         confirmButtonText: "Ok",
+    //         allowEscapeKey: false,
+    //         allowOutsideClick: false
+    //     }, params || {})
+    // ).then(function(isConfirm) {
+    //     if (isConfirm && func_if_yes instanceof Function){
+    //         func_if_yes();
+    //     }
+    // }, function(dismiss) {
+    //     // dismiss can be 'cancel', 'overlay', 'close', 'timer'
+    //     if (dismiss === 'cancel' && func_if_cancel instanceof Function) {
+    //         func_if_cancel()
+    //     }
+    // })
 };
 
 /**
@@ -132,7 +141,25 @@ const confirmWarning = function (callback_yes, callback_cancel, msg, title) {
  * @param title
  */
 const confirmDanger = function (callback_yes, callback_cancel, msg, title) {
-    _confirm(callback_yes, callback_cancel, msg, title, 'danger')
+    _confirm(callback_yes, callback_cancel, msg, title, 'error')
+}
+
+const showAlert = function (title, msg, type, params = {}, func_if_yes, func_if_cancel) {
+    Swal.fire({
+        title: title,
+        text: msg,
+        icon: type, // En SweetAlert2, 'type' se reemplaza por 'icon'
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+        confirmButtonText: "Ok",
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        ...params  // Spread operator en lugar de $.extend
+    }).then((result) => {
+        if (result.isConfirmed) {
+            func_if_yes(); 
+        }
+    });
 }
 
 

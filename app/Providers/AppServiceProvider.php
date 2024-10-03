@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Role;
+use Bouncer;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
@@ -23,17 +26,16 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-    public function register(): void
-    {
-
-    }
+    public function register(): void {}
 
     /**
      * Bootstrap any application services.
      */
     public function boot(): void
     {
-        //
+        Bouncer::useRoleModel(Role::class);
+
+        Relation::morphMap([Role::class]);
 
         $this->bootAuth();
         $this->bootRoute();
@@ -42,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
     public function bootAuth()
     {
         ResetPassword::createUrlUsing(function ($user, string $token) {
-            return env('APP_URL').'/reset-password?token='.$token;
+            return env('APP_URL') . '/reset-password?token=' . $token;
         });
     }
 
@@ -54,6 +56,5 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(30);
         });
-
     }
 }

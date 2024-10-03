@@ -2,26 +2,72 @@
 
 namespace App\Utilities;
 
+use Exception;
 use Illuminate\Support\Collection;
+use Nnjeim\World\World;
 
 class Data
 {
     /**
-     * Formats collection for select field
+     * Formats collection ROLE for select field
      *
      * @return Collection
      */
-    public static function formatCollectionForSelect(Collection $collection, $value = 'id', $label = 'trans')
+    public static function formatRoleCollectionForSelect(Collection $collection, $value = 'id', $label = 'trans')
     {
         return $collection->map(function ($entry) use ($value, $label) {
             $id = $entry->$value ?? null;
-            $label = $label === 'trans' ? trans('frontend.users.roles.'.$id) : ($entry->$label ?? $entry->$id);
+            $label = $label === 'trans' ? trans('frontend.users.roles.' . $id) : ($entry->$label ?? $entry->$id);
 
             return [
                 'id' => $id,
-                'title' => $label,
+                'name' => $label,
             ];
         });
+    }
+
+    /**
+     * Formats any for select field
+     *
+     * @return Collection
+     */
+    public static function formatCollectionForSelect(Collection $collection, $value = 'id', $label = 'name', $extra = null)
+    {
+        $result = $collection->map(function ($entry) use ($value, $label, $extra) {
+            $id = $entry[$value] ?? null;
+            $label = $entry[$label] ?? $entry[$id];
+
+            $data = [
+                'id' => $id,
+                'name' => $label,
+            ];
+            if($extra){
+                $data[$extra] = $entry[$extra] ?? null;
+            }
+            return $data;
+        });
+
+        return $result;
+    }
+
+    /**
+     * Formats any for select field. Para los seleccionados. Solo uno
+     *
+     * @return Collection
+     */
+    public static function formatCollectionForSelected(Collection $collection, $value = 'id', $label = 'name')
+    {
+        $result = $collection->map(function ($entry) use ($value, $label) {
+            $id = $entry[$value] ?? null;
+            $label = $entry[$label] ?? $entry[$id];
+
+            return [
+                'id' => $id,
+                'name' => $label,
+            ];
+        });
+
+        return $result->first();
     }
 
     /**
@@ -39,5 +85,16 @@ class Data
         }
 
         return null;
+    }
+
+    public static function getSelectedLocation($data, $selected,$typeValue = 'id', $typelabel = 'name')
+    {
+        $result = [];
+        $result = collect($data)->firstWhere($typeValue, $selected);
+
+        if($typeValue !== 'id'){
+            $result = self::formatCollectionForSelected(collect([$result]),$typeValue,$typelabel);
+        }
+        return $result;
     }
 }

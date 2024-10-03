@@ -25,18 +25,20 @@ export default abstract class ModelService extends BaseService {
         return this.get(this.url + `/${object_id}/edit`, {});
     }
 
-    public store(payload) {
+    public store(payload, customUrl = null) {
+        let url = customUrl ? customUrl : this.url;
         let data = this.transformPayloadForSubmission(payload);
-        return this.post(this.url, data, {
+        return this.post(url, data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             },
         })
     }
 
-    public update(object_id, payload) {
+    public update(object_id, payload, customUrl = null) {
+        let url = customUrl ? customUrl : this.url;
         let data = this.transformPayloadForSubmission(payload);
-        return this.patch(this.url + `/${object_id}`, data, {
+        return this.patch(url + `/${object_id}`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             },
@@ -56,13 +58,14 @@ export default abstract class ModelService extends BaseService {
         return this.get(path, {});
     }
 
-    public handleUpdate(ui_element_id, object_id, data) {
+    public handleUpdate(ui_element_id, object_id, data, customUrl = null) {
         const alertStore = useAlertStore();
         const globalUserState = useGlobalStateStore();
         globalUserState.loadingElements[ui_element_id] = true;
-        return this.update(object_id, data).then((response) => {
+        return this.update(object_id, data, customUrl).then((response) => {
             let answer = response.data;
             alertStore.success(answer.message);
+            return response;
         }).catch((error) => {
             alertStore.error(getResponseError(error));
         }).finally(() => {
@@ -70,17 +73,38 @@ export default abstract class ModelService extends BaseService {
         })
     }
 
-    public handleCreate(ui_element_id, data) {
+    public handleCreate(ui_element_id, data, customUrl = null) {
         const alertStore = useAlertStore();
         const globalUserState = useGlobalStateStore();
         globalUserState.setElementLoading(ui_element_id, true);
-        return this.store(data).then((response) => {
+        return this.store(data, customUrl).then((response) => {
             let answer = response.data;
             alertStore.success(answer.message);
         }).catch((error) => {
             alertStore.error(getResponseError(error));
         }).finally(() => {
             globalUserState.setElementLoading(ui_element_id, false);
+        })
+    }
+
+    public handleUpdatePut(ui_element_id, object_id, data, customUrl = null) {
+        const alertStore = useAlertStore();
+        const globalUserState = useGlobalStateStore();
+        globalUserState.loadingElements[ui_element_id] = true;
+        let url = customUrl ? customUrl : this.url + `/${object_id}`;
+        let payload = this.transformPayloadForSubmission(data);
+        this.put(url, payload, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+        }).then((response) => {
+            let answer = response.data;
+            alertStore.success(answer.message);
+            return response;
+        }).catch((error) => {
+            alertStore.error(getResponseError(error));
+        }).finally(() => {
+            globalUserState.loadingElements[ui_element_id] = false;
         })
     }
 

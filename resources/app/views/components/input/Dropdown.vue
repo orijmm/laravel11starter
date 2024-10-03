@@ -3,7 +3,7 @@
         <label :for="name" class="text-sm text-gray-500" :class="{ 'sr-only': !showLabel }" v-if="label">
             {{ label }}<span class="text-red-600" v-if="$props.required">*</span>
         </label>
-        <Multiselect track-by="id" label="title" v-model="value" :id="$props.name" :name="$props.name" :disabled="disabled" :placeholder="$props.placeholder" :options="selectOptions" :multiple="$props.multiple" :searchable="!!$props.server" :loading="isLoading" :internal-search="false" :clear-on-select="true" :close-on-select="true" :max-height="400" :show-no-results="false" :hide-selected="true" open-direction="bottom" @search-change="handleSearch">
+        <Multiselect track-by="id" label="name" v-model="value" :id="$props.name" :name="$props.name" :disabled="disabled" :placeholder="$props.placeholder" :options="selectOptions" :multiple="$props.multiple" :searchable="!!$props.server" :loading="isLoading" :internal-search="false" :clear-on-select="true" :close-on-select="true" :max-height="400" :show-no-results="false" :hide-selected="false" open-direction="bottom" @search-change="handleSearch">
         </Multiselect>
     </div>
 </template>
@@ -70,7 +70,6 @@ export default defineComponent({
     },
     emits: ['update:modelValue', 'input'],
     setup(props, {emit}) {
-
         let selectOptionsArr = ref(props.options);
         let isLoading = ref(false);
 
@@ -78,7 +77,7 @@ export default defineComponent({
             let val = [];
             for (let i in selectOptionsArr.value) {
                 if (typeof selectOptionsArr.value[i] === 'object') {
-                    val.push({id: selectOptionsArr.value[i].id, title: selectOptionsArr.value[i].title});
+                    val.push({id: selectOptionsArr.value[i].id, name: selectOptionsArr.value[i].name});
                 } else {
                     val.push(selectOptionsArr.value[i])
                 }
@@ -108,7 +107,7 @@ export default defineComponent({
             service.begin(search, 1, props.serverPerPage).then((response) => {
                 selectOptionsArr.value = [];
                 for (let i in response.data.data) {
-                    selectOptionsArr.value.push({id: response.data.data[i].id, title: response.data.data[i].title});
+                    selectOptionsArr.value.push({id: response.data.data[i].id, name: response.data.data[i].name});
                 }
                 isLoading.value = false;
             }).catch((error) => {

@@ -26,6 +26,7 @@ return [
             'id_pound' => '#',
             'first_name' => 'Nombre',
             'last_name' => 'Apellido',
+            'title' => 'Título',
             'middle_name' => 'Segundo nombre',
             'name' => 'Nombre completo',
             'avatar' => 'Avatar',
@@ -33,6 +34,16 @@ return [
             'role' => 'Rol',
             'roles' => 'Roles',
             'status' => 'Estado',
+            'description' => 'Descripción',
+            'address' => 'Dirección',
+            'phone' => 'Teléfono',
+            'email' => 'Email',
+            'locale' => 'Idioma',
+            'timezone' => 'Zona Horaria',
+            'state' => 'Región',
+            'city' => 'Ciudad',
+            'country' => 'País',
+            'currency' => 'Moneda',
             'current_password' => 'Contraseña actual',
             'password' => 'Contraseña',
             'new_password' => 'Nueva contraseña',
@@ -54,15 +65,35 @@ return [
         ],
         'pages' => [
             'home' => 'Panel de control',
+
             'users' => 'Usuarios',
             'users_create' => 'Nuevo usuario',
             'users_edit' => 'Editar usuario',
+
+            'abilities' => 'Roles y Permisos',
+            
+            'roles' => 'Roles',
+            'roles_create' => 'Nuevo rol',
+            'roles_edit' => 'Editar rol',
+
+            'permission' => 'Permisos',
+            'permission_create' => 'Nuevo permiso',
+            'permission_edit' => 'Editar permiso',
+            'permission_asigned' => 'Permisos Asignados',
+
+            'settings' => 'Configuración',
+            'general_info' => 'Información General',
+            'settings_edit' => 'Editar configuración',
+
+            'name_company' => 'Nombre empresa',
             'profile' => 'Perfil',
             'register' => 'Registro',
             'login' => 'Iniciar sesión',
             'logout' => 'Cerrar sesión',
             'forgot_password' => 'Olvidé mi contraseña',
             'reset_password' => 'Restablecer contraseña',
+            'lowercase'   => 'Minúsculas',
+            'uppercase'   => 'Mayúsculas'
         ],
         'phrases' => [
             'clear_filters' => 'Limpiar todo',
@@ -89,6 +120,8 @@ return [
             'record_not_created' => 'No se pudo crear el registro.',
             'record_updated' => 'Registro actualizado con éxito.',
             'record_not_updated' => 'No se pudo actualizar el registro.',
+            'record_deleted' => 'Registro eliminado con éxito.',
+            'record_not_deleted' => 'No se pudo eliminar el registro.',
             'file_uploaded' => 'Archivo subido con éxito',
             'file_not_uploaded' => 'No se pudo subir el archivo',
             'password_updated' => 'Contraseña actualizada con éxito',
@@ -119,6 +152,8 @@ return [
             'upload' => 'Subir',
             'update' => 'Actualizar',
             'change_avatar' => 'Cambiar avatar',
+            'add' => 'Agregar',
+            'remove' => 'Quitar'
         ],
         'actions' => [
             'name' => 'Acciones',

@@ -45,7 +45,7 @@
                 <template v-slot:content-role="props">
                     {{
                         props.item.roles.map((entry) => {
-                            return entry.title
+                            return entry.name
                         }).join(', ')
                     }}
                 </template>

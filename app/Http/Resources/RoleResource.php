@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Utilities\Data;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RoleResource extends JsonResource
@@ -14,7 +15,9 @@ class RoleResource extends JsonResource
     public function toArray($request): array
     {
         $data = $this->resource->toArray();
+        //obtener las abilidades y formatear en id/name
+        $data['abilities'] = Data::formatCollectionForSelect($this->getAbilities(), 'id', 'name', 'title');
 
-        return ['id' => $data['name'], 'title' => $data['title']];
+        return $data;
     }
 }

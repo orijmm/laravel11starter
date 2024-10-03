@@ -12,6 +12,10 @@ export default defineComponent({
             type: String,
             default: "success",
         },
+        rounded: {
+            type: String,
+            default: null,
+        },
     },
     setup(props) {
         const classes = computed(() => {
@@ -38,6 +42,11 @@ export default defineComponent({
                     value = 'bg-theme-100 text-theme-800 dark:bg-theme-200 dark:text-theme-900';
                     break;
             }
+
+            if(props.rounded){
+                value = value +' '+ props.rounded;
+            }
+
             return value;
         })
 

@@ -37,7 +37,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('list', User::class);
+        $this->authorize('list_user', User::class);
 
         return $this->userService->index($request->all());
     }
@@ -51,7 +51,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', User::class);
+        $this->authorize('create_user', User::class);
 
         return $this->responseDataSuccess(['properties' => $this->properties()]);
     }
@@ -66,7 +66,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $this->authorize('create', User::class);
+        $this->authorize('create_user', User::class);
 
         $input = $request->validated();
         $record = $this->userService->create($input);
@@ -87,7 +87,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $this->authorize('view', User::class);
+        $this->authorize('list_user', User::class);
 
         $model = $this->userService->get($user);
 
