@@ -82,6 +82,9 @@ class RoleService
         $data['name'] = strtolower($data['name']);
         $record = Role::query()->create($data);
         if (! empty($record)) {
+            //agregar permiso basico
+            $ability = Bouncer::ability()->where('name', 'edit-profile')->first();
+            Bouncer::allow($record)->to($ability, Role::class);
             return $record->fresh();
         } else {
             return null;
