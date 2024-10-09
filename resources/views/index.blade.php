@@ -14,8 +14,8 @@
             logo: '{{ url('/assets/images/logo.png')  }}',
             url: '{{ env('APP_URL') }}',
             csrf: '{{ csrf_token() }}',
-            defaultLocale: '{{ env('APP_LOCALE', 'en') }}',
-            defaultTimezone: '{{ env('APP_TIMEZONE', 'UTC') }}',
+            defaultLocale: '{{ App\Models\Setting::where("id", 1)->first()["locale"], env('APP_LOCALE') }}',
+            defaultTimezone: '{{ App\Models\Setting::where("id", 1)->first()["timezone"], env('APP_TIMEZONE') }}',
             locales: {
                 en: {!! json_encode(\Illuminate\Support\Facades\Lang::get('frontend', [], 'en')) !!},
                 mk: {!! json_encode(\Illuminate\Support\Facades\Lang::get('frontend', [], 'mk')) !!},

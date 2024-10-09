@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSettingRequest;
 use App\Http\Requests\UpdateSettingRequest;
 use App\Models\Setting;
-use App\Models\User;
 use App\Services\Setting\SettingService;
-use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
