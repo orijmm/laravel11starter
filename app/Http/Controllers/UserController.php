@@ -87,7 +87,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $this->authorize('list_user');
+        $this->authorize('list_user', User::class);
 
         $model = $this->userService->get($user);
 
@@ -104,7 +104,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $this->authorize('list_user');
+        $this->authorize('list_user', User::class);
 
         return $this->show($user);
     }
