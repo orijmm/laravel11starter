@@ -47,6 +47,7 @@ import { getResponseError, prepareQuery } from "@/helpers/api";
 import { toUrl } from "@/helpers/routing";
 import { useAlertStore } from "@/stores";
 import alertHelpers from "@/helpers/alert";
+import { isAllowed } from "@/helpers/isreq";
 import Page from "@/views/layouts/Page";
 import Table from "@/views/components/Table";
 import Avatar from "@/views/components/icons/Avatar";
@@ -106,7 +107,8 @@ export default defineComponent({
                     id: 'new',
                     name: trans('global.buttons.add_new'),
                     icon: "fa fa-plus",
-                    to: toUrl('/roles/create')
+                    to: toUrl('/roles/create'),
+                    isAllowed: isAllowed(['create_role'])
                 }
             ],
             toggleFilters: false,
@@ -132,7 +134,8 @@ export default defineComponent({
                     name: trans('global.actions.edit'),
                     icon: "fa fa-edit",
                     showName: false,
-                    to: toUrl('/roles/{id}/edit')
+                    to: toUrl('/roles/{id}/edit'),
+                    isAllowed: isAllowed(['edit_role'])
                 },
                 delete: {
                     id: 'delete',
@@ -140,6 +143,7 @@ export default defineComponent({
                     icon: "fa fa-trash",
                     showName: false,
                     danger: true,
+                    isAllowed: isAllowed(['delete_role'])
                 }
             },
             loading: false,
@@ -229,7 +233,8 @@ export default defineComponent({
             onFiltersClear,
             mainQuery,
             remainingAbilities,
-            limitedAbilities
+            limitedAbilities,
+            isAllowed
         }
 
     },

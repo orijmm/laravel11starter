@@ -62,6 +62,7 @@ import {watch, onMounted, defineComponent, reactive, ref} from 'vue';
 import {getResponseError, prepareQuery} from "@/helpers/api";
 import {toUrl} from "@/helpers/routing";
 import {useAlertStore} from "@/stores";
+import { isAllowed } from "@/helpers/isreq";
 import alertHelpers from "@/helpers/alert";
 import Page from "@/views/layouts/Page";
 import Table from "@/views/components/Table";
@@ -131,7 +132,8 @@ export default defineComponent({
                     id: 'new',
                     name: trans('global.buttons.add_new'),
                     icon: "fa fa-plus",
-                    to: toUrl('/users/create')
+                    to: toUrl('/users/create'),
+                    isAllowed: isAllowed(['create_user'])
                 }
             ],
             toggleFilters: false,
@@ -160,7 +162,8 @@ export default defineComponent({
                     name: trans('global.actions.edit'),
                     icon: "fa fa-edit",
                     showName: false,
-                    to: toUrl('/users/{id}/edit')
+                    to: toUrl('/users/{id}/edit'),
+                    isAllowed: isAllowed(['edit_user'])
                 },
                 delete: {
                     id: 'delete',
@@ -168,6 +171,7 @@ export default defineComponent({
                     icon: "fa fa-trash",
                     showName: false,
                     danger: true,
+                    isAllowed: isAllowed(['delete_user'])
                 }
             },
             loading: false,
@@ -245,7 +249,8 @@ export default defineComponent({
             onTableSort,
             onPageAction,
             onFiltersClear,
-            mainQuery
+            mainQuery,
+            isAllowed
         }
 
     },

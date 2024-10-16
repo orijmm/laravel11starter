@@ -39,6 +39,7 @@ import { watch, onMounted, defineComponent, reactive, ref } from 'vue';
 import { getResponseError, prepareQuery } from "@/helpers/api";
 import { toUrl } from "@/helpers/routing";
 import { useAlertStore } from "@/stores";
+import { isAllowed } from "@/helpers/isreq";
 import alertHelpers from "@/helpers/alert";
 import Page from "@/views/layouts/Page";
 import Table from "@/views/components/Table";
@@ -99,7 +100,8 @@ export default defineComponent({
                     id: 'new',
                     name: trans('global.buttons.add_new'),
                     icon: "fa fa-plus",
-                    to: toUrl('/roles/add/ability')
+                    to: toUrl('/roles/add/ability'),
+                    isAllowed: isAllowed(['create_ability'])
                 }
             ],
             toggleFilters: false,
@@ -124,7 +126,8 @@ export default defineComponent({
                     name: trans('global.actions.edit'),
                     icon: "fa fa-edit",
                     showName: false,
-                    to: toUrl('/roles/{id}/editability')
+                    to: toUrl('/roles/{id}/editability'),
+                    isAllowed: isAllowed(['edit_ability'])
                 },
                 delete: {
                     id: 'delete',
@@ -132,6 +135,7 @@ export default defineComponent({
                     icon: "fa fa-trash",
                     showName: false,
                     danger: true,
+                    isAllowed: isAllowed(['delete_ability'])
                 }
             },
             loading: false,
@@ -209,7 +213,8 @@ export default defineComponent({
             onTableSort,
             onPageAction,
             onFiltersClear,
-            mainQuery
+            mainQuery,
+            isAllowed
         }
 
     },
