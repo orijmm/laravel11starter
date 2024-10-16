@@ -159,6 +159,7 @@ return [
             'name' => 'Acciones',
             'edit' => 'Editar',
             'delete' => 'Eliminar',
+            'filterbytitle' => 'Filtrar por título'
         ],
         'alerts' => [
             'success' => '¡Éxito!',

@@ -112,7 +112,11 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleUpdate('edit-setting', route.params.id, reduceProperties(form, [], 'id'));
+            service.handleUpdate('edit-setting', route.params.id, reduceProperties(form, [], 'id'))
+            .then((response) => {
+                console.log(response);
+                window.location.reload();
+            });
             return false;
         }
 

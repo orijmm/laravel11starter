@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateAbilityRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Ability;
 use App\Models\Role;
+use App\Models\User;
 use App\Services\Role\RoleService;
 use App\Utilities\Data;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -214,7 +215,7 @@ class RoleController extends Controller
      */
     public function editAbility(Ability $ability)
     {
-        $this->authorize('list_role', Ability::class);
+        $this->authorize('list_role');
 
         return $this->responseDataSuccess(['model' => $ability, 'properties' => $this->properties()]);
     }
