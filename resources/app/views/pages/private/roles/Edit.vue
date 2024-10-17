@@ -23,7 +23,7 @@
                         <Badge theme="info" rounded="rounded-full" class="flex flex-wrap items-center justify-between" v-for="(item, index) in form.abilities"
                             :key="item.id">
                             <div class="w-50 truncate">{{ item.name }}</div>
-                            <span @click="removeAbility(index)"
+                            <span v-if="allowRemovePermission('edit-profile', {name:item.name, role: form.name})" @click="removeAbility(index)"
                                 class="flex justify-center cursor-pointer w-4 h-4 ms-2 text-xs font-semibold text-blue-400 bg-blue-300 rounded-full">
                                 x
                             </span>
@@ -39,7 +39,8 @@
 <script>
 import { defineComponent, onBeforeMount, reactive } from "vue";
 import { trans } from "@/helpers/i18n";
-import { fillObject, reduceProperties } from "@/helpers/data"
+import { fillObject, reduceProperties } from "@/helpers/data";
+import { allowRemovePermission } from "@/helpers/conditionals";
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { toUrl } from "@/helpers/routing";
@@ -68,7 +69,8 @@ export default defineComponent({
         Page,
         TableSimple,
         Badge,
-        Tooltip
+        Tooltip,
+        allowRemovePermission
     },
     setup() {
         const { user } = useAuthStore();
@@ -214,7 +216,8 @@ export default defineComponent({
             addAbility,
             removeAbility,
             onTableAction,
-            getAllAbilities
+            getAllAbilities,
+            allowRemovePermission
         }
     }
 })

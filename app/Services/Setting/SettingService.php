@@ -5,12 +5,9 @@ namespace App\Services\Setting;
 use App\Http\Resources\SettingResource;
 use App\Models\Setting;
 use App\Traits\Filterable;
-use App\Utilities\Data;
-use Bouncer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Carbon;
 
 class SettingService
 {
@@ -77,7 +74,7 @@ class SettingService
     public function update(Setting $setting, array $data)
     {
         $data = $this->clean($data);
-
+        
         return $setting->update($data);
     }
 
@@ -128,6 +125,5 @@ class SettingService
                 }
             }
         }
-
     }
 }

@@ -100,19 +100,19 @@ const routes = [
                     {
                         name: "roles.allbilities",
                         path: "allbilities",
-                        meta: { requiresAuth: true, requiresAbility: abilities.LIST_ROLE },
+                        meta: { requiresAuth: true, requiresAbility: abilities.LIST_ABILITY },
                         component: PageAbility,
                     },
                     {
                         name: "roles.create.ability",
                         path: "add/ability",
-                        meta: { requiresAuth: true, requiresAbility: abilities.LIST_ROLE },
+                        meta: { requiresAuth: true, requiresAbility: abilities.LIST_ABILITY },
                         component: PageAbilityCreate,
                     },
                     {
                         name: "roles.ability.edit",
                         path: ":id/editability",
-                        meta: { requiresAuth: true, requiresAbility: abilities.LIST_ROLE },
+                        meta: { requiresAuth: true, requiresAbility: abilities.LIST_ABILITY },
                         component: PageAbilityEdit,
                     },
                 ]

@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSettingRequest;
 use App\Http\Requests\UpdateSettingRequest;
 use App\Models\Setting;
 use App\Models\User;
 use App\Services\Setting\SettingService;
-use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
@@ -35,7 +33,7 @@ class SettingController extends Controller
      */
     public function show(Setting $settingad)
     {
-        $this->authorize('edit_setting');
+        $this->authorize('edit_setting', User::class);
 
         $model = $this->settingService->get($settingad);
 
@@ -52,7 +50,7 @@ class SettingController extends Controller
      */
     public function edit(Setting $settingad)
     {
-        $this->authorize('edit_setting');
+        $this->authorize('edit_setting', User::class);
 
         return $this->show($settingad);
     }
@@ -62,7 +60,7 @@ class SettingController extends Controller
      */
     public function update(UpdateSettingRequest $request, Setting $settingad)
     {
-        $this->authorize('edit_setting', Setting::class);
+        $this->authorize('edit_setting', User::class);
 
         $data = $request->validated();
         if ($this->settingService->update($settingad, $data)) {
@@ -77,7 +75,7 @@ class SettingController extends Controller
      */
     public function destroy(Setting $settingad)
     {
-        $this->authorize('edit_setting', Setting::class);
+        $this->authorize('edit_setting', User::class);
 
         if ($this->settingService->delete($settingad)) {
             return $this->responseDeleteSuccess(['record' => $settingad]);

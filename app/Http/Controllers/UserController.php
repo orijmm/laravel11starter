@@ -104,7 +104,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $this->authorize('edit', User::class);
+        $this->authorize('list_user', User::class);
 
         return $this->show($user);
     }
@@ -119,7 +119,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $this->authorize('edit', User::class);
+        $this->authorize('list_user', User::class);
 
         $data = $request->validated();
         if ($this->userService->update($user, $data)) {

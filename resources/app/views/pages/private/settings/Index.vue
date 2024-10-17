@@ -70,7 +70,7 @@ export default defineComponent({
 
         //Configuracion del breadcrumbs (navegacion y botones superiores) 
         const page = reactive({
-            id: 'edit_setting',
+            id: 'edit_settings',
             title: trans('global.pages.settings_edit'),
             filters: false,
             breadcrumbs: [
@@ -112,7 +112,11 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleUpdate('edit-setting', route.params.id, reduceProperties(form, [], 'id'));
+            service.handleUpdate('edit-setting', route.params.id, reduceProperties(form, [], 'id'))
+            .then((response) => {
+                console.log(response);
+                window.location.reload();
+            });
             return false;
         }
 

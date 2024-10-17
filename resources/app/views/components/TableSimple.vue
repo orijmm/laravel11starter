@@ -1,7 +1,7 @@
 <template>
     <div class="w-full shadow border-b border-gray-200 mb-8 sm:rounded-lg overflow-auto">
         <div v-if="filter" class="mb-4">
-            <TextInput v-model="search" name="search" placeholder="Filtrar por título" />
+            <TextInput v-model="search" name="search" :placeholder="trans('global.actions.filterbytitle')" />
         </div>
         <table class="w-full divide-y divide-gray-200 table-auto">
             <thead class="bg-gray-50">
