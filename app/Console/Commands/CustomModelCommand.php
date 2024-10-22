@@ -9,7 +9,7 @@ use Str;
 class CustomModelCommand extends Command
 {
     /**
-     * The name and signature of the console command.
+     * The name and signature of the console command. php artisan make:model-custom Modelo Carpeta
      *
      * @var string
      */
@@ -62,17 +62,22 @@ class CustomModelCommand extends Command
 
             // Insertar $table, $fillable, y SoftDeletes en el modelo
             $modelContent = str_replace(
+                "use Illuminate\Database\Eloquent\Model;",
+                "use Illuminate\Database\Eloquent\Model;\nuse Illuminate\Database\Eloquent\SoftDeletes;",
+                $modelContent
+            );
+            $modelContent = str_replace(
                 "use HasFactory;",
                 "use HasFactory, SoftDeletes;\n\n    protected \$table = '$tableName';\n\n    protected \$fillable = $fillableArray;",
                 $modelContent
             );
 
             // Insertar scopes personalizados
-            $modelContent = str_replace(
-                "}\n",
-                "\n    public function scopeListado(\$query)\n    {\n        // Define the listado scope\n    }\n\n    public function scopeSearch(\$query, \$term)\n    {\n        // Define the search scope\n    }\n}\n",
-                $modelContent
-            );
+            // $modelContent = str_replace(
+            //     "}\n",
+            //     "\n    public function scopeListado(\$query)\n    {\n        // Define the listado scope\n    }\n\n    public function scopeSearch(\$query, \$term)\n    {\n        // Define the search scope\n    }\n}\n",
+            //     $modelContent
+            // );
 
             // Escribir el contenido modificado de nuevo al archivo
             file_put_contents($modelPath, $modelContent);
