@@ -61,7 +61,14 @@ return [
     ],
     'global' => [
         'menu' => [
-            'setting' => 'Configuración'
+            'setting' => 'Configuración',
+            'pages' => 'Páginas',
+            'page' => 'Página',
+            'menus' => 'Menús',
+            'menu' => 'Menú',
+            'template' => 'Plantilla',
+            'templates' => 'Plantillas',
+            'website' => 'Sitio Web'
         ],
         'pages' => [
             'home' => 'Panel de control',
@@ -71,7 +78,7 @@ return [
             'users_edit' => 'Editar usuario',
 
             'abilities' => 'Roles y Permisos',
-            
+
             'roles' => 'Roles',
             'roles_create' => 'Nuevo rol',
             'roles_edit' => 'Editar rol',

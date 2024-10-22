@@ -240,6 +240,40 @@ export default {
                     ]
                 },
                 {
+                    name: trans('global.menu.website'),
+                    icon: 'file',
+                    showDesktop: true,
+                    showMobile: true,
+                    requiresAbility: false,
+                    to: '/panel/pages',
+                    children: [
+                        {
+                            name: trans('global.menu.menu'),
+                            icon: 'tachometer',
+                            showDesktop: true,
+                            showMobile: true,
+                            requiresAbility: getAbilitiesForRoute(['edit.setting']),
+                            to: '/panel/pages',
+                        },
+                        {
+                            name: trans('global.menu.templates'),
+                            icon: 'tachometer',
+                            showDesktop: true,
+                            showMobile: true,
+                            requiresAbility: getAbilitiesForRoute(['edit.setting']),
+                            to: '/panel/pages',
+                        },
+                        {
+                            name: trans('global.menu.pages'),
+                            icon: 'tachometer',
+                            showDesktop: true,
+                            showMobile: true,
+                            requiresAbility: getAbilitiesForRoute(['edit.setting']),
+                            to: '/panel/pages',
+                        }
+                    ]
+                },
+                {
                     name: trans('global.phrases.sign_out'),
                     icon: 'sign-out',
                     showDesktop: false,
