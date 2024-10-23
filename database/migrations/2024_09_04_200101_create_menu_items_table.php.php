@@ -20,7 +20,6 @@ return new class extends Migration
             $table->unsignedBigInteger('parent_id')->nullable();//para submenus
             $table->foreignId('menu_id')->constrained('menus')->onDelete('cascade');
             $table->foreignId('page_id')->nullable();
-            $table->softDeletes();
             $table->timestamps();
         });
     }
