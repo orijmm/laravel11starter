@@ -12,5 +12,5 @@ class Template extends Model
 
     protected $table = 'templates';
 
-    protected $fillable = ['name', 'filename', 'description', 'deleted_at'];
+    protected $fillable = ['name', 'filename', 'description'];
 }

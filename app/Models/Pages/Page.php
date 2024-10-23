@@ -13,7 +13,7 @@ class Page extends Model
 
     protected $table = 'pages';
 
-    protected $fillable = ['title', 'description', 'slug', 'template_id', 'deleted_at'];
+    protected $fillable = ['title', 'description', 'slug', 'template_id'];
 
     /**
      * Get the menu_items for the blog post.

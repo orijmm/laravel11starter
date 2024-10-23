@@ -13,7 +13,7 @@ class Column extends Model
 
     protected $table = 'columns';
 
-    protected $fillable = ['width', 'order', 'row_id', 'deleted_at'];
+    protected $fillable = ['width', 'order', 'row_id'];
 
     /**
      * Get the components for the blog post.

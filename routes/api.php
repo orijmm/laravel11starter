@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Pages\MenuController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TokenController;
@@ -65,6 +66,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
      * Pages and Templates
      */
     Route::apiResource('templates', TemplateController::class);
+    Route::apiResource('menus', MenuController::class);
 });
 
 ## Ubicaciones

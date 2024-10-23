@@ -79,7 +79,7 @@ class TemplateController extends Controller
         $this->authorize('edit_template');
 
         $data = $request->validated();
-        $newrecord = Template::query()->update($data);
+        $newrecord = $template->update($data);
 
         if ($newrecord) {
             return $this->responseUpdateSuccess(['record' => $newrecord]);

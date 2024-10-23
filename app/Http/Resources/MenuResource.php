@@ -17,6 +17,7 @@ class MenuResource extends JsonResource
     public function toArray($request): array
     {
         $data = $this->resource->toArray();
+        $data['items'] = $this->items;
         return $data;
     }
 }

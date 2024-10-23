@@ -49,7 +49,7 @@ class CustomModelCommand extends Command
 
             // Excluir columnas 'id', 'created_at', y 'updated_at'
             $fillable = array_filter($columns, function ($column) {
-                return !in_array($column, ['id', 'created_at', 'updated_at']);
+                return !in_array($column, ['id', 'created_at', 'updated_at', 'deleted_at']);
             });
 
             $fillableArray = "['" . implode("', '", $fillable) . "']";

@@ -13,7 +13,7 @@ class Row extends Model
 
     protected $table = 'rows';
 
-    protected $fillable = ['order', 'section_id', 'deleted_at'];
+    protected $fillable = ['order', 'section_id'];
 
     /**
      * Get the columns for the blog post.

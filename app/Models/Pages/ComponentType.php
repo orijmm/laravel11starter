@@ -12,5 +12,5 @@ class ComponentType extends Model
 
     protected $table = 'component_types';
 
-    protected $fillable = ['name', 'deleted_at'];
+    protected $fillable = ['name'];
 }

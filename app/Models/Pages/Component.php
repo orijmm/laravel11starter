@@ -13,7 +13,7 @@ class Component extends Model
 
     protected $table = 'components';
 
-    protected $fillable = ['content', 'name', 'description', 'order', 'column_id', 'component_type_id', 'deleted_at'];
+    protected $fillable = ['content', 'name', 'description', 'order', 'column_id', 'component_type_id'];
 
     /**
      * Get the componenttype that owns the comment.
