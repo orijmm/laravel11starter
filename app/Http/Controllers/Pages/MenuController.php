@@ -41,9 +41,9 @@ class MenuController extends Controller
         $newmenu = Menu::query()->create($data);
 
         if ($newmenu) {
-            return $this->responseUpdateSuccess(['record' => $newmenu]);
+            return $this->responseStoreSuccess(['record' => $newmenu]);
         } else {
-            return $this->responseUpdateFail();
+            return $this->responseStoreFail();
         }
     }
 
@@ -65,23 +65,8 @@ class MenuController extends Controller
 
         $data = $request->validated();
         $newmenu = $menu->update($data);
-        $createdItems = [];
+
         if ($newmenu) {
-            //Agregar item si tiene
-            if ($data['items'] ?? false) {
-                //foreach ($data['items'] as $k => $itemData) {
-                    $comments = array_map(function($data) {
-                        return new MenuItem($data);
-                    }, $data['items']);
-                    $menu->items()->saveMany($comments);
-                    // $menu->items[$k]->label = $itemData['label'];
-                    // $menu->items[$k]->url = $itemData['url'];
-                    // $menu->items[$k]->description = $itemData['description'] ?? null;
-                    // $menu->items[$k]->order = $itemData['order'];
-                    // $menu->items[$k]->parent_id = $itemData['parent_id'] ?? null;
-                    // $menu->items[$k]->page_id = $itemData['page_id'] ?? null;
-                //}
-            }
             return $this->responseUpdateSuccess(['record' => $menu]);
         } else {
             return $this->responseUpdateFail();
@@ -97,5 +82,52 @@ class MenuController extends Controller
         $this->authorize('delete_menu');
         $menu->delete();
         return $this->responseDeleteSuccess(['name' => $name]);
+    }
+
+    ############ ITEMS ##############
+    public function storeItem(Request $request, Menu $menu)
+    {
+        $data = $request->validate([
+            'label' => 'required|string',
+            'url' => 'required|string',
+            'description' => 'nullable|string',
+            'order' => 'required|integer',
+            'parent_id' => 'nullable|integer',
+            'page_id' => 'nullable|integer|exists:pages,id',
+        ]);
+        $menuitem = new MenuItem($data);
+        #Agregar relacion a menu
+        $newitem = $menu->items()->save($menuitem);
+        if ($newitem) {
+            return $this->responseStoreSuccess(['record' => $newitem]);
+        } else {
+            return $this->responseStoreFail();
+        }
+    }
+
+    public function updateItem(Request $request, MenuItem $menuitem)
+    {
+        $data = $request->validate([
+            'label' => 'required|string',
+            'url' => 'required|string',
+            'description' => 'nullable|string',
+            'order' => 'required|integer',
+            'parent_id' => 'nullable|integer',
+            'page_id' => 'nullable|integer|exists:pages,id',
+        ]);
+        $edititem = $menuitem->update($data);
+
+        if ($edititem) {
+            return $this->responseUpdateSuccess(['record' => $menuitem]);
+        } else {
+            return $this->responseUpdateFail();
+        }
+    }
+
+    public function deleteItem(MenuItem $menuitem)
+    {
+        $this->authorize('delete_menu');
+        $menuitem->delete();
+        return $this->responseDeleteSuccess();
     }
 }

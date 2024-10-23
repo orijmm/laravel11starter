@@ -16,14 +16,6 @@ class UpdateMenuRequest extends FormRequest
         return [
             'name' => 'required',
             'description' => 'required',
-            'items' => 'required|array', 
-            'items.*.id' => 'nullable|integer|exists:menu_items,id',
-            'items.*.label' => 'required|string',
-            'items.*.url' => 'required|string',
-            'items.*.description' => 'nullable|string',
-            'items.*.order' => 'required|integer',
-            'items.*.parent_id' => 'nullable|integer',
-            'items.*.page_id' => 'nullable|integer|exists:pages,id',
         ];
     }
 }

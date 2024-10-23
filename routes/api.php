@@ -67,6 +67,10 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
      */
     Route::apiResource('templates', TemplateController::class);
     Route::apiResource('menus', MenuController::class);
+    Route::post('menus/{menu}/storeitem', [MenuController::class, 'storeItem'])->name('menu.store.item');
+    Route::put('menus/{menuitem}/updateitem', [MenuController::class, 'updateItem'])->name('menu.update.item');
+    Route::delete('menus/{menuitem}/deleteitem', [MenuController::class, 'deleteItem'])->name('menu.delete.item');
+
 });
 
 ## Ubicaciones
