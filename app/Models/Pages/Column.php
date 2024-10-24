@@ -4,7 +4,6 @@ namespace App\Models\Pages;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Column extends Model
 {
@@ -14,11 +13,8 @@ class Column extends Model
 
     protected $fillable = ['width', 'order', 'row_id'];
 
-    /**
-     * Get the components for the blog post.
-     */
-    public function components(): HasMany
+    public function components()
     {
-        return $this->hasMany(Row::class);
+        return $this->belongsToMany(Component::class);
     }
 }
