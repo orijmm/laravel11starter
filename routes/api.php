@@ -78,6 +78,8 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
         Route::apiResource('componenttype', ComponentTypeController::class);
         Route::apiResource('components', ComponentController::class);
 
+        Route::apiResource('page', PagesController::class);
+
     });
 });
 

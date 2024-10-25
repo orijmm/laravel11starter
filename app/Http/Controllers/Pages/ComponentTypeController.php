@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateComponentTypeRequest;
 use App\Http\Resources\ComponentTypeResource;
 use App\Models\Pages\ComponentType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ComponentTypeController extends Controller
 {
@@ -17,7 +18,8 @@ class ComponentTypeController extends Controller
     public function index(Request $request)
     {
         try {
-            $query = ComponentType::query();
+            //DB::listen(fn ($e) => dump($e->toRawSql()));
+            $query = ComponentType::query()->with('components');
             if (! empty($request['search'])) {
                 $query = $query->search($request['search']);
             }

@@ -4,6 +4,7 @@ namespace App\Models\Pages;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -16,11 +17,11 @@ class Page extends Model
     protected $fillable = ['title', 'description', 'slug', 'template_id'];
 
     /**
-     * Get the menu_items for the blog post.
+     * Get the template for the blog post.
      */
-    public function menuitems(): HasMany
+    public function template(): BelongsTo
     {
-        return $this->hasMany(MenuItem::class);
+        return $this->belongsTo(Template::class);
     }
 
     /**
@@ -28,6 +29,6 @@ class Page extends Model
      */
     public function sections(): HasMany
     {
-        return $this->hasMany(Section::class)->chaperone();
+        return $this->hasMany(Section::class);
     }
 }
