@@ -252,24 +252,72 @@ export default {
                             icon: 'tachometer',
                             showDesktop: true,
                             showMobile: true,
-                            requiresAbility: getAbilitiesForRoute(['edit.setting']),
-                            to: '/panel/pages',
+                            requiresAbility: false,
+                            to: '/panel/pages/menus',
+                            children: [
+                                {
+                                    name: trans('global.phrases.add_new'),
+                                    icon: '',
+                                    showDesktop: true,
+                                    showMobile: true,
+                                    requiresAbility: false,
+                                    to: '/panel/pages/menus/create',
+                                }
+                            ]
                         },
                         {
                             name: trans('global.menu.templates'),
                             icon: 'tachometer',
                             showDesktop: true,
                             showMobile: true,
-                            requiresAbility: getAbilitiesForRoute(['edit.setting']),
-                            to: '/panel/pages',
+                            requiresAbility: false,
+                            to: '/panel/pages/templates',
+                            children: [
+                                {
+                                    name: trans('global.phrases.add_new'),
+                                    icon: '',
+                                    showDesktop: true,
+                                    showMobile: true,
+                                    requiresAbility: false,
+                                    to: '/panel/pages/templates/create',
+                                }
+                            ]
                         },
                         {
                             name: trans('global.menu.pages'),
                             icon: 'tachometer',
                             showDesktop: true,
                             showMobile: true,
-                            requiresAbility: getAbilitiesForRoute(['edit.setting']),
-                            to: '/panel/pages',
+                            requiresAbility: false,
+                            to: '/panel/pages/page',
+                            children: [
+                                {
+                                    name: trans('global.phrases.add_new'),
+                                    icon: '',
+                                    showDesktop: true,
+                                    showMobile: true,
+                                    requiresAbility: false,
+                                    to: '/panel/pages/pages/create',
+                                }
+                            ]
+                        },
+                        {
+                            name: trans('global.menu.components'),
+                            icon: 'tachometer',
+                            showDesktop: true,
+                            showMobile: true,
+                            requiresAbility: false,
+                            to: '/panel/pages/components',
+                            children: [
+                                {
+                                    name: trans('global.phrases.add_new'),
+                                    icon: '',
+                                    showDesktop: true,
+                                    showMobile: true,
+                                    requiresAbility: false,
+                                    to: '/panel/pages/components/create',
+                                }
+                            ]
                         }
                     ]
                 },

@@ -20,6 +20,23 @@ import { default as PageAbility } from "@/views/pages/private/abilities/Index";
 import { default as PageAbilityCreate } from "@/views/pages/private/abilities/Create";
 import { default as PageAbilityEdit } from "@/views/pages/private/abilities/Edit";
 
+import { default as PageMenu } from "@/views/pages/private/website/menus/Index";
+import { default as PageMenuCreate } from "@/views/pages/private/website/menus/Create";
+import { default as PageMenuEdit } from "@/views/pages/private/website/menus/Edit";
+
+import { default as PageTemplate } from "@/views/pages/private/website/templates/Index";
+import { default as PageTemplateCreate } from "@/views/pages/private/website/templates/Create";
+import { default as PageTemplateEdit } from "@/views/pages/private/website/templates/Edit";
+
+import { default as PagePage } from "@/views/pages/private/website/pages/Index";
+import { default as PagePageCreate } from "@/views/pages/private/website/pages/Create";
+import { default as PagePageEdit } from "@/views/pages/private/website/pages/Edit";
+
+
+import { default as PageComponent } from "@/views/pages/private/website/components/Index";
+import { default as PageComponentCreate } from "@/views/pages/private/website/components/Create";
+import { default as PageComponentEdit } from "@/views/pages/private/website/components/Edit";
+
 
 
 import abilities from "@/stub/abilities";
@@ -114,6 +131,83 @@ const routes = [
                         path: ":id/editability",
                         meta: { requiresAuth: true, requiresAbility: abilities.LIST_ABILITY },
                         component: PageAbilityEdit,
+                    },
+                ]
+            },
+            {
+                path: "pages",
+                children: [
+                    {
+                        name: "menus.list",
+                        path: "menus",
+                        meta: { requiresAuth: true },
+                        component: PageMenu,
+                    },
+                    {
+                        name: "menus.create",
+                        path: "menus/create",
+                        meta: { requiresAuth: true },
+                        component: PageMenuCreate,
+                    },
+                    {
+                        name: "menus.edit",
+                        path: "menus/:id",
+                        meta: { requiresAuth: true },
+                        component: PageMenuEdit,
+                    },
+                    {
+                        name: "templates.list",
+                        path: "templates",
+                        meta: { requiresAuth: true },
+                        component: PageTemplate,
+                    },
+                    {
+                        name: "templates.create",
+                        path: "templates/create",
+                        meta: { requiresAuth: true },
+                        component: PageTemplateCreate,
+                    },
+                    {
+                        name: "templates.edit",
+                        path: "templates/:id",
+                        meta: { requiresAuth: true },
+                        component: PageTemplateEdit,
+                    },
+                    {
+                        name: "pages.list",
+                        path: "page",
+                        meta: { requiresAuth: true },
+                        component: PagePage,
+                    },
+                    {
+                        name: "pages.create",
+                        path: "pages/create",
+                        meta: { requiresAuth: true },
+                        component: PagePageCreate,
+                    },
+                    {
+                        name: "pages.edit",
+                        path: "pages/:id",
+                        meta: { requiresAuth: true },
+                        component: PagePageEdit,
+                    },
+                    {
+                        name: "components.list",
+                        path: "components",
+                        meta: { requiresAuth: true },
+                        component: PageComponent,
+                    },
+                    {
+                        name: "components.create",
+                        path: "components/create",
+                        meta: { requiresAuth: true },
+                        component: PageComponentCreate,
+                    },
+                    {
+                        name: "components.edit",
+                        path: "components/:id",
+                        meta: { requiresAuth: true },
+                        component: PageComponentEdit,
                     },
                 ]
             }

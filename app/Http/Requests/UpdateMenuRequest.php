@@ -14,7 +14,7 @@ class UpdateMenuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'name' => 'required|alpha_dash|unique:menus,name,'.$this->route('menu')->id,
             'description' => 'required',
         ];
     }

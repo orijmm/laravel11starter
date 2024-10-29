@@ -18,7 +18,7 @@ class ComponentController extends Controller
     public function index(Request $request)
     {
         try {
-            $query = Component::query();
+            $query = Component::query()->with(['componenttype']);
             if (! empty($request['search'])) {
                 $query = $query->search($request['search']);
             }
