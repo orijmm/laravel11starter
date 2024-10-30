@@ -181,13 +181,13 @@ const routes = [
                     },
                     {
                         name: "pages.create",
-                        path: "pages/create",
+                        path: "page/create",
                         meta: { requiresAuth: true },
                         component: PagePageCreate,
                     },
                     {
                         name: "pages.edit",
-                        path: "pages/:id",
+                        path: "page/:id",
                         meta: { requiresAuth: true },
                         component: PagePageEdit,
                     },

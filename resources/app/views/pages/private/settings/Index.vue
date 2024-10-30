@@ -1,7 +1,7 @@
 <template>
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction"
         :is-loading="page.loading">
-        <Panel>
+        <Panel otherClass="overflow-visible">
             <Form id="edit-setting" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="name_company" v-model="form.name_company"
                     :label="trans('users.labels.first_name')" />

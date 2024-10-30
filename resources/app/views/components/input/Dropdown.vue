@@ -10,7 +10,7 @@
 
 <script>
 
-import {computed, defineComponent, ref} from "vue";
+import {computed, defineComponent, ref, onMounted} from "vue";
 
 import SearchService from "@/services/SearchService";
 import Multiselect from 'vue-multiselect';
@@ -83,6 +83,29 @@ export default defineComponent({
                 }
             }
             return val;
+        });
+
+        const loadInitialOptions = () => {
+            if (!props.server) return;
+            isLoading.value = true;
+            const service = new SearchService(props.server);
+            service.begin('', 1, props.serverPerPage)
+                .then((response) => {
+                    selectOptionsArr.value = response.data.data.map(item => ({
+                        id: item.id,
+                        name: item.name
+                    }));
+                })
+                .catch((error) => console.error(error))
+                .finally(() => {
+                    isLoading.value = false;
+                });
+        };
+
+        onMounted(() => {
+            if(props.serverSearchMinCharacters == 0){
+                loadInitialOptions();
+            }
         });
 
         const value = computed({

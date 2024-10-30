@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Pages\Template;
+use App\Utilities\Data;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -16,7 +18,9 @@ class PageResource extends JsonResource
      */
     public function toArray($request): array
     {
+        $templates = Template::get();
         $data = $this->resource->toArray();
+        $data['template_id'] = Data::getSelectedLocation($templates, $this->template_id);
         return $data;
     }
 }

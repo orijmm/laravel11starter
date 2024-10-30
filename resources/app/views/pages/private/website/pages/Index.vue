@@ -98,7 +98,7 @@ export default defineComponent({
                     id: 'new',
                     name: trans('global.buttons.add_new'),
                     icon: "fa fa-plus",
-                    to: toUrl('/pages/add/pages'),
+                    to: toUrl('/pages/page/create'),
                     isAllowed: isAllowed(['create_pages'])
                 }
             ],
@@ -126,7 +126,7 @@ export default defineComponent({
                     name: trans('global.actions.edit'),
                     icon: "fa fa-edit",
                     showName: false,
-                    to: toUrl('/pages/{id}/editpages'),
+                    to: toUrl('/pages/page/{id}'),
                     isAllowed: isAllowed(['edit_pages'])
                 },
                 delete: {

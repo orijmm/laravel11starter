@@ -37,6 +37,8 @@ class PagesController extends Controller
         $this->authorize('create_page');
 
         $data = $request->validated();
+        //plantilla
+        $data['template_id'] = $data['template_id']['id'];
         $newPage = Page::query()->create($data);
 
         if ($newPage) {
@@ -63,6 +65,7 @@ class PagesController extends Controller
         $this->authorize('edit_page');
 
         $data = $request->validated();
+        $data['template_id'] = $data['template_id']['id'];
         $newPage = $page->update($data);
 
         if ($newPage) {
