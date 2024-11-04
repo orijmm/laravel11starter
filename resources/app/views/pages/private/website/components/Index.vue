@@ -20,11 +20,9 @@
             <Table :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" :actions="table.actions"
                 :records="table.records" :pagination="table.pagination" :is-loading="table.loading"
                 @page-changed="onTablePageChange" @action="onTableAction" @sort="onTableSort">
-                <template v-slot:content-components="props">
+                <template v-slot:content-componenttype="props">
                     <div>
-                        <span  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800" v-for="(entry, index) in props.item.components" :key="index">
-                            {{ entry.name }}<span v-if="index < props.item.components.length - 1"> </span>
-                        </span>
+                        {{ props.item.componenttype.name }}
                     </div>
                 </template>
             </Table>
@@ -100,7 +98,14 @@ export default defineComponent({
                     id: 'new',
                     name: trans('global.buttons.add_new'),
                     icon: "fa fa-plus",
-                    to: toUrl('/pages/add/components'),
+                    to: toUrl('/pages/components/create'),
+                    isAllowed: isAllowed(['create_pages'])
+                },
+                {
+                    id: 'type',
+                    name: trans('global.pages.componenttypes'),
+                    icon: "fa fa-list",
+                    to: toUrl('/pages/componenttype'),
                     isAllowed: isAllowed(['create_pages'])
                 }
             ],
@@ -129,7 +134,7 @@ export default defineComponent({
                     name: trans('global.actions.edit'),
                     icon: "fa fa-edit",
                     showName: false,
-                    to: toUrl('/pages/{id}/editcomponents'),
+                    to: toUrl('/pages/components/{id}'),
                     isAllowed: isAllowed(['edit_pages'])
                 },
                 delete: {

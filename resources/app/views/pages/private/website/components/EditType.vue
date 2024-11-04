@@ -1,9 +1,8 @@
 <template>
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction" :is-loading="page.loading">
         <Panel>
-            <Form id="edit-template" @submit.prevent="onSubmit">
+            <Form id="edit-componenttype" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name" :label="trans('users.labels.first_name')"/>
-                <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description" :label="trans('users.labels.description')"/>
             </Form>
         </Panel>
     </Page>
@@ -39,22 +38,21 @@ export default defineComponent({
         const {user} = useAuthStore();
         const route = useRoute();
         const form = reactive({
-            name: '',
-            description: '',
+            name: undefined,
         });
 
         const page = reactive({
-            id: 'edit_template',
-            title: trans('global.pages.template_edit'),
+            id: 'edit_componenttype',
+            title: trans('global.pages.componenttype_edit'),
             filters: false,
             loading: true,
             breadcrumbs: [
                 {
-                    name: trans('global.pages.templates'),
-                    to: toUrl('/pages/templates'),
+                    name: trans('global.pages.componenttype'),
+                    to: toUrl('/pages/componenttype'),
                 },
                 {
-                    name: trans('global.pages.template_edit'),
+                    name: trans('global.pages.componenttype_edit'),
                     active: true,
                 }
             ],
@@ -63,7 +61,7 @@ export default defineComponent({
                     id: 'back',
                     name: trans('global.buttons.back'),
                     icon: "fa fa-angle-left",
-                    to: toUrl('/pages/templates'),
+                    to: toUrl('/pages/componenttype'),
                     theme: 'outline',
                 },
                 {
@@ -75,7 +73,7 @@ export default defineComponent({
             ]
         });
 
-        const service = new PagesService('templates');
+        const service = new PagesService('componenttype');
 
         onBeforeMount(() => {
             service.find(route.params.id).then((response) => {
@@ -93,7 +91,7 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleUpdate('edit-template', route.params.id, reduceProperties(form, ['roles'], 'id'));
+            service.handleUpdate('edit-componenttype', route.params.id, reduceProperties(form, [], 'id'));
             return false;
         }
 

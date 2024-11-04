@@ -21,7 +21,7 @@ class Component extends Model
      */
     public function componenttype(): BelongsTo
     {
-        return $this->belongsTo(ComponentType::class);
+        return $this->belongsTo(ComponentType::class, 'component_type_id');
     }
 
     public function column()

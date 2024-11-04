@@ -36,6 +36,9 @@ import { default as PagePageEdit } from "@/views/pages/private/website/pages/Edi
 import { default as PageComponent } from "@/views/pages/private/website/components/Index";
 import { default as PageComponentCreate } from "@/views/pages/private/website/components/Create";
 import { default as PageComponentEdit } from "@/views/pages/private/website/components/Edit";
+import { default as PageComponentType } from "@/views/pages/private/website/components/TypeIndex";
+import { default as PageComponentTypeCreate } from "@/views/pages/private/website/components/CreateType";
+import { default as PageComponentTypeEdit } from "@/views/pages/private/website/components/EditType";
 
 
 
@@ -208,6 +211,24 @@ const routes = [
                         path: "components/:id",
                         meta: { requiresAuth: true },
                         component: PageComponentEdit,
+                    },
+                    {
+                        name: "componenttype.list",
+                        path: "componenttype",
+                        meta: { requiresAuth: true },
+                        component: PageComponentType,
+                    },
+                    {
+                        name: "componenttype.create",
+                        path: "componenttype/create",
+                        meta: { requiresAuth: true },
+                        component: PageComponentTypeCreate,
+                    },
+                    {
+                        name: "componenttype.edit",
+                        path: "componenttype/:id",
+                        meta: { requiresAuth: true },
+                        component: PageComponentTypeEdit,
                     },
                 ]
             }

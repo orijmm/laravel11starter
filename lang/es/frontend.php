@@ -130,6 +130,9 @@ return [
             'component_create' => 'Nuevo componente',
             'component_edit' => 'Editar componente',
             'componenttype' => 'Tipo de Componente',
+            'componenttypes' => 'Tipos de Componentes',
+            'componenttype_create' => 'Nuevo tipo de Componente',
+            'componenttype_edit' => 'Editar tipo de Componente',
         ],
         'phrases' => [
             'clear_filters' => 'Limpiar todo',

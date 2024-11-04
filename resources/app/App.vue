@@ -316,6 +316,22 @@ export default {
                                     showMobile: true,
                                     requiresAbility: false,
                                     to: '/panel/pages/components/create',
+                                },
+                                {
+                                    name: trans('global.menu.componenttype'),
+                                    icon: '',
+                                    showDesktop: true,
+                                    showMobile: true,
+                                    requiresAbility: false,
+                                    to: '/panel/pages/componenttype',
+                                },
+                                {
+                                    name: trans('global.menu.add_new'),
+                                    icon: '',
+                                    showDesktop: true,
+                                    showMobile: true,
+                                    requiresAbility: false,
+                                    to: '/panel/pages/componenttype/create',
                                 }
                             ]
                         }

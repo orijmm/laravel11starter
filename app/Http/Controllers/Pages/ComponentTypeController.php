@@ -55,24 +55,24 @@ class ComponentTypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ComponentType $componentType)
+    public function show(ComponentType $componenttype)
     {
-        $model = new ComponentTypeResource($componentType);
+        $model = new ComponentTypeResource($componenttype);
         return $this->responseDataSuccess(['model' => $model]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateComponentTypeRequest $request, ComponentType $componentType)
+    public function update(UpdateComponentTypeRequest $request, ComponentType $componenttype)
     {
         $this->authorize('edit_page');
 
         $data = $request->validated();
-        $newcomponent_type = $componentType->update($data);
+        $newcomponent_type = $componenttype->update($data);
 
         if ($newcomponent_type) {
-            return $this->responseUpdateSuccess(['record' => $componentType]);
+            return $this->responseUpdateSuccess(['record' => $componenttype]);
         } else {
             return $this->responseUpdateFail();
         }
@@ -81,11 +81,11 @@ class ComponentTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ComponentType $componentType)
+    public function destroy(ComponentType $componenttype)
     {
-        $name = $componentType->name;
+        $name = $componenttype->name;
         $this->authorize('delete_page');
-        $componentType->delete();
+        $componenttype->delete();
         return $this->responseDeleteSuccess(['name' => $name]);
     }
 }

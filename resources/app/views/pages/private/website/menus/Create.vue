@@ -30,8 +30,8 @@ export default defineComponent({
     setup() {
         const {user} = useAuthStore();
         const form = reactive({
-            name: '',
-            description: '',
+            name: undefined,
+            description: undefined,
         });
 
         const page = reactive({

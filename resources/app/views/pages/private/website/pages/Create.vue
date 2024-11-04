@@ -33,7 +33,7 @@ import { toUrl } from "@/helpers/routing";
 import Form from "@/views/components/Form";
 
 export default defineComponent({
-    name: 'PagepageCreate',
+    name: 'PagePageCreate',
     components: { Form, FileInput, Panel, Alert, TextInput, Button, Page, Dropdown },
     setup() {
         const { user } = useAuthStore();

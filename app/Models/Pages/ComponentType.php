@@ -18,6 +18,6 @@ class ComponentType extends Model
 
     public function components(): HasMany
     {
-        return $this->hasMany(Component::class)->chaperone();
+        return $this->hasMany(Component::class);
     }
 }

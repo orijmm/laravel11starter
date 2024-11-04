@@ -1,10 +1,8 @@
 <template>
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction">
         <Panel>
-            <Form id="create-template" @submit.prevent="onSubmit">
+            <Form id="create-componenttype" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name" :label="trans('users.labels.first_name')" :labelsmall="trans('global.pages.lowercase')"/>
-                <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description" :label="trans('users.labels.description')"/>
-                <TextInput class="mb-4" type="text" :required="true" name="filename" v-model="form.filename" :label="trans('users.labels.filename')"/>
             </Form>
         </Panel>
     </Page>
@@ -26,28 +24,26 @@ import {toUrl} from "@/helpers/routing";
 import Form from "@/views/components/Form";
 
 export default defineComponent({
-    name: 'PageTemplateCreate',
+    name: 'PagecomponenttypeCreate',
     components: {Form, FileInput, Panel, Alert, TextInput, Button, Page},
     setup() {
         const {user} = useAuthStore();
         const form = reactive({
             name: undefined,
-            description: undefined,
-            filename: undefined
         });
 
         const page = reactive({
-            id: 'create_templates',
-            title: trans('global.pages.template_create'),
+            id: 'create_componenttype',
+            title: trans('global.pages.componenttype_create'),
             filters: false,
             breadcrumbs: [
                 {
-                    name: trans('global.pages.templates'),
-                    to: toUrl('/pages/templates'),
+                    name: trans('global.pages.componenttype'),
+                    to: toUrl('/pages/componenttype'),
 
                 },
                 {
-                    name: trans('global.pages.template_create'),
+                    name: trans('global.pages.componenttype_create'),
                     active: true,
                 }
             ],
@@ -56,7 +52,7 @@ export default defineComponent({
                     id: 'back',
                     name: trans('global.buttons.back'),
                     icon: "fa fa-angle-left",
-                    to: toUrl('/pages/templates'),
+                    to: toUrl('/pages/componenttype'),
                     theme: 'outline',
                 },
                 {
@@ -68,7 +64,7 @@ export default defineComponent({
             ]
         });
 
-        const service = new PagesService('templates');
+        const service = new PagesService('componenttype');
 
         function onAction(data) {
             switch(data.action.id) {
@@ -79,7 +75,7 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleCreate('create-template', reduceProperties(form, [], 'id')).then(() => {
+            service.handleCreate('create-componenttype', reduceProperties(form, [], 'id')).then(() => {
                 clearObject(form)
             })
             return false;

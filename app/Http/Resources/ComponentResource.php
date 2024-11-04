@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Pages\ComponentType;
+use App\Utilities\Data;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -16,7 +18,9 @@ class ComponentResource extends JsonResource
      */
     public function toArray($request): array
     {
+        $componenttype = ComponentType::get();
         $data = $this->resource->toArray();
+        $data['component_type_id'] = Data::getSelectedLocation($componenttype, $this->component_type_id);
         return $data;
     }
 }

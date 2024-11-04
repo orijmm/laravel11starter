@@ -8,10 +8,6 @@
                         <TextInput name="name" :label="trans('users.labels.first_name')"
                             v-model="mainQuery.filters.name.value"></TextInput>
                     </FiltersCol>
-                    <FiltersCol>
-                        <TextInput name="title" :label="trans('users.labels.title')"
-                            v-model="mainQuery.filters.title.value"></TextInput>
-                    </FiltersCol>
                 </FiltersRow>
             </Filters>
         </template>
@@ -54,7 +50,7 @@ export default defineComponent({
         Avatar
     },
     setup() {
-        const service = new PagesService('menus');
+        const service = new PagesService('componenttype');
         const alertStore = useAlertStore();
         const mainQuery = reactive({
             page: 1,
@@ -73,16 +69,23 @@ export default defineComponent({
         });
 
         const page = reactive({
-            id: 'list_menus',
-            title: trans('global.pages.menus'),
+            id: 'list_componenttype',
+            title: trans('global.pages.componenttypes'),
             breadcrumbs: [
                 {
-                    name: trans('global.pages.menus'),
-                    to: toUrl('/pages/menus'),
+                    name: trans('global.pages.componenttypes'),
+                    to: toUrl('/pages/componenttypes'),
                     active: true,
                 }
             ],
             actions: [
+                {
+                    id: 'back',
+                    name: trans('global.buttons.back'),
+                    icon: "fa fa-angle-left",
+                    to: toUrl('/pages/components'),
+                    theme: 'outline',
+                },
                 {
                     id: 'filters',
                     name: trans('global.buttons.filters'),
@@ -93,7 +96,7 @@ export default defineComponent({
                     id: 'new',
                     name: trans('global.buttons.add_new'),
                     icon: "fa fa-plus",
-                    to: toUrl('/pages/menus/create'),
+                    to: toUrl('/pages/componenttype/create'),
                     isAllowed: isAllowed(['create_pages'])
                 }
             ],
@@ -104,7 +107,6 @@ export default defineComponent({
             headers: {
                 id: trans('users.labels.id_pound'),
                 name: trans('users.labels.first_name'),
-                description: trans('users.labels.description'),
             },
             sorting: {
                 name: true,
@@ -119,7 +121,7 @@ export default defineComponent({
                     name: trans('global.actions.edit'),
                     icon: "fa fa-edit",
                     showName: false,
-                    to: toUrl('/pages/menus/{id}'),
+                    to: toUrl('/pages/componenttype/{id}'),
                     isAllowed: isAllowed(['edit_pages'])
                 },
                 delete: {
