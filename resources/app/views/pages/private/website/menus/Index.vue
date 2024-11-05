@@ -9,8 +9,8 @@
                             v-model="mainQuery.filters.name.value"></TextInput>
                     </FiltersCol>
                     <FiltersCol>
-                        <TextInput name="title" :label="trans('users.labels.title')"
-                            v-model="mainQuery.filters.title.value"></TextInput>
+                        <TextInput name="description" :label="trans('users.labels.description')"
+                            v-model="mainQuery.filters.description.value"></TextInput>
                     </FiltersCol>
                 </FiltersRow>
             </Filters>

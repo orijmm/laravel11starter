@@ -7,6 +7,8 @@
                     <FiltersCol>
                         <TextInput name="name" :label="trans('users.labels.first_name')"
                             v-model="mainQuery.filters.name.value"></TextInput>
+                        <TextInput name="description" :label="trans('users.labels.description')"
+                            v-model="mainQuery.filters.description.value"></TextInput>
                     </FiltersCol>
                 </FiltersRow>
             </Filters>
@@ -58,6 +60,10 @@ export default defineComponent({
             sort: '',
             filters: {
                 name: {
+                    value: '',
+                    comparison: '='
+                },
+                description: {
                     value: '',
                     comparison: '='
                 }

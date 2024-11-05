@@ -22,6 +22,10 @@ class MenuController extends Controller
             $query = $query->search($request['search']);
         }
 
+        if (! empty($request['filters'])) {
+            filter($query, $request['filters']);
+        }
+
         if (! empty($request['sort_by']) && ! empty($request['sort'])) {
             $query = $query->orderBy($request['sort_by'], $request['sort']);
         }
@@ -92,10 +96,15 @@ class MenuController extends Controller
             'url' => 'required|string',
             'description' => 'nullable|string',
             'order' => 'required|integer',
-            'parent_id' => 'nullable|integer',
-            'page_id' => 'nullable|integer|exists:pages,id',
+            'parent_id' => 'nullable',
+            'page_id' => 'nullable|exists:pages,id',
         ]);
+
+        $data['parent_id'] = $data['parent_id']['id'];
+        $data['page_id'] = $data['page_id']['id'];
+
         $menuitem = new MenuItem($data);
+
         #Agregar relacion a menu
         $newitem = $menu->items()->save($menuitem);
         if ($newitem) {

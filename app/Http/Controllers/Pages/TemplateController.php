@@ -21,6 +21,10 @@ class TemplateController extends Controller
             $query = $query->search($request['search']);
         }
 
+        if (! empty($request['filters'])) {
+            filter($query, $request['filters']);
+        }
+
         if (! empty($request['sort_by']) && ! empty($request['sort'])) {
             $query = $query->orderBy($request['sort_by'], $request['sort']);
         }

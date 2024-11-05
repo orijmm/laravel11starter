@@ -5,12 +5,16 @@
             <Filters @clear="onFiltersClear">
                 <FiltersRow>
                     <FiltersCol>
-                        <TextInput name="title" :label="trans('users.labels.first_title')"
+                        <TextInput name="title" :label="trans('users.labels.title')"
                             v-model="mainQuery.filters.title.value"></TextInput>
                     </FiltersCol>
                     <FiltersCol>
                         <TextInput name="slug" :label="trans('users.labels.slug')"
                             v-model="mainQuery.filters.slug.value"></TextInput>
+                    </FiltersCol>
+                    <FiltersCol>
+                        <TextInput name="description" :label="trans('users.labels.description')"
+                            v-model="mainQuery.filters.description.value"></TextInput>
                     </FiltersCol>
                 </FiltersRow>
             </Filters>
@@ -66,11 +70,15 @@ export default defineComponent({
             search: '',
             sort: '',
             filters: {
-                name: {
+                title: {
                     value: '',
                     comparison: '='
                 },
                 slug: {
+                    value: '',
+                    comparison: '='
+                },
+                description: {
                     value: '',
                     comparison: '='
                 }

@@ -124,7 +124,6 @@ export default defineComponent({
         }
 
         async function onSubmit() {
-            console.log(`/roles/${route.params.id}/editability`);
             try {
                 let response = await service.handleUpdatePut(
                     'edit-ability',
