@@ -42,6 +42,8 @@ class ComponentController extends Controller
         $this->authorize('create_page');
 
         $data = $request->validated();
+        //plantilla
+        $data['component_type_id'] = $data['component_type_id']['id'];
         $newcomponent = Component::query()->create($data);
 
         if ($newcomponent) {
@@ -68,6 +70,7 @@ class ComponentController extends Controller
         $this->authorize('edit_page');
 
         $data = $request->validated();
+        $data['component_type_id'] = $data['component_type_id']['id'];
         $newcomponent = $component->update($data);
 
         if ($newcomponent) {

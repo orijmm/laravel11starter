@@ -1,22 +1,33 @@
 <template>
-    <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction" :is-loading="page.loading">
-        <Panel>
-            <Form id="edit-template" @submit.prevent="onSubmit">
-                <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name" :label="trans('users.labels.first_name')"/>
-                <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description" :label="trans('users.labels.description')"/>
+    <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction"
+        :is-loading="page.loading">
+        <Panel otherClass="overflow-visible">
+            <Form id="edit-component" @submit.prevent="onSubmit">
+                <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name"
+                    :label="trans('users.labels.first_name')" :labelsmall="trans('global.pages.lowercase')" />
+                <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
+                    :label="trans('users.labels.description')" />
+                <TextInput class="mb-4" type="number" :required="true" name="order" v-model="form.order"
+                    :label="trans('users.labels.order')" />
+                <TextInput class="mb-4" type="textarea" :required="true" name="content" v-model="form.content"
+                    :label="trans('users.labels.content')" />
+                <Dropdown class="mb-4" :server="'pages/componenttype'" :server-per-page="15" :required="true"
+                    name="type" v-model="form.component_type_id" :label="trans('users.labels.componenttype')"
+                    :serverSearchMinCharacters="0" />
             </Form>
         </Panel>
     </Page>
 </template>
 
 <script>
-import {defineComponent, onBeforeMount, reactive, ref} from "vue";
-import {trans} from "@/helpers/i18n";
-import {fillObject, reduceProperties} from "@/helpers/data"
-import {useRoute} from "vue-router";
-import {useAuthStore} from "@/stores/auth";
-import {toUrl} from "@/helpers/routing";
+import { defineComponent, onBeforeMount, reactive, ref } from "vue";
+import { trans } from "@/helpers/i18n";
+import { fillObject, reduceProperties } from "@/helpers/data"
+import { useRoute } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+import { toUrl } from "@/helpers/routing";
 import PagesService from "@/services/PagesService";
+import Dropdown from "@/views/components/input/Dropdown";
 import Button from "@/views/components/input/Button";
 import TextInput from "@/views/components/input/TextInput";
 import Alert from "@/views/components/Alert";
@@ -33,28 +44,32 @@ export default defineComponent({
         Alert,
         TextInput,
         Button,
-        Page
+        Page,
+        Dropdown
     },
     setup() {
-        const {user} = useAuthStore();
+        const { user } = useAuthStore();
         const route = useRoute();
         const form = reactive({
-            name: '',
-            description: '',
+            content: undefined,
+            name: undefined,
+            description: undefined,
+            order: undefined,
+            component_type_id: undefined
         });
 
         const page = reactive({
-            id: 'edit_template',
-            title: trans('global.pages.template_edit'),
+            id: 'edit_component',
+            title: trans('global.pages.component_edit'),
             filters: false,
             loading: true,
             breadcrumbs: [
                 {
-                    name: trans('global.pages.templates'),
-                    to: toUrl('/pages/templates'),
+                    name: trans('global.pages.components'),
+                    to: toUrl('/pages/components'),
                 },
                 {
-                    name: trans('global.pages.template_edit'),
+                    name: trans('global.pages.component_edit'),
                     active: true,
                 }
             ],
@@ -63,7 +78,7 @@ export default defineComponent({
                     id: 'back',
                     name: trans('global.buttons.back'),
                     icon: "fa fa-angle-left",
-                    to: toUrl('/pages/templates'),
+                    to: toUrl('/pages/components'),
                     theme: 'outline',
                 },
                 {
@@ -75,7 +90,7 @@ export default defineComponent({
             ]
         });
 
-        const service = new PagesService('templates');
+        const service = new PagesService('components');
 
         onBeforeMount(() => {
             service.find(route.params.id).then((response) => {
@@ -85,7 +100,7 @@ export default defineComponent({
         });
 
         function onAction(data) {
-            switch(data.action.id) {
+            switch (data.action.id) {
                 case 'submit':
                     onSubmit();
                     break;
@@ -93,7 +108,7 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleUpdate('edit-template', route.params.id, reduceProperties(form, ['roles'], 'id'));
+            service.handleUpdate('edit-component', route.params.id, reduceProperties(form, ['roles'], 'id'));
             return false;
         }
 
@@ -109,6 +124,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
