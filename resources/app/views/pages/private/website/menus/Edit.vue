@@ -10,27 +10,44 @@
             </Form>
         </Panel>
         <Panel :title="trans('global.pages.menu_items')">
-            <Form id="add-item" @submit.prevent="onSubmit">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                    <TextInput class="mb-4" type="text" :required="true" name="label" v-model="formItem.label"
-                        :label="trans('users.labels.label')" />
-                    <TextInput class="mb-4" type="text" :required="true" name="url" v-model="formItem.url"
-                        :label="trans('users.labels.url')" />
-                    <TextInput class="mb-4" type="text" :required="true" name="description"
-                        v-model="formItem.description" :label="trans('users.labels.description')" />
-                    <TextInput class="mb-4" type="text" :required="true" name="order" v-model="formItem.order"
-                        :label="trans('users.labels.order')" />
-                    <TextInput class="mb-4" type="text" :required="true" name="parent_id" v-model="formItem.parent_id"
-                        :label="trans('users.labels.parent_id')" />
-                    <TextInput class="mb-4" type="text" :required="true" name="menu_id" v-model="formItem.menu_id"
-                        :label="trans('users.labels.menu_id')" />
-                    <TextInput class="mb-4" type="text" :required="true" name="page_id" v-model="formItem.page_id"
-                        :label="trans('users.labels.page_id')" />
-                </div>
-            </Form>
+            <div class="text-right mb-4">
+                <Button type="button" @click="toggleAddItems"
+                    :label="`${trans('global.buttons.add')} ${trans('global.pages.menu_item')}`" />
+            </div>
+            <div v-if="page.toggleAddItems">
+                {{ formItem }}
+                <Form id="add-item" @submit.prevent="onSubmitItem">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <TextInput class="mb-4" type="text" :required="true" name="label" v-model="formItem.label"
+                            :label="trans('users.labels.label')" />
+                        <TextInput class="mb-4" type="text" :required="true" name="url" v-model="formItem.url"
+                            :label="trans('users.labels.url')" />
+                        <TextInput class="mb-4" type="text" :required="true" name="description"
+                            v-model="formItem.description" :label="trans('users.labels.description')" />
+                        <TextInput class="mb-4" type="number" :required="true" name="order" v-model="formItem.order"
+                            :label="trans('users.labels.order')" />
+                        <Dropdown class="mb-4" :server="'pages/menus'" :server-per-page="15" :required="true"
+                            name="type" v-model="formItem.menu_id" :label="trans('global.pages.menu')"
+                            :serverSearchMinCharacters="0" />
+                        <Dropdown class="mb-4" :server="'pages/page'" :server-per-page="15" :required="true"
+                            name="type" v-model="formItem.page_id" :label="trans('global.pages.page')"
+                            :serverSearchMinCharacters="0" />
+                        <Dropdown class="mb-4" :required="true" :options="form.items" label="label"
+                            name="type" v-model="formItem.parent_id" :label="trans('users.label.parent')" /> 
+                    </div>
+                    <div class="text-right mb-4">
+                        <Button type="button" @click="onSubmitItem" :label="trans('global.buttons.add')" />
+                    </div>
+                </Form>
+            </div>
             <Table :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" :actions="table.actions"
                 :records="table.records" :pagination="table.pagination" :is-loading="table.loading"
                 @page-changed="onTablePageChange" @action="onTableAction" @sort="onTableSort">
+                <template v-slot:content-page="props">
+                    <div>
+                        {{ props.item.page.name }}
+                    </div>
+                </template>
             </Table>
         </Panel>
     </Page>
@@ -39,7 +56,7 @@
 <script>
 import { defineComponent, onBeforeMount, reactive, ref } from "vue";
 import { trans } from "@/helpers/i18n";
-import { fillObject, reduceProperties } from "@/helpers/data"
+import { fillObject, reduceProperties, clearObject } from "@/helpers/data"
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { toUrl } from "@/helpers/routing";
@@ -52,6 +69,7 @@ import Page from "@/views/layouts/Page";
 import FileInput from "@/views/components/input/FileInput";
 import Form from "@/views/components/Form";
 import Table from "@/views/components/Table";
+import Dropdown from "@/views/components/input/Dropdown";
 import { isAllowed } from "@/helpers/isreq";
 
 export default defineComponent({
@@ -63,7 +81,8 @@ export default defineComponent({
         TextInput,
         Button,
         Page,
-        Table
+        Table,
+        Dropdown
     },
     setup() {
         const { user } = useAuthStore();
@@ -72,6 +91,7 @@ export default defineComponent({
             id: undefined,
             name: undefined,
             description: undefined,
+            items: undefined
         });
 
         const formItem = reactive({
@@ -89,6 +109,7 @@ export default defineComponent({
             title: trans('global.pages.menu_edit'),
             filters: false,
             loading: true,
+            toggleAddItems: false,
             breadcrumbs: [
                 {
                     name: trans('global.pages.menus'),
@@ -122,7 +143,7 @@ export default defineComponent({
                 label: trans('users.labels.label'),
                 parent_id: trans('users.labels.parent'),
                 description: trans('users.labels.description'),
-                page_id: trans('global.pages.page'),
+                page: trans('global.pages.page'),
             },
             sorting: {
                 name: true,
@@ -204,6 +225,10 @@ export default defineComponent({
             return false;
         }
 
+        function toggleAddItems() {
+            page.toggleAddItems = !page.toggleAddItems;
+        }
+
         return {
             trans,
             user,
@@ -216,7 +241,8 @@ export default defineComponent({
             table,
             onTablePageChange,
             onTableAction,
-            onTableSort
+            onTableSort,
+            toggleAddItems
         }
     }
 })

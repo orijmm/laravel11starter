@@ -56,6 +56,7 @@ class MenuController extends Controller
      */
     public function show(Menu $menu)
     {
+        $menu->load(['items.parent', 'items.page', 'items.menu']);
         $model = new MenuResource($menu);
         return $this->responseDataSuccess(['model' => $model]);
     }
@@ -97,11 +98,11 @@ class MenuController extends Controller
             'description' => 'nullable|string',
             'order' => 'required|integer',
             'parent_id' => 'nullable',
-            'page_id' => 'nullable|exists:pages,id',
+            'page_id' => 'nullable',
         ]);
 
-        $data['parent_id'] = $data['parent_id']['id'];
-        $data['page_id'] = $data['page_id']['id'];
+        $data['parent_id'] = $data['parent_id']['id'] ?? null;
+        $data['page_id'] = $data['page_id']['id'] ?? null;
 
         $menuitem = new MenuItem($data);
 

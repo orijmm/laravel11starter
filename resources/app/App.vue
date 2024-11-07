@@ -1,5 +1,7 @@
 <template>
-    <div class="bg-gray-100 flex" v-if="authStore.user && authStore.user.hasOwnProperty('id')">
+    <div class="bg-gray-100 flex"
+        v-if="authStore.user && authStore.user.hasOwnProperty('id') && /panel/.test(this.$route.path)">
+        <!-- /panel/.test(this.$route.path)" muestra el menu solo si ruta empieza por panel -->
         <aside class="relative bg-theme-600 h-screen w-64 hidden sm:block shadow-xl">
             <div class="p-6 border-b border-theme-600">
                 <router-link class="text-white text-3xl font-semibold uppercase hover:text-gray-300"
@@ -112,7 +114,7 @@
 </template>
 
 <script>
-import { computed, onBeforeMount, reactive } from "vue";
+import { computed, onBeforeMount, reactive, ref } from "vue";
 
 import { trans } from '@/helpers/i18n';
 import Menu from "@/views/layouts/Menu";
@@ -373,6 +375,7 @@ export default {
             if (route.query.hasOwnProperty('verified') && route.query.verified) {
                 alertStore.success(trans('global.phrases.email_verified'));
             }
+
         });
 
         return {
@@ -381,7 +384,7 @@ export default {
             globalStateStore,
             trans,
             onLogout,
-            isLoading,
+            isLoading
         }
     }
 };

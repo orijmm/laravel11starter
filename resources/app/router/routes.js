@@ -32,7 +32,6 @@ import { default as PagePage } from "@/views/pages/private/website/pages/Index";
 import { default as PagePageCreate } from "@/views/pages/private/website/pages/Create";
 import { default as PagePageEdit } from "@/views/pages/private/website/pages/Edit";
 
-
 import { default as PageComponent } from "@/views/pages/private/website/components/Index";
 import { default as PageComponentCreate } from "@/views/pages/private/website/components/Create";
 import { default as PageComponentEdit } from "@/views/pages/private/website/components/Edit";
@@ -40,7 +39,8 @@ import { default as PageComponentType } from "@/views/pages/private/website/comp
 import { default as PageComponentTypeCreate } from "@/views/pages/private/website/components/CreateType";
 import { default as PageComponentTypeEdit } from "@/views/pages/private/website/components/EditType";
 
-
+/* Web Site pages */
+import { default as PageIndexSite } from "@/views/pages/public/home/Index";
 
 import abilities from "@/stub/abilities";
 
@@ -48,8 +48,8 @@ const routes = [
     {
         name: "home",
         path: "/",
-        meta: { requiresAuth: false, isPublicAuthPage: true },
-        component: PageLogin,
+        meta: { requiresAuth: false },
+        component: PageIndexSite,
     },
     {
         name: "panel",

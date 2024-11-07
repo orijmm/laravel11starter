@@ -14,12 +14,17 @@ class MenuItem extends Model
 
     protected $fillable = ['label', 'url', 'description', 'order', 'parent_id', 'menu_id', 'page_id'];
 
-    public function menu()
+    public function menu(): BelongsTo
     {
         return $this->belongsTo(Menu::class, 'menu_id');
     }
     
-    public function parentId(): BelongsTo
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(MenuItem::class, 'parent_id');
+    }
+
+    public function page(): BelongsTo
     {
         return $this->belongsTo(ComponentType::class);
     }
