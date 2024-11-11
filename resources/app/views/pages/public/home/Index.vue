@@ -1,48 +1,90 @@
 <template>
-    <div class="bg-gray-100 flex">
-        <aside class="relative bg-theme-600 h-screen w-64 hidden sm:block shadow-xl">
-            <div class="p-6 border-b border-theme-600">
-                header header
-            </div>
-            <nav class="text-white text-base py-4 px-3 rounded">
-                <!-- <Menu :state="state" :type="'desktop'" /> -->
-            </nav>
-        </aside>
-        <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
-            <!-- Desktop Header -->
-            <header class="w-full items-center bg-white py-2 px-6 hidden sm:flex">
-                desktop header
-            </header>
-
-            <!-- Mobile Header & Nav -->
-            <header class="w-full bg-theme-600 py-5 px-6 sm:hidden">
-                menu mobile
-            </header>
-
-            <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
-                <!-- <main class="w-full flex-grow p-6">
-                    <router-view />
-                </main> -->
-                <footer class="w-full bg-white text-center text-sm p-4" v-html="trans('global.phrases.copyright')">
-                </footer>
-            </div>
-
-        </div>
+    <div class="min-h-screen font-sans antialiased relative">
+      <div class="relative">
+        <div
+          class="absolute top-0 left-0 w-full h-[125vh] sm:h-[225vh] lg:h-[125vh] cover-gradient-2 sm:cover-gradient"
+        ></div>
+        <BaseNavbar />
+  
+        <main class="text-neutral-800">
+          <Content />
+        </main>
+  
+        <BaseFooter />
+      </div>
     </div>
-</template>
+  </template>
+  <script>
+  import BaseNavbar from '@/views/pages/public/template/components/base/Navbar';
+  import BaseFooter from '@/views/pages/public/template/components/base/Footer';
+  import Content from '@/views/pages/public/home/Content';
 
-<script>
-
-import {trans} from "@/helpers/i18n"
-
-export default {
-    name: "IndexSite",
-    components: {
-    },
-    setup() {
-        return {
-            trans,
-        }
-    }
-};
-</script>
+  export default {
+    name: 'DefaultLayout',
+    components: { BaseNavbar, Content, BaseFooter }
+  }
+  </script>
+  
+  <style>
+  .cover-gradient {
+    background: linear-gradient(
+      169.4deg,
+      rgba(57, 132, 244, 0.04) -6.01%,
+      rgba(12, 211, 255, 0.04) 36.87%,
+      rgba(47, 124, 240, 0.04) 78.04%,
+      rgba(14, 101, 232, 0.04) 103.77%
+    );
+  }
+  .cover-gradient-2 {
+    background: linear-gradient(
+      169.4deg,
+      rgba(57, 132, 244, 0.1) -6.01%,
+      rgba(12, 211, 255, 0.1) 36.87%,
+      rgba(47, 124, 240, 0.1) 78.04%,
+      rgba(14, 101, 232, 0.1) 103.77%
+    );
+  }
+  .bg-blue-gradient,
+  .text-gradient {
+    background: linear-gradient(136.91deg, #468ef9 -12.5%, #0c66ee 107.5%);
+  }
+  .text-gradient {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .slide-enter-active {
+    -moz-transition-duration: 0.3s;
+    -webkit-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -moz-transition-timing-function: ease-in;
+    -webkit-transition-timing-function: ease-in;
+    -o-transition-timing-function: ease-in;
+    transition-timing-function: ease-in;
+  }
+  
+  .slide-leave-active {
+    -moz-transition-duration: 0.3s;
+    -webkit-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  }
+  
+  .slide-enter-to,
+  .slide-leave {
+    max-height: 100px;
+    overflow: hidden;
+  }
+  
+  .slide-enter,
+  .slide-leave-to {
+    overflow: hidden;
+    max-height: 0;
+  }
+  </style>
+  

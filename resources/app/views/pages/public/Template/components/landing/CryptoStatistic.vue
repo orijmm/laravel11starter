@@ -2,10 +2,8 @@
   <div class="w-full lg:w-1/3 mt-6 lg:mt-0 overflow-hidden space-y-6" v-bind="$attrs">
     <div class="w-full flex items-center justify-between">
       <span class="font-medium">{{ title }}</span>
-      <button
-        href="#"
-        class="px-3 py-1 text-sm font-medium text-blue-500 flex items-center space-x-1 rounded-md hover:bg-blue-50 transition duration-300"
-      >
+      <button href="#"
+        class="px-3 py-1 text-sm font-medium text-blue-500 flex items-center space-x-1 rounded-md hover:bg-blue-50 transition duration-300">
         <span>More</span>
         <ChevronRightIcon :size="16" />
       </button>
@@ -25,7 +23,7 @@
               <tr v-for="data in datasets" :key="data.id" class="border-b border-gray-200">
                 <td class="py-4 whitespace-nowrap">
                   <div class="flex items-center space-x-2">
-                    <img :src="require(`~/assets/img/crypto-icon/${data.logo}`)" alt="" />
+                    <img :src="getImageUrl('crypto-icon/'+data.logo)" alt="" />
                     <span>{{ data.name }}</span>
                   </div>
                 </td>
@@ -62,5 +60,15 @@ export default {
       default: () => [],
     },
   },
+  setup() {
+    const getImageUrl = (name) => {
+      return new URL(`../../assets/img/${name}`, import.meta.url).href
+    }
+
+    return {
+      getImageUrl
+    }
+  }
+
 }
 </script>
