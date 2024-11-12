@@ -7,8 +7,8 @@
             <img src="@/views/pages/public/template/assets/img/logo/nefa.svg" class="w-24 xl:w-28" alt="Nefa Logo" />
           </div>
           <button class="rounded-lg lg:hidden focus:outline-none focus:shadow-outline" @click="open = !open">
-            <SegmentIcon v-if="!open" :size="24" />
-            <CloseIcon v-else :size="24" />
+            <Segment v-if="!open" :size="24" />
+            <Close v-else :size="24" />
           </button>
         </div>
         <ul :class="[open ? 'flex' : 'hidden lg:flex']"
@@ -23,8 +23,8 @@
               class="md:px-4 py-2 text-sm bg-transparent rounded-lg text-[#666666] hover:text-gray-900 focus:outline-none focus:shadow-outline flex items-center"
               @click="dropdownToggler" @blur="dropdownToggler">
               <span>Products</span>
-              <ChevronUpIcon v-if="dropdownNavbar" :size="16" />
-              <ChevronDownIcon v-else :size="16" />
+              <ChevronUp v-if="dropdownNavbar" :size="16" />
+              <ChevronDown v-else :size="16" />
             </button>
             <transition name="transform-fade-down">
               <ul v-if="dropdownNavbar"

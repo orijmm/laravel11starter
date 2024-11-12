@@ -5,7 +5,7 @@
       <button href="#"
         class="px-3 py-1 text-sm font-medium text-blue-500 flex items-center space-x-1 rounded-md hover:bg-blue-50 transition duration-300">
         <span>More</span>
-        <ChevronRightIcon :size="16" />
+        <ChevronRight :size="16" />
       </button>
     </div>
     <div class="flex flex-col">
@@ -16,7 +16,6 @@
               <tr>
                 <th class="text-left text-sm font-medium text-gray-500">Name</th>
                 <th class="text-left text-sm font-medium text-gray-500">Price</th>
-                <th class="hidden sm:block text-left text-sm font-medium text-gray-500">Chart</th>
               </tr>
             </thead>
             <tbody>
@@ -29,14 +28,9 @@
                 </td>
                 <td class="py-4 whitespace-nowrap">
                   <div class="flex items-center">
-                    <PlusThickIcon v-if="data.increase" :size="14" class="text-emerald-500" />
-                    <MinusThickIcon v-else :size="14" class="text-red-500" />
+                    <PlusThick v-if="data.increase" :size="14" class="text-emerald-500" />
+                    <MinusThick v-else :size="14" class="text-red-500" />
                     <span>${{ data.price }}</span>
-                  </div>
-                </td>
-                <td class="hidden sm:block whitespace-nowrap">
-                  <div>
-                    <LineChart class="w-28 h-12 -mx-2" :datasets="data.data" :increase="data.increase" />
                   </div>
                 </td>
               </tr>
@@ -48,6 +42,7 @@
   </div>
 </template>
 <script>
+
 export default {
   name: 'LandingCryptoStatistic',
   props: {

@@ -12,7 +12,7 @@
         @click="toggleDropdown" @blur="toggleDropdown">
         <img :src="exchangeSelectedf" alt="" class="flex-shrink-0 h-6 w-6 rounded-full" />
         <span class="ml-3 block truncate">{{ exchangeSelected.name }}</span>
-        <ChevronDownIcon :size="20" />
+        <ChevronDown :size="20" />
       </button>
       <transition name="transform-fade-down">
         <ul v-if="openDropdown"
@@ -73,7 +73,7 @@ export default {
     const openDropdown = ref(false);
 
     function toggleDropdown() {
-      this.openDropdown.value = !this.openDropdown.value
+      openDropdown.value = !openDropdown.value
     }
 
     return {

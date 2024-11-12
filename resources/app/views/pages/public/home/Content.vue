@@ -24,7 +24,7 @@
                         <BaseButton
                             class="max-w-full px-6 py-4 bg-inherit text-gradient border border-[#0c66ee] flex items-center justify-center">
                             <span>Download App</span>
-                            <ChevronDownIcon :size="20" class="mt-1 text-[#0c66ee]" />
+                            <ChevronDown :size="20" class="mt-1 text-[#0c66ee]" />
                         </BaseButton>
                     </div>
                 </div>
@@ -249,7 +249,7 @@
             <a v-smooth-scroll data-aos="flip-down" data-aos-delay="150" href="#navbar"
                 class="px-6 py-3 flex items-center space-x-2 bg-[#FAFAFA] hover:bg-gray-100 hover:shadow-md border border-[#DDDDDD] rounded-md text-gray-700">
                 <span>Back to top</span>
-                <ArrowUpIcon :size="20" />
+                <ArrowUp :size="20" />
             </a>
         </div>
     </div>
@@ -269,6 +269,7 @@ import LandingBuyTradeImage from '@/views/pages/public/template/components/landi
 import LandingPartnerImage from '@/views/pages/public/template/components/landing/PartnerImage';
 import LandingStep from '@/views/pages/public/template/components/landing/Step';
 import LandingTradingToolImage from '@/views/pages/public/template/components/landing/TradingToolImage';
+
 
 export default {
     name: "IndexSite",
@@ -313,7 +314,30 @@ export default {
                 increase: true,
                 data: [40, 35, 60, 75, 60, 75, 50],
             },
-            // Otros objetos...
+            {
+                id: 2,
+                name: 'Ethereum',
+                price: 3480.65,
+                logo: 'ethereum.png',
+                increase: false,
+                data: [25, 30, 60, 50, 80, 55, 80],
+            },
+            {
+                id: 3,
+                name: 'Solana',
+                price: 150.2,
+                logo: 'solana.png',
+                increase: true,
+                data: [40, 45, 40, 80, 50, 60, 35],
+            },
+            {
+                id: 4,
+                name: 'Dogecoin',
+                price: 0.1572,
+                logo: 'dogecoin.png',
+                increase: true,
+                data: [35, 70, 60, 80, 50, 60, 40],
+            },
         ]);
 
         const topGainers = reactive([
@@ -325,7 +349,30 @@ export default {
                 increase: true,
                 data: [30, 50, 45, 60, 70, 40, 45],
             },
-            // Otros objetos...
+            {
+                id: 2,
+                name: 'Bitcoin Asia',
+                price: 0.02096,
+                logo: 'bitcoin-asia.png',
+                increase: true,
+                data: [25, 60, 50, 60, 35, 50, 70],
+            },
+            {
+                id: 3,
+                name: 'MoonRock',
+                price: 0.004907,
+                logo: 'moonrock.png',
+                increase: true,
+                data: [40, 35, 40, 25, 50, 70, 45],
+            },
+            {
+                id: 4,
+                name: 'NinjaFloki',
+                price: 0.000123,
+                logo: 'ninjafloki.png',
+                increase: true,
+                data: [45, 35, 40, 30, 25, 45, 35],
+            },
         ]);
 
         const recents = reactive([
@@ -337,16 +384,53 @@ export default {
                 increase: false,
                 data: [40, 50, 45, 60, 35, 40, 45],
             },
-            // Otros objetos...
+            {
+                id: 2,
+                name: 'Frog',
+                price: 0.5875,
+                logo: 'frog.png',
+                increase: false,
+                data: [25, 50, 45, 48, 40, 60, 45],
+            },
+            {
+                id: 3,
+                name: 'Musk Doge',
+                price: 0.04041,
+                logo: 'musk-doge.png',
+                increase: true,
+                data: [25, 35, 60, 45, 50, 45, 45],
+            },
+            {
+                id: 4,
+                name: '2SHARE',
+                price: 1366.24,
+                logo: '2share.png',
+                increase: true,
+                data: [35, 30, 60, 50, 35, 45, 40],
+            },
         ]);
 
         const accordions = reactive([
             {
                 title: 'Why should I choose NEFA?',
                 description:
-                    "We're industry pioneers, having been in the cryptocurrency industry since 2016...",
+                    "We're industry pioneers, having been in the cryptocurrency industry since 2016. We've facilitated more than 21 billion USD worth of transactions on our exchange for customers in over 40 countries. Today, we're trusted by over 8 million customers around the world and have received praise for our easy-to-use app, secure wallet, and range of features.",
             },
-            // Otros objetos...
+            {
+                title: 'How secure is NEFA?',
+                description:
+                    "We're industry pioneers, having been in the cryptocurrency industry since 2016. We've facilitated more than 21 billion USD worth of transactions on our exchange for customers in over 40 countries. Today, we're trusted by over million customers around the world and have received praise for our easy-to-use app, secure wallet, and range of features.",
+            },
+            {
+                title: 'Do I have to buy a whole Bitcoin?',
+                description:
+                    "We're industry pioneers, having been in the cryptocurrency industry since 2016. We've facilitated more than 21 billion USD worth of transactions on our exchange for customers in over 40 countries. Today, we're trusted by over million customers around the world and have received praise for our easy-to-use app, secure wallet, and range of features.",
+            },
+            {
+                title: 'How do I actually buy Bitcoin?',
+                description:
+                    "We're industry pioneers, having been in the cryptocurrency industry since 2016. We've facilitated more than 21 billion USD worth of transactions on our exchange for customers in over 40 countries. Today, we're trusted by over million customers around the world and have received praise for our easy-to-use app, secure wallet, and range of features.",
+            },
         ]);
 
         const steps = reactive([
@@ -356,7 +440,18 @@ export default {
                 description:
                     'Sign up for your free NEFA Wallet on web, iOS or Android and follow our easy process to set up your profile',
             },
-            // Otros objetos...
+            {
+                img: 'fund.png',
+                title: 'Fund',
+                description:
+                    'Choose your preferred payment method such as bank transfer or credit card to top up your NEFA Wallet',
+            },
+            {
+                img: 'buy-crypto.png',
+                title: 'Buy Crypto',
+                description:
+                    'Buy Bitcoin or Ethereum, then securely store it in your Wallet or send it on easily to your friends anywhere',
+            },
         ]);
 
         // Retornar variables y objetos
@@ -387,13 +482,13 @@ export default {
 }
 
 .bg-partner {
-    background: url('../assets/img/partner/background.png');
+    background: url('../template/assets/img/partner/background.png');
     background-size: cover;
     background-position: center;
 }
 
 .bg-trading-tools {
-    background: url('../assets/img/bg-trading-tools.webp');
+    background: url('../template/assets/img/bg-trading-tools.webp');
     background-size: cover;
     background-position: center;
 }

@@ -56,7 +56,7 @@
             <button
               class="bg-blue-gradient px-4 py-4 sm:py-3 rounded-md text-white hover:shadow-md transition duration-300"
             >
-              <ArrowRightIcon :size="20" />
+              <ArrowRight :size="20" />
             </button>
           </div>
         </div>
