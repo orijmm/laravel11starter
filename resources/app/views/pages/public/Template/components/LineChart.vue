@@ -1,8 +1,16 @@
+<template>
+  <Line :chartData="chartData" :options="chartOptions" />
+</template>
+
 <script>
-import { Line } from 'vue-chartjs'
+import { Line } from 'vue-chartjs';
+import { Chart as ChartJS, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale } from 'chart.js';
+import { computed } from 'vue';
+
+ChartJS.register(LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale);
 
 export default {
-  extends: Line,
+  components: { Line },
   props: {
     increase: {
       type: Boolean,
@@ -13,81 +21,47 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      gradient: null,
-      gradient2: null,
-    }
-  },
-  mounted() {
-    this.gradient = this.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 450)
-    this.gradient.addColorStop(0.1119, 'rgba(95, 223, 146, 0.5)')
-    this.gradient.addColorStop(0.1118, 'rgba(95, 223, 146, 0.3)')
-    this.gradient.addColorStop(0.93, 'rgba(196, 196, 196, 0)')
+  setup(props) {
+    // Definición de chartData basado en las props
+    const chartData = computed(() => ({
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      datasets: [
+        {
+          label: 'Data',
+          borderColor: props.increase ? '#28C165' : '#F4574D', // Verde si increase es true, rojo si es false
+          backgroundColor: props.increase ? 'rgba(40, 193, 101, 0.2)' : 'rgba(244, 87, 77, 0.2)', // Fondo semitransparente
+          data: props.datasets,
+          fill: true,
+          tension: 0.3, // Hace la línea suave
+        },
+      ],
+    }));
 
-    this.gradient2 = this.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 450)
-    this.gradient2.addColorStop(0, 'rgba(255, 189, 189, 0.5)')
-    this.gradient2.addColorStop(0.94, 'rgba(196, 196, 196, 0)')
-
-    this.renderChart(
-      {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [
-          {
-            label: 'Data One',
-            borderColor: this.increase ? '#28C165' : '#F4574D',
-            borderWidth: 1,
-            backgroundColor: this.increase ? this.gradient : this.gradient2,
-            data: this.datasets,
-          },
-        ],
-      },
-      {
-        responsive: true,
-        maintainAspectRatio: false,
+    // Configuración básica para el gráfico
+    const chartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
         legend: {
-          display: false,
+          display: false, // Oculta la leyenda
         },
-        elements: {
-          point: {
-            radius: 0,
-          },
-        },
-        tooltips: {
+        tooltip: {
           callbacks: {
-            label: (tooltipItem) => {
-              return tooltipItem.yLabel
-            },
+            label: (tooltipItem) => `${tooltipItem.raw}`, // Muestra el valor directamente
           },
         },
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                display: false,
-              },
-              gridLines: {
-                display: false,
-                drawBorder: false,
-                color: 'rgba(0, 0, 0, 0)',
-              },
-            },
-          ],
-          xAxes: [
-            {
-              ticks: {
-                display: false,
-              },
-              gridLines: {
-                display: false,
-                drawBorder: false,
-                color: 'rgba(0, 0, 0, 0)',
-              },
-            },
-          ],
+      },
+      scales: {
+        y: {
+          beginAtZero: true, // Comienza el eje Y en 0
         },
-      }
-    )
+      },
+    };
+
+    return {
+      chartData,
+      chartOptions,
+    };
   },
-}
+};
 </script>
