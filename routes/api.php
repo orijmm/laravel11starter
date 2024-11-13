@@ -70,7 +70,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
      */
     Route::prefix('pages')->group(function () {
         Route::apiResource('templates', TemplateController::class);
-        Route::apiResource('menus', MenuController::class);
+        Route::apiResource('menus', MenuController::class)->except('show');
         Route::post('menus/{menu}/storeitem', [MenuController::class, 'storeItem'])->name('menu.store.item');
         Route::put('menus/{menuitem}/updateitem', [MenuController::class, 'updateItem'])->name('menu.update.item');
         Route::delete('menus/{menuitem}/deleteitem', [MenuController::class, 'deleteItem'])->name('menu.delete.item');
@@ -79,8 +79,13 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
         Route::apiResource('components', ComponentController::class);
 
         Route::apiResource('page', PagesController::class);
-
     });
+});
+
+
+### Website routes ####
+Route::prefix('pages')->group(function () {
+    Route::get('menus', [MenuController::class, 'show'])->name('menus.show');
 });
 
 ## Ubicaciones

@@ -122,6 +122,9 @@ return [
             'page' => 'Página',
             'page_create' => 'Nueva página',
             'page_edit' => 'Editar página',
+            'without_page' => 'Sin página',
+            'without_parent' => 'Sin Padre',
+            
             'menus' => 'Menús',
             'menu' => 'Menú',
             'menu_items' => 'Items de Menús',

@@ -13,37 +13,7 @@
         </div>
         <ul :class="[open ? 'flex' : 'hidden lg:flex']"
           class="w-full h-auto flex flex-col flex-grow lg:items-center pb-4 lg:pb-0 lg:justify-end lg:flex-row origin-top duration-300 xl:space-x-2 space-y-3 lg:space-y-0">
-          <NavLink name="Cryptocurrency" url="#" />
-          <NavLink name="Exchanges" url="#" />
-          <NavLink name="Watchlist" url="#" />
-          <NavLink name="NFT" url="#" />
-          <NavLink name="Portfolio" url="#" />
-          <li class="relative group">
-            <button
-              class="md:px-4 py-2 text-sm bg-transparent rounded-lg text-[#666666] hover:text-gray-900 focus:outline-none focus:shadow-outline flex items-center"
-              @click="dropdownToggler" @blur="dropdownToggler">
-              <span>Products</span>
-              <ChevronUp v-if="dropdownNavbar" :size="16" />
-              <ChevronDown v-else :size="16" />
-            </button>
-            <transition name="transform-fade-down">
-              <ul v-if="dropdownNavbar"
-                class="flex lg:absolute flex-col max-w-42 py-1 lg:bg-white rounded-md lg:shadow-md pl-2 lg:pl-0">
-                <li>
-                  <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Exchange</a>
-                </li>
-                <li>
-                  <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Wallet</a>
-                </li>
-                <li>
-                  <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Explorer</a>
-                </li>
-                <li>
-                  <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Charts</a>
-                </li>
-              </ul>
-            </transition>
-          </li>
+          <NavLink :dataLink="menus.data" />
         </ul>
       </div>
       <div :class="[open ? 'flex' : 'hidden lg:flex']" class="space-x-3">
@@ -65,19 +35,19 @@ import BaseButton from '@/views/pages/public/template/components/base/Button';
 export default {
   name: 'BaseNavbar',
   components: { NavLink, BaseButton },
+  props: {
+    menus: {
+      type: Object,
+      required: true,
+      default: {},
+    },
+  },
   setup() {
     // Variables reactivas
     const open = ref(false);
-    const dropdownNavbar = ref(false);
-
-    const dropdownToggler = () => {
-      dropdownNavbar.value = !dropdownNavbar.value;
-    }
 
     return {
-      dropdownNavbar,
-      open,
-      dropdownToggler
+      open
     }
   }
 }

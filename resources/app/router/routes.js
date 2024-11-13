@@ -143,7 +143,7 @@ const routes = [
                     {
                         name: "menus.list",
                         path: "menus",
-                        meta: { requiresAuth: true },
+                        meta: { requiresAuth: false },
                         component: PageMenu,
                     },
                     {

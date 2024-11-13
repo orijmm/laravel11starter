@@ -66,6 +66,11 @@ export default defineComponent({
         serverSearchMinCharacters: {
             type: Number,
             default: 3
+        },
+        //el nombre a mostrar en las options
+        optionLabel: {
+            type: String,
+            default: 'name',
         }
     },
     emits: ['update:modelValue', 'input'],
@@ -77,7 +82,8 @@ export default defineComponent({
             let val = [];
             for (let i in selectOptionsArr.value) {
                 if (typeof selectOptionsArr.value[i] === 'object') {
-                    val.push({id: selectOptionsArr.value[i].id, name: selectOptionsArr.value[i].name});
+                    let labelOption = selectOptionsArr.value[i]?.name ?? selectOptionsArr.value[i][props.optionLabel];
+                    val.push({id: selectOptionsArr.value[i].id, name: labelOption});
                 } else {
                     val.push(selectOptionsArr.value[i])
                 }

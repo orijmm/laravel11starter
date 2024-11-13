@@ -9,13 +9,12 @@
                     :label="trans('users.labels.description')" />
             </Form>
         </Panel>
-        <Panel :title="trans('global.pages.menu_items')">
+        <Panel :title="trans('global.pages.menu_items')" otherClass="">
             <div class="text-right mb-4">
                 <Button type="button" @click="toggleAddItems"
                     :label="`${trans('global.buttons.add')} ${trans('global.pages.menu_item')}`" />
             </div>
             <div v-if="page.toggleAddItems">
-                {{ formItem }}
                 <Form id="add-item" @submit.prevent="onSubmitItem">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                         <TextInput class="mb-4" type="text" :required="true" name="label" v-model="formItem.label"
@@ -26,14 +25,11 @@
                             v-model="formItem.description" :label="trans('users.labels.description')" />
                         <TextInput class="mb-4" type="number" :required="true" name="order" v-model="formItem.order"
                             :label="trans('users.labels.order')" />
-                        <Dropdown class="mb-4" :server="'pages/menus'" :server-per-page="15" :required="true"
-                            name="type" v-model="formItem.menu_id" :label="trans('global.pages.menu')"
-                            :serverSearchMinCharacters="0" />
                         <Dropdown class="mb-4" :server="'pages/page'" :server-per-page="15" :required="true"
                             name="type" v-model="formItem.page_id" :label="trans('global.pages.page')"
                             :serverSearchMinCharacters="0" />
-                        <Dropdown class="mb-4" :required="true" :options="form.items" label="label"
-                            name="type" v-model="formItem.parent_id" :label="trans('users.label.parent')" /> 
+                        <Dropdown class="mb-4" :required="true" :options="form.items" optionLabel="label"
+                            name="label" v-model="formItem.parent_id" :label="trans('users.labels.parent_id')" /> 
                     </div>
                     <div class="text-right mb-4">
                         <Button type="button" @click="onSubmitItem" :label="trans('global.buttons.add')" />
@@ -45,7 +41,12 @@
                 @page-changed="onTablePageChange" @action="onTableAction" @sort="onTableSort">
                 <template v-slot:content-page="props">
                     <div>
-                        {{ props.item.page.name }}
+                        {{ props.item.page?.name ?? '-' }}
+                    </div>
+                </template>
+                <template v-slot:content-parent="props">
+                    <div>
+                        {{ props.item.parent?.label ?? '-' }}
                     </div>
                 </template>
             </Table>
@@ -140,8 +141,9 @@ export default defineComponent({
         //tabla de items de menu
         const table = reactive({
             headers: {
+                order: trans('users.labels.order'),
                 label: trans('users.labels.label'),
-                parent_id: trans('users.labels.parent'),
+                parent: trans('users.labels.parent'),
                 description: trans('users.labels.description'),
                 page: trans('global.pages.page'),
             },
@@ -196,12 +198,16 @@ export default defineComponent({
 
         const service = new PagesService('menus');
 
-        onBeforeMount(() => {
+        function fetchItems() {
             service.find(route.params.id).then((response) => {
                 fillObject(form, response.data.model);
                 table.records = response.data.model.items;
                 page.loading = false;
-            })
+            });
+        }
+
+        onBeforeMount(() => {
+            fetchItems();
         });
 
         function onAction(data) {
@@ -220,8 +226,9 @@ export default defineComponent({
         function onSubmitItem() {
             service.handleCreate('add-item', reduceProperties(formItem, [], 'id'), `/pages/menus/${form.id}/storeitem`).then(() => {
                 clearObject(formItem)
-            })
-
+            }).then(response => {
+                fetchItems();
+            });
             return false;
         }
 

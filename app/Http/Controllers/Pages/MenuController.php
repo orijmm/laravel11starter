@@ -56,7 +56,7 @@ class MenuController extends Controller
      */
     public function show(Menu $menu)
     {
-        $menu->load(['items.parent', 'items.page', 'items.menu']);
+        $menu->load(['items.parent', 'items.page', 'items.menu', 'items.children']);
         $model = new MenuResource($menu);
         return $this->responseDataSuccess(['model' => $model]);
     }
