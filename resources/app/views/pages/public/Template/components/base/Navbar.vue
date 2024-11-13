@@ -48,10 +48,10 @@
       </div>
       <div :class="[open ? 'flex' : 'hidden lg:flex']" class="space-x-3">
         <BaseButton class="px-8 xl:px-10 py-3 mt-2 bg-inherit text-gradient border border-[#0c66ee]">
-          Login
+          <a href="/login">Login</a>
         </BaseButton>
         <BaseButton class="px-8 xl:px-10 py-3 mt-2 bg-gradient-to-r from-[#468ef9] to-[#0c66ee] text-white">
-          Sign Up
+          <a href="/register">Register</a>
         </BaseButton>
       </div>
     </div>

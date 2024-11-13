@@ -10,6 +10,6 @@
 <script>
 export default {
   name: 'BaseButton',
-  inheritAttrs: false,
+  inheritAttrs: true,
 }
 </script>
