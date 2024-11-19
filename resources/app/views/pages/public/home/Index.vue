@@ -21,6 +21,7 @@ import PagesService from '@/services/PagesService';
 import { useAlertStore } from "@/stores";
 import { onMounted, reactive, ref } from 'vue';
 import { getResponseError, prepareQuery } from "@/helpers/api";
+import ModelService from '@/services/ModelService';
 
 
 
@@ -28,7 +29,7 @@ export default {
   name: 'DefaultLayout',
   components: { BaseNavbar, Content, BaseFooter },
   setup() {
-    const serviceMenu = new PagesService('menus');
+    const serviceMenu = new ModelService;
     const alertStore = useAlertStore();
 
     // Variables reactivas
@@ -43,7 +44,7 @@ export default {
       //Menutop ID
       let menutop = 1;
       serviceMenu
-        .find(menutop)
+        .find(menutop, 'menus')
         .then((response) => {
           menus.data = response.data.model.items;
           menus.total = response.data.model.length;

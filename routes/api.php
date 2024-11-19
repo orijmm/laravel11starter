@@ -78,15 +78,14 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
         Route::apiResource('componenttype', ComponentTypeController::class);
         Route::apiResource('components', ComponentController::class);
 
-        Route::apiResource('page', PagesController::class);
+        Route::apiResource('page', PagesController::class)->except('show');
     });
 });
 
 
-### Website routes ####
-Route::prefix('pages')->group(function () {
-    Route::get('menus', [MenuController::class, 'show'])->name('menus.show');
-});
+### Website public routes ####
+Route::get('menus/{menu}', [MenuController::class, 'show'])->name('menus.show');
+Route::get('page/{page}', [PagesController::class, 'show'])->name('page.show');
 
 ## Ubicaciones
 Route::get('languages', function (Request $request) {

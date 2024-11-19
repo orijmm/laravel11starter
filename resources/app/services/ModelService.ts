@@ -17,8 +17,10 @@ export default abstract class ModelService extends BaseService {
         return this.get(this.url + `/create`, {});
     }
 
-    public find(object_id) {
-        return this.get(this.url + `/${object_id}`, {});
+    public find(object_id, customUrl = null) {
+        let url = customUrl ? customUrl : this.url;
+
+        return this.get(url + `/${object_id}`, {});
     }
 
     public edit(object_id) {
