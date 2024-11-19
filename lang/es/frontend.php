@@ -66,7 +66,8 @@ return [
             'url' => 'Url',
             'parent_id' => 'Item Padre',
             'menu_id' => 'Menu',
-            'page_id' => 'Página',
+            'backgroundcolor' => 'Color Fondo',
+            'textcolor' => 'Color texto',
         ],
     ],
     'messages' => [
@@ -144,6 +145,11 @@ return [
             'componenttypes' => 'Tipos de Componentes',
             'componenttype_create' => 'Nuevo tipo de Componente',
             'componenttype_edit' => 'Editar tipo de Componente',
+
+            'sections' => 'Secciones',
+            'section' => 'Sección',
+            'rowa' => 'Filas',
+            'columns' => 'Columnas',
         ],
         'phrases' => [
             'clear_filters' => 'Limpiar todo',
@@ -203,7 +209,9 @@ return [
             'update' => 'Actualizar',
             'change_avatar' => 'Cambiar avatar',
             'add' => 'Agregar',
-            'remove' => 'Quitar'
+            'remove' => 'Quitar',
+            'hide' => 'Ocultar',
+            'contract' => 'Contraer'
         ],
         'actions' => [
             'name' => 'Acciones',

@@ -22,6 +22,7 @@ class PageResource extends JsonResource
         $data = $this->resource->toArray();
         $data['name'] = $this->title;
         $data['template_id'] = Data::getSelectedLocation($templates, $this->template_id);
+        $data['sections'] = $this->sections;
         return $data;
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
 use App\Http\Resources\PageResource;
 use App\Models\Pages\Page;
+use App\Models\Pages\Section;
 use Illuminate\Http\Request;
 
 class PagesController extends Controller
@@ -85,5 +86,51 @@ class PagesController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+
+    ############ ITEMS ##############
+    public function storeSection(Request $request, Page $page)
+    {
+        $data = $request->validate([
+            'name' => 'required|string',
+            'background-color' => 'nullable',
+            'order' => 'required|integer',
+            'text-color' => 'nullable',
+        ]);
+
+        $section = new Section($data);
+
+        #Agregar relacion a page
+        $newsection = $page->sections()->save($section);
+        if ($newsection) {
+            return $this->responseStoreSuccess(['record' => $newsection]);
+        } else {
+            return $this->responseStoreFail();
+        }
+    }
+
+    public function updateSection(Request $request, Section $section)
+    {
+        $data = $request->validate([
+            'name' => 'required|string',
+            'background-color' => 'nullable',
+            'order' => 'required|integer',
+            'text-color' => 'nullable',
+        ]);
+        $edititem = $section->update($data);
+
+        if ($edititem) {
+            return $this->responseUpdateSuccess(['record' => $section]);
+        } else {
+            return $this->responseUpdateFail();
+        }
+    }
+
+    public function deleteSection(Section $section)
+    {
+        $this->authorize('delete_page');
+        $section->delete();
+        return $this->responseDeleteSuccess();
     }
 }

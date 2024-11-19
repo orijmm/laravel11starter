@@ -61,7 +61,6 @@ import { fillObject, reduceProperties, clearObject } from "@/helpers/data"
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { toUrl } from "@/helpers/routing";
-import PagesService from "@/services/PagesService";
 import Button from "@/views/components/input/Button";
 import TextInput from "@/views/components/input/TextInput";
 import Alert from "@/views/components/Alert";
@@ -72,6 +71,7 @@ import Form from "@/views/components/Form";
 import Table from "@/views/components/Table";
 import Dropdown from "@/views/components/input/Dropdown";
 import { isAllowed } from "@/helpers/isreq";
+import ModelService from "@/services/ModelService";
 
 export default defineComponent({
     components: {
@@ -196,10 +196,10 @@ export default defineComponent({
             }
         }
 
-        const service = new PagesService('menus');
+        const service = new ModelService;
 
         function fetchItems() {
-            service.find(route.params.id).then((response) => {
+            service.find(route.params.id, 'menus').then((response) => {
                 fillObject(form, response.data.model);
                 table.records = response.data.model.items;
                 page.loading = false;

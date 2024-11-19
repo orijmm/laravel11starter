@@ -77,8 +77,11 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
 
         Route::apiResource('componenttype', ComponentTypeController::class);
         Route::apiResource('components', ComponentController::class);
-
+        ##PAGES
         Route::apiResource('page', PagesController::class)->except('show');
+        Route::post('page/{page}/storesection', [PagesController::class, 'storeSection'])->name('page.store.section');
+        Route::put('page/{section}/updatesection', [PagesController::class, 'updateSection'])->name('page.update.section');
+        Route::delete('page/{section}/deletesection', [PagesController::class, 'deleteSection'])->name('page.delete.section');
     });
 });
 
