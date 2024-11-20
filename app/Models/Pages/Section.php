@@ -12,7 +12,7 @@ class Section extends Model
 
     protected $table = 'sections';
 
-    protected $fillable = ['name', 'order', 'background-color', 'text-color', 'page_id'];
+    protected $fillable = ['name', 'order', 'backgroundcolor', 'textcolor', 'page_id'];
 
     /**
      * Get the rows for the blog post.

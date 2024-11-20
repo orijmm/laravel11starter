@@ -31,6 +31,7 @@ import { default as PageTemplateEdit } from "@/views/pages/private/website/templ
 import { default as PagePage } from "@/views/pages/private/website/pages/Index";
 import { default as PagePageCreate } from "@/views/pages/private/website/pages/Create";
 import { default as PagePageEdit } from "@/views/pages/private/website/pages/Edit";
+import { default as PageShowSection } from "@/views/pages/private/website/pages/ShowSection";
 
 import { default as PageComponent } from "@/views/pages/private/website/components/Index";
 import { default as PageComponentCreate } from "@/views/pages/private/website/components/Create";
@@ -193,6 +194,12 @@ const routes = [
                         path: "page/:id",
                         meta: { requiresAuth: true },
                         component: PagePageEdit,
+                    },
+                    {
+                        name: "pages.show.section",
+                        path: "page/:page/section/:id",
+                        meta: { requiresAuth: true },
+                        component: PageShowSection,
                     },
                     {
                         name: "components.list",

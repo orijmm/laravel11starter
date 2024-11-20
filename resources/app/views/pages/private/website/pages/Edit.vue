@@ -24,9 +24,9 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3">
                         <TextInput class="mb-4" type="text" :required="true" name="name" v-model="formItem.name"
                             :label="trans('users.labels.name')" />
-                        <TextInput class="mb-4" type="text" :required="true" name="backgroundcolor"
+                        <TextInput class="mb-4" type="text" name="backgroundcolor"
                             v-model="formItem.backgroundcolor" :label="trans('users.labels.backgroundcolor')" />
-                        <TextInput class="mb-4" type="text" :required="true" name="textcolor"
+                        <TextInput class="mb-4" type="text" name="textcolor"
                             v-model="formItem.textcolor" :label="trans('users.labels.textcolor')" />
                         <TextInput class="mb-4" type="number" :required="true" name="order" v-model="formItem.order"
                             :label="trans('users.labels.order')" />
@@ -162,6 +162,7 @@ export default defineComponent({
 
         const table = reactive({
             headers: {
+                id: trans('users.labels.id_pound'),
                 order: trans('users.labels.order'),
                 name: trans('users.labels.first_name')
             },
@@ -178,7 +179,7 @@ export default defineComponent({
                     name: trans('global.actions.edit'),
                     icon: "fa fa-edit",
                     showName: false,
-                    to: toUrl('/pages/page/{id}'),
+                    to: toUrl(`/pages/page/${route.params.id}/section/{id}`),
                     isAllowed: isAllowed(['edit_pages'])
                 },
                 delete: {

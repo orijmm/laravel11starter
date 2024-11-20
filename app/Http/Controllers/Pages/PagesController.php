@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
 use App\Http\Resources\PageResource;
+use App\Http\Resources\SectionResource;
 use App\Models\Pages\Page;
 use App\Models\Pages\Section;
 use Illuminate\Http\Request;
@@ -88,15 +89,20 @@ class PagesController extends Controller
         //
     }
 
+    ############ SECTIONS ##############
+    public function showSection(Page $page, Section $section)
+    {
+        $model = new SectionResource($section);
+        return $this->responseDataSuccess(['model' => $model]);
+    }
 
-    ############ ITEMS ##############
     public function storeSection(Request $request, Page $page)
     {
         $data = $request->validate([
             'name' => 'required|string',
-            'background-color' => 'nullable',
+            'backgroundcolor' => 'nullable',
             'order' => 'required|integer',
-            'text-color' => 'nullable',
+            'textcolor' => 'nullable',
         ]);
 
         $section = new Section($data);
@@ -114,9 +120,9 @@ class PagesController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string',
-            'background-color' => 'nullable',
+            'backgroundcolor' => 'nullable',
             'order' => 'required|integer',
-            'text-color' => 'nullable',
+            'textcolor' => 'nullable',
         ]);
         $edititem = $section->update($data);
 

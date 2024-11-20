@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('order');
-            $table->text('background-color')->nullable(); 
-            $table->text('text-color')->nullable(); 
+            $table->text('backgroundcolor')->nullable(); 
+            $table->text('textcolor')->nullable(); 
             $table->foreignId('page_id')->constrained('pages')->onDelete('cascade');
             $table->timestamps();
         });
