@@ -212,7 +212,7 @@ export default {
                             to: '/panel/roles/list',
                             children: [
                                 {
-                                    name: trans('global.phrases.add_new'),
+                                    name: trans('global.buttons.add_new'),
                                     icon: '',
                                     showDesktop: true,
                                     showMobile: true,
@@ -230,7 +230,7 @@ export default {
                             to: '/panel/roles/allbilities',
                             children: [
                                 {
-                                    name: trans('global.phrases.add_new'),
+                                    name: trans('global.buttons.add_new'),
                                     icon: '',
                                     showDesktop: true,
                                     showMobile: true,
@@ -258,7 +258,7 @@ export default {
                             to: '/panel/pages/menus',
                             children: [
                                 {
-                                    name: trans('global.phrases.add_new'),
+                                    name: trans('global.buttons.add_new'),
                                     icon: '',
                                     showDesktop: true,
                                     showMobile: true,
@@ -276,7 +276,7 @@ export default {
                             to: '/panel/pages/templates',
                             children: [
                                 {
-                                    name: trans('global.phrases.add_new'),
+                                    name: trans('global.buttons.add_new'),
                                     icon: '',
                                     showDesktop: true,
                                     showMobile: true,
@@ -294,7 +294,7 @@ export default {
                             to: '/panel/pages/page',
                             children: [
                                 {
-                                    name: trans('global.phrases.add_new'),
+                                    name: trans('global.buttons.add_new'),
                                     icon: '',
                                     showDesktop: true,
                                     showMobile: true,
@@ -312,7 +312,7 @@ export default {
                             to: '/panel/pages/components',
                             children: [
                                 {
-                                    name: trans('global.phrases.add_new'),
+                                    name: trans('global.buttons.add_new'),
                                     icon: '',
                                     showDesktop: true,
                                     showMobile: true,
@@ -328,7 +328,7 @@ export default {
                                     to: '/panel/pages/componenttype',
                                 },
                                 {
-                                    name: trans('global.menu.add_new'),
+                                    name: trans('global.buttons.add_new'),
                                     icon: '',
                                     showDesktop: true,
                                     showMobile: true,

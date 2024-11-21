@@ -37,8 +37,7 @@
                 </Form>
             </div>
             <Table :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" :actions="table.actions"
-                :records="table.records" :pagination="table.pagination" :is-loading="table.loading"
-                @page-changed="onTablePageChange" @action="onTableAction" @sort="onTableSort">
+                :records="table.records" :pagination="table.pagination" :is-loading="table.loading">
                 <template v-slot:content-page="props">
                     <div>
                         {{ props.item.page?.name ?? '-' }}
