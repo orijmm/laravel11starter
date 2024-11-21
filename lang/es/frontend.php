@@ -146,6 +146,8 @@ return [
             'componenttype_create' => 'Nuevo tipo de Componente',
             'componenttype_edit' => 'Editar tipo de Componente',
 
+            'structure' => 'Estructura',
+            'structure_design' => 'Estructura y diseño',
             'sections' => 'Secciones',
             'section' => 'Sección',
             'rowa' => 'Filas',

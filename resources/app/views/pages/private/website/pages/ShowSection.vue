@@ -15,6 +15,9 @@
                 </div>
             </Form>
         </Panel>
+        <Panel :title="trans('global.pages.structure_design')" otherClass="">
+            
+        </Panel>
     </Page>
 </template>
 
