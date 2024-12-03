@@ -81,8 +81,9 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
         Route::apiResource('page', PagesController::class)->except('show');
         Route::post('page/{page}/storesection', [PagesController::class, 'storeSection'])->name('page.store.section');
         Route::get('page/{page}/section/{section}', [PagesController::class, 'showSection'])->name('page.show.section');
-        Route::put('page/{section}/updatesection', [PagesController::class, 'updateSection'])->name('page.update.section');
-        Route::delete('page/{section}/deletesection', [PagesController::class, 'deleteSection'])->name('page.delete.section');
+        Route::patch('page/updatesection/{section}', [PagesController::class, 'updateSection'])->name('page.update.section');
+        Route::delete('page/{page}/deletesection/{section}', [PagesController::class, 'deleteSection'])->name('page.delete.section');
+        Route::patch('page/updaterows/{section}', [PagesController::class, 'updateRows'])->name('page.section.updaterows');
     });
 });
 

@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
 use App\Http\Resources\PageResource;
-use App\Http\Resources\SectionResource;
 use App\Models\Pages\Page;
+use App\Models\Pages\Row;
 use App\Models\Pages\Section;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class PagesController extends Controller
@@ -92,7 +93,9 @@ class PagesController extends Controller
     ############ SECTIONS ##############
     public function showSection(Page $page, Section $section)
     {
-        $model = new SectionResource($section);
+        $model = Section::where('id', $section->id)->with(['rows' => function (Builder $query) {
+            $query->select('id', 'order', 'section_id')->orderBy('order', 'asc');
+        }])->first();
         return $this->responseDataSuccess(['model' => $model]);
     }
 
@@ -139,4 +142,35 @@ class PagesController extends Controller
         $section->delete();
         return $this->responseDeleteSuccess();
     }
+
+    ###### ROWS ######
+    public function updateRows(Request $request, Section $section)
+    {
+        try {
+            $rows = $request->rows;
+            $order = 1;
+            // Obtener los IDs de las filas actuales de la base de datos
+            $currentRowIds = $section->rows->pluck('id')->toArray();
+
+            // Extraer los IDs de las filas enviadas desde el front-end
+            $rowIdsFromRequest = array_column($rows, 'id');
+
+            // Filas que deben ser eliminadas
+            $rowsToDelete = array_diff($currentRowIds, $rowIdsFromRequest);
+            Row::destroy($rowsToDelete);
+
+            // Crear o actualizar las filas
+            // foreach ($rows as $rowData) {
+            //     $section->rows()->updateOrCreate(
+            //         ['id' => $rowData['id'] ?? null], // Condición: buscar por ID (si existe)
+            //         ['order' => $order++]   // Datos a actualizar o crear
+            //     );
+            // }
+            return $this->responseUpdateSuccess(['record' => [$currentRowIds, $rowIdsFromRequest, $rowsToDelete]]);
+        } catch (\Exception $e) {
+            return $this->responseUpdateFail(['error' => $e->getMessage()]);
+        }
+    }
+    ###### COLUMS ######
+    ###### COMPONENTS ######
 }

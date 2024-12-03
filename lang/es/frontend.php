@@ -150,8 +150,10 @@ return [
             'structure_design' => 'Estructura y diseño',
             'sections' => 'Secciones',
             'section' => 'Sección',
-            'rowa' => 'Filas',
+            'rows' => 'Filas',
             'columns' => 'Columnas',
+            'row' => 'Fila',
+            'column' => 'Columna',
         ],
         'phrases' => [
             'clear_filters' => 'Limpiar todo',

@@ -24,7 +24,8 @@
         "vue-loader": "^17.4.2",
         "vue-material-design-icons": "^5.3.1",
         "vue-multiselect": "^3.0.0",
-        "vue-router": "^4.3.2"
+        "vue-router": "^4.3.2",
+        "vuedraggable": "^4.1.0"
     },
     "devDependencies": {
         "@tailwindcss/aspect-ratio": "^0.4.2",
