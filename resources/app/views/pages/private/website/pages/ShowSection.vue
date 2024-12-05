@@ -26,22 +26,7 @@
                     class="lg:col-start-4" :label="`${trans('global.buttons.save')} ${trans('global.pages.rows')}`">
                 </Button>
             </div>
-            <draggable v-model="sectionList.rows" group="people" @start="drag = true" @end="updateOrder(sectionList)"
-                item-key="id" class="space-y-4 bg-gray-100 p-6 rounded-lg" animation="200">
-                <template #item="{ element, index }">
-                    <div
-                        class="p-4 bg-white rounded-md shadow-md flex justify-between items-center cursor-move sortable-handle">
-                        <!-- <span class="text-gray-200">{{ element.name }}</span> -->
-                        <span class="text-gray-200">{{ `${trans('global.pages.row')} ${index + 1}` }}</span>
-                        <span>
-                            <Tooltip :text="trans('global.actions.delete')"> <i @click="deleteItems(sectionList, index)"
-                                    class="text-gray-200 fa fa-times cursor-pointer"></i>
-                            </Tooltip>
-                        </span>
-                    </div>
-                </template>
-            </draggable>
-
+            <Draggable :sectionList="sectionList" />
         </Panel>
     </Page>
 </template>
@@ -49,8 +34,8 @@
 <script>
 import { defineComponent, onBeforeMount, reactive, ref } from "vue";
 import { trans } from "@/helpers/i18n";
-import { fillObject, reduceProperties } from "@/helpers/data"
-import { toggleAddItems, updateOrder, deleteItems } from "@/helpers/draggable";
+import { fillObject, reduceProperties } from "@/helpers/data";
+import { toggleAddItems } from "@/helpers/draggable";
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { toUrl } from "@/helpers/routing";
@@ -63,8 +48,8 @@ import Page from "@/views/layouts/Page";
 import FileInput from "@/views/components/input/FileInput";
 import Form from "@/views/components/Form";
 import PagesService from "@/services/PagesService";
-import draggable from 'vuedraggable';
 import Tooltip from "@/views/components/Tooltip";
+import Draggable from "@/views/components/draggable/Index";
 import alertHelpers from "@/helpers/alert";
 
 export default defineComponent({
@@ -77,8 +62,8 @@ export default defineComponent({
         Button,
         Page,
         Dropdown,
-        draggable,
-        Tooltip
+        Tooltip,
+        Draggable
     },
     setup() {
         const { user } = useAuthStore();
@@ -90,9 +75,6 @@ export default defineComponent({
             textcolor: undefined,
             page_id: undefined,
         });
-
-        //Dragable
-        let drag = ref(false);
 
         const sectionList = reactive({
             rows: []
@@ -167,12 +149,9 @@ export default defineComponent({
             onSubmit,
             onAction,
             page,
-            drag,
             sectionList,
             saveItems,
-            toggleAddItems,
-            deleteItems,
-            updateOrder
+            toggleAddItems
         }
     }
 })
