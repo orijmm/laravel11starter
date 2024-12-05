@@ -18,25 +18,23 @@
 
         <Panel :title="trans('global.pages.structure_design')" otherClass="overflow-visible">
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 py-3">
-                <Button icon="fa fa-plus" type="button" @click="toggleAddItems('sectionList')" class=""
+                <Button icon="fa fa-plus" type="button"
+                    @click="toggleAddItems(sectionList, 'section_id', $route.params.id)" class=""
                     :label="`${trans('global.buttons.add')} ${trans('global.pages.rows')}`">
                 </Button>
                 <Button icon="fa fa-save" theme="success" type="button" @click="saveItems('sectionList')"
                     class="lg:col-start-4" :label="`${trans('global.buttons.save')} ${trans('global.pages.rows')}`">
                 </Button>
             </div>
-            <div v-for="item in sectionList.rows">
-                {{ item }}
-            </div>
-            <draggable v-model="sectionList.rows" group="people" @start="drag = true" @end="drag = false" item-key="id"
-                class="space-y-4 bg-gray-100 p-6 rounded-lg" animation="200">
+            <draggable v-model="sectionList.rows" group="people" @start="drag = true" @end="updateOrder(sectionList)"
+                item-key="id" class="space-y-4 bg-gray-100 p-6 rounded-lg" animation="200">
                 <template #item="{ element, index }">
                     <div
                         class="p-4 bg-white rounded-md shadow-md flex justify-between items-center cursor-move sortable-handle">
                         <!-- <span class="text-gray-200">{{ element.name }}</span> -->
                         <span class="text-gray-200">{{ `${trans('global.pages.row')} ${index + 1}` }}</span>
                         <span>
-                            <Tooltip :text="trans('global.actions.delete')"> <i @click="deleteItems('sectionList', index)"
+                            <Tooltip :text="trans('global.actions.delete')"> <i @click="deleteItems(sectionList, index)"
                                     class="text-gray-200 fa fa-times cursor-pointer"></i>
                             </Tooltip>
                         </span>
@@ -52,6 +50,7 @@
 import { defineComponent, onBeforeMount, reactive, ref } from "vue";
 import { trans } from "@/helpers/i18n";
 import { fillObject, reduceProperties } from "@/helpers/data"
+import { toggleAddItems, updateOrder, deleteItems } from "@/helpers/draggable";
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { toUrl } from "@/helpers/routing";
@@ -154,29 +153,11 @@ export default defineComponent({
             return false;
         }
 
-        function toggleAddItems(type) {
-            if (type === 'sectionList') {
-                sectionList.rows.push({ id: `0000${sectionList.rows.length + 1}`, order: sectionList.rows.length + 1 });
-            } else if (type === 'ListColumns') {
-                // ListColumns.value.push({ id: null, name: `${trans('global.pages.column')} ${ListColumns.value.length + 1}` });
-            }
-        }
-
         function saveItems(type) {
-            console.log('confirmado', sectionList.rows);
             alertHelpers.confirmDanger(function () {
-                console.log('confirmado', sectionList.rows);
-                if (type === 'sectionList') {
-                    service.update(route.params.id, sectionList, 'pages/page/updaterows', true);
-                    return false;
-                } else if (type === 'ListColumns') {
-                    
-                }
+                service.update(route.params.id, sectionList, 'pages/page/updaterows', true);
+                return false;
             })
-        }
-
-        function deleteItems(type, index) {
-            sectionList.rows.splice(index, 1);
         }
 
         return {
@@ -185,12 +166,13 @@ export default defineComponent({
             form,
             onSubmit,
             onAction,
-            toggleAddItems,
             page,
             drag,
             sectionList,
+            saveItems,
+            toggleAddItems,
             deleteItems,
-            saveItems
+            updateOrder
         }
     }
 })

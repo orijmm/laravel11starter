@@ -93,7 +93,7 @@ class PagesController extends Controller
     ############ SECTIONS ##############
     public function showSection(Page $page, Section $section)
     {
-        $model = Section::where('id', $section->id)->with(['rows' => function (Builder $query) {
+        $model = Section::where('id', $section->id)->with(['rows.columns', 'rows' => function (Builder $query) {
             $query->select('id', 'order', 'section_id')->orderBy('order', 'asc');
         }])->first();
         return $this->responseDataSuccess(['model' => $model]);
@@ -148,25 +148,23 @@ class PagesController extends Controller
     {
         try {
             $rows = $request->rows;
-            $order = 1;
-            // Obtener los IDs de las filas actuales de la base de datos
+            // Obtener los IDs de la consulta y los id de la base de datos y compara
             $currentRowIds = $section->rows->pluck('id')->toArray();
-
-            // Extraer los IDs de las filas enviadas desde el front-end
             $rowIdsFromRequest = array_column($rows, 'id');
-
-            // Filas que deben ser eliminadas
             $rowsToDelete = array_diff($currentRowIds, $rowIdsFromRequest);
             Row::destroy($rowsToDelete);
 
             // Crear o actualizar las filas
-            // foreach ($rows as $rowData) {
-            //     $section->rows()->updateOrCreate(
-            //         ['id' => $rowData['id'] ?? null], // Condición: buscar por ID (si existe)
-            //         ['order' => $order++]   // Datos a actualizar o crear
-            //     );
-            // }
-            return $this->responseUpdateSuccess(['record' => [$currentRowIds, $rowIdsFromRequest, $rowsToDelete]]);
+            $rowClean = collect($rows)->map(fn($row) => collect($row)->except(['columns']))->toArray();
+            foreach ($rowClean as $row) {
+                // Usamos updateOrCreate para verificar si existe el registro y actualizarlo o insertarlo
+                Row::updateOrCreate(
+                    ['id' => $row['id'], 'section_id' => $row['section_id']],  // Verifica la existencia por 'id' y 'section_id'
+                    ['order' => $row['order'], 'updated_at' => now()]  // Actualiza el campo 'order' y 'updated_at'
+                );
+            }
+
+            return $this->responseUpdateSuccess(['record' => $rows]);
         } catch (\Exception $e) {
             return $this->responseUpdateFail(['error' => $e->getMessage()]);
         }
