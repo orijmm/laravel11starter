@@ -58,10 +58,10 @@ export default defineComponent({
                     value += 'text-white border-green-600 border-2 bg-green-600 hover:bg-green-800 focus:bg-green-800 focus:ring-green-800';
                     break;
                 case 'info':
-                    value += 'text-white border-blue-600 border-2 bg-blue-600 hover:bg-blue-800 focus:bg-blue-800 focus:ring-blue-800';
+                    value += 'text-white border-sky-600 border-2 bg-sky-600 hover:bg-sky-800 focus:bg-sky-800 focus:ring-sky-800';
                     break;
                 case 'warning':
-                    value += 'text-white border-orange-600 border-2 bg-orange-600 hover:bg-orange-800 focus:bg-orange-800 focus:ring-orange-800';
+                    value += 'text-white border-orange-500 border-2 bg-orange-500 hover:bg-orange-700 focus:bg-orange-700 focus:ring-orange-700';
                     break;
                 case 'danger':
                 case 'error':

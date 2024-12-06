@@ -151,7 +151,9 @@ return [
             'sections' => 'Secciones',
             'section' => 'Sección',
             'rows' => 'Filas',
+            'norows' => 'Sin Filas',
             'columns' => 'Columnas',
+            'nocolumns' => 'Sin Columnas',
             'row' => 'Fila',
             'column' => 'Columna',
         ],
@@ -196,6 +198,7 @@ return [
             'email_verified' => 'Correo electrónico verificado con éxito',
             'member_since' => 'Miembro desde: {date}',
             'verification_sent' => 'Enlace de verificación de correo enviado.',
+            'add_numbercolumns' => 'Ingrese número de columnas',
         ],
         'buttons' => [
             'add_new' => 'Añadir nuevo',

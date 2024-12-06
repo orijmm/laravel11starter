@@ -18,7 +18,7 @@
 
         <Panel :title="trans('global.pages.structure_design')" otherClass="overflow-visible">
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 py-3">
-                <Button icon="fa fa-plus" type="button"
+                <Button icon="fa fa-plus" type="button" theme="info"
                     @click="toggleAddItems(sectionList, 'section_id', $route.params.id)" class=""
                     :label="`${trans('global.buttons.add')} ${trans('global.pages.rows')}`">
                 </Button>
@@ -26,7 +26,8 @@
                     class="lg:col-start-4" :label="`${trans('global.buttons.save')} ${trans('global.pages.rows')}`">
                 </Button>
             </div>
-            <Draggable :sectionList="sectionList" />
+            <Draggable v-if="sectionList.rows.length" :sectionList="sectionList" />
+            <div v-else class="space-y-4 text-gray-400 bg-gray-100 p-6 rounded-lg text-center">{{ trans('global.pages.norows') }}</div>
         </Panel>
     </Page>
 </template>
@@ -156,13 +157,3 @@ export default defineComponent({
     }
 })
 </script>
-
-<style scoped>
-.sortable-drag {
-    background-color: #f3f4f6;
-    /* Tailwind's gray-200 */
-    transform: scale(1.05);
-    transition: transform 0.2s ease;
-    cursor: move !important;
-}
-</style>
