@@ -13,29 +13,41 @@
                         </span>
                     </div>
                     <div class="p-1 border-2 border-gray-100 rounded-md">
-                        <Button icon="fa fa-plus" type="button" class="mb-2" theme="info"
+                        <!-- Agregar muchas columnas -->
+                        <Button v-if="element.columns.length == 0" icon="fa fa-plus" type="button" class="mb-2" theme="info"
                             @click="displayModalColumns(index)"
                             :label="`${trans('global.buttons.add')} ${trans('global.pages.columns')}`">
                         </Button>
                         <div v-if="element.columns.length">
-                            <Columns :columns="element.columns"></Columns>
+                            <Columns :columns="element.columns" @update:columns="updateColumns"></Columns>
                         </div>
-                        <div class="text-gray-400 bg-gray-100 p-2 rounded-lg text-center" v-else>{{
-                            trans('global.pages.nocolumns') }}</div>
+                        <div class="text-gray-400 bg-gray-100 p-2 rounded-lg text-center" v-else>
+                            {{trans('global.pages.nocolumns') }}
+                        </div>
                     </div>
                 </div>
             </template>
         </draggable>
-        <Modal :is-showing="columnsShow" @close="columnsShow = false;">
+        <Modal :is-showing="columnsSetter.columnsShow" @close="columnsSetter.columnsShow = false;">
             <Panel :title="trans('global.pages.columns')">
                 <div>
                     <label :for="name" class="text-sm text-gray-500">
                         {{ trans('global.phrases.add_numbercolumns') }}
                     </label>
-                    <input v-if="type !== 'textarea'" id="numbercolumns" type="number" v-model="numberColumns"
-                        :required="true" placeholder="1-12" @input="validateNumberColumns" min="1" max="12"
-                        class="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-theme-500 focus:border-theme-500 text-sm" />
-                    <p v-if="errorColumnRange" class="mt-1 text-sm text-red-600">{{ errorColumnRange }}</p>
+                    <select class="mt-1 block w-full" id="numbercolumns" v-model="columnsSetter.numberColumns">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
                     <Button icon="fa fa-plus" type="button" class="mt-2" theme="info" @click="setColumns()"
                         :label="`${trans('global.buttons.add')}`">
                     </Button>
@@ -46,7 +58,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import { updateOrder, deleteItems } from "@/helpers/draggable";
 import Tooltip from "@/views/components/Tooltip";
 import draggable from 'vuedraggable';
@@ -67,41 +79,56 @@ export default defineComponent({
     },
     setup(props) {
         let drag = ref(false);
-        let numberColumns = ref(1);
-        let errorColumnRange = ref('');
-        let columnsShow = ref(false);
-        let rowIndex = ref(null);
-
-        function validateNumberColumns() {
-            if (numberColumns.value > 12) {
-                numberColumns.value = 12;
-                errorColumnRange.value = 'El número debe ser al menos 1 y no puede ser mayor a 12';
-            } else {
-                errorColumnRange.value = '';
-            }
-        }
+        let columnsSetter = reactive({
+            numberColumns: 1,
+            columnsShow: false,
+            rowIndex: null
+        });
 
         function displayModalColumns(index) {
-            columnsShow.value = true;
-            rowIndex.value = index;
+            columnsSetter.columnsShow = true;
+            columnsSetter.rowIndex = index;
         }
 
         function setColumns() {
-            console.log(this.sectionList.rows[rowIndex.value]);
+            const cols = {
+                1: 12,
+                2: 6,
+                3: 4,
+                4: 3,
+                5: 1,
+                6: 2,
+                7: 1,
+                8: 1,
+                9: 1,
+                10: 1,
+                12: 1
+            };
+            for (let i = 1; i <= columnsSetter.numberColumns; i++) {
+                props.sectionList.rows[columnsSetter.rowIndex].columns.push({
+                    id: '0000' + i,
+                    order: props.sectionList.rows[columnsSetter.rowIndex].columns.length+1,
+                    row_id: props.sectionList.rows[columnsSetter.rowIndex].id,
+                    width: cols[columnsSetter.numberColumns]
+                });
+            }
+            columnsSetter.columnsShow = false;
+            columnsSetter.numberColumns = 1;
         }
+
+        function updateColumns(newColumns) {
+            props.sectionList.rows[columnsSetter.rowIndex].columns = newColumns;
+        };
 
         return {
             drag,
-            columnsShow,
             trans,
             updateOrder,
             deleteItems,
-            numberColumns,
-            validateNumberColumns,
-            errorColumnRange,
             displayModalColumns,
             setColumns,
-            rowIndex
+            columnsSetter,
+            updateColumns
         }
     }
 })
