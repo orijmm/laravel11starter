@@ -19,7 +19,7 @@
         <Panel :title="trans('global.pages.structure_design')" otherClass="overflow-visible">
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 py-3">
                 <Button icon="fa fa-plus" type="button" theme="info"
-                    @click="toggleAddItems(sectionList, 'section_id', $route.params.id)" class=""
+                    @click="toggleAddItems(sectionList.rows, 'section_id', $route.params.id)" class=""
                     :label="`${trans('global.buttons.add')} ${trans('global.pages.rows')}`">
                 </Button>
                 <Button icon="fa fa-save" theme="success" type="button" @click="saveItems('sectionList')"

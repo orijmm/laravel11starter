@@ -200,6 +200,7 @@ return [
             'verification_sent' => 'Enlace de verificación de correo enviado.',
             'add_numbercolumns' => 'Ingrese número de columnas',
             'column_range' => 'El número debe ser al menos 1 y no puede ser mayor a 12',
+            'add_morecolumns' => 'Agregar otra columna',
         ],
         'buttons' => [
             'add_new' => 'Añadir nuevo',

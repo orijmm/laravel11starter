@@ -12,14 +12,14 @@
                             </Tooltip>
                         </span>
                     </div>
-                    <div class="p-1 border-2 border-gray-100 rounded-md">
+                    <div>
                         <!-- Agregar muchas columnas -->
                         <Button v-if="element.columns.length == 0" icon="fa fa-plus" type="button" class="mb-2" theme="info"
                             @click="displayModalColumns(index)"
                             :label="`${trans('global.buttons.add')} ${trans('global.pages.columns')}`">
                         </Button>
                         <div v-if="element.columns.length">
-                            <Columns :columns="element.columns" @update:columns="updateColumns"></Columns>
+                            <Columns :columns="element.columns" :rowid="element.id" @update:columns="updateColumns"></Columns>
                         </div>
                         <div class="text-gray-400 bg-gray-100 p-2 rounded-lg text-center" v-else>
                             {{trans('global.pages.nocolumns') }}
@@ -41,12 +41,6 @@
                         <option value="4">4</option>
                         <option value="5">5</option>
                         <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
                     </select>
                     <Button icon="fa fa-plus" type="button" class="mt-2" theme="info" @click="setColumns()"
                         :label="`${trans('global.buttons.add')}`">
