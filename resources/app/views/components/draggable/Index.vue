@@ -1,13 +1,13 @@
 <template>
     <div>
-        <draggable v-model="sectionList.rows" group="people" @start="drag = true" @end="updateOrder(sectionList, drag)"
+        <draggable v-model="sectionList.rows" group="people" @start="drag = true" @end="updateOrder(sectionList.rows, drag)"
             item-key="id" class="space-y-4 bg-gray-100 p-2 rounded-lg" animation="200">
             <template #item="{ element, index }">
-                <div class="p-4 bg-white rounded-md shadow-md cursor-move sortable-handle">
-                    <div class="flex justify-between items-center">
+                <div class="p-2 bg-white rounded-md shadow-md cursor-move sortable-handle">
+                    <div class="flex justify-between items-center text-sm">
                         <span class="text-gray-200">{{ `${trans('global.pages.row')} ${index + 1}` }}</span>
                         <span>
-                            <Tooltip :text="trans('global.actions.delete')"> <i @click="deleteItems(sectionList, index)"
+                            <Tooltip :text="trans('global.actions.delete')"> <i @click="deleteItems(sectionList.rows, index)"
                                     class="text-gray-200 fa fa-times cursor-pointer"></i>
                             </Tooltip>
                         </span>
@@ -110,8 +110,10 @@ export default defineComponent({
             columnsSetter.numberColumns = 1;
         }
 
-        function updateColumns(newColumns) {
-            props.sectionList.rows[columnsSetter.rowIndex].columns = newColumns;
+        function updateColumns(newColumns, rowid) {
+            //actualizar las columnas desde Componente hijo segun la fila
+            let rownode = props.sectionList.rows.find(item => item.id === rowid);
+            rownode.columns = newColumns;
         };
 
         return {
@@ -122,7 +124,7 @@ export default defineComponent({
             displayModalColumns,
             setColumns,
             columnsSetter,
-            updateColumns
+            updateColumns,
         }
     }
 })

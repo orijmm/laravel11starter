@@ -12,6 +12,7 @@ export const updateOrder = function (obj, drag) {
 
 export const deleteItems = function (obj, index) {
     obj.splice(index, 1);
+    updateOrder(obj);
 }
 
 
