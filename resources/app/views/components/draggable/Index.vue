@@ -4,7 +4,7 @@
             item-key="id" class="space-y-4 bg-gray-100 p-2 rounded-lg" animation="200">
             <template #item="{ element, index }">
                 <div class="p-2 bg-white rounded-md shadow-md cursor-move sortable-handle">
-                    <div class="flex justify-between items-center text-sm">
+                    <div class="flex justify-between items-center text-sm mb-2">
                         <span class="text-gray-200">{{ `${trans('global.pages.row')} ${index + 1}` }}</span>
                         <span>
                             <Tooltip :text="trans('global.actions.delete')"> <i @click="deleteItems(sectionList.rows, index)"

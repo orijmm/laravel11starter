@@ -7,9 +7,9 @@
                     <div class="flex justify-between items-center text-sm">
                         <span class="text-gray-200">{{ `${trans('global.pages.column')} ${index + 1}` }}</span>
                         <span>
-                            <Tooltip :text="trans('global.actions.delete')"> <i @click="deleteItems(localColumns, index)"
+                            <i @click="deleteItems(localColumns, index)"
                                     class="text-gray-200 fa fa-times cursor-pointer"></i>
-                            </Tooltip>
+                            
                         </span>
                     </div>
                     <div>{{ element.id }}</div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
 use App\Http\Resources\PageResource;
+use App\Models\Pages\Column;
 use App\Models\Pages\Page;
 use App\Models\Pages\Row;
 use App\Models\Pages\Section;
@@ -155,18 +156,32 @@ class PagesController extends Controller
             Row::destroy($rowsToDelete);
 
             // Crear o actualizar las filas
-            $rowClean = collect($rows)->map(fn($row) => collect($row)->except(['columns']))->toArray();
-            foreach ($rowClean as $row) {
+            //$rowClean = collect($rows)->map(fn($row) => collect($row)->except(['columns']))->toArray();
+
+            foreach ($rows as $row) {
                 // Usamos updateOrCreate para verificar si existe el registro y actualizarlo o insertarlo
-                Row::updateOrCreate(
+                $rowid = Row::updateOrCreate(
                     ['id' => $row['id'], 'section_id' => $row['section_id']],  // Verifica la existencia por 'id' y 'section_id'
                     ['order' => $row['order'], 'updated_at' => now()]  // Actualiza el campo 'order' y 'updated_at'
                 );
+
+                if (isset($row['columns']) && $row['columns']) {
+                    //Delete columns
+                    Column::where('row_id', $rowid->id)->delete();
+                    //Add columns to row
+                    foreach ($row['columns'] as $col) {
+                        Column::create([
+                            'row_id' => $rowid->id,
+                            'width' => $col['width'],
+                            'order' => $col['order']
+                        ]);
+                    }
+                }
             }
 
-            return $this->responseUpdateSuccess(['record' => $rows]);
+            return $this->responseUpdateSuccess(['record' => $section]);
         } catch (\Exception $e) {
-            return $this->responseUpdateFail(['error' => $e->getMessage()]);
+            return $this->responseUpdateFail(['error' => $e->getTrace()]);
         }
     }
     ###### COLUMS ######
