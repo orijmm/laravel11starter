@@ -1,6 +1,5 @@
 <template>
     <div class="text-gray-400 bg-gray-100 p-1 rounded-lg text-center">
-        {{ localColumns }}
         <draggable v-model="localColumns" :sortableOptions="{ direction: 'horizontal' }" class="grid grid-flow-col"
             item-key="id" animation="200" @start="drag = true" @end="onDragEnd">
             <template #item="{ element, index }">
