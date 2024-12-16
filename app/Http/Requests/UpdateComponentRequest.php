@@ -25,8 +25,6 @@ class UpdateComponentRequest extends FormRequest
             'content' => 'required',
             'name' => 'required|alpha_dash|unique:components,name,'.$this->route('component')->id,
             'description' => 'required',
-            'order' => 'required',
-            'column_id' => 'required',
             'component_type_id' => 'required',
         ];
     }

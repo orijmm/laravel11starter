@@ -7,8 +7,6 @@
                     :label="trans('users.labels.first_name')" :labelsmall="trans('global.pages.lowercase')" />
                 <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
                     :label="trans('users.labels.description')" />
-                <TextInput class="mb-4" type="number" :required="true" name="order" v-model="form.order"
-                    :label="trans('users.labels.order')" />
                 <TextInput class="mb-4" type="textarea" :required="true" name="content" v-model="form.content"
                     :label="trans('users.labels.content')" />
                 <Dropdown class="mb-4" :server="'pages/componenttype'" :server-per-page="15" :required="true"
@@ -54,7 +52,6 @@ export default defineComponent({
             content: undefined,
             name: undefined,
             description: undefined,
-            order: undefined,
             component_type_id: undefined
         });
 

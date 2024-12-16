@@ -25,7 +25,6 @@ class StoreComponentRequest extends FormRequest
             'content' => 'required',
             'name' => 'required|alpha_dash|unique:components',
             'description' => 'required',
-            'order' => 'required',
             'component_type_id' => 'required',
         ];
     }

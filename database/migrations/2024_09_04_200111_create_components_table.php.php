@@ -16,7 +16,6 @@ return new class extends Migration
             $table->text('content');
             $table->string('name');
             $table->text('description')->nullable(); 
-            $table->integer('order');
             $table->foreignId('component_type_id')->constrained('component_types')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
