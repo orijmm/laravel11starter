@@ -155,9 +155,6 @@ class PagesController extends Controller
             $rowsToDelete = array_diff($currentRowIds, $rowIdsFromRequest);
             Row::destroy($rowsToDelete);
 
-            // Crear o actualizar las filas
-            //$rowClean = collect($rows)->map(fn($row) => collect($row)->except(['columns']))->toArray();
-
             foreach ($rows as $row) {
                 // Usamos updateOrCreate para verificar si existe el registro y actualizarlo o insertarlo
                 $rowid = Row::updateOrCreate(
@@ -179,7 +176,9 @@ class PagesController extends Controller
                 }
             }
 
-            return $this->responseUpdateSuccess(['record' => $section]);
+            $updateRows = Row::where('section_id', $section->id)->with('columns.components')->get();
+
+            return $this->responseUpdateSuccess(['record' => $updateRows]);
         } catch (\Exception $e) {
             return $this->responseUpdateFail(['error' => $e->getTrace()]);
         }

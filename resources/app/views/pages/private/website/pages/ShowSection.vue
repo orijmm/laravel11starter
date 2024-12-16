@@ -27,7 +27,8 @@
                 </Button>
             </div>
             <Draggable v-if="sectionList.rows.length" :sectionList="sectionList" />
-            <div v-else class="space-y-4 text-gray-400 bg-gray-100 p-6 rounded-lg text-center">{{ trans('global.pages.norows') }}</div>
+            <div v-else class="space-y-4 text-gray-400 bg-gray-100 p-6 rounded-lg text-center">{{
+                trans('global.pages.norows') }}</div>
         </Panel>
     </Page>
 </template>
@@ -137,9 +138,15 @@ export default defineComponent({
         }
 
         function saveItems(type) {
-            alertHelpers.confirmDanger(function () {
-                service.update(route.params.id, sectionList, 'pages/page/updaterows', true);
-                return false;
+            alertHelpers.confirmDanger(async function () {
+                try {
+                    let response = await service.update(route.params.id, sectionList, 'pages/page/updaterows', true);
+                    fillObject(sectionList.rows, response.data.record);
+                    return false;
+                } catch (error) {
+                    console.error('Error:', error);
+
+                }
             })
         }
 

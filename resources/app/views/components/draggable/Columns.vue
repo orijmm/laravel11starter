@@ -7,7 +7,7 @@
                     <div class="flex justify-between items-center text-sm">
                         <span class="text-gray-200">{{ `${trans('global.pages.column')} ${index + 1}` }}</span>
                         <span>
-                            <i @click="deleteItems(localColumns, index)"
+                            <i @click="onDeleteItems(localColumns, index)"
                                     class="text-gray-200 fa fa-times cursor-pointer"></i>
                             
                         </span>
@@ -17,7 +17,7 @@
             </template>
         </draggable>
         <Tooltip :text="trans('global.phrases.add_morecolumns')"><i
-                @click="toggleAddItems(localColumns, 'row_id', rowid)" class="fa fa-plus cursor-pointer"></i></Tooltip>
+                @click="onToggleAddItems(localColumns, 'row_id', rowid)" class="fa fa-plus cursor-pointer"></i></Tooltip>
     </div>
 </template>
 
@@ -53,6 +53,19 @@ export default defineComponent({
             emit("update:columns", localColumns.value, props.rowid); // Emitir el índice y las columnas actualizadas
         }
 
+        function onToggleAddItems(cols, field, rowid) {
+            toggleAddItems(cols, field, rowid)
+            emit("update:columns", props.columns, props.rowid);
+            emit("update:columns", localColumns.value, props.rowid); // Emitir el índice y las columnas actualizadas
+        }
+
+        function onDeleteItems(cols, index) {
+            deleteItems(cols, index);
+            //actualizar las columnas de la fila desde componente hijo
+            emit("update:columns", props.columns, props.rowid);
+            emit("update:columns", localColumns.value, props.rowid); // Emitir el índice y las columnas actualizadas
+        }
+
         // Keep localColumns in sync with props.columns
         watch(
             () => props.columns,
@@ -67,7 +80,9 @@ export default defineComponent({
             onDragEnd,
             localColumns,
             toggleAddItems,
+            onToggleAddItems,
             deleteItems,
+            onDeleteItems,
             updateOrder
         }
     }

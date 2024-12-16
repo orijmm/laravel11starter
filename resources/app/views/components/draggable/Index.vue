@@ -1,5 +1,10 @@
 <template>
     <div>
+        <!-- <div v-for="items in sectionList.rows">
+            <div v-for="value in items.columns">
+                {{ value }}
+            </div>
+        </div> -->
         <draggable v-model="sectionList.rows" group="people" @start="drag = true" @end="updateOrder(sectionList.rows, drag)"
             item-key="id" class="space-y-4 bg-gray-100 p-2 rounded-lg" animation="200">
             <template #item="{ element, index }">
