@@ -8,10 +8,8 @@
                         :label="trans('users.labels.name')" />
                     <TextInput class="mb-4" type="text" :required="true" name="order" v-model="form.order"
                         :label="trans('users.labels.order')" />
-                    <TextInput class="mb-4" type="text" name="backgroundcolor" v-model="form.backgroundcolor"
-                        :label="trans('users.labels.backgroundcolor')" />
-                    <TextInput class="mb-4" type="text" name="textcolor" v-model="form.textcolor"
-                        :label="trans('users.labels.textcolor')" />
+                    <TextInput class="mb-4" type="text" name="classes" v-model="form.classes"
+                        :label="trans('users.labels.classes')" />
                 </div>
             </Form>
         </Panel>
@@ -73,8 +71,7 @@ export default defineComponent({
         const form = reactive({
             name: undefined,
             order: undefined,
-            backgroundcolor: undefined,
-            textcolor: undefined,
+            classes: undefined,
             page_id: undefined,
         });
 

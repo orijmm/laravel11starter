@@ -68,6 +68,7 @@ return [
             'menu_id' => 'Menu',
             'backgroundcolor' => 'Color Fondo',
             'textcolor' => 'Color texto',
+            'classes' => 'Clases',
         ],
     ],
     'messages' => [
@@ -201,6 +202,7 @@ return [
             'add_numbercolumns' => 'Ingrese número de columnas',
             'column_range' => 'El número debe ser al menos 1 y no puede ser mayor a 12',
             'add_morecolumns' => 'Agregar otra columna',
+            'no_menuitempage' => 'La ruta no existe en el registro de items de menú, verifique si tiene url asignado'
         ],
         'buttons' => [
             'add_new' => 'Añadir nuevo',

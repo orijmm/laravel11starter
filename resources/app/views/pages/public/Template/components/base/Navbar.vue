@@ -43,7 +43,6 @@ export default {
     },
   },
   setup() {
-    // Variables reactivas
     const open = ref(false);
 
     return {

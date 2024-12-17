@@ -6,7 +6,7 @@
       <BaseNavbar :menus="menus" />
 
       <main class="text-neutral-800">
-        <Content />
+        <Content :page="pageid" />
       </main>
 
       <BaseFooter />
@@ -17,10 +17,10 @@
 import BaseNavbar from '@/views/pages/public/template/components/base/Navbar';
 import BaseFooter from '@/views/pages/public/template/components/base/Footer';
 import Content from '@/views/pages/public/home/Content';
-import PagesService from '@/services/PagesService';
+import { useRoute } from 'vue-router';
 import { useAlertStore } from "@/stores";
 import { onMounted, reactive, ref } from 'vue';
-import { getResponseError, prepareQuery } from "@/helpers/api";
+import { getResponseError } from "@/helpers/api";
 import ModelService from '@/services/ModelService';
 
 
@@ -29,21 +29,24 @@ export default {
   name: 'DefaultLayout',
   components: { BaseNavbar, Content, BaseFooter },
   setup() {
-    const serviceMenu = new ModelService;
+    const service = new ModelService;
     const alertStore = useAlertStore();
+    const route = useRoute();
+    const currentRoute = route.path;
+
 
     // Variables reactivas
     const menus = reactive({
       total: 0,
       data: []
     });
-    // const dropdownNavbar = ref(false);
+    let page = ref('/');
 
     //metodos
     function fetchPage() {
       //Menutop ID
-      let menutop = 1;
-      serviceMenu
+      let menutop = 2;
+      service
         .find(menutop, 'menus')
         .then((response) => {
           menus.data = response.data.model.items;
@@ -51,6 +54,18 @@ export default {
         })
         .catch((error) => {
           alertStore.error(getResponseError(error));
+        });
+
+      //page
+      service
+        .store({ url: currentRoute }, 'page/showpage')
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          alertStore.error(getResponseError(error));
+          console.log(error);
+
         });
     }
 

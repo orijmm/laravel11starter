@@ -7,6 +7,7 @@ use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
 use App\Http\Resources\PageResource;
 use App\Models\Pages\Column;
+use App\Models\Pages\MenuItem;
 use App\Models\Pages\Page;
 use App\Models\Pages\Row;
 use App\Models\Pages\Section;
@@ -91,6 +92,18 @@ class PagesController extends Controller
         //
     }
 
+    /**
+     * Display page.
+    */
+    public function showPageItem(Request $request)
+    {
+        $menuitem = MenuItem::where('url', $request->url)->first();
+        if(!$menuitem)
+            return $this->responseFail(trans('frontend.global.phrases.no_menuitempage'));
+        $page = Page::where('id', $menuitem->page_id)->with('sections.rows.columns.components')->first();
+        return $this->responseDataSuccess(['page' => $page]);
+    }
+
     ############ SECTIONS ##############
     public function showSection(Page $page, Section $section)
     {
@@ -104,9 +117,8 @@ class PagesController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string',
-            'backgroundcolor' => 'nullable',
+            'classes' => 'nullable',
             'order' => 'required|integer',
-            'textcolor' => 'nullable',
         ]);
 
         $section = new Section($data);
@@ -124,9 +136,8 @@ class PagesController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string',
-            'backgroundcolor' => 'nullable',
+            'classes' => 'nullable',
             'order' => 'required|integer',
-            'textcolor' => 'nullable',
         ]);
         $edititem = $section->update($data);
 

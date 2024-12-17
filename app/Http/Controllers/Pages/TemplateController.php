@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTemplateRequest;
 use App\Http\Requests\UpdateTemplateRequest;
 use App\Http\Resources\TemplateResource;
-use App\Models\Template;
+use App\Models\Pages\Template;
 use Illuminate\Http\Request;
 
 class TemplateController extends Controller

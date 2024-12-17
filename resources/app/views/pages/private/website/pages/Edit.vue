@@ -17,19 +17,17 @@
         <Panel :title="trans('global.pages.sections')" otherClass="">
             <div class="text-right mb-4">
                 <Button type="button" @click="toggleAddItems"
-                    :label="page.toggleAddItems? `${trans('global.buttons.hide')}` :`${trans('global.buttons.add')} ${trans('global.pages.section')}`" />
+                    :label="page.toggleAddItems ? `${trans('global.buttons.hide')}` : `${trans('global.buttons.add')} ${trans('global.pages.section')}`" />
             </div>
             <div v-if="page.toggleAddItems">
                 <Form id="add-item" @submit.prevent="onSubmitSection">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3">
                         <TextInput class="mb-4" type="text" :required="true" name="name" v-model="formItem.name"
                             :label="trans('users.labels.name')" />
-                        <TextInput class="mb-4" type="text" name="backgroundcolor"
-                            v-model="formItem.backgroundcolor" :label="trans('users.labels.backgroundcolor')" />
-                        <TextInput class="mb-4" type="text" name="textcolor"
-                            v-model="formItem.textcolor" :label="trans('users.labels.textcolor')" />
                         <TextInput class="mb-4" type="number" :required="true" name="order" v-model="formItem.order"
                             :label="trans('users.labels.order')" />
+                        <TextInput class="mb-4" type="text" name="classes" v-model="formItem.classes"
+                            :label="trans('users.labels.classes')" />
                     </div>
                     <div class="text-right mb-4">
                         <Button type="button" @click="onSubmitSection" :label="trans('global.buttons.add')" />
@@ -196,9 +194,8 @@ export default defineComponent({
 
         const formItem = reactive({
             name: undefined,
-            backgroundcolor: undefined,
+            classes: undefined,
             order: undefined,
-            textcolor: undefined,
         });
 
         function onSubmitSection() {
