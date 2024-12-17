@@ -16,14 +16,16 @@ return new class extends Migration
                 ->constrained('columns') // Especifica la tabla relacionada
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-                
+
             $table->foreignId('component_id')
                 ->constrained('components') // Especifica la tabla relacionada
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-                
+
+            $table->integer('order');
+
             $table->primary(['column_id', 'component_id']);
-        });        
+        });
     }
 
     /**
