@@ -29,9 +29,9 @@ abstract class Controller extends BaseController
      *
      * @return JsonResponse
      */
-    protected function responseDataSuccess(array $data)
+    protected function responseDataSuccess(array $data, $msg = '')
     {
-        return $this->responseSuccess('', $data);
+        return $this->responseSuccess($msg, $data);
     }
 
     /**

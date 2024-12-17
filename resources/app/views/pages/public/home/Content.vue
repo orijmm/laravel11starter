@@ -1,6 +1,13 @@
 <template>
     <div class="w-full">
-        <!-- Hero section -->
+        <!-- sections -->
+        <section v-for="(section, i) in page.sections" :id="`section-${section.name}`" :class="section.classes">
+            <div v-for="row in section.rows" class="grid grid-flow-col">
+                <div v-for="col in row.columns">
+                    columnas: {{ col.id }}
+                </div>
+            </div>
+        </section>
         <section id="hero" class="w-full pb-24">
             <BaseSection>
                 <div
@@ -274,6 +281,12 @@ import LandingTradingToolImage from '@/views/pages/public/template/components/la
 export default {
     name: "IndexSite",
     components: { BaseSection, LandingPartnerImage, LandingStep, LandingTradingToolImage, BaseButton, LandingCryptoStatistic, LandingExchange, LandingListItem, BaseAccordion, LandingBuyTradeImage },
+    props: {
+        page: {
+            type: Object,
+            default: {}
+        },
+    },
     setup() {
         // Variables reactivas
         const selected = ref(0);

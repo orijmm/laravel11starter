@@ -93,7 +93,7 @@ class MenuController extends Controller
     public function storeItem(Request $request, Menu $menu)
     {
         $data = $request->validate([
-            'label' => 'required|string',
+            'label' => 'required|string|unique:menu_items',
             'url' => 'required|string',
             'description' => 'nullable|string',
             'order' => 'required|integer',
@@ -119,7 +119,7 @@ class MenuController extends Controller
     {
         $data = $request->validate([
             'label' => 'required|string',
-            'url' => 'required|string',
+            'url' => 'required|string|unique:menu_items,url,'.$this->route('menuitem')->id,
             'description' => 'nullable|string',
             'order' => 'required|integer',
             'parent_id' => 'nullable|integer',

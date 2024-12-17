@@ -70,14 +70,14 @@ class SettingSeeder extends Seeder
 
         // Crear las entradas de menu_items
         $dataTop = [
-            ['label' => 'Cryptocurrency', 'url' => '#', 'description' => 'Cryptocurrency', 'order' => 1, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
-            ['label' => 'Exchanges', 'url' => '#', 'description' => 'Exchanges', 'order' => 2, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
-            ['label' => 'Watchlist', 'url' => '#', 'description' => 'Watchlist', 'order' => 3, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
-            ['label' => 'NFT', 'url' => '#', 'description' => 'NFT', 'order' => 4, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
-            ['label' => 'Portfolio', 'url' => '#', 'description' => 'Portfolio', 'order' => 5, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
-            ['label' => 'Products', 'url' => '#', 'description' => 'Products', 'order' => 6, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
-            ['label' => 'Producto1', 'url' => '#', 'description' => 'producto 1', 'order' => 1, 'parent_id' => 7, 'menu_id' => null, 'page_id' => null],
-            ['label' => 'Producto2', 'url' => '#', 'description' => 'producto 2', 'order' => 2, 'parent_id' => 7, 'menu_id' => null, 'page_id' => null],
+            ['label' => 'Cryptocurrency', 'url' => null, 'description' => 'Cryptocurrency', 'order' => 1, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
+            ['label' => 'Exchanges', 'url' => null, 'description' => 'Exchanges', 'order' => 2, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
+            ['label' => 'Watchlist', 'url' => null, 'description' => 'Watchlist', 'order' => 3, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
+            ['label' => 'NFT', 'url' => null, 'description' => 'NFT', 'order' => 4, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
+            ['label' => 'Portfolio', 'url' => null, 'description' => 'Portfolio', 'order' => 5, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
+            ['label' => 'Products', 'url' => null, 'description' => 'Products', 'order' => 6, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
+            ['label' => 'Producto1', 'url' => null, 'description' => 'producto 1', 'order' => 1, 'parent_id' => 7, 'menu_id' => null, 'page_id' => null],
+            ['label' => 'Producto2', 'url' => null, 'description' => 'producto 2', 'order' => 2, 'parent_id' => 7, 'menu_id' => null, 'page_id' => null],
         ];
         $menuItemTop = [];
         foreach ($dataTop as $item) {

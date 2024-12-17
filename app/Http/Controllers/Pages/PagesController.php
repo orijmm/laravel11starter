@@ -101,7 +101,7 @@ class PagesController extends Controller
         if(!$menuitem)
             return $this->responseFail(trans('frontend.global.phrases.no_menuitempage'));
         $page = Page::where('id', $menuitem->page_id)->with('sections.rows.columns.components')->first();
-        return $this->responseDataSuccess(['page' => $page]);
+        return $this->responseDataSuccess(['page' => $page], trans('frontend.global.phrases.record_show'));
     }
 
     ############ SECTIONS ##############
@@ -116,11 +116,11 @@ class PagesController extends Controller
     public function storeSection(Request $request, Page $page)
     {
         $data = $request->validate([
-            'name' => 'required|string',
+            'name' => 'required|string|unique:sections',
             'classes' => 'nullable',
             'order' => 'required|integer',
         ]);
-
+        $data['name'] = strtolower($data['name']);
         $section = new Section($data);
 
         #Agregar relacion a page
@@ -135,7 +135,7 @@ class PagesController extends Controller
     public function updateSection(Request $request, Section $section)
     {
         $data = $request->validate([
-            'name' => 'required|string',
+            'name' => 'required|string|unique:sections,name,'.$this->route('section')->id,
             'classes' => 'nullable',
             'order' => 'required|integer',
         ]);

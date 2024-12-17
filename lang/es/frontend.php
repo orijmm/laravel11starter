@@ -157,6 +157,7 @@ return [
             'nocolumns' => 'Sin Columnas',
             'row' => 'Fila',
             'column' => 'Columna',
+            'filename_case_sensitive' => 'Nombre del archivo, sensible a mayúsculas y minúsculas'
         ],
         'phrases' => [
             'clear_filters' => 'Limpiar todo',
@@ -185,6 +186,7 @@ return [
             'record_not_updated' => 'No se pudo actualizar el registro.',
             'record_deleted' => 'Registro eliminado con éxito.',
             'record_not_deleted' => 'No se pudo eliminar el registro.',
+            'record_show' => 'Consulta exitosa.',
             'file_uploaded' => 'Archivo subido con éxito',
             'file_not_uploaded' => 'No se pudo subir el archivo',
             'password_updated' => 'Contraseña actualizada con éxito',

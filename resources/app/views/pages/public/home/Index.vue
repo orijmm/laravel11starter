@@ -6,7 +6,7 @@
       <BaseNavbar :menus="menus" />
 
       <main class="text-neutral-800">
-        <Content :page="pageid" />
+        <Content :page="page" />
       </main>
 
       <BaseFooter />
@@ -40,7 +40,9 @@ export default {
       total: 0,
       data: []
     });
-    let page = ref('/');
+    const page = reactive({
+      sections: []
+    });
 
     //metodos
     function fetchPage() {
@@ -61,6 +63,7 @@ export default {
         .store({ url: currentRoute }, 'page/showpage')
         .then((response) => {
           console.log(response.data);
+          page.sections = response.data.page.sections ?? [];
         })
         .catch((error) => {
           alertStore.error(getResponseError(error));
@@ -76,7 +79,8 @@ export default {
     //obtener config desde el backend
 
     return {
-      menus
+      menus,
+      page
     }
   }
 }

@@ -11,6 +11,8 @@
                 <Dropdown class="mb-4" :server="'pages/componenttype'" :server-per-page="15" :required="true"
                     name="type" v-model="form.component_type_id" :label="trans('users.labels.componenttype')"
                     :serverSearchMinCharacters="0" />
+                <TextInput class="mb-4" type="text" :required="true" name="filename" v-model="form.filename"
+                    :label="trans('users.labels.filename')" :labelsmall="trans('global.pages.filename_case_sensitive')" />
             </Form>
         </Panel>
     </Page>
@@ -41,7 +43,8 @@ export default defineComponent({
             content: undefined,
             name: undefined,
             description: undefined,
-            component_type_id: undefined
+            component_type_id: undefined,
+            filename: undefined
         });
 
         const page = reactive({

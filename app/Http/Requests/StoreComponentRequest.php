@@ -26,6 +26,7 @@ class StoreComponentRequest extends FormRequest
             'name' => 'required|alpha_dash|unique:components',
             'description' => 'required',
             'component_type_id' => 'required',
+            'filename' => 'nullable|unique:components'
         ];
     }
 }
