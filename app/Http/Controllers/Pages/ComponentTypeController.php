@@ -7,8 +7,8 @@ use App\Http\Requests\StoreComponentTypeRequest;
 use App\Http\Requests\UpdateComponentTypeRequest;
 use App\Http\Resources\ComponentTypeResource;
 use App\Models\Pages\ComponentType;
+use App\Utilities\Data;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ComponentTypeController extends Controller
 {
@@ -45,6 +45,7 @@ class ComponentTypeController extends Controller
         $this->authorize('create_page');
 
         $data = $request->validated();
+        $data['filename'] = $data['filename']['name'];
         $newcomponent_type = ComponentType::query()->create($data);
 
         if ($newcomponent_type) {
@@ -71,6 +72,7 @@ class ComponentTypeController extends Controller
         $this->authorize('edit_page');
 
         $data = $request->validated();
+        $data['filename'] = $data['filename']['name'];//select
         $newcomponent_type = $componenttype->update($data);
 
         if ($newcomponent_type) {
@@ -89,5 +91,24 @@ class ComponentTypeController extends Controller
         $this->authorize('delete_page');
         $componenttype->delete();
         return $this->responseDeleteSuccess(['name' => $name]);
+    }
+
+    public function listFilename(Request $request)
+    {
+        try {
+            // Define la ruta absoluta a la carpeta "components"
+            $path = resource_path('app/views/pages/public/components');
+            //Funcion extrae nombres archivos segun path
+            $fileFolderNames = Data::getFilenameByFolder($path);
+            //Buscar
+            if ($request->search) {
+                $fileFolderNames = filterArrObj($fileFolderNames, $request->search, 'name');
+            }
+            //Convertir a select
+            $fileNames = Data::formatCollectionForSelect($fileFolderNames, 'name', 'name');
+            return $this->responseDataSuccess(['data' => $fileNames]);
+        } catch (\Exception $e) {
+            return $this->responseFail($e);
+        }
     }
 }

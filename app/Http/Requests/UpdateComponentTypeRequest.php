@@ -22,7 +22,9 @@ class UpdateComponentTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'name' => 'required|alpha_dash|unique:component_types,name,'.$this->route('componenttype')->id,
+            'description' => 'required',
+            'filename' => 'required'
         ];
     }
 }

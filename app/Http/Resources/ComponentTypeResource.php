@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Utilities\Data;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -17,6 +18,8 @@ class ComponentTypeResource extends JsonResource
     public function toArray($request): array
     {
         $data = $this->resource->toArray();
+        $data['filename'] = ['name' => $this->filename, 'id' => $this->filename ];
+        $data['filename_name'] = $this->filename;
         return $data;
     }
 }

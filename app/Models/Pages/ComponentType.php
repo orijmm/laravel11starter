@@ -15,7 +15,7 @@ class ComponentType extends Model
 
     protected $table = 'component_types';
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'description', 'filename'];
 
     public function components(): HasMany
     {

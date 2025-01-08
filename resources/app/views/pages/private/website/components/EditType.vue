@@ -1,20 +1,27 @@
 <template>
-    <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction" :is-loading="page.loading">
-        <Panel>
+    <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction"
+        :is-loading="page.loading">
+        <Panel otherClass="overflow-visible">
             <Form id="edit-componenttype" @submit.prevent="onSubmit">
-                <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name" :label="trans('users.labels.first_name')"/>
+                <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name"
+                    :label="trans('users.labels.first_name')" />
+                <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
+                    :label="trans('users.labels.description')" />
+                <Dropdown class="mb-4" :server="'pages/component/type/filename'" :server-per-page="15" :required="true"
+                    name="filename" v-model="form.filename" :label="trans('users.labels.filename')"
+                    :labelsmall="trans('global.pages.filename_case_sensitive')" :serverSearchMinCharacters="0" />
             </Form>
         </Panel>
     </Page>
 </template>
 
 <script>
-import {defineComponent, onBeforeMount, reactive, ref} from "vue";
-import {trans} from "@/helpers/i18n";
-import {fillObject, reduceProperties} from "@/helpers/data"
-import {useRoute} from "vue-router";
-import {useAuthStore} from "@/stores/auth";
-import {toUrl} from "@/helpers/routing";
+import { defineComponent, onBeforeMount, reactive, ref } from "vue";
+import { trans } from "@/helpers/i18n";
+import { fillObject, reduceProperties } from "@/helpers/data"
+import { useRoute } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+import { toUrl } from "@/helpers/routing";
 import PagesService from "@/services/PagesService";
 import Button from "@/views/components/input/Button";
 import TextInput from "@/views/components/input/TextInput";
@@ -23,6 +30,7 @@ import Panel from "@/views/components/Panel";
 import Page from "@/views/layouts/Page";
 import FileInput from "@/views/components/input/FileInput";
 import Form from "@/views/components/Form";
+import Dropdown from "@/views/components/input/Dropdown";
 
 export default defineComponent({
     components: {
@@ -32,13 +40,16 @@ export default defineComponent({
         Alert,
         TextInput,
         Button,
-        Page
+        Page,
+        Dropdown
     },
     setup() {
-        const {user} = useAuthStore();
+        const { user } = useAuthStore();
         const route = useRoute();
         const form = reactive({
             name: undefined,
+            filename: undefined,
+            description: undefined,
         });
 
         const page = reactive({
@@ -83,7 +94,7 @@ export default defineComponent({
         });
 
         function onAction(data) {
-            switch(data.action.id) {
+            switch (data.action.id) {
                 case 'submit':
                     onSubmit();
                     break;
@@ -107,6 +118,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

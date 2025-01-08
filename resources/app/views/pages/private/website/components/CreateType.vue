@@ -1,8 +1,13 @@
 <template>
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction">
-        <Panel>
+        <Panel otherClass="overflow-visible">
             <Form id="create-componenttype" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name" :label="trans('users.labels.first_name')" :labelsmall="trans('global.pages.lowercase')"/>
+                <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
+                :label="trans('users.labels.description')" />
+                <Dropdown class="mb-4" :server="'pages/component/type/filename'" :server-per-page="15" :required="true"
+                    name="filename" v-model="form.filename" :label="trans('users.labels.filename')" :labelsmall="trans('global.pages.filename_case_sensitive')"
+                    :serverSearchMinCharacters="0" />
             </Form>
         </Panel>
     </Page>
@@ -22,14 +27,17 @@ import PagesService from "@/services/PagesService";
 import {clearObject, reduceProperties} from "@/helpers/data";
 import {toUrl} from "@/helpers/routing";
 import Form from "@/views/components/Form";
+import Dropdown from "@/views/components/input/Dropdown";
 
 export default defineComponent({
     name: 'PagecomponenttypeCreate',
-    components: {Form, FileInput, Panel, Alert, TextInput, Button, Page},
+    components: {Form, FileInput, Panel, Alert, TextInput, Button, Page, Dropdown},
     setup() {
         const {user} = useAuthStore();
         const form = reactive({
             name: undefined,
+            filename: undefined,
+            description: undefined,
         });
 
         const page = reactive({

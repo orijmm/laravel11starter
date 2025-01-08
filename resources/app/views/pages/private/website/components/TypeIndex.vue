@@ -107,6 +107,7 @@ export default defineComponent({
             headers: {
                 id: trans('users.labels.id_pound'),
                 name: trans('users.labels.first_name'),
+                filename_name: trans('users.labels.filename')
             },
             sorting: {
                 name: true,

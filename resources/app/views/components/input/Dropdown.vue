@@ -2,6 +2,7 @@
     <div :style="style" :class="$props.class">
         <label :for="name" class="text-sm text-gray-500" :class="{ 'sr-only': !showLabel }" v-if="label">
             {{ label }}<span class="text-red-600" v-if="$props.required">*</span>
+            <small class="text-gray-300" v-if="labelsmall">{{ labelsmall }}</small>
         </label>
         <Multiselect track-by="id" label="name" v-model="value" :id="$props.name" :name="$props.name" :disabled="disabled" :placeholder="$props.placeholder" :options="selectOptions" :multiple="$props.multiple" :searchable="!!$props.server" :loading="isLoading" :internal-search="false" :clear-on-select="true" :close-on-select="true" :max-height="400" :show-no-results="false" :hide-selected="false" open-direction="bottom" @search-change="handleSearch">
         </Multiselect>
@@ -31,6 +32,10 @@ export default defineComponent({
         label: {
             type: String,
             default: "",
+        },
+        labelsmall: {
+            type: String,
+            default: null,
         },
         modelValue: {
             type: [Object, String],

@@ -22,7 +22,9 @@ class StoreComponentTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'name' => 'required|alpha_dash|unique:component_types',
+            'description' => 'required',
+            'filename' => 'required'
         ];
     }
 }

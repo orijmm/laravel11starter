@@ -35,3 +35,29 @@ if (!function_exists('filter')) {
         $query->filter($filters);
     }
 }
+
+/*
+* Filtro de array de objetos segun busqueda
+* Argumentos: Array de objetos ($arrObj), termino de busqueda ($search), atributo del objeto a buscar ($field)
+*/
+if (!function_exists('filterArrObj')) {
+    function filterArrObj($arrObj, $search, $field)
+    {
+        return collect($arrObj)->filter(function ($item) use($search, $field) {
+            return str_contains(strtolower($item[$field]), strtolower($search));
+        })->values();
+    }
+}
+
+/*
+* Filtro de array de objetos segun busqueda
+* Argumentos: Array de objetos ($arrObj), termino de busqueda ($search), atributo del objeto a buscar ($field)
+*/
+if (!function_exists('filterArr')) {
+    function filterArr($arr, $search)
+    {
+        return array_filter($arr, function ($item) use ($search) {
+            return str_contains(strtolower($item), strtolower($search));
+        });
+    }
+}

@@ -77,6 +77,8 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
 
         Route::apiResource('componenttype', ComponentTypeController::class);
         Route::apiResource('components', ComponentController::class);
+        Route::get('component/type/filename', [ComponentTypeController::class, 'listFilename'])->name('get.typecomponents.filename');
+
         ##PAGES
         Route::apiResource('page', PagesController::class)->except('show');
         Route::post('page/{page}/storesection', [PagesController::class, 'storeSection'])->name('page.store.section');

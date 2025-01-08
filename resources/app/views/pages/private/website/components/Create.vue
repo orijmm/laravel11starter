@@ -4,15 +4,11 @@
             <Form id="create-component" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name"
                     :label="trans('users.labels.first_name')" :labelsmall="trans('global.pages.lowercase')" />
-                <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
-                    :label="trans('users.labels.description')" />
                 <TextInput class="mb-4" type="textarea" :required="true" name="content" v-model="form.content"
                     :label="trans('users.labels.content')" />
                 <Dropdown class="mb-4" :server="'pages/componenttype'" :server-per-page="15" :required="true"
                     name="type" v-model="form.component_type_id" :label="trans('users.labels.componenttype')"
                     :serverSearchMinCharacters="0" />
-                <TextInput class="mb-4" type="text" :required="true" name="filename" v-model="form.filename"
-                    :label="trans('users.labels.filename')" :labelsmall="trans('global.pages.filename_case_sensitive')" />
             </Form>
         </Panel>
     </Page>
@@ -42,9 +38,7 @@ export default defineComponent({
         const form = reactive({
             content: undefined,
             name: undefined,
-            description: undefined,
             component_type_id: undefined,
-            filename: undefined
         });
 
         const page = reactive({
