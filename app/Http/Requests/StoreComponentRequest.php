@@ -22,8 +22,7 @@ class StoreComponentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'content' => 'required',
-            'name' => 'required|alpha_dash|unique:components',
+            'number_content' => 'required',
             'component_type_id' => 'required',
         ];
     }

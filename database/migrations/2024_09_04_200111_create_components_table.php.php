@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('components', function (Blueprint $table) {
             $table->id();
-            $table->text('content');
-            $table->string('name');
-            $table->foreignId('component_type_id')->constrained('component_types')->onDelete('cascade');
+            $table->json('contents');
+            $table->foreignId('component_type_id')->constrained('component_types');
+            $table->foreignId('column_id')->constrained('columns')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

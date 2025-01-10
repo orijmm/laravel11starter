@@ -7,16 +7,17 @@
                     <div class="flex justify-between items-center text-sm">
                         <span class="text-gray-200">{{ `${trans('global.pages.column')} ${index + 1}` }}</span>
                         <span>
-                            <i @click="onDeleteItems(localColumns, index)"
-                                    class="text-gray-200 fa fa-times cursor-pointer"></i>
-                            
+                            <i @click="onDeleteItems(localColumns, index)" class="text-gray-200 fa fa-times cursor-pointer"></i>
                         </span>
                     </div>
-                    <div>{{ element.id }}</div>
+                    <div class="grid mb-2">
+                        <div v-if="showColumnBlock[element.id] ?? false" class="text-xs text-red-400 m-2 break-normal">{{trans('global.phrases.hasto_savecolumn_first')}}</div>
+                        <Button  type="button" @click="checkColumnSaved(element.id)" theme="light-grey" :to="String(element.id).startsWith('0000') ? null : `/panel/pages/page/${sectionList.pageid}/section/${sectionList.sectionid}/column/${element.id}`" class="cursor-pointer" :label="trans('global.buttons.store_components')" />
+                    </div>
                 </div>
             </template>
         </draggable>
-        <Tooltip :text="trans('global.phrases.add_morecolumns')"><i
+        <Tooltip :text="trans('global.phrases.add_morecolumns')" position="bottom"><i
                 @click="onToggleAddItems(localColumns, 'row_id', rowid)" class="fa fa-plus cursor-pointer"></i></Tooltip>
     </div>
 </template>
@@ -27,9 +28,10 @@ import { toggleAddItems, deleteItems, updateOrder } from "@/helpers/draggable";
 import draggable from 'vuedraggable';
 import { trans } from "@/helpers/i18n";
 import Tooltip from "@/views/components/Tooltip";
+import Button from "@/views/components/input/Button";
 
 export default defineComponent({
-    components: { draggable, Tooltip },
+    components: { draggable, Tooltip, Button },
     props: {
         columns: {
             type: Array,
@@ -38,11 +40,17 @@ export default defineComponent({
         rowid: {
             type: Number,
             default: 0
+        },
+        sectionList: {
+            type: Object,
+            default: {}
         }
     },
     emits: ['update:columns'],
     setup(props, { emit }) {
         let drag = ref(false);
+
+        let showColumnBlock = ref([]);
         // Local copy of columns to allow modification
         const localColumns = ref([...props.columns]);
 
@@ -66,6 +74,12 @@ export default defineComponent({
             emit("update:columns", localColumns.value, props.rowid); // Emitir el índice y las columnas actualizadas
         }
 
+        function checkColumnSaved(columnId) {
+            if(String(columnId).startsWith('0000')){
+                showColumnBlock.value = {[columnId]: true};
+            }
+        }
+
         // Keep localColumns in sync with props.columns
         watch(
             () => props.columns,
@@ -79,11 +93,13 @@ export default defineComponent({
             trans,
             onDragEnd,
             localColumns,
+            showColumnBlock,
             toggleAddItems,
             onToggleAddItems,
             deleteItems,
             onDeleteItems,
-            updateOrder
+            updateOrder,
+            checkColumnSaved
         }
     }
 })

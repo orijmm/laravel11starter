@@ -32,6 +32,7 @@ import { default as PagePage } from "@/views/pages/private/website/pages/Index";
 import { default as PagePageCreate } from "@/views/pages/private/website/pages/Create";
 import { default as PagePageEdit } from "@/views/pages/private/website/pages/Edit";
 import { default as PageShowSection } from "@/views/pages/private/website/pages/ShowSection";
+import { default as PageStoreComponents } from "@/views/pages/private/website/pages/StoreComponents";
 
 import { default as PageComponent } from "@/views/pages/private/website/components/Index";
 import { default as PageComponentCreate } from "@/views/pages/private/website/components/Create";
@@ -200,6 +201,12 @@ const routes = [
                         path: "page/:page/section/:id",
                         meta: { requiresAuth: true },
                         component: PageShowSection,
+                    },
+                    {
+                        name: "pages.store.column.component",
+                        path: "page/:page/section/:section/column/:id",
+                        meta: { requiresAuth: true },
+                        component: PageStoreComponents,
                     },
                     {
                         name: "components.list",

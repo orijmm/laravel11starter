@@ -15,7 +15,11 @@ class Component extends Model
 
     protected $table = 'components';
 
-    protected $fillable = ['content', 'name', 'component_type_id'];
+    protected $fillable = ['contents', 'component_type_id', 'column_id'];
+
+    protected $casts = [
+        'contents' => 'array',  // Convierte el campo 'data' a un array
+    ];
 
     /**
      * Get the componenttype that owns the comment.
@@ -27,6 +31,6 @@ class Component extends Model
 
     public function column()
     {
-        return $this->belongsToMany(Column::class);
+        return $this->belongsTo(Column::class);
     }
 }

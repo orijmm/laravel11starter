@@ -2,12 +2,11 @@
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction">
         <Panel otherClass="overflow-visible">
             <Form id="create-componenttype" @submit.prevent="onSubmit">
-                <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name" :label="trans('users.labels.first_name')" :labelsmall="trans('global.pages.lowercase')"/>
+                <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name" :label="trans('users.labels.first_name')" :labelsmall="trans('global.pages.case_sensitive')" />
                 <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
                 :label="trans('users.labels.description')" />
                 <Dropdown class="mb-4" :server="'pages/component/type/filename'" :server-per-page="15" :required="true"
-                    name="filename" v-model="form.filename" :label="trans('users.labels.filename')" :labelsmall="trans('global.pages.filename_case_sensitive')"
-                    :serverSearchMinCharacters="0" />
+                    name="filename" v-model="form.filename" :label="trans('users.labels.filename')" :serverSearchMinCharacters="0" />
             </Form>
         </Panel>
     </Page>

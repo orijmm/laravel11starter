@@ -1,10 +1,5 @@
 <template>
     <div>
-        <!-- <div v-for="items in sectionList.rows">
-            <div v-for="value in items.columns">
-                {{ value }}
-            </div>
-        </div> -->
         <draggable v-model="sectionList.rows" group="people" @start="drag = true" @end="updateOrder(sectionList.rows, drag)"
             item-key="id" class="space-y-4 bg-gray-100 p-2 rounded-lg" animation="200">
             <template #item="{ element, index }">
@@ -24,7 +19,7 @@
                             :label="`${trans('global.buttons.add')} ${trans('global.pages.columns')}`">
                         </Button>
                         <div v-if="element.columns.length">
-                            <Columns :columns="element.columns" :rowid="element.id" @update:columns="updateColumns"></Columns>
+                            <Columns :sectionList="sectionList" :columns="element.columns" :rowid="element.id" @update:columns="updateColumns"></Columns>
                         </div>
                         <div class="text-gray-400 bg-gray-100 p-2 rounded-lg text-center" v-else>
                             {{trans('global.pages.nocolumns') }}

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreComponentRequest;
 use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
 use App\Http\Resources\PageResource;
 use App\Models\Pages\Column;
+use App\Models\Pages\Component;
 use App\Models\Pages\MenuItem;
 use App\Models\Pages\Page;
 use App\Models\Pages\Row;
@@ -94,11 +96,11 @@ class PagesController extends Controller
 
     /**
      * Display page.
-    */
+     */
     public function showPageItem(Request $request)
     {
         $menuitem = MenuItem::where('url', $request->url)->first();
-        if(!$menuitem)
+        if (!$menuitem)
             return $this->responseFail(trans('frontend.global.phrases.no_menuitempage'));
         $page = Page::where('id', $menuitem->page_id)->with('sections.rows.columns.components')->first();
         return $this->responseDataSuccess(['page' => $page], trans('frontend.global.phrases.record_show'));
@@ -135,7 +137,7 @@ class PagesController extends Controller
     public function updateSection(Request $request, Section $section)
     {
         $data = $request->validate([
-            'name' => 'required|string|unique:sections,name,'.$this->route('section')->id,
+            'name' => 'required|string|unique:sections,name,' . $this->route('section')->id,
             'classes' => 'nullable',
             'order' => 'required|integer',
         ]);
@@ -155,7 +157,7 @@ class PagesController extends Controller
         return $this->responseDeleteSuccess();
     }
 
-    ###### ROWS ######
+    ###### ROWS and COLUMS ######
     public function updateRows(Request $request, Section $section)
     {
         try {
@@ -194,6 +196,35 @@ class PagesController extends Controller
             return $this->responseUpdateFail(['error' => $e->getTrace()]);
         }
     }
-    ###### COLUMS ######
+
+    public function getColumnData(Column $column)
+    {
+        $model = [];
+        $column['components'] = $column->components;
+        return $this->responseDataSuccess(['column' => $column]);
+    }
+
     ###### COMPONENTS ######
+
+    public function addComponentToColumn(StoreComponentRequest $request, Column $column) 
+    {
+        #guardar componente
+        $contents = [];
+        $data = $request->validated();
+
+        $data['component_type_id'] = $data['component_type_id']['id'];
+
+        for ($i=0; $i < $request->number_content['id']; $i++) { 
+            $contents[] = ['type' => 'text', 'text' => 'ipsum quia dolor sit amet', 'img' => ''];
+        }
+        $data['contents'] = $contents;
+        $data['column_id'] = $column->id;
+        $component = Component::create($data);
+        if ($component) {
+
+            return $this->responseStoreSuccess(['record' => $column, 'c' => $component]);
+        } else {
+            return $this->responseStoreFail();
+        }
+    }
 }

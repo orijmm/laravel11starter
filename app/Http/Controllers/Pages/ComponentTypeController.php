@@ -45,7 +45,8 @@ class ComponentTypeController extends Controller
         $this->authorize('create_page');
 
         $data = $request->validated();
-        $data['filename'] = $data['filename']['name'];
+        $data['name'] = ucfirst($data['name']);//Capitalize
+        $data['filename'] = $data['filename']['name'];//select
         $newcomponent_type = ComponentType::query()->create($data);
 
         if ($newcomponent_type) {
@@ -72,6 +73,7 @@ class ComponentTypeController extends Controller
         $this->authorize('edit_page');
 
         $data = $request->validated();
+        $data['name'] = ucfirst($data['name']);//Capitalize
         $data['filename'] = $data['filename']['name'];//select
         $newcomponent_type = $componenttype->update($data);
 
@@ -104,9 +106,7 @@ class ComponentTypeController extends Controller
             if ($request->search) {
                 $fileFolderNames = filterArrObj($fileFolderNames, $request->search, 'name');
             }
-            //Convertir a select
-            $fileNames = Data::formatCollectionForSelect($fileFolderNames, 'name', 'name');
-            return $this->responseDataSuccess(['data' => $fileNames]);
+            return $this->responseDataSuccess(['data' => $fileFolderNames]);
         } catch (\Exception $e) {
             return $this->responseFail($e);
         }

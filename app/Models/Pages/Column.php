@@ -4,6 +4,7 @@ namespace App\Models\Pages;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Column extends Model
 {
@@ -15,6 +16,11 @@ class Column extends Model
 
     public function components()
     {
-        return $this->belongsToMany(Component::class);
+        return $this->hasMany(Component::class);
+    }
+
+    public function row(): BelongsTo
+    {
+        return $this->belongsTo(Row::class, 'row_id');
     }
 }

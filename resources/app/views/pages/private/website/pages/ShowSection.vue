@@ -15,9 +15,9 @@
         </Panel>
 
         <Panel :title="trans('global.pages.structure_design')" otherClass="overflow-visible">
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 py-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 py-3">
                 <Button icon="fa fa-plus" type="button" theme="info"
-                    @click="toggleAddItems(sectionList.rows, 'section_id', $route.params.id)" class=""
+                    @click="toggleAddItems(sectionList.rows, 'section_id', $route.params.id)"
                     :label="`${trans('global.buttons.add')} ${trans('global.pages.rows')}`">
                 </Button>
                 <Button icon="fa fa-save" theme="success" type="button" @click="saveItems('sectionList')"
@@ -76,6 +76,8 @@ export default defineComponent({
         });
 
         const sectionList = reactive({
+            pageid: route.params.page,
+            sectionid: route.params.id,
             rows: []
         });
 

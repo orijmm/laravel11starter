@@ -109,7 +109,7 @@ class Data
         $files = File::allFiles($path);
         // Lista con los nombres de los archivos, incluyendo sus rutas relativas
         $fileFolderNames = collect($files)->map(function ($file) use ($path) {
-            return ['name' => str_replace($path . DIRECTORY_SEPARATOR, '', $file->getRelativePathname())];
+            return ['name' => str_replace(['.vue', '.js'], '', $file->getRelativePathname())];
         });
 
         return $fileFolderNames;

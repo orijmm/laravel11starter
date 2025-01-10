@@ -22,8 +22,7 @@ class UpdateComponentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'content' => 'required',
-            'name' => 'required|alpha_dash|unique:components,name,'.$this->route('component')->id,
+            'contents' => 'required',
             'component_type_id' => 'required',
         ];
     }

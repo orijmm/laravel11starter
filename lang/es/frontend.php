@@ -69,6 +69,7 @@ return [
             'backgroundcolor' => 'Color Fondo',
             'textcolor' => 'Color texto',
             'classes' => 'Clases',
+            'number_content' => 'Número de contenido'
         ],
     ],
     'messages' => [
@@ -157,7 +158,8 @@ return [
             'nocolumns' => 'Sin Columnas',
             'row' => 'Fila',
             'column' => 'Columna',
-            'filename_case_sensitive' => 'Nombre del archivo, sensible a mayúsculas y minúsculas'
+            'filename_case_sensitive' => 'Nombre del archivo, sensible a mayúsculas y minúsculas',
+            'case_sensitive' => 'Sensible a mayúsculas y minúsculas'
         ],
         'phrases' => [
             'clear_filters' => 'Limpiar todo',
@@ -204,7 +206,8 @@ return [
             'add_numbercolumns' => 'Ingrese número de columnas',
             'column_range' => 'El número debe ser al menos 1 y no puede ser mayor a 12',
             'add_morecolumns' => 'Agregar otra columna',
-            'no_menuitempage' => 'La ruta no existe en el registro de items de menú, verifique si tiene url asignado'
+            'no_menuitempage' => 'La ruta no existe en el registro de items de menú, verifique si tiene url asignado',
+            'hasto_savecolumn_first' => 'Debe guardar las columnas en las filas primero.'
         ],
         'buttons' => [
             'add_new' => 'Añadir nuevo',
@@ -224,7 +227,8 @@ return [
             'add' => 'Agregar',
             'remove' => 'Quitar',
             'hide' => 'Ocultar',
-            'contract' => 'Contraer'
+            'contract' => 'Contraer',
+            'store_components' => 'Gestionar componentes'
         ],
         'actions' => [
             'name' => 'Acciones',

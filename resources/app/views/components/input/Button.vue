@@ -70,6 +70,9 @@ export default defineComponent({
                 case 'outline':
                     value += 'text-theme-600 border-theme-600 border-solid border-2 hover:bg-theme-800 hover:text-white hover:border-transparent'
                     break;
+                case 'light-grey':
+                    value += 'text-gray-500 hover:text-gray-100 border-gray-300 border-2 bg-gray-300 hover:bg-gray-400 focus:bg-gray-400 focus:ring-gray-400'
+                    break;
                 default:
                     value += 'text-white border-theme-600 border-2 bg-theme-600 hover:bg-theme-800 focus:bg-theme-800 focus:ring-theme-800';
                     break;
