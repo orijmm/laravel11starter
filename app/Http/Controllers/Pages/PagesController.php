@@ -165,6 +165,7 @@ class PagesController extends Controller
             // Obtener los IDs de la consulta y los id de la base de datos y compara
             $currentRowIds = $section->rows->pluck('id')->toArray();
             $rowIdsFromRequest = array_column($rows, 'id');
+            //Elimina filas borradas
             $rowsToDelete = array_diff($currentRowIds, $rowIdsFromRequest);
             Row::destroy($rowsToDelete);
 
@@ -175,6 +176,7 @@ class PagesController extends Controller
                     ['order' => $row['order'], 'updated_at' => now()]  // Actualiza el campo 'order' y 'updated_at'
                 );
 
+                //TODO: En vez de borrar todas las columnas, solo borrar las eliminadas y actualizar o crear desde el front
                 if (isset($row['columns']) && $row['columns']) {
                     //Delete columns
                     Column::where('row_id', $rowid->id)->delete();
