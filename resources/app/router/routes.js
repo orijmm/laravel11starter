@@ -20,7 +20,29 @@ import { default as PageAbility } from "@/views/pages/private/abilities/Index";
 import { default as PageAbilityCreate } from "@/views/pages/private/abilities/Create";
 import { default as PageAbilityEdit } from "@/views/pages/private/abilities/Edit";
 
+import { default as PageMenu } from "@/views/pages/private/website/menus/Index";
+import { default as PageMenuCreate } from "@/views/pages/private/website/menus/Create";
+import { default as PageMenuEdit } from "@/views/pages/private/website/menus/Edit";
 
+import { default as PageTemplate } from "@/views/pages/private/website/templates/Index";
+import { default as PageTemplateCreate } from "@/views/pages/private/website/templates/Create";
+import { default as PageTemplateEdit } from "@/views/pages/private/website/templates/Edit";
+
+import { default as PagePage } from "@/views/pages/private/website/pages/Index";
+import { default as PagePageCreate } from "@/views/pages/private/website/pages/Create";
+import { default as PagePageEdit } from "@/views/pages/private/website/pages/Edit";
+import { default as PageShowSection } from "@/views/pages/private/website/pages/ShowSection";
+import { default as PageStoreComponents } from "@/views/pages/private/website/pages/StoreComponents";
+
+import { default as PageComponent } from "@/views/pages/private/website/components/Index";
+import { default as PageComponentCreate } from "@/views/pages/private/website/components/Create";
+import { default as PageComponentEdit } from "@/views/pages/private/website/components/Edit";
+import { default as PageComponentType } from "@/views/pages/private/website/components/TypeIndex";
+import { default as PageComponentTypeCreate } from "@/views/pages/private/website/components/CreateType";
+import { default as PageComponentTypeEdit } from "@/views/pages/private/website/components/EditType";
+
+/* Web Site pages */
+import { default as PageIndexSite } from "@/views/pages/public/home/Index";
 
 import abilities from "@/stub/abilities";
 
@@ -28,8 +50,8 @@ const routes = [
     {
         name: "home",
         path: "/",
-        meta: { requiresAuth: false, isPublicAuthPage: true },
-        component: PageLogin,
+        meta: { requiresAuth: false },
+        component: PageIndexSite,
     },
     {
         name: "panel",
@@ -114,6 +136,113 @@ const routes = [
                         path: ":id/editability",
                         meta: { requiresAuth: true, requiresAbility: abilities.LIST_ABILITY },
                         component: PageAbilityEdit,
+                    },
+                ]
+            },
+            {
+                path: "pages",
+                children: [
+                    {
+                        name: "menus.list",
+                        path: "menus",
+                        meta: { requiresAuth: false },
+                        component: PageMenu,
+                    },
+                    {
+                        name: "menus.create",
+                        path: "menus/create",
+                        meta: { requiresAuth: true },
+                        component: PageMenuCreate,
+                    },
+                    {
+                        name: "menus.edit",
+                        path: "menus/:id",
+                        meta: { requiresAuth: true },
+                        component: PageMenuEdit,
+                    },
+                    {
+                        name: "templates.list",
+                        path: "templates",
+                        meta: { requiresAuth: true },
+                        component: PageTemplate,
+                    },
+                    {
+                        name: "templates.create",
+                        path: "templates/create",
+                        meta: { requiresAuth: true },
+                        component: PageTemplateCreate,
+                    },
+                    {
+                        name: "templates.edit",
+                        path: "templates/:id",
+                        meta: { requiresAuth: true },
+                        component: PageTemplateEdit,
+                    },
+                    {
+                        name: "pages.list",
+                        path: "page",
+                        meta: { requiresAuth: true },
+                        component: PagePage,
+                    },
+                    {
+                        name: "pages.create",
+                        path: "page/create",
+                        meta: { requiresAuth: true },
+                        component: PagePageCreate,
+                    },
+                    {
+                        name: "pages.edit",
+                        path: "page/:id",
+                        meta: { requiresAuth: true },
+                        component: PagePageEdit,
+                    },
+                    {
+                        name: "pages.show.section",
+                        path: "page/:page/section/:id",
+                        meta: { requiresAuth: true },
+                        component: PageShowSection,
+                    },
+                    {
+                        name: "pages.store.column.component",
+                        path: "page/:page/section/:section/column/:id",
+                        meta: { requiresAuth: true },
+                        component: PageStoreComponents,
+                    },
+                    {
+                        name: "components.list",
+                        path: "components",
+                        meta: { requiresAuth: true },
+                        component: PageComponent,
+                    },
+                    {
+                        name: "components.create",
+                        path: "components/create",
+                        meta: { requiresAuth: true },
+                        component: PageComponentCreate,
+                    },
+                    {
+                        name: "components.edit",
+                        path: "components/:id",
+                        meta: { requiresAuth: true },
+                        component: PageComponentEdit,
+                    },
+                    {
+                        name: "componenttype.list",
+                        path: "componenttype",
+                        meta: { requiresAuth: true },
+                        component: PageComponentType,
+                    },
+                    {
+                        name: "componenttype.create",
+                        path: "componenttype/create",
+                        meta: { requiresAuth: true },
+                        component: PageComponentTypeCreate,
+                    },
+                    {
+                        name: "componenttype.edit",
+                        path: "componenttype/:id",
+                        meta: { requiresAuth: true },
+                        component: PageComponentTypeEdit,
                     },
                 ]
             }

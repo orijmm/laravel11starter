@@ -1,5 +1,7 @@
 <template>
-    <div class="bg-gray-100 flex" v-if="authStore.user && authStore.user.hasOwnProperty('id')">
+    <div class="bg-gray-100 flex"
+        v-if="authStore.user && authStore.user.hasOwnProperty('id') && /panel/.test(this.$route.path)">
+        <!-- /panel/.test(this.$route.path)" muestra el menu solo si ruta empieza por panel -->
         <aside class="relative bg-theme-600 h-screen w-64 hidden sm:block shadow-xl">
             <div class="p-6 border-b border-theme-600">
                 <router-link class="text-white text-3xl font-semibold uppercase hover:text-gray-300"
@@ -112,7 +114,7 @@
 </template>
 
 <script>
-import { computed, onBeforeMount, reactive } from "vue";
+import { computed, onBeforeMount, reactive, ref } from "vue";
 
 import { trans } from '@/helpers/i18n';
 import Menu from "@/views/layouts/Menu";
@@ -210,7 +212,7 @@ export default {
                             to: '/panel/roles/list',
                             children: [
                                 {
-                                    name: trans('global.phrases.add_new'),
+                                    name: trans('global.buttons.add_new'),
                                     icon: '',
                                     showDesktop: true,
                                     showMobile: true,
@@ -228,12 +230,110 @@ export default {
                             to: '/panel/roles/allbilities',
                             children: [
                                 {
-                                    name: trans('global.phrases.add_new'),
+                                    name: trans('global.buttons.add_new'),
                                     icon: '',
                                     showDesktop: true,
                                     showMobile: true,
                                     requiresAbility: getAbilitiesForRoute('roles.create.ability'),
                                     to: '/panel/roles/add/ability',
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: trans('global.menu.website'),
+                    icon: 'file',
+                    showDesktop: true,
+                    showMobile: true,
+                    requiresAbility: false,
+                    to: '/panel/pages',
+                    children: [
+                        {
+                            name: trans('global.menu.menu'),
+                            icon: 'tachometer',
+                            showDesktop: true,
+                            showMobile: true,
+                            requiresAbility: false,
+                            to: '/panel/pages/menus',
+                            children: [
+                                {
+                                    name: trans('global.buttons.add_new'),
+                                    icon: '',
+                                    showDesktop: true,
+                                    showMobile: true,
+                                    requiresAbility: false,
+                                    to: '/panel/pages/menus/create',
+                                }
+                            ]
+                        },
+                        {
+                            name: trans('global.menu.templates'),
+                            icon: 'tachometer',
+                            showDesktop: true,
+                            showMobile: true,
+                            requiresAbility: false,
+                            to: '/panel/pages/templates',
+                            children: [
+                                {
+                                    name: trans('global.buttons.add_new'),
+                                    icon: '',
+                                    showDesktop: true,
+                                    showMobile: true,
+                                    requiresAbility: false,
+                                    to: '/panel/pages/templates/create',
+                                }
+                            ]
+                        },
+                        {
+                            name: trans('global.menu.pages'),
+                            icon: 'tachometer',
+                            showDesktop: true,
+                            showMobile: true,
+                            requiresAbility: false,
+                            to: '/panel/pages/page',
+                            children: [
+                                {
+                                    name: trans('global.buttons.add_new'),
+                                    icon: '',
+                                    showDesktop: true,
+                                    showMobile: true,
+                                    requiresAbility: false,
+                                    to: '/panel/pages/pages/create',
+                                }
+                            ]
+                        },
+                        {
+                            name: trans('global.menu.components'),
+                            icon: 'tachometer',
+                            showDesktop: true,
+                            showMobile: true,
+                            requiresAbility: false,
+                            to: '/panel/pages/components',
+                            children: [
+                                {
+                                    name: trans('global.buttons.add_new'),
+                                    icon: '',
+                                    showDesktop: true,
+                                    showMobile: true,
+                                    requiresAbility: false,
+                                    to: '/panel/pages/components/create',
+                                },
+                                {
+                                    name: trans('global.menu.componenttype'),
+                                    icon: '',
+                                    showDesktop: true,
+                                    showMobile: true,
+                                    requiresAbility: false,
+                                    to: '/panel/pages/componenttype',
+                                },
+                                {
+                                    name: trans('global.buttons.add_new'),
+                                    icon: '',
+                                    showDesktop: true,
+                                    showMobile: true,
+                                    requiresAbility: false,
+                                    to: '/panel/pages/componenttype/create',
                                 }
                             ]
                         }
@@ -275,6 +375,7 @@ export default {
             if (route.query.hasOwnProperty('verified') && route.query.verified) {
                 alertStore.success(trans('global.phrases.email_verified'));
             }
+
         });
 
         return {
@@ -283,7 +384,7 @@ export default {
             globalStateStore,
             trans,
             onLogout,
-            isLoading,
+            isLoading
         }
     }
 };

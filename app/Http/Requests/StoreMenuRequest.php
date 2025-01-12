@@ -2,8 +2,17 @@
 
 namespace App\Http\Requests;
 
-class Template extends BaseRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreMenuRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -13,8 +22,7 @@ class Template extends BaseRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:templates',
-            'filename' => 'required|unique:templates',
+            'name' => 'required|alpha_dash|unique:menus',
             'description' => 'required',
         ];
     }

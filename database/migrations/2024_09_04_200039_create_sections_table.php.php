@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->integer('order');
-            $table->text('background-color')->nullable(); 
-            $table->text('text-color')->nullable(); 
+            $table->text('classes')->nullable(); 
             $table->foreignId('page_id')->constrained('pages')->onDelete('cascade');
-            $table->softDeletes();
             $table->timestamps();
         });
     }

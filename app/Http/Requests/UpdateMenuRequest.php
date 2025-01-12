@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
-class Template extends BaseRequest
-{
+use Illuminate\Foundation\Http\FormRequest;
 
+class UpdateMenuRequest extends FormRequest
+{
     /**
      * Get the validation rules that apply to the request.
      *
@@ -13,8 +14,7 @@ class Template extends BaseRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:templates,name,'.$this->route('template')->id,
-            'filename' => 'required|unique:templates,filename,'.$this->request->get('filename'),
+            'name' => 'required|alpha_dash|unique:menus,name,'.$this->route('menu')->id,
             'description' => 'required',
         ];
     }

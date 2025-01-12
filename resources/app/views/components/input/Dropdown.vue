@@ -2,6 +2,7 @@
     <div :style="style" :class="$props.class">
         <label :for="name" class="text-sm text-gray-500" :class="{ 'sr-only': !showLabel }" v-if="label">
             {{ label }}<span class="text-red-600" v-if="$props.required">*</span>
+            <small class="text-gray-300" v-if="labelsmall">{{ labelsmall }}</small>
         </label>
         <Multiselect track-by="id" label="name" v-model="value" :id="$props.name" :name="$props.name" :disabled="disabled" :placeholder="$props.placeholder" :options="selectOptions" :multiple="$props.multiple" :searchable="!!$props.server" :loading="isLoading" :internal-search="false" :clear-on-select="true" :close-on-select="true" :max-height="400" :show-no-results="false" :hide-selected="false" open-direction="bottom" @search-change="handleSearch">
         </Multiselect>
@@ -10,7 +11,7 @@
 
 <script>
 
-import {computed, defineComponent, ref} from "vue";
+import {computed, defineComponent, ref, onMounted} from "vue";
 
 import SearchService from "@/services/SearchService";
 import Multiselect from 'vue-multiselect';
@@ -31,6 +32,10 @@ export default defineComponent({
         label: {
             type: String,
             default: "",
+        },
+        labelsmall: {
+            type: String,
+            default: null,
         },
         modelValue: {
             type: [Object, String],
@@ -66,6 +71,11 @@ export default defineComponent({
         serverSearchMinCharacters: {
             type: Number,
             default: 3
+        },
+        //el nombre a mostrar en las options
+        optionLabel: {
+            type: String,
+            default: 'name',
         }
     },
     emits: ['update:modelValue', 'input'],
@@ -77,12 +87,36 @@ export default defineComponent({
             let val = [];
             for (let i in selectOptionsArr.value) {
                 if (typeof selectOptionsArr.value[i] === 'object') {
-                    val.push({id: selectOptionsArr.value[i].id, name: selectOptionsArr.value[i].name});
+                    let labelOption = selectOptionsArr.value[i]?.name ?? selectOptionsArr.value[i][props.optionLabel];
+                    val.push({id: selectOptionsArr.value[i].id, name: labelOption});
                 } else {
                     val.push(selectOptionsArr.value[i])
                 }
             }
             return val;
+        });
+
+        const loadInitialOptions = () => {
+            if (!props.server) return;
+            isLoading.value = true;
+            const service = new SearchService(props.server);
+            service.begin('', 1, props.serverPerPage)
+                .then((response) => {
+                    selectOptionsArr.value = response.data.data.map(item => ({
+                        id: item.id,
+                        name: item.name
+                    }));
+                })
+                .catch((error) => console.error(error))
+                .finally(() => {
+                    isLoading.value = false;
+                });
+        };
+
+        onMounted(() => {
+            if(props.serverSearchMinCharacters == 0){
+                loadInitialOptions();
+            }
         });
 
         const value = computed({

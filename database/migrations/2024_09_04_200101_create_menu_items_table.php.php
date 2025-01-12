@@ -14,13 +14,12 @@ return new class extends Migration
         Schema::create('menu_items', function (Blueprint $table) {
             $table->id();
             $table->string('label');
-            $table->text('url')->nullable();
+            $table->string('url')->nullable()->unique();
             $table->text('description')->nullable(); 
             $table->integer('order');
             $table->unsignedBigInteger('parent_id')->nullable();//para submenus
             $table->foreignId('menu_id')->constrained('menus')->onDelete('cascade');
-            $table->foreignId('page_id')->constrained('pages')->onDelete('cascade');
-            $table->softDeletes();
+            $table->foreignId('page_id')->nullable();
             $table->timestamps();
         });
     }

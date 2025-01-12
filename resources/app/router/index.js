@@ -1,7 +1,7 @@
 import {createWebHistory, createRouter} from "vue-router";
 
 import routes from "@/router/routes";
-
+import {useAlertStore} from "@/stores/alert";
 import {useAuthStore} from "@/stores/auth";
 
 const router = createRouter({
@@ -15,6 +15,9 @@ router.beforeEach(async (to, from, next) => {
     const requiresAbility = to?.meta?.requiresAbility;
     const requiresAuth = to?.meta?.requiresAuth;
     const belongsToOwnerOnly = to?.meta?.isOwner;
+    //limpiar alertas de formulario 
+    const alertStore = useAlertStore();
+    alertStore.clear();
 
     if (!authStore.user) {
         await authStore.getCurrentUser();

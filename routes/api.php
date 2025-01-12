@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Pages\ComponentController;
+use App\Http\Controllers\Pages\ComponentTypeController;
+use App\Http\Controllers\Pages\MenuController;
+use App\Http\Controllers\Pages\PagesController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TokenController;
@@ -55,7 +59,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
     Route::put('/roles/{ability}/editability', [RoleController::class, 'updateAbility'])->name('roles.ability.update');
     Route::delete('/roles/{ability}/deleteability', [RoleController::class, 'deleteAbility'])->name('roles.ability.delete');
     Route::get('/roles/abilities/select', [RoleController::class, 'abilitiesSelect'])->name('roles.ability.select');
-    
+
     /**
      * Settings Admin
      */
@@ -64,8 +68,35 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
     /**
      * Pages and Templates
      */
-    Route::apiResource('templates', TemplateController::class);
+    Route::prefix('pages')->group(function () {
+        Route::apiResource('templates', TemplateController::class);
+        Route::apiResource('menus', MenuController::class)->except('show');
+        Route::post('menus/{menu}/storeitem', [MenuController::class, 'storeItem'])->name('menu.store.item');
+        Route::put('menus/{menuitem}/updateitem', [MenuController::class, 'updateItem'])->name('menu.update.item');
+        Route::delete('menus/{menuitem}/deleteitem', [MenuController::class, 'deleteItem'])->name('menu.delete.item');
+
+        Route::apiResource('componenttype', ComponentTypeController::class);
+        Route::apiResource('components', ComponentController::class);
+        Route::get('component/type/filename', [ComponentTypeController::class, 'listFilename'])->name('get.typecomponents.filename');
+
+        ##PAGES
+        Route::apiResource('page', PagesController::class)->except('show');
+        Route::post('page/{page}/storesection', [PagesController::class, 'storeSection'])->name('page.store.section');
+        Route::get('page/{page}/section/{section}', [PagesController::class, 'showSection'])->name('page.show.section');
+        Route::patch('page/updatesection/{section}', [PagesController::class, 'updateSection'])->name('page.update.section');
+        Route::delete('page/{page}/deletesection/{section}', [PagesController::class, 'deleteSection'])->name('page.delete.section');
+        Route::patch('page/updaterows/{section}', [PagesController::class, 'updateRows'])->name('page.section.updaterows');
+        Route::post('page/column/{column}/storecomponent', [PagesController::class, 'addComponentToColumn'])->name('page.store.column.component');
+        Route::get('page/column/{column}', [PagesController::class, 'getColumnData'])->name('pages.store.column.component');
+        Route::patch('page/savecontents/{column}', [PagesController::class, 'saveComponentContent'])->name('pages.save.component.content');
+    });
 });
+
+
+### Website public routes ####
+Route::get('menus/{menu}', [MenuController::class, 'show'])->name('menus.show');
+Route::get('page/{page}', [PagesController::class, 'show'])->name('page.show');
+Route::post('page/showpage', [PagesController::class, 'showPageItem'])->name('page.item.show');
 
 ## Ubicaciones
 Route::get('languages', function (Request $request) {

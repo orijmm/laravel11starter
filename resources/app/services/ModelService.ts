@@ -17,8 +17,10 @@ export default abstract class ModelService extends BaseService {
         return this.get(this.url + `/create`, {});
     }
 
-    public find(object_id) {
-        return this.get(this.url + `/${object_id}`, {});
+    public find(object_id, customUrl = null) {
+        let url = customUrl ? customUrl : this.url;
+
+        return this.get(url + `/${object_id}`, {});
     }
 
     public edit(object_id) {
@@ -35,9 +37,9 @@ export default abstract class ModelService extends BaseService {
         })
     }
 
-    public update(object_id, payload, customUrl = null) {
+    public update(object_id, payload, customUrl = null, noTransform = false) {
         let url = customUrl ? customUrl : this.url;
-        let data = this.transformPayloadForSubmission(payload);
+        let data = noTransform ? payload : this.transformPayloadForSubmission(payload);
         return this.patch(url + `/${object_id}`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data'

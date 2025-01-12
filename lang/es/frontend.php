@@ -54,6 +54,22 @@ return [
             'general_settings' => 'Configuración general',
             'password_settings' => 'Configuración de contraseña',
             'avatar_settings' => 'Configuración de avatar',
+            'templates' => 'Plantillas',
+            'template' => 'Plantilla',
+            'slug' => 'Slug',
+            'filename' => 'Nombre de archivo',
+            'componenttype' => 'Tipo de Componente',
+            'content' => 'Contenido',
+            'order' => 'Orden',
+            'label' => 'Label',
+            'parent' => 'Padre',
+            'url' => 'Url',
+            'parent_id' => 'Item Padre',
+            'menu_id' => 'Menu',
+            'backgroundcolor' => 'Color Fondo',
+            'textcolor' => 'Color texto',
+            'classes' => 'Clases',
+            'number_content' => 'Número de contenido'
         ],
     ],
     'messages' => [
@@ -61,7 +77,17 @@ return [
     ],
     'global' => [
         'menu' => [
-            'setting' => 'Configuración'
+            'setting' => 'Configuración',
+            'pages' => 'Páginas',
+            'page' => 'Página',
+            'menus' => 'Menús',
+            'menu' => 'Menú',
+            'template' => 'Plantilla',
+            'templates' => 'Plantillas',
+            'website' => 'Sitio Web',
+            'component' => 'Component',
+            'components' => 'Componentes',
+            'componenttype' => 'Tipo de Componente',
         ],
         'pages' => [
             'home' => 'Panel de control',
@@ -71,7 +97,7 @@ return [
             'users_edit' => 'Editar usuario',
 
             'abilities' => 'Roles y Permisos',
-            
+
             'roles' => 'Roles',
             'roles_create' => 'Nuevo rol',
             'roles_edit' => 'Editar rol',
@@ -93,7 +119,47 @@ return [
             'forgot_password' => 'Olvidé mi contraseña',
             'reset_password' => 'Restablecer contraseña',
             'lowercase'   => 'Minúsculas',
-            'uppercase'   => 'Mayúsculas'
+            'uppercase'   => 'Mayúsculas',
+
+            'pages' => 'Páginas',
+            'page' => 'Página',
+            'page_create' => 'Nueva página',
+            'page_edit' => 'Editar página',
+            'without_page' => 'Sin página',
+            'without_parent' => 'Sin Padre',
+            
+            'menus' => 'Menús',
+            'menu' => 'Menú',
+            'menu_items' => 'Items de Menús',
+            'menu_item' => 'Item de Menú',
+            'menu_create' => 'Nuevo menu',
+            'menu_edit' => 'Editar menu',
+            'template' => 'Plantilla',
+            'templates' => 'Plantillas',
+            'template_create' => 'Nuevo platilla',
+            'template_edit' => 'Editar plantilla',
+            'website' => 'Sitio Web',
+            'components' => 'Componentes',
+            'component' => 'Component',
+            'component_create' => 'Nuevo componente',
+            'component_edit' => 'Editar componente',
+            'componenttype' => 'Tipo de Componente',
+            'componenttypes' => 'Tipos de Componentes',
+            'componenttype_create' => 'Nuevo tipo de Componente',
+            'componenttype_edit' => 'Editar tipo de Componente',
+
+            'structure' => 'Estructura',
+            'structure_design' => 'Estructura y diseño',
+            'sections' => 'Secciones',
+            'section' => 'Sección',
+            'rows' => 'Filas',
+            'norows' => 'Sin Filas',
+            'columns' => 'Columnas',
+            'nocolumns' => 'Sin Columnas',
+            'row' => 'Fila',
+            'column' => 'Columna',
+            'filename_case_sensitive' => 'Nombre del archivo, sensible a mayúsculas y minúsculas',
+            'case_sensitive' => 'Sensible a mayúsculas y minúsculas'
         ],
         'phrases' => [
             'clear_filters' => 'Limpiar todo',
@@ -122,6 +188,7 @@ return [
             'record_not_updated' => 'No se pudo actualizar el registro.',
             'record_deleted' => 'Registro eliminado con éxito.',
             'record_not_deleted' => 'No se pudo eliminar el registro.',
+            'record_show' => 'Consulta exitosa.',
             'file_uploaded' => 'Archivo subido con éxito',
             'file_not_uploaded' => 'No se pudo subir el archivo',
             'password_updated' => 'Contraseña actualizada con éxito',
@@ -136,6 +203,11 @@ return [
             'email_verified' => 'Correo electrónico verificado con éxito',
             'member_since' => 'Miembro desde: {date}',
             'verification_sent' => 'Enlace de verificación de correo enviado.',
+            'add_numbercolumns' => 'Ingrese número de columnas',
+            'column_range' => 'El número debe ser al menos 1 y no puede ser mayor a 12',
+            'add_morecolumns' => 'Agregar otra columna',
+            'no_menuitempage' => 'La ruta no existe en el registro de items de menú, verifique si tiene url asignado',
+            'hasto_savecolumn_first' => 'Debe guardar las columnas en las filas primero.'
         ],
         'buttons' => [
             'add_new' => 'Añadir nuevo',
@@ -153,7 +225,10 @@ return [
             'update' => 'Actualizar',
             'change_avatar' => 'Cambiar avatar',
             'add' => 'Agregar',
-            'remove' => 'Quitar'
+            'remove' => 'Quitar',
+            'hide' => 'Ocultar',
+            'contract' => 'Contraer',
+            'store_components' => 'Gestionar componentes'
         ],
         'actions' => [
             'name' => 'Acciones',

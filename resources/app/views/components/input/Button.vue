@@ -58,10 +58,10 @@ export default defineComponent({
                     value += 'text-white border-green-600 border-2 bg-green-600 hover:bg-green-800 focus:bg-green-800 focus:ring-green-800';
                     break;
                 case 'info':
-                    value += 'text-white border-blue-600 border-2 bg-blue-600 hover:bg-blue-800 focus:bg-blue-800 focus:ring-blue-800';
+                    value += 'text-white border-sky-600 border-2 bg-sky-600 hover:bg-sky-800 focus:bg-sky-800 focus:ring-sky-800';
                     break;
                 case 'warning':
-                    value += 'text-white border-orange-600 border-2 bg-orange-600 hover:bg-orange-800 focus:bg-orange-800 focus:ring-orange-800';
+                    value += 'text-white border-orange-500 border-2 bg-orange-500 hover:bg-orange-700 focus:bg-orange-700 focus:ring-orange-700';
                     break;
                 case 'danger':
                 case 'error':
@@ -70,6 +70,9 @@ export default defineComponent({
                 case 'outline':
                     value += 'text-theme-600 border-theme-600 border-solid border-2 hover:bg-theme-800 hover:text-white hover:border-transparent'
                     break;
+                case 'light-grey':
+                    value += 'text-gray-500 hover:text-gray-100 border-gray-300 border-2 bg-gray-300 hover:bg-gray-400 focus:bg-gray-400 focus:ring-gray-400'
+                    break;
                 default:
                     value += 'text-white border-theme-600 border-2 bg-theme-600 hover:bg-theme-800 focus:bg-theme-800 focus:ring-theme-800';
                     break;
@@ -77,6 +80,10 @@ export default defineComponent({
 
             if (props.class) {
                 value += ' ' + props.class;
+            }
+
+            if (props.disabled) {
+                value += ' opacity-25';
             }
 
             return value;

@@ -9,12 +9,10 @@ use App\Http\Requests\UpdateAbilityRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Ability;
 use App\Models\Role;
-use App\Models\User;
 use App\Services\Role\RoleService;
 use App\Utilities\Data;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 class RoleController extends Controller
 {
