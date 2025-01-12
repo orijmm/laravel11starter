@@ -88,6 +88,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
         Route::patch('page/updaterows/{section}', [PagesController::class, 'updateRows'])->name('page.section.updaterows');
         Route::post('page/column/{column}/storecomponent', [PagesController::class, 'addComponentToColumn'])->name('page.store.column.component');
         Route::get('page/column/{column}', [PagesController::class, 'getColumnData'])->name('pages.store.column.component');
+        Route::patch('page/savecontents/{column}', [PagesController::class, 'saveComponentContent'])->name('pages.save.component.content');
     });
 });
 

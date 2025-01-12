@@ -17,14 +17,32 @@
             </Form>
         </Panel>
         <Panel otherClass="overflow-visible">
-            <div class="grid grid-cols-3 gap-3">
+            <div class="grid grid-cols-4 gap-3">
                 <div>
-                    <div v-for="comp in allComp.components"
-                        class="divide-y divide-gray-200 border border-gray-300 rounded-lg">
-                        <div class="p-4 hover:bg-gray-100 cursor-pointer">{{ comp.id }}</div>
+                    <ul class="flex-column space-y space-y-4 text-sm">
+                        <li v-for="comp in allComp.components" :key="comp.id">
+                            <a href="#"
+                                class="inline-flex items-center px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-500 rounded-lg w-full"
+                                :class="{ 'bg-gray-300': selectedComponent === comp.id }"
+                                @click.prevent="selectComponent(comp.id)" aria-current="page">
+                                {{ comp.componenttype.name }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-span-3">
+                    <Button icon="fa fa-save" theme="success" type="button" @click="saveComponentContent()"
+                        class="float-right" :label="trans('global.buttons.save')" :disabled="allComp.components.length == 0">
+                    </Button>
+                    <div v-for="comp in allComp.components" :key="comp.id" v-show="selectedComponent === comp.id"
+                        class="p-4 bg-gray-50 text-medium text-gray-500 rounded-lg w-full">
+                        <h5 class="text-lg font-bold text-gray-500 mb-2">{{ comp.componenttype.name }}</h5>
+                        <div v-for="(content, i) in comp.contents" :key="i">
+                            <TextInput :name="`${comp.id}_${i}`" class="mb-4" type="text" :required="true"
+                                v-model="content.text" :label="`${trans('users.labels.content')} #${i + 1}`" />
+                        </div>
                     </div>
                 </div>
-                <div class="col-span-2">sd</div>
             </div>
         </Panel>
     </Page>
@@ -40,10 +58,12 @@ import { useRoute } from "vue-router";
 import ModelService from "@/services/ModelService";
 import Dropdown from "@/views/components/input/Dropdown";
 import Button from "@/views/components/input/Button";
-import { clearObject, reduceProperties } from "@/helpers/data"
+import { clearObject, reduceProperties } from "@/helpers/data";
+import TextInput from "@/views/components/input/TextInput";
+import alertHelpers from "@/helpers/alert";
 
 export default defineComponent({
-    components: { Panel, Page, Dropdown, Button },
+    components: { Panel, Page, Dropdown, Button, TextInput },
     setup() {
         const route = useRoute();
         const form = reactive({
@@ -55,6 +75,8 @@ export default defineComponent({
         const allComp = reactive({
             components: undefined
         });
+
+        let selectedComponent = ref(null);
 
         const numberContent = ref([
             { id: 1, name: 1 },
@@ -97,12 +119,15 @@ export default defineComponent({
             ]
         });
 
+        function selectComponent(id) {
+            selectedComponent.value = id; // Actualiza el componente seleccionado
+        }
+
         const service = new ModelService;
 
         function fetchItems() {
             service.find(route.params.id, 'pages/page/column')
                 .then((response) => {
-                    console.log(response);
                     form.id = response.data.column.id
                     allComp.components = response.data.column.components
                     page.loading = false
@@ -122,6 +147,25 @@ export default defineComponent({
             return false;
         }
 
+        function saveComponentContent() {
+            alertHelpers.confirmDanger(async function () {
+                try {
+                    let response = await service.update(
+                        route.params.id, 
+                        allComp,
+                        'pages/page/savecontents',
+                        true
+                    );           
+                    //fillObject(sectionList.rows, response.data.record);
+                    console.log(response.data.record);
+                    return false;
+                } catch (error) {
+                    console.error('Error:', error);
+
+                }
+            })
+        }
+
         return {
             trans,
             page,
@@ -129,7 +173,10 @@ export default defineComponent({
             allComp,
             numberContent,
             fetchItems,
-            onSubmitComponent
+            onSubmitComponent,
+            selectedComponent,
+            selectComponent,
+            saveComponentContent
         }
     }
 })

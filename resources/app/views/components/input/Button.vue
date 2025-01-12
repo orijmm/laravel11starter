@@ -82,6 +82,10 @@ export default defineComponent({
                 value += ' ' + props.class;
             }
 
+            if (props.disabled) {
+                value += ' opacity-25';
+            }
+
             return value;
         });
 

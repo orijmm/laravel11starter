@@ -199,14 +199,13 @@ class PagesController extends Controller
 
     public function getColumnData(Column $column)
     {
-        $model = [];
-        $column['components'] = $column->components;
-        return $this->responseDataSuccess(['column' => $column]);
+        $model = Column::where('id', $column->id)->with('components.componenttype')->first();
+        return $this->responseDataSuccess(['column' => $model]);
     }
 
     ###### COMPONENTS ######
 
-    public function addComponentToColumn(StoreComponentRequest $request, Column $column) 
+    public function addComponentToColumn(StoreComponentRequest $request, Column $column)
     {
         #guardar componente
         $contents = [];
@@ -214,15 +213,31 @@ class PagesController extends Controller
 
         $data['component_type_id'] = $data['component_type_id']['id'];
 
-        for ($i=0; $i < $request->number_content['id']; $i++) { 
+        for ($i = 0; $i < $request->number_content['id']; $i++) {
             $contents[] = ['type' => 'text', 'text' => 'ipsum quia dolor sit amet', 'img' => ''];
         }
         $data['contents'] = $contents;
         $data['column_id'] = $column->id;
         $component = Component::create($data);
         if ($component) {
+            return $this->responseStoreSuccess(['record' => $column]);
+        } else {
+            return $this->responseStoreFail();
+        }
+    }
 
-            return $this->responseStoreSuccess(['record' => $column, 'c' => $component]);
+    public function saveComponentContent(Request $request, Column $column)
+    {
+        foreach ($request->components as $k => $v) {
+            //$comp =  Component::find($v->id);
+            $component = Component::updateOrCreate(
+                ['id' => $v['id'], 'column_id' => $column->id],
+                ['contents' => $v['contents']]
+            );
+        }
+
+        if ($component) {
+            return $this->responseStoreSuccess(['record' => $column]);
         } else {
             return $this->responseStoreFail();
         }
