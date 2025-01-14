@@ -15,6 +15,7 @@ use App\Models\Pages\Row;
 use App\Models\Pages\Section;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PagesController extends Controller
 {
@@ -102,7 +103,7 @@ class PagesController extends Controller
         $menuitem = MenuItem::where('url', $request->url)->first();
         if (!$menuitem)
             return $this->responseFail(trans('frontend.global.phrases.no_menuitempage'));
-        $page = Page::where('id', $menuitem->page_id)->with('sections.rows.columns.components')->first();
+        $page = Page::where('id', $menuitem->page_id)->with('sections.rows.columns.components.componenttype')->first();
         return $this->responseDataSuccess(['page' => $page], trans('frontend.global.phrases.record_show'));
     }
 
@@ -137,9 +138,13 @@ class PagesController extends Controller
     public function updateSection(Request $request, Section $section)
     {
         $data = $request->validate([
-            'name' => 'required|string|unique:sections,name,' . $this->route('section')->id,
             'classes' => 'nullable',
             'order' => 'required|integer',
+            'name' => [
+                'required',
+                'string',
+                Rule::unique('sections', 'name')->ignore($section->id),
+            ],
         ]);
         $edititem = $section->update($data);
 
@@ -178,22 +183,26 @@ class PagesController extends Controller
 
                 //TODO: En vez de borrar todas las columnas, solo borrar las eliminadas y actualizar o crear desde el front
                 if (isset($row['columns']) && $row['columns']) {
+
+                    $allColumnRows = Column::where('row_id', $row['id'])->pluck('id')->toArray();
+                    $columnsIds = array_column($row['columns'], 'id');
+                    $columnsToDelete = array_diff($allColumnRows, $columnsIds);
                     //Delete columns
-                    Column::where('row_id', $rowid->id)->delete();
-                    //Add columns to row
+                    Column::whereIn('id', $columnsToDelete)->delete();
+
+                    //Agregar columnas a row
                     foreach ($row['columns'] as $col) {
-                        Column::create([
-                            'row_id' => $rowid->id,
-                            'width' => $col['width'],
-                            'order' => $col['order']
-                        ]);
+                        Column::updateOrCreate(
+                            ['id' => $col['id']],
+                            ['row_id' => $rowid->id, 'width' => $col['width'], 'order' => $col['order']]
+                        );
                     }
                 }
             }
 
             $updateRows = Row::where('section_id', $section->id)->with('columns.components')->get();
 
-            return $this->responseUpdateSuccess(['record' => $updateRows]);
+            return $this->responseUpdateSuccess(['record' => $updateRows, 'colsre' => $columnsIds, 'coldb' => $allColumnRows, 'del' => $columnsToDelete]);
         } catch (\Exception $e) {
             return $this->responseUpdateFail(['error' => $e->getTrace()]);
         }

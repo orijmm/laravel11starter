@@ -10,6 +10,7 @@
 </template>
 <script>
 import LandingCryptoStatistic from '@/views/pages/public/template/components/landing/CryptoStatistic';
+import { reactive } from 'vue';
 
 export default {
     components: { LandingCryptoStatistic },

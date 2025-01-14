@@ -4,7 +4,12 @@
         <section v-for="(section, i) in page.sections" :id="`section-${section.name}`" :class="section.classes">
             <div v-for="row in section.rows" class="grid grid-flow-col">
                 <div v-for="col in row.columns">
-                    columnas: {{ col.id }}
+                    <div v-for="component in col.components">
+                        <component :is="component.componenttype.name || 'div'">
+                            {{ component.componenttype.name ? '' : 'Componente no encontrado' }}
+                        </component>
+
+                    </div>
                 </div>
             </div>
         </section>
@@ -276,11 +281,15 @@ import LandingBuyTradeImage from '@/views/pages/public/template/components/landi
 import LandingPartnerImage from '@/views/pages/public/template/components/landing/PartnerImage';
 import LandingStep from '@/views/pages/public/template/components/landing/Step';
 import LandingTradingToolImage from '@/views/pages/public/template/components/landing/TradingToolImage';
-
+import Header from '@/views/pages/public/components/customs/Header';
+import Grafics from '@/views/pages/public/components/customs/Grafics';
 
 export default {
     name: "IndexSite",
-    components: { BaseSection, LandingPartnerImage, LandingStep, LandingTradingToolImage, BaseButton, LandingCryptoStatistic, LandingExchange, LandingListItem, BaseAccordion, LandingBuyTradeImage },
+    components: {
+        BaseSection, LandingPartnerImage, LandingStep, LandingTradingToolImage, BaseButton, LandingCryptoStatistic, LandingExchange, LandingListItem, BaseAccordion, LandingBuyTradeImage,
+        Header, Grafics
+    },
     props: {
         page: {
             type: Object,
