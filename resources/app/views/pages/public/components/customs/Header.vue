@@ -47,6 +47,7 @@ import BaseSection from '@/views/pages/public/template/components/base/Section';
 
 export default {
     components: { BaseSection },
+    //colocar en el div: {{ content[0].text }} ó {{ content[0].img }} por cada palabra o contenido
     props: {
         content: {
             type: [Array],
