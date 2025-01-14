@@ -2,24 +2,23 @@
     <BaseSection>
         <div class="col-span-12 lg:col-span-6 mt-12 xl:mt-10 space-y-4 sm:space-y-6 px-6 text-center sm:text-left">
             <span data-aos="fade-right" data-aos-once="true"
-                class="text-base text-gradient font-semibold uppercase">Sign Up Today</span>
+                class="text-base text-gradient font-semibold uppercase">{{ content[0].text }}</span>
             <h1 data-aos="fade-right" data-aos-once="true"
                 class="text-[2.5rem] sm:text-5xl xl:text-6xl font-bold leading-tight capitalize sm:pr-8 xl:pr-10">
-                The World's <span class="text-header-gradient">Fastest Growing</span> Crypto Web App
+                {{ content[1].text }}<span class="text-header-gradient">{{ content[2].text }}</span> {{ content[3].text }}
             </h1>
             <p data-aos="fade-down" data-aos-once="true" data-aos-delay="300" class="paragraph hidden sm:block">
-                Buy and sell 200+ cryptocurrencies with 20+ flat currencies using bank transfers or your
-                credit/debit card.
+                {{ content[4].text }}
             </p>
             <div data-aos="fade-up" data-aos-once="true" data-aos-delay="700"
                 class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mt-2">
                 <BaseButton
-                    class="max-w-full px-8 py-4 bg-gradient-to-r from-[#468ef9] to-[#0c66ee] border border-[#0c66ee] text-white">
-                    Get Started
+                    class="max-w-full px-8 py-4 rounded-full bg-blue-500 text-white">
+                    {{ content[5].text }}
                 </BaseButton>
                 <BaseButton
-                    class="max-w-full px-6 py-4 bg-inherit text-gradient border border-[#0c66ee] flex items-center justify-center">
-                    <span>Download App</span>
+                    class="max-w-full px-6 py-4 bg-inherit text-gradient rounded-full border border-blue-500  flex items-center justify-center">
+                    <span>{{ content[6]?.text ?? 'Download' }}</span>
                     <ChevronDown :size="20" class="mt-1 text-[#0c66ee]" />
                 </BaseButton>
             </div>
@@ -48,6 +47,12 @@ import BaseSection from '@/views/pages/public/template/components/base/Section';
 
 export default {
     components: { BaseSection },
+    props: {
+        content: {
+            type: [Array],
+            default: [], 
+        },
+    },
     setup(props) {
 
     }

@@ -5,7 +5,7 @@
             <div v-for="row in section.rows" class="grid grid-flow-col">
                 <div v-for="col in row.columns">
                     <div v-for="component in col.components">
-                        <component :is="component.componenttype.name || 'div'">
+                        <component :is="component.componenttype.name || 'div'" :content="component.contents">
                             {{ component.componenttype.name ? '' : 'Componente no encontrado' }}
                         </component>
 
@@ -495,27 +495,3 @@ export default {
     },
 };
 </script>
-<style scoped>
-.text-header-gradient {
-    background: rgb(57, 132, 244);
-    background: linear-gradient(169.4deg, #3984f4 -6.01%, #0cd3ff 36.87%, #2f7cf0 78.04%, #0e65e8 103.77%);
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.bg-partner {
-    background: url('../template/assets/img/partner/background.png');
-    background-size: cover;
-    background-position: center;
-}
-
-.bg-trading-tools {
-    background: url('../template/assets/img/bg-trading-tools.webp');
-    background-size: cover;
-    background-position: center;
-}
-
-.max-h-0 {
-    max-height: 0;
-}
-</style>

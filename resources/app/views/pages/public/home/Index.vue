@@ -62,7 +62,6 @@ export default {
       service
         .store({ url: currentRoute }, 'page/showpage')
         .then((response) => {
-          console.log(response.data);
           page.sections = response.data.page.sections ?? [];
         })
         .catch((error) => {
