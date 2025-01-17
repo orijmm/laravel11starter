@@ -155,11 +155,12 @@ class PagesController extends Controller
         }
     }
 
-    public function deleteSection(Section $section)
+    public function deleteSection(Page $page, Section $section)
     {
+        $name = $section->name;
         $this->authorize('delete_page');
         $section->delete();
-        return $this->responseDeleteSuccess();
+        return $this->responseDeleteSuccess(['name' => $name]);
     }
 
     ###### ROWS and COLUMS ######
@@ -201,6 +202,7 @@ class PagesController extends Controller
                     }
                 }
             }else{
+                //Si se borran todas las filas que limpie
                 $deleteAllRow = Row::where('section_id', $request->sectionid)->pluck('id')->toArray();
                 Row::destroy($deleteAllRow);
             }

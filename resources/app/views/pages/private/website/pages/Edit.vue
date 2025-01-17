@@ -35,7 +35,8 @@
                 </Form>
             </div>
             <Table :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" :actions="table.actions"
-                :records="table.records" :pagination="table.pagination" :is-loading="table.loading">
+                :records="table.records" :pagination="table.pagination" :is-loading="table.loading"
+                @page-changed="onTablePageChange" @action="onTableAction" @sort="onTableSort">
                 <template v-slot:content-page="props">
                     <div>
                         {{ props.item.page?.name ?? '-' }}
@@ -70,6 +71,7 @@ import { isAllowed } from "@/helpers/isreq";
 import Table from "@/views/components/Table";
 import ModelService from "@/services/ModelService";
 import PagesService from "@/services/PagesService";
+import alertHelpers from "@/helpers/alert";
 
 export default defineComponent({
     components: {
@@ -209,6 +211,20 @@ export default defineComponent({
             return false;
         }
 
+        function onTableAction(params) {
+            console.log(params, 'params');
+
+            switch (params.action.id) {
+                case 'delete':
+                    alertHelpers.confirmWarning(function () {
+                        service.delete(params.item.id, `pages/page/${route.params.id}/deletesection`).then(function (response) {
+                            fetchItems();
+                        });
+                    })
+                    break;
+            }
+        }
+
         return {
             trans,
             user,
@@ -219,7 +235,8 @@ export default defineComponent({
             table,
             onSubmitSection,
             toggleAddItems,
-            formItem
+            formItem,
+            onTableAction
         }
     }
 })
