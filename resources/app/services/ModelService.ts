@@ -47,8 +47,9 @@ export default abstract class ModelService extends BaseService {
         });
     }
 
-    public delete(object_id) {
-        return super.delete(this.url + `/${object_id}`, {});
+    public delete(object_id, customUrl = null) {
+        let url = customUrl ? customUrl : this.url;
+        return super.delete(url + `/${object_id}`, {});
     }
 
     public index(params = {}) {

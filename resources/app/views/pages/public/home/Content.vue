@@ -13,7 +13,7 @@
                 </div>
             </div>
         </section>
-        <section id="hero" class="w-full pb-24">
+        <!-- <section id="hero" class="w-full pb-24">
             <BaseSection>
                 <div
                     class="col-span-12 lg:col-span-6 mt-12 xl:mt-10 space-y-4 sm:space-y-6 px-6 text-center sm:text-left">
@@ -60,7 +60,6 @@
                     class="hidden sm:block absolute top-20 sm:top-28 right-16 lg:right-0 lg:left-[30rem] w-8" />
             </BaseSection>
         </section>
-        <!-- Crypto statistic section -->
         <section
             class="max-w-screen-xl mx-2 sm:mx-auto px-4 sm:px-6 lg:px-0 py-6 pb-20 sm:py-8 rounded-[2.25rem] sm:rounded-xl bg-white shadow-lg sm:shadow-md transform lg:-translate-y-12">
             <div class="w-full flex flex-col lg:flex-row items-center justify-center">
@@ -71,7 +70,7 @@
                 <LandingCryptoStatistic data-aos="fade-up" data-aos-delay="300" title="💎 Recently Added"
                     :datasets="recents" class="lg:px-8" />
             </div>
-        </section>
+        </section> -->
         <!-- Buy and trade section -->
         <section class="w-full my-24">
             <BaseSection>

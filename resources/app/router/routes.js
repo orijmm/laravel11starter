@@ -214,12 +214,12 @@ const routes = [
                         meta: { requiresAuth: true },
                         component: PageComponent,
                     },
-                    {
-                        name: "components.create",
-                        path: "components/create",
-                        meta: { requiresAuth: true },
-                        component: PageComponentCreate,
-                    },
+                    // {
+                    //     name: "components.create",
+                    //     path: "components/create",
+                    //     meta: { requiresAuth: true },
+                    //     component: PageComponentCreate,
+                    // },
                     {
                         name: "components.edit",
                         path: "components/:id",

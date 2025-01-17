@@ -88,6 +88,13 @@ export default defineComponent({
             ],
             actions: [
                 {
+                    id: 'back',
+                    name: trans('global.buttons.back'),
+                    icon: "fa fa-angle-left",
+                    to: '',
+                    theme: 'outline',
+                },
+                {
                     id: 'submit',
                     name: trans('global.buttons.update'),
                     icon: "fa fa-save",
@@ -99,14 +106,12 @@ export default defineComponent({
         onBeforeMount(() => {
             service.find(route.params.id).then((response) => {
                 fillObject(form, response.data.model);
-                page.actions.push({
-                    id: 'back',
-                    name: trans('global.buttons.back'),
-                    icon: "fa fa-angle-left",
-                    to: toUrl(`pages/page/${response.data.model.section.page_id}/section/${response.data.model.section.id}/column/${response.data.model.column_id}`),
-                    theme: 'outline',
-                });
-                //sectionData.value = response.data.model.section;
+                //Agregar variables a link de regresar
+                const actionNode = page.actions.find(action => action.id === 'back');
+                if (actionNode) {
+                    actionNode.to = toUrl(`pages/page/${response.data.model.section.page_id}/section/${response.data.model.section.id}/column/${response.data.model.column_id}`);
+                }
+
                 if (response.data.model.contents.length) {
                     form.number_content = { id: response.data.model.contents.length, name: response.data.model.contents.length }
                 }

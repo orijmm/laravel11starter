@@ -29,22 +29,12 @@
                             <a :href="`/panel/pages/components/${comp.id}`">
                                 <i class="text-gray-500 fa fa-edit cursor-pointer"></i>
                             </a>
+                            <a @click="deleteComponent(comp.id)">
+                                <i class="text-gray-500 fa fa-trash cursor-pointer"></i>
+                            </a>
                         </li>
                     </ul>
                 </div>
-                <!-- <div class="col-span-3">
-                    <Button icon="fa fa-save" theme="success" type="button" @click="saveComponentContent()"
-                        class="float-right" :label="trans('global.buttons.save')" :disabled="allComp.components.length == 0">
-                    </Button>
-                    <div v-for="comp in allComp.components" :key="comp.id" v-show="selectedComponent === comp.id"
-                        class="p-4 bg-gray-50 text-medium text-gray-500 rounded-lg w-full">
-                        <h5 class="text-lg font-bold text-gray-500 mb-2">{{ comp.componenttype.name }}</h5>
-                        <div v-for="(content, i) in comp.contents" :key="i">
-                            <TextInput :name="`${comp.id}_${i}`" class="mb-4" type="text" :required="true"
-                                v-model="content.text" :label="`${trans('users.labels.content')} #${i + 1}`" />
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </Panel>
     </Page>
@@ -114,12 +104,6 @@ export default defineComponent({
                     icon: "fa fa-angle-left",
                     to: toUrl(`/pages/page/${route.params.page}/section/${route.params.section}`),
                     theme: 'outline',
-                },
-                {
-                    id: 'submit',
-                    name: trans('global.buttons.update'),
-                    icon: "fa fa-save",
-                    type: 'submit'
                 }
             ]
         });
@@ -131,6 +115,7 @@ export default defineComponent({
         const service = new ModelService;
 
         function fetchItems() {
+            console.log('dddddd');
             service.find(route.params.id, 'pages/page/column')
                 .then((response) => {
                     form.id = response.data.column.id
@@ -152,22 +137,11 @@ export default defineComponent({
             return false;
         }
 
-        function saveComponentContent() {
-            alertHelpers.confirmDanger(async function () {
-                try {
-                    let response = await service.update(
-                        route.params.id,
-                        allComp,
-                        'pages/page/savecontents',
-                        true
-                    );
-                    //fillObject(sectionList.rows, response.data.record);
-                    console.log(response.data.record);
-                    return false;
-                } catch (error) {
-                    console.error('Error:', error);
-
-                }
+        function deleteComponent(componentId) {
+            alertHelpers.confirmWarning(function () {
+                service.delete(componentId, 'pages/components').then(function () {
+                    fetchItems();
+                });
             })
         }
 
@@ -181,7 +155,7 @@ export default defineComponent({
             onSubmitComponent,
             selectedComponent,
             selectComponent,
-            saveComponentContent
+            deleteComponent
         }
     }
 })
