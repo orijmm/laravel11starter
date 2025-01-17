@@ -3,22 +3,25 @@
         :is-loading="page.loading">
         <Panel otherClass="overflow-visible">
             <Form id="edit-component" @submit.prevent="onSubmit">
-                <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name"
-                    :label="trans('users.labels.first_name')" :labelsmall="trans('global.pages.lowercase')" />
-                <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
-                    :label="trans('users.labels.description')" />
-                <TextInput class="mb-4" type="textarea" :required="true" name="content" v-model="form.content"
-                    :label="trans('users.labels.content')" />
                 <Dropdown class="mb-4" :server="'pages/componenttype'" :server-per-page="15" :required="true"
                     name="type" v-model="form.component_type_id" :label="trans('users.labels.componenttype')"
                     :serverSearchMinCharacters="0" />
+                <Dropdown class="mb-4" :required="true" name="type" :options="numberContent" @input="handleNumberCols"
+                    :placeholder="trans('users.labels.number_content')" v-model="form.number_content"
+                    :label="trans('users.labels.number_content')" :serverSearchMinCharacters="0" />
             </Form>
+        </Panel>
+        <Panel otherClass="overflow-visible">
+            <div v-for="(content, i) in form.contents" :key="i">
+                <TextInput :name="i" class="mb-4" type="text" :required="true" v-model="content.text"
+                    :label="`${trans('users.labels.content')} #${i + 1}`" />
+            </div>
         </Panel>
     </Page>
 </template>
 
 <script>
-import { defineComponent, onBeforeMount, reactive, ref } from "vue";
+import { defineComponent, onBeforeMount, reactive, ref, watch } from "vue";
 import { trans } from "@/helpers/i18n";
 import { fillObject, reduceProperties } from "@/helpers/data"
 import { useRoute } from "vue-router";
@@ -49,11 +52,24 @@ export default defineComponent({
         const { user } = useAuthStore();
         const route = useRoute();
         const form = reactive({
-            content: undefined,
-            name: undefined,
-            description: undefined,
-            component_type_id: undefined
+            component_type_id: undefined,
+            number_content: undefined,
+            contents: undefined,
         });
+
+        const numberContent = ref([
+            { id: 1, name: 1 },
+            { id: 2, name: 2 },
+            { id: 3, name: 3 },
+            { id: 4, name: 4 },
+            { id: 5, name: 5 },
+            { id: 6, name: 6 },
+            { id: 7, name: 7 },
+            { id: 8, name: 8 },
+            { id: 9, name: 9 },
+        ]);
+
+        const service = new PagesService('components');
 
         const page = reactive({
             id: 'edit_component',
@@ -72,13 +88,6 @@ export default defineComponent({
             ],
             actions: [
                 {
-                    id: 'back',
-                    name: trans('global.buttons.back'),
-                    icon: "fa fa-angle-left",
-                    to: toUrl('/pages/components'),
-                    theme: 'outline',
-                },
-                {
                     id: 'submit',
                     name: trans('global.buttons.update'),
                     icon: "fa fa-save",
@@ -87,14 +96,24 @@ export default defineComponent({
             ]
         });
 
-        const service = new PagesService('components');
-
         onBeforeMount(() => {
             service.find(route.params.id).then((response) => {
                 fillObject(form, response.data.model);
+                page.actions.push({
+                    id: 'back',
+                    name: trans('global.buttons.back'),
+                    icon: "fa fa-angle-left",
+                    to: toUrl(`pages/page/${response.data.model.section.page_id}/section/${response.data.model.section.id}/column/${response.data.model.column_id}`),
+                    theme: 'outline',
+                });
+                //sectionData.value = response.data.model.section;
+                if (response.data.model.contents.length) {
+                    form.number_content = { id: response.data.model.contents.length, name: response.data.model.contents.length }
+                }
                 page.loading = false;
             })
         });
+
 
         function onAction(data) {
             switch (data.action.id) {
@@ -105,8 +124,20 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleUpdate('edit-component', route.params.id, reduceProperties(form, ['roles'], 'id'));
+            service.handleUpdate('edit-component', route.params.id, reduceProperties(form, [], 'id'), null, true);
             return false;
+        }
+
+        function handleNumberCols() {
+            if (form.number_content.id > form.contents.length) {
+                let numberOfElements = form.number_content.id - form.contents.length;
+                for (let index = 0; index < numberOfElements; index++) {
+                    form.contents.push({ 'type': 'text', 'text': 'ipsum quia dolor sit amet', 'img': '' });
+                }
+            } else {
+                let numberOfElements = form.contents.length - form.number_content.id;
+                form.contents.splice(- numberOfElements);
+            }
         }
 
         return {
@@ -115,7 +146,9 @@ export default defineComponent({
             form,
             onSubmit,
             onAction,
-            page
+            page,
+            numberContent,
+            handleNumberCols
         }
     }
 })

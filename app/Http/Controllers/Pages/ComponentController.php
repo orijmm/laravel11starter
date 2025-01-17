@@ -76,7 +76,8 @@ class ComponentController extends Controller
         $newcomponent = $component->update($data);
 
         if ($newcomponent) {
-            return $this->responseUpdateSuccess(['record' => $component]);
+            //$component->contents = $request->contents;
+            return $this->responseUpdateSuccess(['record' => $component, $request->contents]);
         } else {
             return $this->responseUpdateFail();
         }

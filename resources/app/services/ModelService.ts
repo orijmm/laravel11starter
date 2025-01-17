@@ -60,11 +60,11 @@ export default abstract class ModelService extends BaseService {
         return this.get(path, {});
     }
 
-    public handleUpdate(ui_element_id, object_id, data, customUrl = null) {
+    public handleUpdate(ui_element_id, object_id, data, customUrl = null, noTransform = false) {
         const alertStore = useAlertStore();
         const globalUserState = useGlobalStateStore();
         globalUserState.loadingElements[ui_element_id] = true;
-        return this.update(object_id, data, customUrl).then((response) => {
+        return this.update(object_id, data, customUrl, noTransform).then((response) => {
             let answer = response.data;
             alertStore.success(answer.message);
             return response;

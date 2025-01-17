@@ -17,20 +17,22 @@
             </Form>
         </Panel>
         <Panel otherClass="overflow-visible">
-            <div class="grid grid-cols-4 gap-3">
+            <div class="grid grid-cols-1 gap-3">
                 <div>
                     <ul class="flex-column space-y space-y-4 text-sm">
-                        <li v-for="comp in allComp.components" :key="comp.id">
-                            <a href="#"
-                                class="inline-flex items-center px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-500 rounded-lg w-full"
-                                :class="{ 'bg-gray-300': selectedComponent === comp.id }"
-                                @click.prevent="selectComponent(comp.id)" aria-current="page">
+                        <li v-for="comp in allComp.components" :key="comp.id"
+                            :class="{ 'bg-gray-300': selectedComponent === comp.id }"
+                            class="flex justify-between items-center px-4 py-3 bg-gray-200 rounded-lg w-full hover:bg-gray-300 text-gray-500">
+                            <a href="#">
                                 {{ comp.componenttype.name }}
+                            </a>
+                            <a :href="`/panel/pages/components/${comp.id}`">
+                                <i class="text-gray-500 fa fa-edit cursor-pointer"></i>
                             </a>
                         </li>
                     </ul>
                 </div>
-                <div class="col-span-3">
+                <!-- <div class="col-span-3">
                     <Button icon="fa fa-save" theme="success" type="button" @click="saveComponentContent()"
                         class="float-right" :label="trans('global.buttons.save')" :disabled="allComp.components.length == 0">
                     </Button>
@@ -42,7 +44,7 @@
                                 v-model="content.text" :label="`${trans('users.labels.content')} #${i + 1}`" />
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </Panel>
     </Page>
@@ -154,11 +156,11 @@ export default defineComponent({
             alertHelpers.confirmDanger(async function () {
                 try {
                     let response = await service.update(
-                        route.params.id, 
+                        route.params.id,
                         allComp,
                         'pages/page/savecontents',
                         true
-                    );           
+                    );
                     //fillObject(sectionList.rows, response.data.record);
                     console.log(response.data.record);
                     return false;

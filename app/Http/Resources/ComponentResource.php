@@ -20,6 +20,7 @@ class ComponentResource extends JsonResource
     {
         $componenttype = ComponentType::get();
         $data = $this->resource->toArray();
+        $data['section'] = $this->resource->column->row->section;
         $data['component_type_id'] = Data::getSelectedLocation($componenttype, $this->component_type_id);
         return $data;
     }

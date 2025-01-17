@@ -69,6 +69,7 @@ import Dropdown from "@/views/components/input/Dropdown";
 import { isAllowed } from "@/helpers/isreq";
 import Table from "@/views/components/Table";
 import ModelService from "@/services/ModelService";
+import PagesService from "@/services/PagesService";
 
 export default defineComponent({
     components: {
@@ -127,6 +128,7 @@ export default defineComponent({
         });
 
         const service = new ModelService;
+        const servicePage = new PagesService('page');
 
         function fetchItems() {
             service.find(route.params.id, 'page').then((response) => {
@@ -149,7 +151,7 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleUpdate('edit-page', route.params.id, reduceProperties(form, ['roles'], 'id'));
+            servicePage.handleUpdate('edit-page', route.params.id, reduceProperties(form, [], 'id'), null);
             return false;
         }
 
