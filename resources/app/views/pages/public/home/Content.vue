@@ -282,12 +282,14 @@ import LandingStep from '@/views/pages/public/template/components/landing/Step';
 import LandingTradingToolImage from '@/views/pages/public/template/components/landing/TradingToolImage';
 import Header from '@/views/pages/public/components/customs/Header';
 import Grafics from '@/views/pages/public/components/customs/Grafics';
+import Converter from '@/views/pages/public/components/customs/Converter';
+import Partners from '@/views/pages/public/components/customs/Partners';
 
 export default {
     name: "IndexSite",
     components: {
         BaseSection, LandingPartnerImage, LandingStep, LandingTradingToolImage, BaseButton, LandingCryptoStatistic, LandingExchange, LandingListItem, BaseAccordion, LandingBuyTradeImage,
-        Header, Grafics
+        Header, Grafics, Converter, Partners
     },
     props: {
         page: {

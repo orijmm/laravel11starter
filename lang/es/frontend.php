@@ -207,7 +207,8 @@ return [
             'column_range' => 'El número debe ser al menos 1 y no puede ser mayor a 12',
             'add_morecolumns' => 'Agregar otra columna',
             'no_menuitempage' => 'La ruta no existe en el registro de items de menú, verifique si tiene url asignado',
-            'hasto_savecolumn_first' => 'Debe guardar las columnas en las filas primero.'
+            'hasto_savecolumn_first' => 'Debe guardar las columnas en las filas primero.',
+            'hasto_add_content' => 'Debe agregar más contenido al componente.'
         ],
         'buttons' => [
             'add_new' => 'Añadir nuevo',

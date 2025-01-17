@@ -167,42 +167,47 @@ class PagesController extends Controller
     {
         try {
             $rows = $request->rows;
-            // Obtener los IDs de la consulta y los id de la base de datos y compara
-            $currentRowIds = $section->rows->pluck('id')->toArray();
-            $rowIdsFromRequest = array_column($rows, 'id');
-            //Elimina filas borradas
-            $rowsToDelete = array_diff($currentRowIds, $rowIdsFromRequest);
-            Row::destroy($rowsToDelete);
+            if (isset($rows)) {
+                // Obtener los IDs de la consulta y los id de la base de datos y compara
+                $currentRowIds = $section->rows->pluck('id')->toArray();
+                $rowIdsFromRequest = array_column($rows, 'id');
+                //Elimina filas borradas
+                $rowsToDelete = array_diff($currentRowIds, $rowIdsFromRequest);
+                Row::destroy($rowsToDelete);
 
-            foreach ($rows as $row) {
-                // Usamos updateOrCreate para verificar si existe el registro y actualizarlo o insertarlo
-                $rowid = Row::updateOrCreate(
-                    ['id' => $row['id'], 'section_id' => $row['section_id']],  // Verifica la existencia por 'id' y 'section_id'
-                    ['order' => $row['order'], 'updated_at' => now()]  // Actualiza el campo 'order' y 'updated_at'
-                );
+                foreach ($rows as $row) {
+                    // Usamos updateOrCreate para verificar si existe el registro y actualizarlo o insertarlo
+                    $rowid = Row::updateOrCreate(
+                        ['id' => $row['id'], 'section_id' => $row['section_id']],  // Verifica la existencia por 'id' y 'section_id'
+                        ['order' => $row['order'], 'updated_at' => now()]  // Actualiza el campo 'order' y 'updated_at'
+                    );
 
-                //TODO: En vez de borrar todas las columnas, solo borrar las eliminadas y actualizar o crear desde el front
-                if (isset($row['columns']) && $row['columns']) {
+                    //TODO: En vez de borrar todas las columnas, solo borrar las eliminadas y actualizar o crear desde el front
+                    if (isset($row['columns']) && $row['columns']) {
 
-                    $allColumnRows = Column::where('row_id', $row['id'])->pluck('id')->toArray();
-                    $columnsIds = array_column($row['columns'], 'id');
-                    $columnsToDelete = array_diff($allColumnRows, $columnsIds);
-                    //Delete columns
-                    Column::whereIn('id', $columnsToDelete)->delete();
+                        $allColumnRows = Column::where('row_id', $rowid->id)->pluck('id')->toArray();
+                        $columnsIds = array_column($row['columns'], 'id');
+                        $columnsToDelete = array_diff($allColumnRows, $columnsIds);
+                        //Delete columns
+                        Column::whereIn('id', $columnsToDelete)->delete();
 
-                    //Agregar columnas a row
-                    foreach ($row['columns'] as $col) {
-                        Column::updateOrCreate(
-                            ['id' => $col['id']],
-                            ['row_id' => $rowid->id, 'width' => $col['width'], 'order' => $col['order']]
-                        );
+                        //Agregar columnas a row
+                        foreach ($row['columns'] as $col) {
+                            Column::updateOrCreate(
+                                ['id' => $col['id']],
+                                ['row_id' => $rowid->id, 'width' => $col['width'], 'order' => $col['order']]
+                            );
+                        }
                     }
                 }
+            }else{
+                $deleteAllRow = Row::where('section_id', $request->sectionid)->pluck('id')->toArray();
+                Row::destroy($deleteAllRow);
             }
 
             $updateRows = Row::where('section_id', $section->id)->with('columns.components')->get();
 
-            return $this->responseUpdateSuccess(['record' => $updateRows, 'colsre' => $columnsIds, 'coldb' => $allColumnRows, 'del' => $columnsToDelete]);
+            return $this->responseUpdateSuccess(['record' => $updateRows]);
         } catch (\Exception $e) {
             return $this->responseUpdateFail(['error' => $e->getTrace()]);
         }
