@@ -115,7 +115,6 @@ export default defineComponent({
         const service = new ModelService;
 
         function fetchItems() {
-            console.log('dddddd');
             service.find(route.params.id, 'pages/page/column')
                 .then((response) => {
                     form.id = response.data.column.id

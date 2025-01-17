@@ -13,102 +13,6 @@
                 </div>
             </div>
         </section>
-        <!-- <section id="hero" class="w-full pb-24">
-            <BaseSection>
-                <div
-                    class="col-span-12 lg:col-span-6 mt-12 xl:mt-10 space-y-4 sm:space-y-6 px-6 text-center sm:text-left">
-                    <span data-aos="fade-right" data-aos-once="true"
-                        class="text-base text-gradient font-semibold uppercase">Sign Up Today</span>
-                    <h1 data-aos="fade-right" data-aos-once="true"
-                        class="text-[2.5rem] sm:text-5xl xl:text-6xl font-bold leading-tight capitalize sm:pr-8 xl:pr-10">
-                        The World's <span class="text-header-gradient">Fastest Growing</span> Crypto Web App
-                    </h1>
-                    <p data-aos="fade-down" data-aos-once="true" data-aos-delay="300" class="paragraph hidden sm:block">
-                        Buy and sell 200+ cryptocurrencies with 20+ flat currencies using bank transfers or your
-                        credit/debit card.
-                    </p>
-                    <div data-aos="fade-up" data-aos-once="true" data-aos-delay="700"
-                        class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mt-2">
-                        <BaseButton
-                            class="max-w-full px-8 py-4 bg-gradient-to-r from-[#468ef9] to-[#0c66ee] border border-[#0c66ee] text-white">
-                            Get Started
-                        </BaseButton>
-                        <BaseButton
-                            class="max-w-full px-6 py-4 bg-inherit text-gradient border border-[#0c66ee] flex items-center justify-center">
-                            <span>Download App</span>
-                            <ChevronDown :size="20" class="mt-1 text-[#0c66ee]" />
-                        </BaseButton>
-                    </div>
-                </div>
-                <div class="hidden sm:block col-span-12 lg:col-span-6">
-                    <div class="w-full">
-                        <img data-aos="fade-up" data-aos-once="true"
-                            src="@/views/pages/public/template/assets/img/hero-image.webp" class="-mt-4" alt="" />
-                    </div>
-                </div>
-                <img data-aos="fade-up" data-aos-delay="300"
-                    src="@/views/pages/public/template/assets/img/pattern/ellipse-1.png"
-                    class="hidden sm:block absolute bottom-12 xl:bottom-16 left-4 xl:left-0 w-6" />
-                <img data-aos="fade-up" data-aos-delay="300"
-                    src="@/views/pages/public/template/assets/img/pattern/ellipse-2.png"
-                    class="hidden sm:block absolute top-4 sm:top-10 right-64 sm:right-96 xl:right-[32rem] w-6" />
-                <img data-aos="fade-up" data-aos-delay="300"
-                    src="@/views/pages/public/template/assets/img/pattern/ellipse-3.png"
-                    class="hidden sm:block absolute bottom-56 right-24 w-6" />
-                <img data-aos="fade-up" data-aos-delay="300"
-                    src="@/views/pages/public/template/assets/img/pattern/star.png"
-                    class="hidden sm:block absolute top-20 sm:top-28 right-16 lg:right-0 lg:left-[30rem] w-8" />
-            </BaseSection>
-        </section>
-        <section
-            class="max-w-screen-xl mx-2 sm:mx-auto px-4 sm:px-6 lg:px-0 py-6 pb-20 sm:py-8 rounded-[2.25rem] sm:rounded-xl bg-white shadow-lg sm:shadow-md transform lg:-translate-y-12">
-            <div class="w-full flex flex-col lg:flex-row items-center justify-center">
-                <LandingCryptoStatistic data-aos="fade-up" title="🔥 Trending" :datasets="trendings"
-                    class="xl:border-r border-gray-200 lg:px-8" />
-                <LandingCryptoStatistic data-aos="fade-up" data-aos-delay="150" title="🚀 Top Gainers"
-                    :datasets="topGainers" class="xl:border-r border-gray-200 lg:px-8" />
-                <LandingCryptoStatistic data-aos="fade-up" data-aos-delay="300" title="💎 Recently Added"
-                    :datasets="recents" class="lg:px-8" />
-            </div>
-        </section> -->
-        <!-- Buy and trade section -->
-        <section class="w-full my-24">
-            <BaseSection>
-                <LandingBuyTradeImage class="sm:hidden mb-8" />
-                <div data-aos="fade-right" class="col-span-12 lg:col-span-6 mt-4 xl:mt-20 space-y-6 px-4">
-                    <h2 class="text-4xl font-semibold sm:pr-8 xl:pr-12">
-                        Buy & trade on the <br class="hidden sm:block" />
-                        original crypto exchange.
-                    </h2>
-                    <p class="paragraph">
-                        Buy now and get 40% extra bonus Minimum pre-sale amount 25 Crypto Coin. We accept BTC
-                        crypto-currency
-                    </p>
-                    <div class="space-y-6 lg:pr-12">
-                        <LandingExchange title="Amount" name="amount" type="number" default-value="5.000"
-                            :exchangeSelected="currencySelected" :exchanges="currencies" />
-                        <LandingExchange title="Get" name="get" type="number" default-value="0.10901"
-                            :exchangeSelected="cryptoSelected" :exchanges="cryptocurrencies" />
-                        <BaseButton class="w-full px-5 py-4 bg-blue-gradient text-white text-base font-medium">Buy Now
-                        </BaseButton>
-                    </div>
-                </div>
-                <LandingBuyTradeImage data-aos="fade-left" class="hidden sm:block" />
-            </BaseSection>
-        </section>
-        <!-- Partners section -->
-        <section class="bg-partner relative max-w-full sm:mx-6 my-24 shadow sm:rounded-2xl overflow-hidden">
-            <div class="w-full px-6 sm:px-0 py-16 flex flex-col items-center justify-center space-y-4 text-center">
-                <h3 data-aos="flip-down" class="text-2xl text-neutral-800 font-semibold">Trusted Partners Worldwide</h3>
-                <p data-aos="flip-down" class="paragraph">We're partners with countless major organisations around the
-                    globe</p>
-                <div data-aos="fade-up" class="flex flex-wrap items-center justify-center">
-                    <LandingPartnerImage
-                        v-for="img in ['clever.png', 'diamon-cutts.png', 'swiss-finance.png', 'gambio.png']" :key="img"
-                        :img="img" />
-                </div>
-            </div>
-        </section>
 
         <!-- Credit card section -->
         <section class="w-full my-36">
@@ -273,10 +177,8 @@ import { ref, reactive } from 'vue';
 import BaseSection from '@/views/pages/public/template/components/base/Section';
 import BaseButton from '@/views/pages/public/template/components/base/Button';
 import LandingCryptoStatistic from '@/views/pages/public/template/components/landing/CryptoStatistic';
-import LandingExchange from '@/views/pages/public/template/components/landing/Exchange';
 import LandingListItem from '@/views/pages/public/template/components/landing/ListItem';
 import BaseAccordion from '@/views/pages/public/template/components/base/Accordion';
-import LandingBuyTradeImage from '@/views/pages/public/template/components/landing/BuyTradeImage';
 import LandingPartnerImage from '@/views/pages/public/template/components/landing/PartnerImage';
 import LandingStep from '@/views/pages/public/template/components/landing/Step';
 import LandingTradingToolImage from '@/views/pages/public/template/components/landing/TradingToolImage';
@@ -288,7 +190,7 @@ import Partners from '@/views/pages/public/components/customs/Partners';
 export default {
     name: "IndexSite",
     components: {
-        BaseSection, LandingPartnerImage, LandingStep, LandingTradingToolImage, BaseButton, LandingCryptoStatistic, LandingExchange, LandingListItem, BaseAccordion, LandingBuyTradeImage,
+        BaseSection, LandingPartnerImage, LandingStep, LandingTradingToolImage, BaseButton, LandingCryptoStatistic, LandingListItem, BaseAccordion,
         Header, Grafics, Converter, Partners
     },
     props: {
@@ -300,138 +202,6 @@ export default {
     setup() {
         // Variables reactivas
         const selected = ref(0);
-        const dropdownConcurency = ref(false);
-        const dropdownCrypto = ref(false);
-
-        // Objetos reactivos
-        const currencySelected = reactive({
-            img: 'country-icon/eng.png',
-            name: 'USD',
-        });
-
-        const currencies = reactive([
-            {
-                img: 'country-icon/eng.png',
-                name: 'USD',
-            },
-        ]);
-
-        const cryptoSelected = reactive({
-            img: 'crypto-icon/bitcoin.png',
-            name: 'BTC',
-        });
-
-        const cryptocurrencies = reactive([
-            {
-                img: 'crypto-icon/bitcoin.png',
-                name: 'BTC',
-            },
-        ]);
-
-        const trendings = reactive([
-            {
-                id: 1,
-                name: 'Bitcoin',
-                price: 43180.13,
-                logo: 'bitcoin.png',
-                increase: true,
-                data: [40, 35, 60, 75, 60, 75, 50],
-            },
-            {
-                id: 2,
-                name: 'Ethereum',
-                price: 3480.65,
-                logo: 'ethereum.png',
-                increase: false,
-                data: [25, 30, 60, 50, 80, 55, 80],
-            },
-            {
-                id: 3,
-                name: 'Solana',
-                price: 150.2,
-                logo: 'solana.png',
-                increase: true,
-                data: [40, 45, 40, 80, 50, 60, 35],
-            },
-            {
-                id: 4,
-                name: 'Dogecoin',
-                price: 0.1572,
-                logo: 'dogecoin.png',
-                increase: true,
-                data: [35, 70, 60, 80, 50, 60, 40],
-            },
-        ]);
-
-        const topGainers = reactive([
-            {
-                id: 1,
-                name: 'PAPPAY',
-                price: 0.00374,
-                logo: 'pappay.png',
-                increase: true,
-                data: [30, 50, 45, 60, 70, 40, 45],
-            },
-            {
-                id: 2,
-                name: 'Bitcoin Asia',
-                price: 0.02096,
-                logo: 'bitcoin-asia.png',
-                increase: true,
-                data: [25, 60, 50, 60, 35, 50, 70],
-            },
-            {
-                id: 3,
-                name: 'MoonRock',
-                price: 0.004907,
-                logo: 'moonrock.png',
-                increase: true,
-                data: [40, 35, 40, 25, 50, 70, 45],
-            },
-            {
-                id: 4,
-                name: 'NinjaFloki',
-                price: 0.000123,
-                logo: 'ninjafloki.png',
-                increase: true,
-                data: [45, 35, 40, 30, 25, 45, 35],
-            },
-        ]);
-
-        const recents = reactive([
-            {
-                id: 1,
-                name: 'MetaCraft',
-                price: 0.0608,
-                logo: 'metacraft.png',
-                increase: false,
-                data: [40, 50, 45, 60, 35, 40, 45],
-            },
-            {
-                id: 2,
-                name: 'Frog',
-                price: 0.5875,
-                logo: 'frog.png',
-                increase: false,
-                data: [25, 50, 45, 48, 40, 60, 45],
-            },
-            {
-                id: 3,
-                name: 'Musk Doge',
-                price: 0.04041,
-                logo: 'musk-doge.png',
-                increase: true,
-                data: [25, 35, 60, 45, 50, 45, 45],
-            },
-            {
-                id: 4,
-                name: '2SHARE',
-                price: 1366.24,
-                logo: '2share.png',
-                increase: true,
-                data: [35, 30, 60, 50, 35, 45, 40],
-            },
-        ]);
 
         const accordions = reactive([
             {
@@ -480,15 +250,6 @@ export default {
         // Retornar variables y objetos
         return {
             selected,
-            dropdownConcurency,
-            dropdownCrypto,
-            currencySelected,
-            currencies,
-            cryptoSelected,
-            cryptocurrencies,
-            trendings,
-            topGainers,
-            recents,
             accordions,
             steps,
             trans

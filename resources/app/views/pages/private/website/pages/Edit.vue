@@ -212,7 +212,6 @@ export default defineComponent({
         }
 
         function onTableAction(params) {
-            console.log(params, 'params');
 
             switch (params.action.id) {
                 case 'delete':
