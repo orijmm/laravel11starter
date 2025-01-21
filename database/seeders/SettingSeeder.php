@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Pages\ComponentType;
 use App\Models\Pages\Menu;
 use App\Models\Pages\MenuItem;
 use App\Models\Pages\Page;
@@ -17,7 +18,7 @@ class SettingSeeder extends Seeder
     public function run(): void
     {
         //Configuracion inicial
-        $setting = Setting::create([
+        Setting::create([
             'name_company' => 'name company',
             'description' => 'description',
             'address' => 'Address 123',
@@ -86,6 +87,43 @@ class SettingSeeder extends Seeder
             $menuTop->items()->save($menuItemTop);
         }
 
-        
+        //tipos de componentes
+        $componentstype = [
+            [
+                'name' => 'Header', 'description' => 'description', 'filename' => 'customs/Header'
+            ],
+            [
+                'name' => 'Accordion', 'description' => 'Tienda de test', 'filename' => 'customs/Accordion',
+            ],
+            [
+                'name' => 'Grafics', 'description' => 'Seccion de gracifos y estadisticas', 'filename' => 'customs/Grafics',
+            ],
+            [
+                'name' => 'Converter', 'description' => 'Convertidor de divisas', 'filename' => 'customs/Converter',
+            ],
+            [
+                'name' => 'Partners', 'description' => 'Partners', 'filename' => 'customs/Partners',
+            ],
+            [
+                'name' => 'TitleOne', 'description' => 'descripttib', 'filename' => 'general/TitleOne',
+            ],
+            [
+                'name' => 'ListOne', 'description' => 'lista uno', 'filename' => 'general/ListOne',
+            ],
+            [
+                'name' => 'SimpleParagraph', 'description' => 'paraffo simple', 'filename' => 'general/SimpleParagraph',
+            ],
+            [
+                'name' => 'FullImage', 'description' => 'imagens full', 'filename' => 'general/FullImage',
+            ],
+            [
+                'name' => 'Button', 'description' => 'boton simple', 'filename' => 'general/Button',
+            ]
+        ];
+
+        // Insertar los datos en la base de datos
+        foreach ($componentstype as $compType) {
+            ComponentType::create($compType);
+        }
     }
 }

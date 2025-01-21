@@ -187,11 +187,17 @@ import Grafics from '@/views/pages/public/components/customs/Grafics';
 import Converter from '@/views/pages/public/components/customs/Converter';
 import Partners from '@/views/pages/public/components/customs/Partners';
 
+import TitleOne from '@/views/pages/public/components/general/titleOne';
+import ListOne from '@/views/pages/public/components/general/ListOne';
+import SimpleParagraph from '@/views/pages/public/components/general/SimpleParagraph';
+import FullImage from '@/views/pages/public/components/general/FullImage';
+import Button from '@/views/pages/public/components/general/Button';
+
 export default {
     name: "IndexSite",
     components: {
         BaseSection, LandingPartnerImage, LandingStep, LandingTradingToolImage, BaseButton, LandingCryptoStatistic, LandingListItem, BaseAccordion,
-        Header, Grafics, Converter, Partners
+        Header, Grafics, Converter, Partners, TitleOne, ListOne, SimpleParagraph, FullImage, Button
     },
     props: {
         page: {

@@ -74,20 +74,24 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
         Route::post('menus/{menu}/storeitem', [MenuController::class, 'storeItem'])->name('menu.store.item');
         Route::put('menus/{menuitem}/updateitem', [MenuController::class, 'updateItem'])->name('menu.update.item');
         Route::delete('menus/{menuitem}/deleteitem', [MenuController::class, 'deleteItem'])->name('menu.delete.item');
-
+        #components and type of components
         Route::apiResource('componenttype', ComponentTypeController::class);
         Route::apiResource('components', ComponentController::class);
         Route::get('component/type/filename', [ComponentTypeController::class, 'listFilename'])->name('get.typecomponents.filename');
 
         ##PAGES
         Route::apiResource('page', PagesController::class)->except('show');
+        #sections
         Route::post('page/{page}/storesection', [PagesController::class, 'storeSection'])->name('page.store.section');
         Route::get('page/{page}/section/{section}', [PagesController::class, 'showSection'])->name('page.show.section');
         Route::patch('page/updatesection/{section}', [PagesController::class, 'updateSection'])->name('page.update.section');
         Route::delete('page/{page}/deletesection/{section}', [PagesController::class, 'deleteSection'])->name('page.delete.section');
         Route::patch('page/updaterows/{section}', [PagesController::class, 'updateRows'])->name('page.section.updaterows');
-        Route::post('page/column/{column}/storecomponent', [PagesController::class, 'addComponentToColumn'])->name('page.store.column.component');
+        #Columns
         Route::get('page/column/{column}', [PagesController::class, 'getColumnData'])->name('pages.store.column.component');
+        Route::patch('page/update/column/{column}', [PagesController::class, 'updateColumn'])->name('pages.update.column');
+        #Components in columns
+        Route::post('page/column/{column}/storecomponent', [PagesController::class, 'addComponentToColumn'])->name('page.store.column.component');
         Route::patch('page/savecontents/{column}', [PagesController::class, 'saveComponentContent'])->name('pages.save.component.content');
     });
 });

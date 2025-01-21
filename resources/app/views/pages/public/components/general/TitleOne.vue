@@ -1,14 +1,13 @@
 <template>
-    <p class="paragraph">Subject to cardholder and rewards terms which will be available at application.
-    </p>
+    <h2 class="text-4xl font-semibold">
+        Introducing the <span class="text-header-gradient">NEFA</span> Credit Card
+    </h2>
 </template>
 <script>
 
 import { trans } from "@/helpers/i18n";
 
 export default {
-    components: {},
-    //colocar en el div: {{ content[0].text }} ó {{ content[0].img }} por cada palabra o contenido
     props: {
         content: {
             type: [Array],

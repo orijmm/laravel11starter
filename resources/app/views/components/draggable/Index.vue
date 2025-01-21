@@ -1,28 +1,38 @@
 <template>
     <div>
-        <draggable v-model="sectionList.rows" group="people" @start="drag = true" @end="updateOrder(sectionList.rows, drag)"
-            item-key="id" class="space-y-4 bg-gray-100 p-2 rounded-lg" animation="200">
+        <draggable v-model="sectionList.rows" group="people" @start="drag = true"
+            @end="updateOrder(sectionList.rows, drag)" item-key="id" class="space-y-4 bg-gray-100 p-2 rounded-lg"
+            animation="200">
             <template #item="{ element, index }">
                 <div class="p-2 bg-white rounded-md shadow-md cursor-move sortable-handle">
                     <div class="flex justify-between items-center text-sm mb-2">
-                        <span class="text-gray-200">{{ `${trans('global.pages.row')} ${index + 1}` }}</span>
-                        <span>
-                            <Tooltip :text="trans('global.actions.delete')"> <i @click="deleteItems(sectionList.rows, index)"
+                        <div class="text-gray-200">{{ `${trans('global.pages.row')} ${index + 1}` }}</div>
+                        <div>
+                            <Tooltip :text="trans('global.actions.delete')"> <i
+                                    @click="deleteItems(sectionList.rows, index)"
                                     class="text-gray-200 fa fa-times cursor-pointer"></i>
                             </Tooltip>
-                        </span>
+                        </div>
+                    </div>
+                    <div class="text-xs col-span-5 flex">
+                        <div class="flex-none content-center mr-1">{{ trans('users.labels.classes') }}:</div>
+                        <div class="flex-1 content-center">
+                            <TextInput sizeInput="sm" type="text" :required="true" name="classes"
+                                v-model="element.classes" :placeholder="trans('users.labels.classes')" />
+                        </div>
                     </div>
                     <div>
                         <!-- Agregar muchas columnas -->
-                        <Button v-if="element.columns.length == 0" icon="fa fa-plus" type="button" class="mb-2" theme="info"
-                            @click="displayModalColumns(index)"
+                        <Button v-if="element.columns.length == 0" icon="fa fa-plus" type="button" class="mb-2"
+                            theme="info" @click="displayModalColumns(index)"
                             :label="`${trans('global.buttons.add')} ${trans('global.pages.columns')}`">
                         </Button>
                         <div v-if="element.columns.length">
-                            <Columns :sectionList="sectionList" :columns="element.columns" :rowid="element.id" @update:columns="updateColumns"></Columns>
+                            <Columns :sectionList="sectionList" :columns="element.columns" :rowid="element.id"
+                                @update:columns="updateColumns"></Columns>
                         </div>
                         <div class="text-gray-400 bg-gray-100 p-2 rounded-lg text-center" v-else>
-                            {{trans('global.pages.nocolumns') }}
+                            {{ trans('global.pages.nocolumns') }}
                         </div>
                     </div>
                 </div>
@@ -101,9 +111,10 @@ export default defineComponent({
             for (let i = 1; i <= columnsSetter.numberColumns; i++) {
                 props.sectionList.rows[columnsSetter.rowIndex].columns.push({
                     id: '0000' + i,
-                    order: props.sectionList.rows[columnsSetter.rowIndex].columns.length+1,
+                    order: props.sectionList.rows[columnsSetter.rowIndex].columns.length + 1,
                     row_id: props.sectionList.rows[columnsSetter.rowIndex].id,
-                    width: cols[columnsSetter.numberColumns]
+                    width: cols[columnsSetter.numberColumns],
+                    classes: ''
                 });
             }
             columnsSetter.columnsShow = false;

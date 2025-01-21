@@ -111,7 +111,7 @@ class PagesController extends Controller
     public function showSection(Page $page, Section $section)
     {
         $model = Section::where('id', $section->id)->with(['rows.columns', 'rows' => function (Builder $query) {
-            $query->select('id', 'order', 'section_id')->orderBy('order', 'asc');
+            $query->select('id', 'order', 'section_id', 'classes')->orderBy('order', 'asc');
         }])->first();
         return $this->responseDataSuccess(['model' => $model]);
     }
@@ -180,10 +180,9 @@ class PagesController extends Controller
                     // Usamos updateOrCreate para verificar si existe el registro y actualizarlo o insertarlo
                     $rowid = Row::updateOrCreate(
                         ['id' => $row['id'], 'section_id' => $row['section_id']],  // Verifica la existencia por 'id' y 'section_id'
-                        ['order' => $row['order'], 'updated_at' => now()]  // Actualiza el campo 'order' y 'updated_at'
+                        ['order' => $row['order'], 'classes' => $row['classes'], 'updated_at' => now()]  // Actualiza el campo 'order' y 'updated_at'
                     );
 
-                    //TODO: En vez de borrar todas las columnas, solo borrar las eliminadas y actualizar o crear desde el front
                     if (isset($row['columns']) && $row['columns']) {
 
                         $allColumnRows = Column::where('row_id', $rowid->id)->pluck('id')->toArray();
@@ -221,6 +220,23 @@ class PagesController extends Controller
         return $this->responseDataSuccess(['column' => $model]);
     }
 
+    public function updateColumn(Request $request, Column $column)
+    {
+        $data = $request->validate([
+            'classes' => 'nullable',
+            'order' => 'nullable',
+            'width' => 'nullable'
+        ]);
+        
+        $edititem = $column->update($data);
+
+        if ($edititem) {
+            return $this->responseUpdateSuccess(['record' => $column]);
+        } else {
+            return $this->responseUpdateFail();
+        }
+    }
+
     ###### COMPONENTS ######
 
     public function addComponentToColumn(StoreComponentRequest $request, Column $column)
@@ -247,7 +263,6 @@ class PagesController extends Controller
     public function saveComponentContent(Request $request, Column $column)
     {
         foreach ($request->components as $k => $v) {
-            //$comp =  Component::find($v->id);
             $component = Component::updateOrCreate(
                 ['id' => $v['id'], 'column_id' => $column->id],
                 ['contents' => $v['contents']]

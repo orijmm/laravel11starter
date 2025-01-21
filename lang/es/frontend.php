@@ -158,8 +158,11 @@ return [
             'nocolumns' => 'Sin Columnas',
             'row' => 'Fila',
             'column' => 'Columna',
+            'column_classes' => 'Clases de la columna',
             'filename_case_sensitive' => 'Nombre del archivo, sensible a mayúsculas y minúsculas',
-            'case_sensitive' => 'Sensible a mayúsculas y minúsculas'
+            'case_sensitive' => 'Sensible a mayúsculas y minúsculas',
+            'added_components' => 'Componentes agreagados'
+
         ],
         'phrases' => [
             'clear_filters' => 'Limpiar todo',
@@ -229,7 +232,8 @@ return [
             'remove' => 'Quitar',
             'hide' => 'Ocultar',
             'contract' => 'Contraer',
-            'store_components' => 'Gestionar componentes'
+            'store_components' => 'Gestionar componentes',
+            'store_column' => 'Gestionar columna'
         ],
         'actions' => [
             'name' => 'Acciones',
