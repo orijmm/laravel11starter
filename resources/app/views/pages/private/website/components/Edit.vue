@@ -4,7 +4,7 @@
         <Panel otherClass="overflow-visible">
             <Form id="edit-component" @submit.prevent="onSubmit">
                 <Dropdown class="mb-4" :server="'pages/componenttype'" :server-per-page="15" :required="true"
-                    name="type" v-model="form.component_type_id" :label="trans('users.labels.componenttype')"
+                    name="type" v-model="form.component_type_id" :label="trans('global.menu.componenttype')"
                     :serverSearchMinCharacters="0" />
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
                         <Button :theme="form.type == 'text' ? 'success': 'outline'" type="button" @click="toggleContent" :label="trans('global.buttons.content_text')" />
@@ -21,7 +21,11 @@
                     :label="`${trans('users.labels.content')} #${i + 1}`" />
             </div>
             <div v-if="form.type == 'img'">
-                <FormImg @error="errorImg = true" @success="setImgFile"/>
+                <!-- TODO: Muestra bien cuando viene de base de datos, pero si la selecccionas de form se ve rara -->
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <FormImg @error="errorImg = true" @success="setImgFile"/>
+                    <img v-if="form.img" :src="form.img" class="object-scale-down h-48 w-96" :alt="trans('users.labels.img')"/>
+                </div>
             </div>
         </Panel>
     </Page>

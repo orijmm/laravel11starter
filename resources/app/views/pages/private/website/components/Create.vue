@@ -7,7 +7,7 @@
                 <TextInput class="mb-4" type="textarea" :required="true" name="content" v-model="form.content"
                     :label="trans('users.labels.content')" />
                 <Dropdown class="mb-4" :server="'pages/componenttype'" :server-per-page="15" :required="true"
-                    name="type" v-model="form.component_type_id" :label="trans('users.labels.componenttype')"
+                    name="type" v-model="form.component_type_id" :label="trans('global.menu.componenttype')"
                     :serverSearchMinCharacters="0" />
             </Form>
         </Panel>

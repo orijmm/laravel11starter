@@ -19,8 +19,8 @@
                 <Form id="add-component" @submit.prevent="onSubmitComponent">
                     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-1">
                         <Dropdown class="mb-4" :server="'pages/componenttype'" :server-per-page="15" :required="true"
-                            name="type" v-model="form.component_type_id" :label="trans('users.labels.componenttype')"
-                            :placeholder="trans('users.labels.componenttype')" :serverSearchMinCharacters="0" />
+                            name="type" v-model="form.component_type_id" :label="trans('global.menu.componenttype')"
+                            :placeholder="trans('global.menu.componenttype')" :serverSearchMinCharacters="0" />
                         <Dropdown class="mb-4" :required="true" name="type" :options="numberContent"
                             :placeholder="trans('users.labels.number_content')" v-model="form.number_content"
                             :label="trans('users.labels.number_content')" :serverSearchMinCharacters="0" />

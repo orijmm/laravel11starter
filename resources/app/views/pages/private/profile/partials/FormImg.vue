@@ -1,6 +1,6 @@
 <template>
-    <Panel :title="trans('users.labels.avatar_settings')">
-        <FileInput @error="alertError" @change="onChange" name="file" :label="trans('users.labels.avatar')" v-model="form.file" @clear="form.file = ''" accept="image/*" class="mb-4"></FileInput>
+    <Panel :title="trans('users.labels.img_settings')">
+        <FileInput @error="alertError" @change="onChange" name="file" :label="trans('users.labels.img')" v-model="form.file" @clear="form.file = ''" accept="image/*" class="mb-4"></FileInput>
     </Panel>
 </template>
 
