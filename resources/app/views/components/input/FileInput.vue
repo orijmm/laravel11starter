@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import {computed, defineComponent, ref, watch} from "vue";
+import {computed, defineComponent, ref} from "vue";
 
 import {trans} from "@/helpers/i18n";
 

@@ -1,7 +1,7 @@
 <template>
     <div class="w-full">
-        <!-- <img src="@/views/pages/public/template/assets/img/nefa-cc.webp" class="w-[95%]" alt="" />  -->
-        <img src="@/views/pages/public/template/assets/img/nefa-cc.webp" class="w-[95%]" alt="" /> 
+        <img v-if="img" :src="img" class="w-[95%]" :alt="img" /> 
+        <div v-else>{{ trans('global.phrases.hasto_add_content') }}</div>
     </div>
 </template>
 <script>

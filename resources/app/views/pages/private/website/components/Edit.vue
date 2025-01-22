@@ -6,13 +6,16 @@
                 <Dropdown class="mb-4" :server="'pages/componenttype'" :server-per-page="15" :required="true"
                     name="type" v-model="form.component_type_id" :label="trans('global.menu.componenttype')"
                     :serverSearchMinCharacters="0" />
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
-                        <Button :theme="form.type == 'text' ? 'success': 'outline'" type="button" @click="toggleContent" :label="trans('global.buttons.content_text')" />
-                        <Button :theme="form.type == 'img' ? 'success': 'outline'"  type="button" @click="toggleContent" :label="trans('global.buttons.content_img')" />
-                    </div>
-                    <Dropdown v-if="form.type == 'text'" class="mb-4" :required="true" name="type" :options="numberContent" @input="handleNumberCols"
-                    :placeholder="trans('users.labels.number_content')" v-model="form.number_content"
-                    :label="trans('users.labels.number_content')" :serverSearchMinCharacters="0" />
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
+                    <Button :theme="form.type == 'text' ? 'success' : 'outline'" type="button" @click="toggleContent('text')"
+                        :label="trans('global.buttons.content_text')" />
+                    <Button :theme="form.type == 'img' ? 'success' : 'outline'" type="button" @click="toggleContent('img')"
+                        :label="trans('global.buttons.content_img')" />
+                </div>
+                <Dropdown v-if="form.type == 'text'" class="mb-4" :required="true" name="type" :options="numberContent"
+                    @input="handleNumberCols" :placeholder="trans('users.labels.number_content')"
+                    v-model="form.number_content" :label="trans('users.labels.number_content')"
+                    :serverSearchMinCharacters="0" />
             </Form>
         </Panel>
         <Panel otherClass="overflow-visible">
@@ -21,10 +24,12 @@
                     :label="`${trans('users.labels.content')} #${i + 1}`" />
             </div>
             <div v-if="form.type == 'img'">
-                <!-- TODO: Muestra bien cuando viene de base de datos, pero si la selecccionas de form se ve rara -->
                 <div class="grid grid-cols-1 md:grid-cols-2">
-                    <FormImg @error="errorImg = true" @success="setImgFile"/>
-                    <img v-if="form.img" :src="form.img" class="object-scale-down h-48 w-96" :alt="trans('users.labels.img')"/>
+                    <FormImg @error="errorImg = true" @success="setImgFile" />
+                    <img v-if="form.img && !form.urlInput" :src="form.img" class="object-scale-down h-48 w-96"
+                        :alt="trans('users.labels.img')" />
+                    <img v-if="form.urlInput" :src="form.urlInput" class="object-scale-down h-48 w-96"
+                        :alt="trans('users.labels.img')" />
                 </div>
             </div>
         </Panel>
@@ -70,7 +75,8 @@ export default defineComponent({
             contents: undefined,
             contentsCopy: undefined,
             type: 'text',
-            img: undefined
+            img: undefined,
+            urlInput: undefined
         });
 
         let errorImg = ref(false);
@@ -150,7 +156,6 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            console.log(form, 'onsubmit');
             service.handleUpdate('edit-component', route.params.id, reduceProperties(form, [], 'id'), null, true);
             return false;
         }
@@ -167,19 +172,24 @@ export default defineComponent({
             }
         }
 
-        function toggleContent(){
-            if (form.type == 'text') {
-                form.type = 'img';
+        //Cambiar entre contenido e imagenes
+        function toggleContent(type) {
+            if (type == 'img') {
+                form.type = type;
                 form.contents = [];
-            }else{
-                form.type = 'text';
-                form.contents = form.contentsCopy
+            } else {
+                form.type = type;
+                form.contents = form.contentsCopy;
+                form.img = undefined;
             }
         }
 
-        function setImgFile(data){
-            console.log(data, 'setImgFile');
+        //Asignar el valor del archivo 
+        function setImgFile(data) {
             form.img = data;
+            if (data) {
+                form.urlInput = URL.createObjectURL(data);
+            }
         }
 
         return {

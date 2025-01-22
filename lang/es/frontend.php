@@ -214,6 +214,7 @@ return [
             'no_menuitempage' => 'La ruta no existe en el registro de items de menú, verifique si tiene url asignado',
             'hasto_savecolumn_first' => 'Debe guardar las columnas en las filas primero.',
             'hasto_add_content' => 'Debe agregar más contenido al componente.',
+            'hasto_add_img' => 'Debe agregar una imagen al componente.',
             'not_accepted_type' => 'tiene un tipo no permitido. '
         ],
         'buttons' => [

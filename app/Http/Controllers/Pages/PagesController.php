@@ -180,7 +180,7 @@ class PagesController extends Controller
                     // Usamos updateOrCreate para verificar si existe el registro y actualizarlo o insertarlo
                     $rowid = Row::updateOrCreate(
                         ['id' => $row['id'], 'section_id' => $row['section_id']],  // Verifica la existencia por 'id' y 'section_id'
-                        ['order' => $row['order'], 'classes' => $row['classes'], 'updated_at' => now()]  // Actualiza el campo 'order' y 'updated_at'
+                        ['order' => $row['order'], 'classes' => $row['classes'] ?? null, 'updated_at' => now()]  // Actualiza el campo 'order' y 'updated_at'
                     );
 
                     if (isset($row['columns']) && $row['columns']) {

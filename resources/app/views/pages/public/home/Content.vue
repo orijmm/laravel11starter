@@ -2,7 +2,7 @@
     <div class="w-full">
         <!-- sections -->
         <section v-for="(section, i) in page.sections" :id="`section-${section.name}`" :class="section.classes">
-            <div v-for="row in section.rows" class="grid grid-flow-col" :class="row.classes">
+            <div v-for="row in section.rows" :class="row.classes">
                 <div v-for="col in row.columns" :class="col.classes">
                     <div v-for="component in col.components">
                         <component :is="component.componenttype.name || 'div'" :content="component.contents" :img="component.img" :data-aos="checkAnimate(component.componenttype.filename) ? 'flip-down' : ''">
