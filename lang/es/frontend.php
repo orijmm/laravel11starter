@@ -113,6 +113,7 @@ return [
 
             'name_company' => 'Nombre empresa',
             'profile' => 'Perfil',
+            'file' => 'Archivo',
             'register' => 'Registro',
             'login' => 'Iniciar sesión',
             'logout' => 'Cerrar sesión',
@@ -211,7 +212,8 @@ return [
             'add_morecolumns' => 'Agregar otra columna',
             'no_menuitempage' => 'La ruta no existe en el registro de items de menú, verifique si tiene url asignado',
             'hasto_savecolumn_first' => 'Debe guardar las columnas en las filas primero.',
-            'hasto_add_content' => 'Debe agregar más contenido al componente.'
+            'hasto_add_content' => 'Debe agregar más contenido al componente.',
+            'not_accepted_type' => 'tiene un tipo no permitido. '
         ],
         'buttons' => [
             'add_new' => 'Añadir nuevo',
@@ -233,7 +235,9 @@ return [
             'hide' => 'Ocultar',
             'contract' => 'Contraer',
             'store_components' => 'Gestionar componentes',
-            'store_column' => 'Gestionar columna'
+            'store_column' => 'Gestionar columna',
+            'content_text' => 'Textos de contenido',
+            'content_img' => 'Imagen de contenido'
         ],
         'actions' => [
             'name' => 'Acciones',

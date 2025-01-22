@@ -6,7 +6,11 @@
                 <Dropdown class="mb-4" :server="'pages/componenttype'" :server-per-page="15" :required="true"
                     name="type" v-model="form.component_type_id" :label="trans('users.labels.componenttype')"
                     :serverSearchMinCharacters="0" />
-                <Dropdown class="mb-4" :required="true" name="type" :options="numberContent" @input="handleNumberCols"
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
+                        <Button :theme="form.type == 'text' ? 'success': 'outline'" type="button" @click="toggleContent" :label="trans('global.buttons.content_text')" />
+                        <Button :theme="form.type == 'img' ? 'success': 'outline'"  type="button" @click="toggleContent" :label="trans('global.buttons.content_img')" />
+                    </div>
+                    <Dropdown v-if="form.type == 'text'" class="mb-4" :required="true" name="type" :options="numberContent" @input="handleNumberCols"
                     :placeholder="trans('users.labels.number_content')" v-model="form.number_content"
                     :label="trans('users.labels.number_content')" :serverSearchMinCharacters="0" />
             </Form>
@@ -16,12 +20,15 @@
                 <TextInput :name="i" class="mb-4" type="text" :required="true" v-model="content.text"
                     :label="`${trans('users.labels.content')} #${i + 1}`" />
             </div>
+            <div v-if="form.type == 'img'">
+                <FormImg @error="errorImg = true" @success="setImgFile"/>
+            </div>
         </Panel>
     </Page>
 </template>
 
 <script>
-import { defineComponent, onBeforeMount, reactive, ref, watch } from "vue";
+import { defineComponent, onBeforeMount, reactive, ref } from "vue";
 import { trans } from "@/helpers/i18n";
 import { fillObject, reduceProperties } from "@/helpers/data"
 import { useRoute } from "vue-router";
@@ -36,6 +43,7 @@ import Panel from "@/views/components/Panel";
 import Page from "@/views/layouts/Page";
 import FileInput from "@/views/components/input/FileInput";
 import Form from "@/views/components/Form";
+import FormImg from "@/views/pages/private/profile/partials/FormImg.vue";
 
 export default defineComponent({
     components: {
@@ -46,7 +54,8 @@ export default defineComponent({
         TextInput,
         Button,
         Page,
-        Dropdown
+        Dropdown,
+        FormImg
     },
     setup() {
         const { user } = useAuthStore();
@@ -55,7 +64,12 @@ export default defineComponent({
             component_type_id: undefined,
             number_content: undefined,
             contents: undefined,
+            contentsCopy: undefined,
+            type: 'text',
+            img: undefined
         });
+
+        let errorImg = ref(false);
 
         const numberContent = ref([
             { id: 1, name: 1 },
@@ -106,6 +120,9 @@ export default defineComponent({
         onBeforeMount(() => {
             service.find(route.params.id).then((response) => {
                 fillObject(form, response.data.model);
+                //copia content para toggleContent()
+                form.contentsCopy = response.data.model.contents
+                form.type = response.data.model.img ? 'img' : 'text'
                 //Agregar variables a link de regresar
                 const actionNode = page.actions.find(action => action.id === 'back');
                 if (actionNode) {
@@ -129,6 +146,7 @@ export default defineComponent({
         }
 
         function onSubmit() {
+            console.log(form, 'onsubmit');
             service.handleUpdate('edit-component', route.params.id, reduceProperties(form, [], 'id'), null, true);
             return false;
         }
@@ -137,12 +155,27 @@ export default defineComponent({
             if (form.number_content.id > form.contents.length) {
                 let numberOfElements = form.number_content.id - form.contents.length;
                 for (let index = 0; index < numberOfElements; index++) {
-                    form.contents.push({ 'type': 'text', 'text': 'ipsum quia dolor sit amet', 'img': '' });
+                    form.contents.push({ 'type': 'text', 'text': 'ipsum quia dolor sit amet' });
                 }
             } else {
                 let numberOfElements = form.contents.length - form.number_content.id;
                 form.contents.splice(- numberOfElements);
             }
+        }
+
+        function toggleContent(){
+            if (form.type == 'text') {
+                form.type = 'img';
+                form.contents = [];
+            }else{
+                form.type = 'text';
+                form.contents = form.contentsCopy
+            }
+        }
+
+        function setImgFile(data){
+            console.log(data, 'setImgFile');
+            form.img = data;
         }
 
         return {
@@ -153,10 +186,11 @@ export default defineComponent({
             onAction,
             page,
             numberContent,
-            handleNumberCols
+            handleNumberCols,
+            toggleContent,
+            errorImg,
+            setImgFile
         }
     }
 })
 </script>
-
-<style scoped></style>

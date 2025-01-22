@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Component extends Model
+class Component extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, Searchable, Filterable;
+    use HasFactory, SoftDeletes, Searchable, Filterable, InteractsWithMedia;
 
     protected $table = 'components';
 
@@ -20,6 +22,29 @@ class Component extends Model
     protected $casts = [
         'contents' => 'array',  // Convierte el campo 'data' a un array
     ];
+
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'img'
+    ];
+
+    /*
+    * Get image's component
+    */
+    public function getImgAttribute()
+    {
+        $img = $this->getMedia('componentimg')->first();
+        if ($img) {
+            return $img->getFullUrl();
+        }
+
+        return null;
+    }
 
     /**
      * Get the componenttype that owns the comment.

@@ -5,7 +5,7 @@
             <div v-for="row in section.rows" class="grid grid-flow-col" :class="row.classes">
                 <div v-for="col in row.columns" :class="col.classes">
                     <div v-for="component in col.components">
-                        <component :is="component.componenttype.name || 'div'" :content="component.contents">
+                        <component :is="component.componenttype.name || 'div'" :content="component.contents" :img="component.img" :data-aos="checkAnimate(component.componenttype.filename) ? 'flip-down' : ''">
                             {{ component.componenttype.name ? '' : 'Componente no encontrado' }}
                         </component>
 
@@ -59,7 +59,7 @@
         </section>
 
         <!-- Industry-leading security section -->
-        <section class="w-full my-24">
+        <!-- <section class="w-full my-24">
             <div class="relative max-w-screen-xl px-8 mx-auto grid grid-cols-12 gap-x-6">
                 <div data-aos="fade-right" class="col-span-12 lg:col-span-6">
                     <div class="w-full">
@@ -94,7 +94,7 @@
                     </ul>
                 </div>
             </div>
-        </section>
+        </section> -->
 
         <!-- Getting started section -->
         <section
@@ -127,7 +127,6 @@
                 <div data-aos="fade-left" data-aos-delay="150" class="col-span-12 lg:col-span-6 px-4 sm:px-6 mt-8">
                     <span class="text-base text-gradient font-semibold uppercase mb-4 sm:mb-2">Support</span>
                     <h2 class="text-3xl sm:text-4xl font-semibold mb-10 sm:mb-6">Frequently asked questions</h2>
-
                     <ul class="shadow-box">
                         <BaseAccordion v-for="(accordion, index) in accordions" :key="index" :accordion="accordion" />
                     </ul>
@@ -227,12 +226,17 @@ export default {
             },
         ]);
 
+        function checkAnimate(filename) {
+            return filename.startsWith('general/');
+        }
+
         // Retornar variables y objetos
         return {
             selected,
             accordions,
             steps,
-            trans
+            trans,
+            checkAnimate
         };
     },
 };

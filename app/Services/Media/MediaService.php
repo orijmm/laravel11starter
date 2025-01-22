@@ -5,6 +5,7 @@ namespace App\Services\Media;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -20,14 +21,14 @@ class MediaService
      * @throws FileDoesNotExist
      * @throws FileIsTooBig
      */
-    public function replace(UploadedFile $file, User $user, $collection)
+    public function replace(UploadedFile $file, HasMedia $model, string $collection): Media
     {
-        $media = $user->getMedia($collection);
+        $media = $model->getMedia($collection);
         foreach ($media as $media_item) {
             $media_item->delete();
         }
 
-        return $this->store($file, $user, $collection);
+        return $this->store($file, $model, $collection);
     }
 
     /**
@@ -39,8 +40,8 @@ class MediaService
      * @throws FileDoesNotExist
      * @throws FileIsTooBig
      */
-    public function store(UploadedFile $file, User $user, $collection)
+    public function store(UploadedFile $file, HasMedia $model, string $collection): Media
     {
-        return $user->addMedia($file)->toMediaCollection($collection);
+        return $model->addMedia($file)->toMediaCollection($collection);
     }
 }

@@ -198,7 +198,7 @@ export default defineComponent({
                         return true;
                     }
 
-                    let error = new Error(`File ${file.name} has not accepted type ${file.type}`);
+                    let error = new Error(`${trans('global.pages.file')} ${file.name} ${trans('global.phrases.not_accepted_type')} ${file.type}`);
                     emit('error', error);
                     throw error;
                 });

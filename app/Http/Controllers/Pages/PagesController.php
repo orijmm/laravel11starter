@@ -247,9 +247,12 @@ class PagesController extends Controller
 
         $data['component_type_id'] = $data['component_type_id']['id'];
 
-        for ($i = 0; $i < $request->number_content['id']; $i++) {
-            $contents[] = ['type' => 'text', 'text' => 'ipsum quia dolor sit amet', 'img' => ''];
+        if($request->number_content){
+            for ($i = 0; $i < $request->number_content['id']; $i++) {
+                $contents[] = ['type' => 'text', 'text' => 'ipsum quia dolor sit amet', 'img' => ''];
+            }
         }
+        
         $data['contents'] = $contents;
         $data['column_id'] = $column->id;
         $component = Component::create($data);

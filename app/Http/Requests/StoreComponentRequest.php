@@ -22,7 +22,9 @@ class StoreComponentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'number_content' => 'required',
+            'number_content' => 'nullable',
+            'contents' => 'nullable',
+            'img' => 'nullable',
             'component_type_id' => 'required',
         ];
     }

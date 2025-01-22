@@ -19,7 +19,7 @@ import BaseFooter from '@/views/pages/public/template/components/base/Footer';
 import Content from '@/views/pages/public/home/Content';
 import { useRoute } from 'vue-router';
 import { useAlertStore } from "@/stores";
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive } from 'vue';
 import { getResponseError } from "@/helpers/api";
 import ModelService from '@/services/ModelService';
 

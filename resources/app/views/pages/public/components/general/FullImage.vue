@@ -1,6 +1,6 @@
 <template>
     <div class="w-full">
-        <!-- {{ content[0].text }}-->
+        <!-- <img src="@/views/pages/public/template/assets/img/nefa-cc.webp" class="w-[95%]" alt="" />  -->
         <img src="@/views/pages/public/template/assets/img/nefa-cc.webp" class="w-[95%]" alt="" /> 
     </div>
 </template>
@@ -15,6 +15,10 @@ export default {
         content: {
             type: [Array],
             default: [],
+        },
+        img: {
+            type: String,
+            default: '',
         },
     },
     setup(props) {

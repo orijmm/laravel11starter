@@ -22,7 +22,8 @@ class UpdateComponentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'contents' => 'required',
+            'contents' => 'nullable',
+            'img' => 'nullable',
             'component_type_id' => 'required',
         ];
     }
