@@ -7,29 +7,44 @@
                     name="type" v-model="form.component_type_id" :label="trans('global.menu.componenttype')"
                     :serverSearchMinCharacters="0" />
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
-                    <Button :theme="form.type == 'text' ? 'success' : 'outline'" type="button" @click="toggleContent('text')"
-                        :label="trans('global.buttons.content_text')" />
-                    <Button :theme="form.type == 'img' ? 'success' : 'outline'" type="button" @click="toggleContent('img')"
-                        :label="trans('global.buttons.content_img')" />
+                    <Button :theme="form.type == 'text' ? 'success' : 'outline'" type="button"
+                        @click="toggleContent('text')" :label="trans('global.buttons.content_text')" />
+                    <Button :theme="form.type == 'img' ? 'success' : 'outline'" type="button"
+                        @click="toggleContent('img')" :label="trans('global.buttons.content_img')" />
                 </div>
-                <Dropdown v-if="form.type == 'text'" class="mb-4" :required="true" name="type" :options="numberContent"
-                    @input="handleNumberCols" :placeholder="trans('users.labels.number_content')"
-                    v-model="form.number_content" :label="trans('users.labels.number_content')"
-                    :serverSearchMinCharacters="0" />
             </Form>
+            <div v-for="x in form.contents">{{ x }}</div>
+            {{form.img}}
         </Panel>
         <Panel otherClass="overflow-visible">
-            <div v-for="(content, i) in form.contents" :key="i">
+            <Dropdown v-if="form.type == 'text'" class="mb-4" name="type" :options="numberContent"
+                @input="handleNumberCols" :placeholder="trans('users.labels.number_content')"
+                v-model="form.number_content" :label="trans('users.labels.number_content')"
+                :serverSearchMinCharacters="0" />
+            <div v-if="form.type == 'text'" v-for="(content, i) in form.contents" :key="i">
                 <TextInput :name="i" class="mb-4" type="text" :required="true" v-model="content.text"
                     :label="`${trans('users.labels.content')} #${i + 1}`" />
             </div>
             <div v-if="form.type == 'img'">
-                <div class="grid grid-cols-1 md:grid-cols-2">
+                <div class="grid grid-cols-1">
                     <FormImg @error="errorImg = true" @success="setImgFile" />
-                    <img v-if="form.img && !form.urlInput" :src="form.img" class="object-scale-down h-48 w-96"
-                        :alt="trans('users.labels.img')" />
-                    <img v-if="form.urlInput" :src="form.urlInput" class="object-scale-down h-48 w-96"
-                        :alt="trans('users.labels.img')" />
+                    <div v-if="form.img.length > 0 && form.urlInput.length == 0" class="flex flex-row">
+                        <div v-for="(imgY, y) in form.img" :key="`img-${y}`">
+                            <button class="file-input__clear text-gray-300" type="button" @click="onClearImg(i)">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <img :src="imgY" class="object-scale-down h-48 w-96" :alt="trans('users.labels.img')" />
+                        </div>
+                    </div>
+                    <div v-if="form.urlInput.length" class="flex flex-row">
+                        <div v-for="(imgI, i) in form.urlInput" :key="`img-${i}`">
+                            <button class="file-input__clear text-gray-300" type="button" @click="onClearImg(i)">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <img v-if="form.urlInput.length" :src="imgI" class="object-scale-down h-48 w-96"
+                            :alt="trans('users.labels.img')" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </Panel>
@@ -75,8 +90,8 @@ export default defineComponent({
             contents: undefined,
             contentsCopy: undefined,
             type: 'text',
-            img: undefined,
-            urlInput: undefined
+            img: [],
+            urlInput: []
         });
 
         let errorImg = ref(false);
@@ -130,9 +145,7 @@ export default defineComponent({
         onBeforeMount(() => {
             service.find(route.params.id).then((response) => {
                 fillObject(form, response.data.model);
-                //copia content para toggleContent()
                 form.contentsCopy = response.data.model.contents
-                form.type = response.data.model.img ? 'img' : 'text'
                 //Agregar variables a link de regresar
                 const actionNode = page.actions.find(action => action.id === 'back');
                 if (actionNode) {
@@ -174,22 +187,20 @@ export default defineComponent({
 
         //Cambiar entre contenido e imagenes
         function toggleContent(type) {
-            if (type == 'img') {
-                form.type = type;
-                form.contents = [];
-            } else {
-                form.type = type;
-                form.contents = form.contentsCopy;
-                form.img = undefined;
-            }
+            form.type = type
         }
 
         //Asignar el valor del archivo 
         function setImgFile(data) {
-            form.img = data;
+            form.img.push(data);
             if (data) {
-                form.urlInput = URL.createObjectURL(data);
+                form.urlInput.push(URL.createObjectURL(data));
             }
+        }
+
+        function onClearImg(i){
+            form.urlInput.splice(i, 1);
+            form.img.splice(i, 1);
         }
 
         return {
@@ -203,7 +214,8 @@ export default defineComponent({
             handleNumberCols,
             toggleContent,
             errorImg,
-            setImgFile
+            setImgFile,
+            onClearImg
         }
     }
 })

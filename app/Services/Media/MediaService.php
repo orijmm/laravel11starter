@@ -33,6 +33,36 @@ class MediaService
 
     /**
      * Handles a file upload to the storage
+     * @return Media
+     *
+     */
+    public function replaceMany(array $files, HasMedia $model, string $collection): void
+    {
+        // Obtener las URLs actuales del modelo
+        $existingMediaUrls = $model->getMedia($collection)->pluck('file_name')->toArray();
+
+        // Filtrar las imágenes que vienen como texto (URLs) y ya existen
+        $preservedMedia = array_filter($files, function ($file) use ($existingMediaUrls) {
+            return is_string($file) && in_array(basename($file), $existingMediaUrls);
+        });
+
+        // Eliminar las imágenes que no están en el array de preservación
+        $model->getMedia($collection)->each(function ($media) use ($preservedMedia) {
+            if (!in_array($media->getFullUrl(), $preservedMedia)) {
+                $media->delete();
+            }
+        });
+
+        // Agregar las nuevas imágenes que vienen como `UploadedFile`
+        foreach ($files as $file) {
+            if ($file instanceof UploadedFile) {
+                $this->store($file, $model, $collection);
+            }
+        }
+    }
+
+    /**
+     * Handles a file upload to the storage
      *
      *
      * @return Media

@@ -38,12 +38,14 @@ class Component extends Model implements HasMedia
     */
     public function getImgAttribute()
     {
-        $img = $this->getMedia('componentimg')->first();
-        if ($img) {
-            return $img->getFullUrl();
+        $img = $this->getMedia('componentimg');
+        if ($img && count($img)) {
+            return $img->map(function ( $item) {
+                return $item->getFullUrl();
+            });
         }
 
-        return null;
+        return [];
     }
 
     /**

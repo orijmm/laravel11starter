@@ -70,7 +70,8 @@ return [
             'backgroundcolor' => 'Color Fondo',
             'textcolor' => 'Color texto',
             'classes' => 'Clases',
-            'number_content' => 'Número de contenido'
+            'number_content' => 'Número de contenido',
+            'number_img' => 'Número de imagenes'
         ],
     ],
     'messages' => [
