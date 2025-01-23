@@ -49,12 +49,15 @@ import { trans } from "@/helpers/i18n";
 
 export default {
     components: { BaseSection, BaseButton },
-    //colocar en el div: {{ content[0].text }} ó {{ content[0].img }} por cada palabra o contenido
     props: {
         content: {
             type: [Array],
             default: [], 
         },
+        img: {
+            type: String,
+            default: [],
+        }
     },
     setup(props) {
 

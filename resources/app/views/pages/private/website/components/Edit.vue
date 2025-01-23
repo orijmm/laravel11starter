@@ -13,8 +13,6 @@
                         @click="toggleContent('img')" :label="trans('global.buttons.content_img')" />
                 </div>
             </Form>
-            <div v-for="x in form.contents">{{ x }}</div>
-            {{form.img}}
         </Panel>
         <Panel otherClass="overflow-visible">
             <Dropdown v-if="form.type == 'text'" class="mb-4" name="type" :options="numberContent"
@@ -28,21 +26,12 @@
             <div v-if="form.type == 'img'">
                 <div class="grid grid-cols-1">
                     <FormImg @error="errorImg = true" @success="setImgFile" />
-                    <div v-if="form.img.length > 0 && form.urlInput.length == 0" class="flex flex-row">
-                        <div v-for="(imgY, y) in form.img" :key="`img-${y}`">
+                    <div class="flex flex-row gap-2">
+                        <div class="bg-gray-50 rounded p-1" v-for="(imgI, i) in form.img" :key="`img-${i}`">
                             <button class="file-input__clear text-gray-300" type="button" @click="onClearImg(i)">
                                 <i class="fa fa-times"></i>
                             </button>
-                            <img :src="imgY" class="object-scale-down h-48 w-96" :alt="trans('users.labels.img')" />
-                        </div>
-                    </div>
-                    <div v-if="form.urlInput.length" class="flex flex-row">
-                        <div v-for="(imgI, i) in form.urlInput" :key="`img-${i}`">
-                            <button class="file-input__clear text-gray-300" type="button" @click="onClearImg(i)">
-                                <i class="fa fa-times"></i>
-                            </button>
-                            <img v-if="form.urlInput.length" :src="imgI" class="object-scale-down h-48 w-96"
-                            :alt="trans('users.labels.img')" />
+                            <img :src="getImgVisual(imgI)" class="object-scale-down h-48 w-96" :alt="trans('users.labels.img')" />
                         </div>
                     </div>
                 </div>
@@ -193,12 +182,14 @@ export default defineComponent({
         //Asignar el valor del archivo 
         function setImgFile(data) {
             form.img.push(data);
-            if (data) {
-                form.urlInput.push(URL.createObjectURL(data));
-            }
         }
 
-        function onClearImg(i){
+        function getImgVisual(img) {
+            return typeof img == 'string' ? img : URL.createObjectURL(img);
+        }
+
+        function onClearImg(i) {
+            console.log(i, 'testt');
             form.urlInput.splice(i, 1);
             form.img.splice(i, 1);
         }
@@ -215,7 +206,8 @@ export default defineComponent({
             toggleContent,
             errorImg,
             setImgFile,
-            onClearImg
+            onClearImg,
+            getImgVisual
         }
     }
 })

@@ -84,24 +84,28 @@ class ComponentController extends Controller
      */
     public function update(UpdateComponentRequest $request, Component $component)
     {
-        $this->authorize('edit_page');
+        try {
+            $this->authorize('edit_page');
+            $checkImg = null;
+            $data = $request->validated();
+            $data['component_type_id'] = $data['component_type_id']['id'];
+            if (!isset($request->contents)) {
+                $data['contents'] = [];
+            }
 
-        $data = $request->validated();
-        $data['component_type_id'] = $data['component_type_id']['id'];
-        if (!isset($request->contents)) {
-            $data['contents'] = [];
-        }
+            if (!empty($request->img)) {
+                $checkImg = $this->mediaService->replaceMany($request->img, $component, 'componentimg');
+            }
 
-        if (!empty($request->img)) {
-            $this->mediaService->replaceMany($request->img, $component, 'componentimg');
-        }
+            $newcomponent = $component->update($data);
 
-        $newcomponent = $component->update($data);
-
-        if ($newcomponent) {
-            return $this->responseUpdateSuccess(['record' => $component]);
-        } else {
-            return $this->responseUpdateFail();
+            if ($newcomponent) {
+                return $this->responseUpdateSuccess(['record' => $component, 'test' => $checkImg]);
+            } else {
+                return $this->responseUpdateFail();
+            }
+        } catch (\Exception $e) {
+            return $this->responseFail($e);
         }
     }
 

@@ -20,6 +20,10 @@ export default {
             type: [Array],
             default: [], 
         },
+        img: {
+            type: String,
+            default: [],
+        }
     },
     setup(props) {
 

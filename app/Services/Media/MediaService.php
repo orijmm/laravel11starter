@@ -3,6 +3,7 @@
 namespace App\Services\Media;
 
 use App\Models\User;
+use Arr;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\HasMedia;
@@ -36,28 +37,41 @@ class MediaService
      * @return Media
      *
      */
-    public function replaceMany(array $files, HasMedia $model, string $collection): void
+    public function replaceMany(array $files, HasMedia $model, string $collection)
     {
-        // Obtener las URLs actuales del modelo
-        $existingMediaUrls = $model->getMedia($collection)->pluck('file_name')->toArray();
-
-        // Filtrar las imágenes que vienen como texto (URLs) y ya existen
-        $preservedMedia = array_filter($files, function ($file) use ($existingMediaUrls) {
-            return is_string($file) && in_array(basename($file), $existingMediaUrls);
-        });
-
-        // Eliminar las imágenes que no están en el array de preservación
-        $model->getMedia($collection)->each(function ($media) use ($preservedMedia) {
-            if (!in_array($media->getFullUrl(), $preservedMedia)) {
-                $media->delete();
+        try {
+            $t = [];
+            $fileNames = Arr::map($files, function ($file) {
+                return is_string($file) ? basename($file) : null;
+            });
+            // Filtrar los valores nulos (por si hay elementos que no sean cadenas)
+            $fileNames = array_filter($fileNames);
+    
+            // Obtener los medios no existentes
+            $nonExistingMedia = $model->getMedia($collection)->filter(function ($media) use ($fileNames) {
+                return !in_array($media->file_name, $fileNames); // Invertimos la lógica con `!`
+            })->pluck('id')->toArray();
+            
+            // Eliminar las imágenes que no están en el array de preservación
+            $getMedia = $model->getMedia($collection);
+    
+            foreach ($getMedia as $value) {
+                if (in_array($value->id, $nonExistingMedia)) {
+                    $t[] = $value->id;
+                    $value->delete();
+                }
             }
-        });
-
-        // Agregar las nuevas imágenes que vienen como `UploadedFile`
-        foreach ($files as $file) {
-            if ($file instanceof UploadedFile) {
-                $this->store($file, $model, $collection);
+    
+            // Agregar las nuevas imágenes que vienen como `UploadedFile`
+            foreach ($files as $file) {
+                if ($file instanceof UploadedFile) {
+                    $this->store($file, $model, $collection);
+                }
             }
+
+            return $t;
+        } catch (\Exception $e) {
+            return $e->getMessage();
         }
     }
 

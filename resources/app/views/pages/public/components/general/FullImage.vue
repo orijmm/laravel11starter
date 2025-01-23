@@ -1,6 +1,6 @@
 <template>
     <div class="w-full">
-        <img v-if="img" :src="img" class="w-[95%]" :alt="img" /> 
+        <img v-if="img[0] ?? false" :src="img[0]" class="w-[95%]" :alt="img" /> 
         <div v-else>{{ trans('global.phrases.hasto_add_content') }}</div>
     </div>
 </template>
@@ -9,8 +9,7 @@
 import { trans } from "@/helpers/i18n";
 
 export default {
-    components: {  },
-    //colocar en el div: {{ content[0].text }} ó {{ content[0].img }} por cada palabra o contenido
+    components: {},
     props: {
         content: {
             type: [Array],
@@ -18,8 +17,8 @@ export default {
         },
         img: {
             type: String,
-            default: '',
-        },
+            default: [],
+        }
     },
     setup(props) {
 

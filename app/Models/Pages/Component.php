@@ -4,6 +4,7 @@ namespace App\Models\Pages;
 
 use App\Traits\Filterable;
 use App\Traits\Searchable;
+use Arr;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -40,7 +41,7 @@ class Component extends Model implements HasMedia
     {
         $img = $this->getMedia('componentimg');
         if ($img && count($img)) {
-            return $img->map(function ( $item) {
+            return $img->map(function ($item) {
                 return $item->getFullUrl();
             });
         }
