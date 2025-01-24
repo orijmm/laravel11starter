@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Pages\Column;
+use App\Models\Pages\Component;
 use App\Models\Pages\ComponentType;
 use App\Models\Pages\Menu;
 use App\Models\Pages\MenuItem;
@@ -150,7 +151,6 @@ class SettingSeeder extends Seeder
             ['order' => 1, 'section_id' => $sectionIds['graficos'], 'classes' => null],
             ['order' => 1, 'section_id' => $sectionIds['converter'], 'classes' => null],
             ['order' => 1, 'section_id' => $sectionIds['partners'], 'classes' => null],
-            ['order' => 2, 'section_id' => $sectionIds['converter'], 'classes' => null],
             ['order' => 1, 'section_id' => $sectionIds['nesa'], 'classes' => 'relative max-w-screen-xl px-4 sm:px-8 mx-auto gap-x-6'],
         ];
 
@@ -170,18 +170,73 @@ class SettingSeeder extends Seeder
             ['width' => 12, 'order' => 1, 'row_id' => $rowIds[1], 'classes' => null],
             ['width' => 12, 'order' => 1, 'row_id' => $rowIds[2], 'classes' => null],
             ['width' => 12, 'order' => 1, 'row_id' => $rowIds[3], 'classes' => null],
-            ['width' => 12, 'order' => 1, 'row_id' => $rowIds[4], 'classes' => null],
-            ['width' => 6, 'order' => 1, 'row_id' => $rowIds[5], 'classes' => null],
-            ['width' => 6, 'order' => 2, 'row_id' => $rowIds[5], 'classes' => 'space-y-6 px-4 sm:px-6 mt-20'],
+            ['width' => 6, 'order' => 1, 'row_id' => $rowIds[4], 'classes' => null],
+            ['width' => 6, 'order' => 2, 'row_id' => $rowIds[4], 'classes' => 'space-y-6 px-4 sm:px-6 mt-20'],
         ];
 
+        $columnIds = [];
         foreach ($columns as $column) {
-            Column::create([
+            $newColumn = Column::create([
                 'width' => $column['width'],
                 'order' => $column['order'],
                 'row_id' => $column['row_id'],
                 'classes' => $column['classes'],
             ]);
+            $columnIds[] = $newColumn->id;
+        }
+
+        // Insertar registros en la tabla components
+        $components = [
+            [
+                'contents' => '[{"img": null, "text": "ipsum quia dolor sit amet", "type": "text"}, {"img": null, "text": "ipsum quia dolor sit amet", "type": "text"}, {"img": null, "text": "ipsum quia dolor sit amet", "type": "text"}, {"img": null, "text": "ipsum quia dolor sit amet", "type": "text"}, {"img": null, "text": "ipsum quia dolor sit amet", "type": "text"}, {"img": null, "text": "ipsum quia dolor sit amet", "type": "text"}]',
+                'component_type_id' => 1,
+                'column_id' => $columnIds[0],
+            ],
+            [
+                'contents' => '[]',
+                'component_type_id' => 3,
+                'column_id' => $columnIds[1],
+            ],
+            [
+                'contents' => '[{"img": "", "text": "ipsum quia dolor sit amet", "type": "text"}, {"img": "", "text": "ipsum quia dolor sit amet", "type": "text"}, {"img": "", "text": "ipsum quia dolor sit amet", "type": "text"}, {"img": "", "text": "ipsum quia dolor sit amet", "type": "text"}]',
+                'component_type_id' => 4,
+                'column_id' => $columnIds[2],
+            ],
+            [
+                'contents' => '[{"img": null, "text": "ipsum quia dolor sit amet", "type": "text"}, {"img": null, "text": "ipsum quia dolor sit amet", "type": "text"}]',
+                'component_type_id' => 5,
+                'column_id' => $columnIds[3],
+            ],
+            [
+                'contents' => '[]',
+                'component_type_id' => 9,
+                'column_id' => $columnIds[4],
+            ],
+            [
+                'contents' => '[{"text": "ipsum quia dolor sit amet", "type": "text"}, {"text": "ipsum quia dolor sit amet", "type": "text"}, {"text": "ipsum quia dolor sit amet", "type": "text"}]',
+                'component_type_id' => 6,
+                'column_id' => $columnIds[5],
+            ],
+            [
+                'contents' => '[{"text": "ipsum quia dolor sit amet", "type": "text"}]',
+                'component_type_id' => 8,
+                'column_id' => $columnIds[5],
+            ],
+            [
+                'contents' => '[{"text": "ipsum quia dolor sit amet", "type": "text"}, {"text": "ipsum quia dolor sit amet", "type": "text"}, {"text": "ipsum quia dolor sit amet", "type": "text"}]',
+                'component_type_id' => 7,
+                'column_id' => $columnIds[5],
+            ],
+            [
+                'contents' => '[{"text": "ipsum quia dolor sit amet", "type": "text"}]',
+                'component_type_id' => 10,
+                'column_id' => $columnIds[5],
+            ],
+        ];
+
+        // Crear registros en la tabla components
+        foreach ($components as $component) {
+            Component::create($component);
         }
     }
 }
