@@ -8,13 +8,12 @@ use Arr;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Component extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, Searchable, Filterable, InteractsWithMedia;
+    use HasFactory, Searchable, Filterable, InteractsWithMedia;
 
     protected $table = 'components';
 

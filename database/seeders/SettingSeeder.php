@@ -2,10 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Pages\Column;
 use App\Models\Pages\ComponentType;
 use App\Models\Pages\Menu;
 use App\Models\Pages\MenuItem;
 use App\Models\Pages\Page;
+use App\Models\Pages\Row;
+use App\Models\Pages\Section;
 use App\Models\Setting;
 use App\Models\Pages\Template;
 use Illuminate\Database\Seeder;
@@ -124,6 +127,61 @@ class SettingSeeder extends Seeder
         // Insertar los datos en la base de datos
         foreach ($componentstype as $compType) {
             ComponentType::create($compType);
+        }
+
+        //crear secciones
+        $sections = [
+            ['name' => 'header', 'order' => 1, 'classes' => 'w-full pb-24', 'page_id' => $pageHome->id],
+            ['name' => 'graficos', 'order' => 2, 'classes' => 'w-full', 'page_id' => $pageHome->id],
+            ['name' => 'converter', 'order' => 3, 'classes' => 'w-full my-24', 'page_id' => $pageHome->id],
+            ['name' => 'partners', 'order' => 4, 'classes' => 'bg-partner relative max-w-full sm:mx-6 my-24 shadow sm:rounded-2xl overflow-hidden', 'page_id' => $pageHome->id],
+            ['name' => 'nesa', 'order' => 5, 'classes' => 'w-full my-36', 'page_id' => $pageHome->id],
+        ];
+
+        $sectionIds = [];
+        foreach ($sections as $section) {
+            $newSection = Section::create($section);
+            $sectionIds[$section['name']] = $newSection->id; // Guardar el id de cada sección
+        }
+
+        //Filas
+        $rows = [
+            ['order' => 1, 'section_id' => $sectionIds['header'], 'classes' => null],
+            ['order' => 1, 'section_id' => $sectionIds['graficos'], 'classes' => null],
+            ['order' => 1, 'section_id' => $sectionIds['converter'], 'classes' => null],
+            ['order' => 1, 'section_id' => $sectionIds['partners'], 'classes' => null],
+            ['order' => 2, 'section_id' => $sectionIds['converter'], 'classes' => null],
+            ['order' => 1, 'section_id' => $sectionIds['nesa'], 'classes' => 'relative max-w-screen-xl px-4 sm:px-8 mx-auto gap-x-6'],
+        ];
+
+        $rowIds = [];
+        foreach ($rows as $row) {
+            $newRow = Row::create([
+                'order' => $row['order'],
+                'section_id' => $row['section_id'],
+                'classes' => $row['classes'],
+            ]);
+            $rowIds[] = $newRow->id; // Guardar el id de cada fila
+        }
+
+        // Insertar registros en la tabla columns
+        $columns = [
+            ['width' => 12, 'order' => 1, 'row_id' => $rowIds[0], 'classes' => null],
+            ['width' => 12, 'order' => 1, 'row_id' => $rowIds[1], 'classes' => null],
+            ['width' => 12, 'order' => 1, 'row_id' => $rowIds[2], 'classes' => null],
+            ['width' => 12, 'order' => 1, 'row_id' => $rowIds[3], 'classes' => null],
+            ['width' => 12, 'order' => 1, 'row_id' => $rowIds[4], 'classes' => null],
+            ['width' => 6, 'order' => 1, 'row_id' => $rowIds[5], 'classes' => null],
+            ['width' => 6, 'order' => 2, 'row_id' => $rowIds[5], 'classes' => 'space-y-6 px-4 sm:px-6 mt-20'],
+        ];
+
+        foreach ($columns as $column) {
+            Column::create([
+                'width' => $column['width'],
+                'order' => $column['order'],
+                'row_id' => $column['row_id'],
+                'classes' => $column['classes'],
+            ]);
         }
     }
 }
