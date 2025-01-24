@@ -188,47 +188,74 @@ class SettingSeeder extends Seeder
         // Insertar registros en la tabla components
         $components = [
             [
-                'contents' => '[{"img": null, "text": "ipsum quia dolor sit amet", "type": "text"}, {"img": null, "text": "ipsum quia dolor sit amet", "type": "text"}, {"img": null, "text": "ipsum quia dolor sit amet", "type": "text"}, {"img": null, "text": "ipsum quia dolor sit amet", "type": "text"}, {"img": null, "text": "ipsum quia dolor sit amet", "type": "text"}, {"img": null, "text": "ipsum quia dolor sit amet", "type": "text"}]',
+                'contents' => [
+                    ['img' => null, 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['img' => null, 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['img' => null, 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['img' => null, 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['img' => null, 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['img' => null, 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                ],
                 'component_type_id' => 1,
                 'column_id' => $columnIds[0],
             ],
             [
-                'contents' => '[]',
+                'contents' => [],
                 'component_type_id' => 3,
                 'column_id' => $columnIds[1],
             ],
             [
-                'contents' => '[{"img": "", "text": "ipsum quia dolor sit amet", "type": "text"}, {"img": "", "text": "ipsum quia dolor sit amet", "type": "text"}, {"img": "", "text": "ipsum quia dolor sit amet", "type": "text"}, {"img": "", "text": "ipsum quia dolor sit amet", "type": "text"}]',
+                'contents' => [
+                    ['img' => '', 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['img' => '', 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['img' => '', 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['img' => '', 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                ],
                 'component_type_id' => 4,
                 'column_id' => $columnIds[2],
             ],
             [
-                'contents' => '[{"img": null, "text": "ipsum quia dolor sit amet", "type": "text"}, {"img": null, "text": "ipsum quia dolor sit amet", "type": "text"}]',
+                'contents' => [
+                    ['img' => null, 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['img' => null, 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                ],
                 'component_type_id' => 5,
                 'column_id' => $columnIds[3],
             ],
             [
-                'contents' => '[]',
+                'contents' => [],
                 'component_type_id' => 9,
                 'column_id' => $columnIds[4],
             ],
             [
-                'contents' => '[{"text": "ipsum quia dolor sit amet", "type": "text"}, {"text": "ipsum quia dolor sit amet", "type": "text"}, {"text": "ipsum quia dolor sit amet", "type": "text"}]',
+                'contents' => [
+                    ['text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                ],
                 'component_type_id' => 6,
                 'column_id' => $columnIds[5],
             ],
             [
-                'contents' => '[{"text": "ipsum quia dolor sit amet", "type": "text"}]',
+                'contents' => [
+                    ['text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                ],
                 'component_type_id' => 8,
                 'column_id' => $columnIds[5],
             ],
             [
-                'contents' => '[{"text": "ipsum quia dolor sit amet", "type": "text"}, {"text": "ipsum quia dolor sit amet", "type": "text"}, {"text": "ipsum quia dolor sit amet", "type": "text"}]',
+                'contents' => [
+                    ['text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                ],
                 'component_type_id' => 7,
                 'column_id' => $columnIds[5],
             ],
             [
-                'contents' => '[{"text": "ipsum quia dolor sit amet", "type": "text"}]',
+                'contents' => [
+                    ['text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                ],
                 'component_type_id' => 10,
                 'column_id' => $columnIds[5],
             ],
