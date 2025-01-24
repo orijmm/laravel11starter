@@ -189,12 +189,13 @@ class SettingSeeder extends Seeder
         $components = [
             [
                 'contents' => [
-                    ['img' => null, 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
-                    ['img' => null, 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
-                    ['img' => null, 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
-                    ['img' => null, 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
-                    ['img' => null, 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
-                    ['img' => null, 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['img' => null, 'text' => 'Sign Up Today', 'type' => 'text'],
+                    ['img' => null, 'text' => 'The Worlds', 'type' => 'text'],
+                    ['img' => null, 'text' => 'Fastest Growing', 'type' => 'text'],
+                    ['img' => null, 'text' => 'Crypto Web App', 'type' => 'text'],
+                    ['img' => null, 'text' => 'Buy and sell 200+ cryptocurrencies with 20+ flat currencies using bank transfers or your credit/debit card.', 'type' => 'text'],
+                    ['img' => null, 'text' => 'Get Started', 'type' => 'text'],
+                    ['img' => null, 'text' => 'Download App', 'type' => 'text'],
                 ],
                 'component_type_id' => 1,
                 'column_id' => $columnIds[0],
@@ -206,18 +207,18 @@ class SettingSeeder extends Seeder
             ],
             [
                 'contents' => [
-                    ['img' => '', 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
-                    ['img' => '', 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
-                    ['img' => '', 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
-                    ['img' => '', 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['img' => '', 'text' => 'Buy & trade on the', 'type' => 'text'],
+                    ['img' => '', 'text' => 'original crypto exchange.', 'type' => 'text'],
+                    ['img' => '', 'text' => 'Buy now and get 40% extra bonus Minimum pre-sale amount 25 Crypto Coin. We accept BTC crypto-currency', 'type' => 'text'],
+                    ['img' => '', 'text' => 'Buy now', 'type' => 'text'],
                 ],
                 'component_type_id' => 4,
                 'column_id' => $columnIds[2],
             ],
             [
                 'contents' => [
-                    ['img' => null, 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
-                    ['img' => null, 'text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['img' => null, 'text' => 'Trusted Partners Worldwide', 'type' => 'text'],
+                    ['img' => null, 'text' => 'Were partners with countless major organisations around the globe', 'type' => 'text'],
                 ],
                 'component_type_id' => 5,
                 'column_id' => $columnIds[3],
@@ -229,32 +230,32 @@ class SettingSeeder extends Seeder
             ],
             [
                 'contents' => [
-                    ['text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
-                    ['text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
-                    ['text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['text' => 'Introducing the', 'type' => 'text'],
+                    ['text' => 'NEFA', 'type' => 'text'],
+                    ['text' => 'Credit Card', 'type' => 'text'],
                 ],
                 'component_type_id' => 6,
                 'column_id' => $columnIds[5],
             ],
             [
                 'contents' => [
-                    ['text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['text' => 'Subject to cardholder and rewards terms which will be available at application.', 'type' => 'text'],
                 ],
                 'component_type_id' => 8,
                 'column_id' => $columnIds[5],
             ],
             [
                 'contents' => [
-                    ['text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
-                    ['text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
-                    ['text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['text' => 'Up to 3% back on purchases', 'type' => 'text'],
+                    ['text' => 'Earn rewards in bitcoin or any crypto on NEFA', 'type' => 'text'],
+                    ['text' => 'No annual fee', 'type' => 'text'],
                 ],
                 'component_type_id' => 7,
                 'column_id' => $columnIds[5],
             ],
             [
                 'contents' => [
-                    ['text' => 'ipsum quia dolor sit amet', 'type' => 'text'],
+                    ['text' => 'Join the waitlist', 'type' => 'text'],
                 ],
                 'component_type_id' => 10,
                 'column_id' => $columnIds[5],
