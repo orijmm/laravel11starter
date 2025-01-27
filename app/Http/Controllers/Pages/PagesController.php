@@ -16,6 +16,7 @@ use App\Models\Pages\Section;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class PagesController extends Controller
 {
@@ -207,6 +208,12 @@ class PagesController extends Controller
             }
 
             $updateRows = Row::where('section_id', $section->id)->with('columns.components')->get();
+
+            //Borrar medios si no tienen componentes asociados
+            $orphanedMedia = Media::doesntHaveMorph('model', Component::class)->get();
+            $orphanedMedia->each(function ($media) {
+                $media->delete(); 
+            });
 
             return $this->responseUpdateSuccess(['record' => $updateRows]);
         } catch (\Exception $e) {
