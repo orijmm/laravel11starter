@@ -27,8 +27,14 @@
                 <div class="grid grid-cols-1">
                     <FormImg @error="errorImg = true" @success="setImgFile" />
                     <div class="flex flex-row gap-2">
-                        <div class="bg-gray-50 rounded p-1" v-for="(imgI, i) in form.img" :key="`img-${i}`">
-                            <button class="file-input__clear text-gray-300" type="button" @click="onClearImg(i)">
+                        <div class="bg-gray-50 rounded p-1" v-for="(image, i) in form.img" :key="`img-${i}`">
+                            <button class="file-input__clear text-gray-300" type="button" @click="onClearImg(i, 'img')">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <img :src="getImgVisual(image)" class="object-scale-down h-48 w-96" :alt="trans('users.labels.img')" />
+                        </div>
+                        <div class="bg-gray-50 rounded p-1" v-for="(imgI, i) in form.inputImg" :key="`inputImg-${i}`">
+                            <button class="file-input__clear text-gray-300" type="button" @click="onClearImg(i, 'inputImg')">
                                 <i class="fa fa-times"></i>
                             </button>
                             <img :src="getImgVisual(imgI)" class="object-scale-down h-48 w-96" :alt="trans('users.labels.img')" />
@@ -77,10 +83,9 @@ export default defineComponent({
             component_type_id: undefined,
             number_content: undefined,
             contents: undefined,
-            contentsCopy: undefined,
             type: 'text',
             img: [],
-            urlInput: []
+            inputImg: []
         });
 
         let errorImg = ref(false);
@@ -134,7 +139,6 @@ export default defineComponent({
         onBeforeMount(() => {
             service.find(route.params.id).then((response) => {
                 fillObject(form, response.data.model);
-                form.contentsCopy = response.data.model.contents
                 //Agregar variables a link de regresar
                 const actionNode = page.actions.find(action => action.id === 'back');
                 if (actionNode) {
@@ -158,6 +162,7 @@ export default defineComponent({
         }
 
         function onSubmit() {
+            console.log(form.img);
             service.handleUpdate('edit-component', route.params.id, reduceProperties(form, [], 'id'), null, true);
             return false;
         }
@@ -181,17 +186,16 @@ export default defineComponent({
 
         //Asignar el valor del archivo 
         function setImgFile(data) {
-            form.img.push(data);
+            form.inputImg.push(data);
         }
 
         function getImgVisual(img) {
             return typeof img == 'string' ? img : URL.createObjectURL(img);
         }
 
-        function onClearImg(i) {
-            console.log(i, 'testt');
-            form.urlInput.splice(i, 1);
-            form.img.splice(i, 1);
+        //Borra la imagen
+        function onClearImg(i, type) {
+            form[type].splice(i, 1);
         }
 
         return {

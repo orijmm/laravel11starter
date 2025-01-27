@@ -33,6 +33,13 @@ class Component extends Model implements HasMedia
         'img'
     ];
 
+    protected static function booted()
+    {
+        static::deleting(function ($model) {
+            $model->clearMediaCollection(); // Elimina los medios asociados
+        });
+    }
+
     /*
     * Get image's component
     */

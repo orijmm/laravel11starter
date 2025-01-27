@@ -37,28 +37,26 @@ class MediaService
      * @return Media
      *
      */
-    public function replaceMany(array $files, HasMedia $model, string $collection)
+    public function replaceMany(HasMedia $model, string $collection, array $urlImg, $files = [])
     {
         try {
-            $t = [];
-            $fileNames = Arr::map($files, function ($file) {
-                return is_string($file) ? basename($file) : null;
-            });
-            // Filtrar los valores nulos (por si hay elementos que no sean cadenas)
-            $fileNames = array_filter($fileNames);
-    
-            // Obtener los medios no existentes
-            $nonExistingMedia = $model->getMedia($collection)->filter(function ($media) use ($fileNames) {
-                return !in_array($media->file_name, $fileNames); // Invertimos la lógica con `!`
-            })->pluck('id')->toArray();
-            
-            // Eliminar las imágenes que no están en el array de preservación
-            $getMedia = $model->getMedia($collection);
-    
-            foreach ($getMedia as $value) {
-                if (in_array($value->id, $nonExistingMedia)) {
-                    $t[] = $value->id;
-                    $value->delete();
+            if(count($urlImg)){
+                $fileNames = Arr::map($urlImg, function ($img) {
+                    return basename($img);
+                });
+        
+                // Obtener los medios no existentes
+                $nonExistingMedia = $model->getMedia($collection)->filter(function ($media) use ($fileNames) {
+                    return !in_array($media->file_name, $fileNames); // Invertimos la lógica con `!`
+                })->pluck('id')->toArray();
+                
+                // Eliminar las imágenes que no están en el array de preservación
+                $getMedia = $model->getMedia($collection);
+        
+                foreach ($getMedia as $value) {
+                    if (in_array($value->id, $nonExistingMedia)) {
+                        $value->delete();
+                    }
                 }
             }
     
@@ -69,7 +67,6 @@ class MediaService
                 }
             }
 
-            return $t;
         } catch (\Exception $e) {
             return $e->getMessage();
         }

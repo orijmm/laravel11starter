@@ -86,21 +86,21 @@ class ComponentController extends Controller
     {
         try {
             $this->authorize('edit_page');
-            $checkImg = null;
             $data = $request->validated();
             $data['component_type_id'] = $data['component_type_id']['id'];
             if (!isset($request->contents)) {
                 $data['contents'] = [];
             }
 
-            if (!empty($request->img)) {
-                $checkImg = $this->mediaService->replaceMany($request->img, $component, 'componentimg');
+            if (!empty($request->inputImg)) {
+                $imgArray = $request->img ?? [];
+                $this->mediaService->replaceMany($component, 'componentimg', $imgArray, $request->inputImg);
             }
 
             $newcomponent = $component->update($data);
 
             if ($newcomponent) {
-                return $this->responseUpdateSuccess(['record' => $component, 'test' => $checkImg]);
+                return $this->responseUpdateSuccess(['record' => $component]);
             } else {
                 return $this->responseUpdateFail();
             }
