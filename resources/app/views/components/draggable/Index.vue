@@ -110,7 +110,7 @@ export default defineComponent({
             };
             for (let i = 1; i <= columnsSetter.numberColumns; i++) {
                 props.sectionList.rows[columnsSetter.rowIndex].columns.push({
-                    id: '0000' + i,
+                    id: 'xxxx' + i,
                     order: props.sectionList.rows[columnsSetter.rowIndex].columns.length + 1,
                     row_id: props.sectionList.rows[columnsSetter.rowIndex].id,
                     width: cols[columnsSetter.numberColumns],

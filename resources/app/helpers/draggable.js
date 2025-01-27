@@ -1,5 +1,5 @@
 export const toggleAddItems = function (obj, parent,parentid) {
-    obj.push({ id: `0000${obj.length + 1}`, order: obj.length + 1, [parent]:parentid, columns: [], width: 12 });
+    obj.push({ id: `xxxx${obj.length + 1}`, order: obj.length + 1, [parent]:parentid, columns: [], width: 12 });
     updateOrder(obj);
 }
 

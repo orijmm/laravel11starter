@@ -15,7 +15,7 @@
                         <div v-if="showColumnBlock[element.id] ?? false" class="text-xs text-red-400 m-2 break-normal">
                             {{ trans('global.phrases.hasto_savecolumn_first') }}</div>
                         <Button type="button" @click="checkColumnSaved(element.id)" theme="light-grey"
-                            :to="String(element.id).startsWith('0000') ? null : `/panel/pages/page/${sectionList.pageid}/section/${sectionList.sectionid}/column/${element.id}`"
+                            :to="String(element.id).startsWith('xxxx') ? null : `/panel/pages/page/${sectionList.pageid}/section/${sectionList.sectionid}/column/${element.id}`"
                             class="cursor-pointer" :label="trans('global.buttons.store_column')" />
                     </div>
                 </div>
@@ -80,7 +80,7 @@ export default defineComponent({
         }
 
         function checkColumnSaved(columnId) {
-            if (String(columnId).startsWith('0000')) {
+            if (String(columnId).startsWith('xxxx')) {
                 showColumnBlock.value = { [columnId]: true };
             }
         }
