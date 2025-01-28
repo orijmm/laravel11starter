@@ -1,6 +1,5 @@
 <template>
-    <p class="paragraph">Subject to cardholder and rewards terms which will be available at application.
-    </p>
+    <p class="paragraph">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</p>
 </template>
 <script>
 
