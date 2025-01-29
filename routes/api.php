@@ -70,7 +70,10 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
      */
     Route::prefix('pages')->group(function () {
         Route::apiResource('templates', TemplateController::class);
+        #Menu
         Route::apiResource('menus', MenuController::class)->except('show');
+        #Menu Items
+        Route::get('menus/{menu}/showitem/{menuitem}', [MenuController::class, 'showItem'])->name('menus.showitem');
         Route::post('menus/{menu}/storeitem', [MenuController::class, 'storeItem'])->name('menu.store.item');
         Route::put('menus/{menuitem}/updateitem', [MenuController::class, 'updateItem'])->name('menu.update.item');
         Route::delete('menus/{menuitem}/deleteitem', [MenuController::class, 'deleteItem'])->name('menu.delete.item');

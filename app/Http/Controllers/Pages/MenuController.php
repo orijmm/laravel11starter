@@ -90,6 +90,12 @@ class MenuController extends Controller
     }
 
     ############ ITEMS ##############
+    public function showItem(Menu $menu, MenuItem $menuitem)
+    {
+        $itemsParents = $menu->items ?? [];
+        return $this->responseDataSuccess(['model' => $menuitem, 'parents' => $itemsParents]);
+    }
+
     public function storeItem(Request $request, Menu $menu)
     {
         $data = $request->validate([

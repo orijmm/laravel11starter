@@ -9,7 +9,7 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 
 const app = createApp(App)
-    .use(AOS.init());
+    .use(AOS.init({ disable: 'phone' }));
 
 app.use(createPinia());
 

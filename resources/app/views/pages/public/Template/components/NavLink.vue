@@ -1,11 +1,13 @@
 <template>
   <div v-for="menu in dataLink">
+    <!-- Si no tiene parent_id que se muestre -->
     <li class="w-full" v-if="!menu.parent_id && menu.children.length == 0">
       <a class="md:px-4 py-2 text-sm bg-transparent rounded-lg text-[#666666] hover:text-gray-900 focus:outline-none focus:shadow-outline"
         :href="menu.url">
         {{ menu.label }}
       </a>
     </li>
+        <!-- Si tiene parent_id que se muestre -->
     <li v-if="menu.children.length > 0" class="relative group">
       <button
         class="md:px-4 py-2 text-sm bg-transparent rounded-lg text-[#666666] hover:text-gray-900 focus:outline-none focus:shadow-outline flex items-center"

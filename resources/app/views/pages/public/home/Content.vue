@@ -13,106 +13,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Advanced trading tools section -->
-        <!-- <section class="bg-trading-tools relative max-w-full sm:mx-4 my-20 py-16 shadow rounded-2xl overflow-hidden">
-            <div class="relative max-w-screen-xl px-4 sm:px-2 mx-auto grid grid-cols-12 gap-x-6">
-                <LandingTradingToolImage class="sm:hidden" />
-                <div data-aos="fade-right" class="col-span-12 lg:col-span-6 space-y-8 sm:space-y-6 px-4 sm:px-6 mt-8">
-                    <h2 class="text-4xl font-semibold">Advanced Trading <span class="text-header-gradient">Tools</span>
-                    </h2>
-                    <div class="space-y-2">
-                        <h4 class="text-lg font-medium">Professional Access, Non-stop Availability</h4>
-                        <p class="paragraph text-sm xl:text-base">
-                            We provide premium access to crypto trading for both individuals and institutions through
-                            high liquidity,
-                            reliable order execution and constant uptime.
-                        </p>
-                    </div>
-                    <div class="space-y-2">
-                        <h4 class="text-lg font-medium">A Range of Powerful Apis</h4>
-                        <p class="paragraph text-sm xl:text-base">
-                            Set up your own trading interface or deploy your algorithmic strategy with our
-                            high-performance FIX and
-                            HTTP APIs. Connect to our WebSocket for real-time data streaming.
-                        </p>
-                    </div>
-                    <div class="space-y-2">
-                        <h4 class="text-lg font-medium">Customer Support</h4>
-                        <p class="paragraph text-sm xl:text-base">
-                            Premium 24/7 support available to all customers worldwide by phone or email. Dedicated
-                            account managers
-                            for partners.
-                        </p>
-                    </div>
-                    <div class="flex flex-col sm:flex-row">
-                        <BaseButton class="px-10 py-4 bg-inherit text-gradient border border-[#4A8FF6] text-base">
-                            Get Started
-                        </BaseButton>
-                        <BaseButton class="bg-inherit text-[#4A8FF6] px-10 py-4 text-center underline rounded-full">
-                            Learn More
-                        </BaseButton>
-                    </div>
-                </div>
-                <LandingTradingToolImage data-aos="fade-left" class="hidden sm:block" />
-            </div>
-        </section> -->
-
-        <!-- Industry-leading security section -->
-        <!-- <section class="w-full my-24">
-            <div class="relative max-w-screen-xl px-8 mx-auto grid grid-cols-12 gap-x-6">
-                <div data-aos="fade-right" class="col-span-12 lg:col-span-6">
-                    <div class="w-full">
-                        <img src="@/views/pages/public/template/assets/img/industry-leading-security.webp"
-                            class="w-full" alt="" />
-                    </div>
-                </div>
-                <div data-aos="fade-left" class="col-span-12 lg:col-span-5 space-y-8 sm:space-y-6 mt-8 xl:px-8">
-                    <h2 class="text-4xl font-semibold">Industry-leading security from day one</h2>
-                    <ul class="space-y-8 sm:space-y-4">
-                        <LandingListItem title="Safety, security and compliance">
-                            <p class="text-sm text-gray-700 leading-relaxed">
-                                NEFA is a licensed New York trust company that undergoes regular bank exams and is
-                                subject to the
-                                cybersecurity audits conducted by the New York Department of Financial Services.
-                                <span class="underline">Learn more</span> about our commitment to security.
-                            </p>
-                        </LandingListItem>
-                        <LandingListItem title="Hardware security keys">
-                            <p class="text-sm text-gray-700 leading-relaxed">
-                                With NEFA you can secure your account with a hardware security key via WebAuthn.
-                            </p>
-                        </LandingListItem>
-                        <LandingListItem title="SOC Certifications">
-                            <p class="text-sm text-gray-700 leading-relaxed">
-                                NEFA is <span class="underline">SOC 1 Type 2</span> and
-                                <span class="underline">SOC 2 Type 2</span> compliant. We are the world’s first
-                                cryptocurrency exchange
-                                and custodian to complete these exams.
-                            </p>
-                        </LandingListItem>
-                    </ul>
-                </div>
-            </div>
-        </section> -->
-
-        <!-- FAQ section -->
-        <!-- <section class="w-full my-24">
-            <BaseSection>
-                <div data-aos="fade-right" data-aos-delay="150" class="col-span-12 lg:col-span-6">
-                    <div class="w-full">
-                        <img src="@/views/pages/public/template/assets/img/faq.webp" class="w-full" alt="" />
-                    </div>
-                </div>
-                <div data-aos="fade-left" data-aos-delay="150" class="col-span-12 lg:col-span-6 px-4 sm:px-6 mt-8">
-                    <span class="text-base text-gradient font-semibold uppercase mb-4 sm:mb-2">Support</span>
-                    <h2 class="text-3xl sm:text-4xl font-semibold mb-10 sm:mb-6">Frequently asked questions</h2>
-                    <ul class="shadow-box">
-                        <BaseAccordion v-for="(accordion, index) in accordions" :key="index" :accordion="accordion" />
-                    </ul>
-                </div>
-            </BaseSection>
-        </section> -->
         <div class="w-full my-10 flex justify-center">
             <a v-smooth-scroll data-aos="flip-down" data-aos-delay="150" href="#navbar"
                 class="px-6 py-3 flex items-center space-x-2 bg-[#FAFAFA] hover:bg-gray-100 hover:shadow-md border border-[#DDDDDD] rounded-md text-gray-700">
@@ -165,30 +65,6 @@ export default {
         // Variables reactivas
         const selected = ref(0);
 
-        const accordions = reactive([
-            {
-                title: 'Why should I choose NEFA?',
-                description:
-                    "We're industry pioneers, having been in the cryptocurrency industry since 2016. We've facilitated more than 21 billion USD worth of transactions on our exchange for customers in over 40 countries. Today, we're trusted by over 8 million customers around the world and have received praise for our easy-to-use app, secure wallet, and range of features.",
-            },
-            {
-                title: 'How secure is NEFA?',
-                description:
-                    "We're industry pioneers, having been in the cryptocurrency industry since 2016. We've facilitated more than 21 billion USD worth of transactions on our exchange for customers in over 40 countries. Today, we're trusted by over million customers around the world and have received praise for our easy-to-use app, secure wallet, and range of features.",
-            },
-            {
-                title: 'Do I have to buy a whole Bitcoin?',
-                description:
-                    "We're industry pioneers, having been in the cryptocurrency industry since 2016. We've facilitated more than 21 billion USD worth of transactions on our exchange for customers in over 40 countries. Today, we're trusted by over million customers around the world and have received praise for our easy-to-use app, secure wallet, and range of features.",
-            },
-            {
-                title: 'How do I actually buy Bitcoin?',
-                description:
-                    "We're industry pioneers, having been in the cryptocurrency industry since 2016. We've facilitated more than 21 billion USD worth of transactions on our exchange for customers in over 40 countries. Today, we're trusted by over million customers around the world and have received praise for our easy-to-use app, secure wallet, and range of features.",
-            },
-        ]);
-
-
         function checkAnimate(filename) {
             return filename.startsWith('general/');
         }
@@ -196,7 +72,6 @@ export default {
         // Retornar variables y objetos
         return {
             selected,
-            accordions,
             trans,
             checkAnimate
         };
