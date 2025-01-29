@@ -97,7 +97,7 @@
         </section> -->
 
         <!-- FAQ section -->
-        <section class="w-full my-24">
+        <!-- <section class="w-full my-24">
             <BaseSection>
                 <div data-aos="fade-right" data-aos-delay="150" class="col-span-12 lg:col-span-6">
                     <div class="w-full">
@@ -112,7 +112,7 @@
                     </ul>
                 </div>
             </BaseSection>
-        </section>
+        </section> -->
         <div class="w-full my-10 flex justify-center">
             <a v-smooth-scroll data-aos="flip-down" data-aos-delay="150" href="#navbar"
                 class="px-6 py-3 flex items-center space-x-2 bg-[#FAFAFA] hover:bg-gray-100 hover:shadow-md border border-[#DDDDDD] rounded-md text-gray-700">
@@ -140,6 +140,7 @@ import Grafics from '@/views/pages/public/components/customs/Grafics';
 import Converter from '@/views/pages/public/components/customs/Converter';
 import Partners from '@/views/pages/public/components/customs/Partners';
 import ThreeColumns from '@/views/pages/public/components/customs/ThreeColumns';
+import Accordion from '@/views/pages/public/components/general/Accordion';
 
 import TitleOne from '@/views/pages/public/components/general/titleOne';
 import ListOne from '@/views/pages/public/components/general/ListOne';
@@ -152,7 +153,7 @@ export default {
     name: "IndexSite",
     components: {
         BaseSection, LandingPartnerImage, LandingStep, LandingTradingToolImage, BaseButton, LandingCryptoStatistic, LandingListItem, BaseAccordion,
-        Header, Grafics, Converter, Partners, TitleOne, ListOne, SimpleParagraph, FullImage, Button, CustomParagraph, ThreeColumns
+        Header, Grafics, Converter, Partners, TitleOne, ListOne, SimpleParagraph, FullImage, Button, CustomParagraph, ThreeColumns, Accordion
     },
     props: {
         page: {
