@@ -97,7 +97,7 @@ class SettingSeeder extends Seeder
                 'name' => 'Header', 'description' => 'description', 'filename' => 'customs/Header'
             ],
             [
-                'name' => 'Accordion', 'description' => 'Tienda de test', 'filename' => 'customs/Accordion',
+                'name' => 'Accordion', 'description' => 'Acordeon', 'filename' => 'general/Accordion',
             ],
             [
                 'name' => 'Grafics', 'description' => 'Seccion de gracifos y estadisticas', 'filename' => 'customs/Grafics',
@@ -122,6 +122,12 @@ class SettingSeeder extends Seeder
             ],
             [
                 'name' => 'Button', 'description' => 'boton simple', 'filename' => 'general/Button',
+            ],
+            [
+                'name' => 'CustomParagraph', 'description' => 'imagens full', 'filename' => 'general/CustomParagraph',
+            ],
+            [
+                'name' => 'ThreeColumns', 'description' => 'boton simple', 'filename' => 'customs/ThreeColumns',
             ]
         ];
 
@@ -137,6 +143,9 @@ class SettingSeeder extends Seeder
             ['name' => 'converter', 'order' => 3, 'classes' => 'w-full my-24', 'page_id' => $pageHome->id],
             ['name' => 'partners', 'order' => 4, 'classes' => 'bg-partner relative max-w-full sm:mx-6 my-24 shadow sm:rounded-2xl overflow-hidden', 'page_id' => $pageHome->id],
             ['name' => 'nesa', 'order' => 5, 'classes' => 'w-full my-36', 'page_id' => $pageHome->id],
+            ['name' => 'avancedtrading', 'order' => 6, 'classes' => 'bg-trading-tools relative max-w-full sm:mx-4 my-20 py-16 shadow rounded-2xl overflow-hidden', 'page_id' => $pageHome->id],
+            ['name' => 'threcolumns', 'order' => 7, 'classes' => 'bg-trading-tools relative max-w-full sm:mx-4 xl:mx-10 my-24 shadow sm:rounded-2xl overflow-hidden', 'page_id' => $pageHome->id],
+            ['name' => 'faq', 'order' => 8, 'classes' => 'w-full my-24', 'page_id' => $pageHome->id],
         ];
 
         $sectionIds = [];
@@ -152,6 +161,9 @@ class SettingSeeder extends Seeder
             ['order' => 1, 'section_id' => $sectionIds['converter'], 'classes' => null],
             ['order' => 1, 'section_id' => $sectionIds['partners'], 'classes' => null],
             ['order' => 1, 'section_id' => $sectionIds['nesa'], 'classes' => 'relative max-w-screen-xl px-4 sm:px-8 mx-auto gap-x-6'],
+            ['order' => 1, 'section_id' => $sectionIds['avancedtrading'], 'classes' => 'relative max-w-screen-xl px-4 sm:px-2 mx-auto grid grid-cols-12 gap-x-6'],
+            ['order' => 1, 'section_id' => $sectionIds['threcolumns'], 'classes' => null],
+            ['order' => 1, 'section_id' => $sectionIds['faq'], 'classes' => 'relative max-w-screen-xl px-4 sm:px-8 mx-auto grid grid-cols-12 gap-x-6 overflow-hidden'],
         ];
 
         $rowIds = [];
@@ -172,6 +184,12 @@ class SettingSeeder extends Seeder
             ['width' => 12, 'order' => 1, 'row_id' => $rowIds[3], 'classes' => null],
             ['width' => 6, 'order' => 1, 'row_id' => $rowIds[4], 'classes' => null],
             ['width' => 6, 'order' => 2, 'row_id' => $rowIds[4], 'classes' => 'space-y-6 px-4 sm:px-6 mt-20'],
+
+            ['width' => 6, 'order' => 1, 'row_id' => $rowIds[5], 'classes' => 'col-span-12 lg:col-span-6 space-y-8 sm:space-y-6 px-4 sm:px-6 mt-8'],
+            ['width' => 6, 'order' => 2, 'row_id' => $rowIds[5], 'classes' => 'col-span-12 lg:col-span-6'],
+            ['width' => 12, 'order' => 1, 'row_id' => $rowIds[6], 'classes' => null],
+            ['width' => 6, 'order' => 1, 'row_id' => $rowIds[7], 'classes' => 'col-span-12 lg:col-span-6'],
+            ['width' => 6, 'order' => 2, 'row_id' => $rowIds[7], 'classes' => 'col-span-12 lg:col-span-6 px-4 sm:px-6 mt-8'],
         ];
 
         $columnIds = [];
@@ -259,6 +277,77 @@ class SettingSeeder extends Seeder
                 ],
                 'component_type_id' => 10,
                 'column_id' => $columnIds[5],
+            ],
+
+            [
+                'contents' => [],
+                'component_type_id' => 9,
+                'column_id' => $columnIds[7],
+            ],
+            [
+                'contents' => [
+                    ['text' => 'Advanced Trading', 'type' => 'text'],
+                    ['text' => 'Tools', 'type' => 'text'],
+                ],
+                'component_type_id' => 6,
+                'column_id' => $columnIds[6],
+            ],
+            [
+                'contents' => [
+                    ['text' => 'Professional Access, Non-stop Availability', 'type' => 'text'],
+                    ['text' => 'We provide premium access to crypto trading for both individuals and institutions through high liquidity, reliable order execution and constant uptime.', 'type' => 'text'],
+                ],
+                'component_type_id' => 11,
+                'column_id' => $columnIds[6],
+            ],
+            [
+                'contents' => [
+                    ['text' => 'A Range of Powerful Apis', 'type' => 'text'],
+                ['text' => 'Set up your own trading interface or deploy your algorithmic strategy with our high-performance FIX and HTTP APIs. Connect to our WebSocket for real-time data streaming.', 'type' => 'text'],
+                ],
+                'component_type_id' => 11,
+                'column_id' => $columnIds[6],
+            ],
+            [
+                'contents' => [
+                    ['text' => 'Customer Support', 'type' => 'text'],
+                    ['text' => 'Premium 24/7 support available to all customers worldwide by phone or email. Dedicated account managers for partners.', 'type' => 'text'],
+                ],
+                'component_type_id' => 11,
+                'column_id' => $columnIds[6],
+            ],
+            [
+                'contents' => [
+                    ['text' => 'Get started', 'type' => 'text'],
+                ],
+                'component_type_id' => 10,
+                'column_id' => $columnIds[6],
+            ],
+            [
+                'contents' => [
+                    ['text' => 'Get started in just a few minutes', 'type' => 'text'],
+                ],
+                'component_type_id' => 12,
+                'column_id' => $columnIds[8],
+            ],
+            [
+                'contents' => [],
+                'component_type_id' => 9,
+                'column_id' => $columnIds[9],
+            ],
+            [
+                'contents' => [
+                    [ "text" => "Support", "type" => "text" ],
+                    [ "text" => "Frequently asked questions", "type" => "text" ],
+                    [ "text" => "Why should I choose NEFA?", "type" => "text" ],
+                    [ "text" => "We're industry pioneers, having been in the cryptocurrency industry since 2016. We've facilitated more than 21 billion USD worth of transactions on our exchange for customers in over 40 countries. Today, we're trusted by over 8 million customers around the world and have received praise for our easy-to-use app, secure wallet, and range of features.", "type" => "text" ],
+                    [ "text" => "How secure is NEFA?", "type" => "text" ],
+                    [ "text" => "We're industry pioneers, having been in the cryptocurrency industry since 2016. We've facilitated more than 21 billion USD worth of transactions on our exchange for customers in over 40 countries. Today, we're trusted by over million customers around the world and have received praise for our easy-to-use app, secure wallet, and range of features.", "type" => "text" ],
+                    [ "text" => "Do I have to buy a whole Bitcoin?", "type" => "text" ],
+                    [ "text" => "We're industry pioneers, having been in the cryptocurrency industry since 2016.", "type" => "text" ]
+                ],
+                'component_type_id' => 2,
+                'column_id' => $columnIds[10],
             ],
         ];
 
