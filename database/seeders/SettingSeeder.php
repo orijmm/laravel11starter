@@ -141,10 +141,10 @@ class SettingSeeder extends Seeder
             ['name' => 'header', 'order' => 1, 'classes' => 'w-full pb-24', 'page_id' => $pageHome->id],
             ['name' => 'graficos', 'order' => 2, 'classes' => 'w-full', 'page_id' => $pageHome->id],
             ['name' => 'converter', 'order' => 3, 'classes' => 'w-full my-24', 'page_id' => $pageHome->id],
-            ['name' => 'partners', 'order' => 4, 'classes' => 'bg-partner relative max-w-full sm:mx-6 my-24 shadow sm:rounded-2xl overflow-hidden', 'page_id' => $pageHome->id],
-            ['name' => 'nesa', 'order' => 5, 'classes' => 'w-full my-36', 'page_id' => $pageHome->id],
-            ['name' => 'avancedtrading', 'order' => 6, 'classes' => 'bg-trading-tools relative max-w-full sm:mx-4 my-20 py-16 shadow rounded-2xl overflow-hidden', 'page_id' => $pageHome->id],
-            ['name' => 'threcolumns', 'order' => 7, 'classes' => 'bg-trading-tools relative max-w-full sm:mx-4 xl:mx-10 my-24 shadow sm:rounded-2xl overflow-hidden', 'page_id' => $pageHome->id],
+            ['name' => 'partners', 'order' => 4, 'classes' => 'bg-partner relative max-w-full sm:mx-6 my-24 shadow sm:rounded-2xl overflow-visible', 'page_id' => $pageHome->id],
+            ['name' => 'nesa', 'order' => 5, 'classes' => 'w-full my-36 overflow-visible', 'page_id' => $pageHome->id],
+            ['name' => 'avancedtrading', 'order' => 6, 'classes' => 'bg-trading-tools relative max-w-full sm:mx-4 my-20 py-16 shadow rounded-2xl overflow-visible', 'page_id' => $pageHome->id],
+            ['name' => 'threcolumns', 'order' => 7, 'classes' => 'bg-trading-tools relative max-w-full sm:mx-4 xl:mx-10 my-24 shadow sm:rounded-2xl overflow-visible', 'page_id' => $pageHome->id],
             ['name' => 'faq', 'order' => 8, 'classes' => 'w-full my-24', 'page_id' => $pageHome->id],
         ];
 
