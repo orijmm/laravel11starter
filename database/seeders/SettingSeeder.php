@@ -160,10 +160,10 @@ class SettingSeeder extends Seeder
             ['order' => 1, 'section_id' => $sectionIds['graficos'], 'classes' => null],
             ['order' => 1, 'section_id' => $sectionIds['converter'], 'classes' => null],
             ['order' => 1, 'section_id' => $sectionIds['partners'], 'classes' => null],
-            ['order' => 1, 'section_id' => $sectionIds['nesa'], 'classes' => 'relative max-w-screen-xl px-4 sm:px-8 mx-auto gap-x-6'],
+            ['order' => 1, 'section_id' => $sectionIds['nesa'], 'classes' => 'relative max-w-screen-xl px-4 sm:px-8 mx-auto gap-x-6 py-8'],
             ['order' => 1, 'section_id' => $sectionIds['avancedtrading'], 'classes' => 'relative max-w-screen-xl px-4 sm:px-2 mx-auto grid grid-cols-12 gap-x-6'],
             ['order' => 1, 'section_id' => $sectionIds['threcolumns'], 'classes' => null],
-            ['order' => 1, 'section_id' => $sectionIds['faq'], 'classes' => 'relative max-w-screen-xl px-4 sm:px-8 mx-auto grid grid-cols-12 gap-x-6 overflow-hidden'],
+            ['order' => 1, 'section_id' => $sectionIds['faq'], 'classes' => 'relative max-w-screen-xl px-4 sm:px-8 mx-auto grid grid-cols-12 gap-x-6 py-8'],
         ];
 
         $rowIds = [];

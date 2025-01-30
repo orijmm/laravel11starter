@@ -46,9 +46,9 @@ export default {
 
     //metodos
     function fetchPage() {
-      //Menutop ID
+      //Menutop ID TODO, buscar por name (menu-top)
       let menutop = 2;
-      //TODO colocar pagina desde base de datos por defec
+      //TODO colocar pagina desde base de datos por defecto. Página home desde DB
       let page_id = typeof route.params.id != 'undefined' ? route.params.id : 1;
 
       service
@@ -78,7 +78,7 @@ export default {
       fetchPage();
     });
 
-    //obtener config desde el backend
+    //obtener config desde el backend TODO
 
     return {
       menus,
