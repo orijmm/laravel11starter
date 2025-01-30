@@ -43,6 +43,7 @@ import { default as PageComponentTypeEdit } from "@/views/pages/private/website/
 
 /* Web Site pages */
 import { default as PageIndexSite } from "@/views/pages/public/home/Index";
+import { default as PagesSite } from "@/views/pages/public/home/PagesSite";
 
 import abilities from "@/stub/abilities";
 
@@ -57,7 +58,7 @@ const routes = [
         name: "webpages",
         path: "/page/:id",
         meta: { requiresAuth: false },
-        component: PageIndexSite,
+        component: PagesSite,
     },
     {
         name: "panel",

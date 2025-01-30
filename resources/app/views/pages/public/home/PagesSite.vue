@@ -32,7 +32,7 @@ export default {
     const service = new ModelService;
     const alertStore = useAlertStore();
     const route = useRoute();
-    const currentRoute = route.path;
+    //const currentRoute = route.path;
 
 
     // Variables reactivas
@@ -46,10 +46,10 @@ export default {
 
     //metodos
     function fetchPage() {
-      //Menutop ID
+      //Menutop ID TODO
       let menutop = 2;
-      //TODO colocar pagina desde base de datos por defec
-      let page_id = typeof route.params.id != 'undefined' ? route.params.id : 1;
+
+      let page_id = route.params.id;
 
       service
         .find(menutop, 'menus')

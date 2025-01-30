@@ -162,7 +162,6 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            console.log(form.img);
             service.handleUpdate('edit-component', route.params.id, reduceProperties(form, [], 'id'), null, true);
             return false;
         }

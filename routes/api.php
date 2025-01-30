@@ -104,7 +104,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
 ### Website public routes ####
 Route::get('menus/{menu}', [MenuController::class, 'show'])->name('menus.show');
 Route::get('page/{page}', [PagesController::class, 'show'])->name('page.show');
-Route::post('page/showpage', [PagesController::class, 'showPageItem'])->name('page.item.show');
+Route::get('page/showpage/{page}', [PagesController::class, 'showPageItem'])->name('page.item.show');
 
 ## Ubicaciones
 Route::get('languages', function (Request $request) {

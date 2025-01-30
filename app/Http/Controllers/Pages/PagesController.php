@@ -99,12 +99,10 @@ class PagesController extends Controller
     /**
      * Display page.
      */
-    public function showPageItem(Request $request)
+    public function showPageItem(Page $page)
     {
-        $menuitem = MenuItem::where('url', $request->url)->first();
-        if (!$menuitem)
-            return $this->responseFail(trans('frontend.global.phrases.no_menuitempage'));
-        $page = Page::where('id', $menuitem->page_id)->with('sections.rows.columns.components.componenttype')->first();
+        
+        $page = $page->load('sections.rows.columns.components.componenttype');
         return $this->responseDataSuccess(['page' => $page], trans('frontend.global.phrases.record_show'));
     }
 
