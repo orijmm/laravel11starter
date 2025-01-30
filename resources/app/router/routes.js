@@ -54,6 +54,12 @@ const routes = [
         component: PageIndexSite,
     },
     {
+        name: "webpages",
+        path: "/page/:id",
+        meta: { requiresAuth: false },
+        component: PageIndexSite,
+    },
+    {
         name: "panel",
         path: "/panel",
         children: [
@@ -220,12 +226,6 @@ const routes = [
                         meta: { requiresAuth: true },
                         component: PageComponent,
                     },
-                    // {
-                    //     name: "components.create",
-                    //     path: "components/create",
-                    //     meta: { requiresAuth: true },
-                    //     component: PageComponentCreate,
-                    // },
                     {
                         name: "components.edit",
                         path: "components/:id",

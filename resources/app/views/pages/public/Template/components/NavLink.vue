@@ -2,12 +2,17 @@
   <div v-for="menu in dataLink">
     <!-- Si no tiene parent_id que se muestre -->
     <li class="w-full" v-if="!menu.parent_id && menu.children.length == 0">
-      <a v-smooth-scroll class="md:px-4 py-2 text-sm bg-transparent rounded-lg text-[#666666] hover:text-gray-900 focus:outline-none focus:shadow-outline"
+      <router-link v-if="menu.page_id" :to="generateUrl(menu)"
+        class="md:px-4 py-2 text-sm bg-transparent rounded-lg text-[#666666] hover:text-gray-900 focus:outline-none focus:shadow-outline">
+        {{ menu.label }}
+      </router-link>
+      <a v-else v-smooth-scroll
+        class="md:px-4 py-2 text-sm bg-transparent rounded-lg text-[#666666] hover:text-gray-900 focus:outline-none focus:shadow-outline"
         :href="menu.url">
         {{ menu.label }}
       </a>
     </li>
-        <!-- Si tiene parent_id que se muestre -->
+    <!-- Si tiene parent_id que se muestre -->
     <li v-if="menu.children.length > 0" class="relative group">
       <button
         class="md:px-4 py-2 text-sm bg-transparent rounded-lg text-[#666666] hover:text-gray-900 focus:outline-none focus:shadow-outline flex items-center"
@@ -29,6 +34,7 @@
 </template>
 <script>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
   props: {
@@ -41,16 +47,23 @@ export default {
   setup() {
     // Variables reactivas
     const dropdownNavbar = ref(false);
-
+    const router = useRouter();
     const dropdownToggler = () => {
       dropdownNavbar.value = !dropdownNavbar.value;
     }
 
     //obtener config desde el backend
+    const generateUrl = (menu) => {
+      if (menu.page_id) {
+        return router.resolve({ name: "webpages", params: { id: menu.page_id } }).href;
+      }
+      return menu.url || "#";
+    };
 
     return {
       dropdownNavbar,
-      dropdownToggler
+      dropdownToggler,
+      generateUrl
     }
   }
 }
