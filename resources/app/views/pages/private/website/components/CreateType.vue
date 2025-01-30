@@ -2,7 +2,7 @@
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction">
         <Panel otherClass="overflow-visible">
             <Form id="create-componenttype" @submit.prevent="onSubmit">
-                <Dropdown @change="tesg" class="mb-4" :server="'pages/component/type/filename'" :server-per-page="15"
+                <Dropdown class="mb-4" :server="'pages/component/type/filename'" :server-per-page="15"
                     :required="true" name="filename" v-model="form.filename" :label="trans('users.labels.filename')"
                     :serverSearchMinCharacters="0" />
                 <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name"
@@ -90,10 +90,6 @@ export default defineComponent({
             return false;
         }
 
-        function tesg() {
-            console.log('jjj');
-        }
-
         watch(
             () => form.filename,
             (filename) => {
@@ -110,7 +106,6 @@ export default defineComponent({
             page,
             onSubmit,
             onAction,
-            tesg
         }
     }
 })

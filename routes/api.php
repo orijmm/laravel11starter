@@ -75,7 +75,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
         #Menu Items
         Route::get('menus/{menu}/showitem/{menuitem}', [MenuController::class, 'showItem'])->name('menus.showitem');
         Route::post('menus/{menu}/storeitem', [MenuController::class, 'storeItem'])->name('menu.store.item');
-        Route::put('menus/{menuitem}/updateitem', [MenuController::class, 'updateItem'])->name('menu.update.item');
+        Route::patch('menus/{menu}/updateitem/{menuitem}', [MenuController::class, 'updateItem'])->name('menu.update.item');
         Route::delete('menus/{menuitem}/deleteitem', [MenuController::class, 'deleteItem'])->name('menu.delete.item');
         #components and type of components
         Route::apiResource('componenttype', ComponentTypeController::class);
@@ -85,6 +85,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
         ##PAGES
         Route::apiResource('page', PagesController::class)->except('show');
         #sections
+        Route::get('page/sections', [PagesController::class, 'listSection'])->name('page.list.sections');
         Route::post('page/{page}/storesection', [PagesController::class, 'storeSection'])->name('page.store.section');
         Route::get('page/{page}/section/{section}', [PagesController::class, 'showSection'])->name('page.show.section');
         Route::patch('page/updatesection/{section}', [PagesController::class, 'updateSection'])->name('page.update.section');

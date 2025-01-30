@@ -28,7 +28,7 @@ export default abstract class ModelService extends BaseService {
     }
 
     public store(payload, customUrl = null) {
-        let url = customUrl ? customUrl : this.url;
+        let url = customUrl || this.url;
         let data = this.transformPayloadForSubmission(payload);
         return this.post(url, data, {
             headers: {
@@ -38,7 +38,8 @@ export default abstract class ModelService extends BaseService {
     }
 
     public update(object_id, payload, customUrl = null, noTransform = false) {
-        let url = customUrl ? customUrl : this.url;
+        let url = customUrl || this.url;
+
         let data = noTransform ? payload : this.transformPayloadForSubmission(payload);
         return this.patch(url + `/${object_id}`, data, {
             headers: {

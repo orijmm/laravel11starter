@@ -1,30 +1,36 @@
 <template>
-    <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction" :is-loading="page.loading">
+    <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction"
+        :is-loading="page.loading">
         <Panel otherClass="overflow-visible">
-            <Form id="edit-menu_item" @submit.prevent="onSubmit">
-                <TextInput class="mb-4" type="text" :required="true" name="label" v-model="form.label" :label="trans('users.labels.label')"/>
-                <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description" :label="trans('users.labels.description')"/>
-                <TextInput class="mb-4" type="text" name="url" v-model="form.url"
-                            :label="trans('users.labels.url')" />
+            <Form id="editmenuitem" @submit.prevent="onSubmit">
+                {{section.name}}
+                <TextInput class="mb-4" type="text" :required="true" name="label" v-model="form.label"
+                    :label="trans('users.labels.label')" />
+                <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
+                    :label="trans('users.labels.description')" />
+                <Dropdown class="mb-4" :options="menuItems.options" optionLabel="label" name="label"
+                    v-model="form.parent_id" :label="trans('users.labels.parent_id')" />
                 <TextInput class="mb-4" type="number" :required="true" name="order" v-model="form.order"
-                :label="trans('users.labels.order')" />
-                <Dropdown class="mb-4" :server="'pages/page'" :server-per-page="15" 
-                            name="type" v-model="form.page_id" :label="trans('global.pages.page')"
-                            :serverSearchMinCharacters="0" />
-                <Dropdown class="mb-4" :options="menuItems.options" optionLabel="label"
-                    name="label" v-model="form.parent_id" :label="trans('users.labels.parent_id')" />
+                    :label="trans('users.labels.order')" />
+                <div class="grid grid-cols-2 gap-2 bg-teal-50 rounded p-2">
+                    <Dropdown @update:model-value="e => setUrl('page', e)" class="mb-4" :server="'pages/page'" :server-per-page="15" name="type"
+                        v-model="form.page_id" :label="trans('global.pages.page')" :serverSearchMinCharacters="0" />
+                    <Dropdown @update:model-value="e => setUrl('section', e)" class="mb-4" :server="'pages/page/sections'" :server-per-page="15" name="type"
+                        v-model="form.section" :label="trans('global.pages.section')" :serverSearchMinCharacters="0" />
+                </div>
+                <TextInput class="mb-4" type="text" name="url" v-model="form.url" :label="trans('users.labels.url')" />
             </Form>
         </Panel>
     </Page>
 </template>
 
 <script>
-import {defineComponent, onBeforeMount, reactive} from "vue";
-import {trans} from "@/helpers/i18n";
-import {fillObject, reduceProperties} from "@/helpers/data"
-import {useRoute} from "vue-router";
-import {useAuthStore} from "@/stores/auth";
-import {toUrl} from "@/helpers/routing";
+import { defineComponent, onBeforeMount, reactive, ref } from "vue";
+import { trans } from "@/helpers/i18n";
+import { fillObject, reduceProperties } from "@/helpers/data"
+import { useRoute } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+import { toUrl } from "@/helpers/routing";
 import ModelService from "@/services/ModelService";
 import Button from "@/views/components/input/Button";
 import TextInput from "@/views/components/input/TextInput";
@@ -47,7 +53,7 @@ export default defineComponent({
         Dropdown
     },
     setup() {
-        const {user} = useAuthStore();
+        const { user } = useAuthStore();
         const route = useRoute();
         const form = reactive({
             label: undefined,
@@ -57,6 +63,8 @@ export default defineComponent({
             page_id: undefined,
             parent_id: undefined
         });
+
+        let section = ref('');
 
         const menuItems = reactive({
             options: []
@@ -105,7 +113,7 @@ export default defineComponent({
         });
 
         function onAction(data) {
-            switch(data.action.id) {
+            switch (data.action.id) {
                 case 'submit':
                     onSubmit();
                     break;
@@ -113,8 +121,18 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleUpdate('edit-menu_item', route.params.id, reduceProperties(form, ['roles'], 'id'));
+            service.handleUpdate('editmenuitem', route.params.id, reduceProperties(form, ['parent_id', 'page_id'], 'id'), `pages/menus/${route.params.menu}/updateitem`);
             return false;
+        }
+
+        function setUrl(type, even = null){
+            if(type == 'page'){
+                form.section =  undefined;
+                form.url =  undefined;
+            }else{
+                form.url = '#section-'+even.name;
+                form.page_id =  undefined;
+            }
         }
 
         return {
@@ -124,12 +142,12 @@ export default defineComponent({
             onSubmit,
             onAction,
             page,
-            menuItems
+            menuItems,
+            setUrl,
+            section
         }
     }
 })
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

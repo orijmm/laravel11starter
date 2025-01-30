@@ -109,6 +109,25 @@ class PagesController extends Controller
     }
 
     ############ SECTIONS ##############
+    public function listSection(Request $request)
+    {
+        $query = Section::query();
+        if (! empty($request['search'])) {
+            $query = $query->search($request['search']);
+        }
+
+        if (! empty($request['filters'])) {
+            filter($query, $request['filters']);
+        }
+
+        if (! empty($request['sort_by']) && ! empty($request['sort'])) {
+            $query = $query->orderBy($request['sort_by'], $request['sort']);
+        }
+
+        //Response json con paginación
+        return responseMetaLinks($query, 10);
+    }
+
     public function showSection(Page $page, Section $section)
     {
         $model = Section::where('id', $section->id)->with(['rows.columns', 'rows' => function (Builder $query) {
