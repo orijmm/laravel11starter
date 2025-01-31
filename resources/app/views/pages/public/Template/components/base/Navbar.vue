@@ -16,11 +16,16 @@
           <NavLink :dataLink="menus.data" />
         </ul>
       </div>
-      <div :class="[open ? 'flex' : 'hidden lg:flex']" class="space-x-3">
-        <BaseButton class="px-8 xl:px-10 py-3 mt-2 bg-inherit text-gradient border border-[#0c66ee]">
+       <div v-if="authStore.user">
+        <BaseButton class="px-3 xl:px-5 py-1 mt-2 bg-inherit text-gradient border border-[#0c66ee]">
+          <a href="/panel/dashboard">Panel</a>
+        </BaseButton>
+       </div>
+      <div v-else :class="[open ? 'flex' : 'hidden lg:flex']" class="space-x-3">
+        <BaseButton class="px-3 xl:px-5 py-1 mt-2 bg-inherit text-gradient border border-[#0c66ee]">
           <a href="/login">Login</a>
         </BaseButton>
-        <BaseButton class="px-8 xl:px-10 py-3 mt-2 bg-gradient-to-r from-[#468ef9] to-[#0c66ee] text-white">
+        <BaseButton class="px-3 xl:px-5 py-1 mt-2 bg-gradient-to-r from-[#468ef9] to-[#0c66ee] text-white">
           <a href="/register">Register</a>
         </BaseButton>
       </div>
@@ -30,6 +35,7 @@
 <script>
 import NavLink from '@/views/pages/public/template/components/NavLink';
 import { ref } from 'vue';
+import { useAuthStore } from "@/stores/auth";
 import BaseButton from '@/views/pages/public/template/components/base/Button';
 
 export default {
@@ -43,10 +49,12 @@ export default {
     },
   },
   setup() {
+    const authStore = useAuthStore();
     const open = ref(false);
 
     return {
-      open
+      open,
+      authStore
     }
   }
 }

@@ -75,10 +75,10 @@ class SettingSeeder extends Seeder
 
         // Crear las entradas de menu_items
         $dataTop = [
-            ['label' => 'Cryptocurrency', 'url' => null, 'description' => 'Cryptocurrency', 'order' => 1, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
-            ['label' => 'Exchanges', 'url' => null, 'description' => 'Exchanges', 'order' => 2, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
+            ['label' => 'Cryptocurrency', 'url' => '#section-grafics', 'description' => 'Cryptocurrency', 'order' => 1, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
+            ['label' => 'Exchanges', 'url' => '#section-converter', 'description' => 'Exchanges', 'order' => 2, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
             ['label' => 'Watchlist', 'url' => null, 'description' => 'Watchlist', 'order' => 3, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
-            ['label' => 'NFT', 'url' => null, 'description' => 'NFT', 'order' => 4, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
+            ['label' => 'NFT', 'url' => '#section-threcolumns', 'description' => 'NFT', 'order' => 4, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
             ['label' => 'Portfolio', 'url' => null, 'description' => 'Portfolio', 'order' => 5, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
             ['label' => 'Products', 'url' => null, 'description' => 'Products', 'order' => 6, 'parent_id' => null, 'menu_id' => null, 'page_id' => null],
             ['label' => 'Producto1', 'url' => null, 'description' => 'producto 1', 'order' => 1, 'parent_id' => 7, 'menu_id' => null, 'page_id' => null],
@@ -139,7 +139,7 @@ class SettingSeeder extends Seeder
         //crear secciones
         $sections = [
             ['name' => 'header', 'order' => 1, 'classes' => 'w-full pb-24', 'page_id' => $pageHome->id],
-            ['name' => 'graficos', 'order' => 2, 'classes' => 'w-full', 'page_id' => $pageHome->id],
+            ['name' => 'grafics', 'order' => 2, 'classes' => 'w-full', 'page_id' => $pageHome->id],
             ['name' => 'converter', 'order' => 3, 'classes' => 'w-full my-24', 'page_id' => $pageHome->id],
             ['name' => 'partners', 'order' => 4, 'classes' => 'bg-partner relative max-w-full sm:mx-6 my-24 shadow sm:rounded-2xl overflow-visible', 'page_id' => $pageHome->id],
             ['name' => 'nesa', 'order' => 5, 'classes' => 'w-full my-36 overflow-visible', 'page_id' => $pageHome->id],
@@ -157,7 +157,7 @@ class SettingSeeder extends Seeder
         //Filas
         $rows = [
             ['order' => 1, 'section_id' => $sectionIds['header'], 'classes' => null],
-            ['order' => 1, 'section_id' => $sectionIds['graficos'], 'classes' => null],
+            ['order' => 1, 'section_id' => $sectionIds['grafics'], 'classes' => null],
             ['order' => 1, 'section_id' => $sectionIds['converter'], 'classes' => null],
             ['order' => 1, 'section_id' => $sectionIds['partners'], 'classes' => null],
             ['order' => 1, 'section_id' => $sectionIds['nesa'], 'classes' => 'relative max-w-screen-xl px-4 sm:px-8 mx-auto gap-x-6 py-8'],
