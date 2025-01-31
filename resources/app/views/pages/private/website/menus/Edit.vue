@@ -199,7 +199,7 @@ export default defineComponent({
         const service = new ModelService;
 
         function fetchItems() {
-            service.find(route.params.id, 'menus').then((response) => {
+            service.find(route.params.id, 'pages/menus').then((response) => {
                 fillObject(form, response.data.model);
                 table.records = response.data.model.items;
                 page.loading = false;

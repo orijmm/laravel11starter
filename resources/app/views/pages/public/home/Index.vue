@@ -20,9 +20,8 @@ import Content from '@/views/pages/public/home/Content';
 import { useRoute } from 'vue-router';
 import { useAlertStore } from "@/stores";
 import { onMounted, reactive } from 'vue';
-import { getResponseError } from "@/helpers/api";
+import { getResponseError, prepareQuery } from "@/helpers/api";
 import ModelService from '@/services/ModelService';
-
 
 
 export default {
@@ -46,13 +45,12 @@ export default {
 
     //metodos
     function fetchPage() {
-      //Menutop ID TODO, buscar por name (menu-top)
-      let menutop = 2;
       //TODO colocar pagina desde base de datos por defecto. Página home desde DB
       let page_id = typeof route.params.id != 'undefined' ? route.params.id : 1;
-
+      //Colocar menu-top como menu principal
+      let query = prepareQuery({ search: 'menu-top' });
       service
-        .find(menutop, 'menus')
+        .index(query, 'menus/searchname')
         .then((response) => {
           menus.data = response.data.model.items;
           menus.total = response.data.model.length;

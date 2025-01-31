@@ -63,6 +63,17 @@ class MenuController extends Controller
         return $this->responseDataSuccess(['model' => $model]);
     }
 
+    public function showByName(Request $request)
+    {
+        $model = [];
+        $menu = Menu::where('name', $request->search)->first();
+        if($menu){
+            $menu->load(['items.parent', 'items.page', 'items.menu', 'items.children']);
+            $model = new MenuResource($menu);
+        }
+        return $this->responseDataSuccess(['model' => $model]);
+    }
+
     /**
      * Update the specified resource in storage.
      */

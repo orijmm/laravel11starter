@@ -1,10 +1,8 @@
 import BaseService from "@/services/BaseService";
 import axios from "@/plugins/axios";
 
-import {useAlertStore} from "@/stores";
+import {useAlertStore, useGlobalStateStore} from "@/stores";
 import {getResponseError} from "@/helpers/api";
-
-import {useGlobalStateStore} from "@/stores";
 
 export default abstract class ModelService extends BaseService {
 
@@ -18,7 +16,7 @@ export default abstract class ModelService extends BaseService {
     }
 
     public find(object_id, customUrl = null) {
-        let url = customUrl ? customUrl : this.url;
+        let url = customUrl || this.url;
 
         return this.get(url + `/${object_id}`, {});
     }
@@ -49,12 +47,13 @@ export default abstract class ModelService extends BaseService {
     }
 
     public delete(object_id, customUrl = null) {
-        let url = customUrl ? customUrl : this.url;
+        let url = customUrl || this.url;
         return super.delete(url + `/${object_id}`, {});
     }
 
-    public index(params = {}) {
-        let path = this.url;
+    public index(params = {}, customUrl = null) {
+        let url = customUrl || this.url;
+        let path = url;
         let query = new URLSearchParams(params).toString();
         if (query) {
             path += '?' + query
@@ -95,7 +94,7 @@ export default abstract class ModelService extends BaseService {
         const alertStore = useAlertStore();
         const globalUserState = useGlobalStateStore();
         globalUserState.loadingElements[ui_element_id] = true;
-        let url = customUrl ? customUrl : this.url + `/${object_id}`;
+        let url = customUrl || this.url + `/${object_id}`;
         let payload = this.transformPayloadForSubmission(data);
         this.put(url, payload, {
             headers: {

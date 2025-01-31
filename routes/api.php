@@ -71,7 +71,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
     Route::prefix('pages')->group(function () {
         Route::apiResource('templates', TemplateController::class);
         #Menu
-        Route::apiResource('menus', MenuController::class)->except('show');
+        Route::apiResource('menus', MenuController::class);
         #Menu Items
         Route::get('menus/{menu}/showitem/{menuitem}', [MenuController::class, 'showItem'])->name('menus.showitem');
         Route::post('menus/{menu}/storeitem', [MenuController::class, 'storeItem'])->name('menu.store.item');
@@ -102,7 +102,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
 
 
 ### Website public routes ####
-Route::get('menus/{menu}', [MenuController::class, 'show'])->name('menus.show');
+Route::get('menus/searchname', [MenuController::class, 'showByName'])->name('menus.search.name');
 Route::get('page/{page}', [PagesController::class, 'show'])->name('page.show');
 Route::get('page/showpage/{page}', [PagesController::class, 'showPageItem'])->name('page.item.show');
 
