@@ -16,7 +16,7 @@ class Page extends Model
 
     protected $table = 'pages';
 
-    protected $fillable = ['title', 'description', 'slug', 'template_id'];
+    protected $fillable = ['title', 'description', 'slug', 'template_id', 'home'];
 
     /**
      * Get the template for the blog post.

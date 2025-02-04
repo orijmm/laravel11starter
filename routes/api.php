@@ -89,6 +89,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
         Route::post('page/{page}/storesection', [PagesController::class, 'storeSection'])->name('page.store.section');
         Route::get('page/{page}/section/{section}', [PagesController::class, 'showSection'])->name('page.show.section');
         Route::patch('page/updatesection/{section}', [PagesController::class, 'updateSection'])->name('page.update.section');
+        Route::patch('page/checkhome/{page}', [PagesController::class, 'checkHomePage'])->name('page.check.home');
         Route::delete('page/{page}/deletesection/{section}', [PagesController::class, 'deleteSection'])->name('page.delete.section');
         Route::patch('page/updaterows/{section}', [PagesController::class, 'updateRows'])->name('page.section.updaterows');
         #Columns
@@ -104,7 +105,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
 ### Website public routes ####
 Route::get('menus/searchname', [MenuController::class, 'showByName'])->name('menus.search.name');
 Route::get('page/{page}', [PagesController::class, 'show'])->name('page.show');
-Route::get('page/showpage/{page}', [PagesController::class, 'showPageItem'])->name('page.item.show');
+Route::get('getpage/{id?}', [PagesController::class, 'displayPageItems'])->name('display.getpage');
 
 ## Ubicaciones
 Route::get('languages', function (Request $request) {

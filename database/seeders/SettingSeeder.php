@@ -47,7 +47,8 @@ class SettingSeeder extends Seeder
             'title' => 'home',
             'slug' => 'home',
             'description' => 'página principal',
-            'template_id' => $templateHome->id
+            'template_id' => $templateHome->id,
+            'home' => true,
         ]);
         //menu principal
         $menuHome = Menu::create([

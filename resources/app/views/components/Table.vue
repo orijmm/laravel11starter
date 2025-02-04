@@ -4,7 +4,7 @@
             <thead class="bg-gray-50">
                 <tr>
                     <th v-for="(item, i) in headers" scope="col"
-                        class="align-middle px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider relative">
+                        class="align-middle px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider relative">
                         <slot :name="'header-' + i">
                             <div class="leading-loose inline-block">{{ item }}</div>
                             <div class="sort-arrows inline-block text-center absolute"
@@ -19,19 +19,19 @@
                         </slot>
                     </th>
                     <th v-if="actions" scope="col"
-                        class="align-middle px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        class="align-middle px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                         <slot name="actions">{{ trans('global.actions.name') }}</slot>
                     </th>
                 </tr>
             </thead>
             <tbody v-if="records && records.length && !$props.isLoading" class="bg-white divide-y divide-gray-200">
                 <tr v-for="(record, i) in records">
-                    <td v-for="(header, j) in headers" class="px-6 py-4 whitespace-nowrap text-sm">
+                    <td v-for="(header, j) in headers" class="px-6 py-4 whitespace-nowrap text-sm text-center">
                         <slot :item="record" :name="'content-' + j">
                             {{ record && record.hasOwnProperty(j) ? record[j] : '' }}
                         </slot>
                     </td>
-                    <td v-if="actions" class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <td v-if="actions" class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                         <slot :name="'actions-' + j" v-for="(action, j) in actions">
                             <router-link v-if="(action.hasOwnProperty('to') && action.to) && (!action.hasOwnProperty('isAllowed') || action.isAllowed)"
                                 :to="getActionPage(action, record)" :class="getActionClass(action)"

@@ -89,6 +89,19 @@ class PagesController extends Controller
     }
 
     /**
+     * Select Home page
+     */
+    public function checkHomePage(Page $page)
+    {
+        $this->authorize('edit_page');
+
+        Page::where('home', true)->update(['home' => false]);
+        $page->update(['home' => true]);
+
+        return $this->responseUpdateSuccess(['record' => $page]);
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
@@ -99,10 +112,13 @@ class PagesController extends Controller
     /**
      * Display page.
      */
-    public function showPageItem(Page $page)
+    public function displayPageItems(?String $id = null)
     {
-        
-        $page = $page->load('sections.rows.columns.components.componenttype');
+        if($id){
+            $page = Page::where('id', $id)->with('sections.rows.columns.components.componenttype')->first();
+        }else{
+            $page = Page::where('home', true)->with('sections.rows.columns.components.componenttype')->first();
+        }
         return $this->responseDataSuccess(['page' => $page], trans('frontend.global.phrases.record_show'));
     }
 

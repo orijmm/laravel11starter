@@ -45,8 +45,7 @@ export default {
 
     //metodos
     function fetchPage() {
-      //TODO colocar pagina desde base de datos por defecto. Página home desde DB
-      let page_id = typeof route.params.id != 'undefined' ? route.params.id : 1;
+      let page_id = typeof route.params.id != 'undefined' ? route.params.id : '';
       //Colocar menu-top como menu principal
       let query = prepareQuery({ search: 'menu-top' });
       service
@@ -61,7 +60,7 @@ export default {
 
       //page
       service
-        .find(page_id, 'page/showpage')
+        .find(page_id, 'getpage')
         .then((response) => {
           page.sections = response.data.page.sections ?? [];
         })

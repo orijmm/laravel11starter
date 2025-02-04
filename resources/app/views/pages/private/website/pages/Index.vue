@@ -29,6 +29,14 @@
                         {{ props.item.template.name }}
                     </div>
                 </template>
+                <template v-slot:content-home="props">
+                    <div class="text-center text-blue-500" v-if="props.item.home">
+                        <Icon name="star"/>
+                    </div>
+                    <div v-else>
+                        <Icon class="cursor-pointer" @click="changeHome(props.item.id)" name="star-o"/>
+                    </div>
+                </template>
             </Table>
         </template>
     </Page>
@@ -51,6 +59,7 @@ import FiltersRow from "@/views/components/filters/FiltersRow";
 import FiltersCol from "@/views/components/filters/FiltersCol";
 import TextInput from "@/views/components/input/TextInput";
 import PagesService from "@/services/PagesService";
+import Icon from "@/views/components/icons/Icon";
 
 export default defineComponent({
     components: {
@@ -60,7 +69,8 @@ export default defineComponent({
         Filters,
         Page,
         Table,
-        Avatar
+        Avatar,
+        Icon
     },
     setup() {
         const service = new PagesService('page');
@@ -120,6 +130,7 @@ export default defineComponent({
                 description: trans('users.labels.description'),
                 slug: trans('users.labels.slug'),
                 template: trans('users.labels.template'),
+                home: trans('users.labels.homepage'),
             },
             sorting: {
                 name: true,
@@ -208,6 +219,12 @@ export default defineComponent({
             fetchPage(mainQuery);
         });
 
+        function changeHome (id) {
+            service.update(id, null, `pages/page/checkhome`).then(r => {
+                fetchPage(mainQuery)
+            });
+        }
+
         onMounted(() => {
             fetchPage(mainQuery);
         });
@@ -222,7 +239,8 @@ export default defineComponent({
             onPageAction,
             onFiltersClear,
             mainQuery,
-            isAllowed
+            isAllowed,
+            changeHome
         }
 
     },
