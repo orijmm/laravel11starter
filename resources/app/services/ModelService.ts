@@ -96,7 +96,7 @@ export default abstract class ModelService extends BaseService {
         globalUserState.loadingElements[ui_element_id] = true;
         let url = customUrl || this.url + `/${object_id}`;
         let payload = this.transformPayloadForSubmission(data);
-        this.put(url, payload, {
+        return this.put(url, payload, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             },

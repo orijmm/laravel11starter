@@ -7,11 +7,17 @@ use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Setting extends Model
+class Setting extends Model implements HasMedia
 {
     use HasFactory, SoftDeletes;
     use Filterable, Searchable;
+    use InteractsWithMedia;
+
 
     protected $table = 'admin_settings';
 
@@ -34,6 +40,16 @@ class Setting extends Model
         'city_id',
         'country_id',
         'currency_id'
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'logo_url',
+        'logo_thumb_url',
     ];
 
     /**
@@ -130,5 +146,62 @@ class Setting extends Model
             // Si no es un array válido, guarda el valor tal como es
             $this->attributes['city_id'] = $value;
         }
+    }
+
+    /**
+     * @return \Closure|mixed|null|Media
+     */
+    public function logo()
+    {
+        return $this->getMedia('logo')->first();
+    }
+
+    /**
+     * Returns the logo url attribute
+     *
+     * @return string|null
+     */
+    public function getLogoUrlAttribute()
+    {
+        $logo = $this->logo();
+        if ($logo) {
+            return $logo->getFullUrl();
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the logo url attribute
+     *
+     * @return string|null
+     */
+    public function getLogoThumbUrlAttribute()
+    {
+        $logo = $this->logo();
+        if ($logo) {
+            return $logo->getAvailableFullUrl(['small_thumb']);
+        }
+
+        return null;
+    }
+
+    /**
+     * Register the conversions
+     *
+     *
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     */
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('small_thumb')
+            ->fit(Fit::Crop, 300, 300)
+            ->nonQueued();
+        $this->addMediaConversion('medium_thumb')
+            ->fit(Fit::Crop, 600, 600)
+            ->nonQueued();
+        $this->addMediaConversion('large_thumb')
+            ->fit(Fit::Crop, 1200, 1200)
+            ->nonQueued();
     }
 }

@@ -64,6 +64,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
      * Settings Admin
      */
     Route::resource('settingad', SettingController::class);
+    Route::put('/settingad/{setting}/logo', [SettingController::class, 'updateLogo']);
 
     /**
      * Pages and Templates

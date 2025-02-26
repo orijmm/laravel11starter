@@ -8,9 +8,25 @@ use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use App\Services\Media\MediaService;
 
 class SettingService
 {
+
+    /**
+     * The service instance
+     *
+     * @var MediaService
+     */
+    protected $mediaService;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->mediaService = new MediaService();
+    }
 
     /**
      * Get a single resource from the database
@@ -74,7 +90,7 @@ class SettingService
     public function update(Setting $setting, array $data)
     {
         $data = $this->clean($data);
-        
+
         return $setting->update($data);
     }
 
@@ -104,6 +120,24 @@ class SettingService
         }
 
         return $data;
+    }
+
+    /**
+     * Update logo for the specified resource
+     *
+     *
+     * @return bool
+     */
+    public function updateLogo(Setting $setting, array $data)
+    {
+        if (isset($data['logo']) && $data['logo']) {
+            $this->mediaService->replace($data['logo'], $setting, 'logo');
+        }
+        if (! empty($data)) {
+            return $setting->update($data);
+        } else {
+            return false;
+        }
     }
 
     /**

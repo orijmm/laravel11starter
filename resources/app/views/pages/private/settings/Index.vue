@@ -1,6 +1,7 @@
 <template>
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction"
         :is-loading="page.loading">
+        <OverviewSetting :logo="form.logo_thumb_url" class="mb-4" @change-logo-started="isAvatarModalShowing = true;"/>
         <Panel otherClass="overflow-visible">
             <Form id="edit-setting" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="name_company" v-model="form.name_company"
@@ -28,10 +29,13 @@
             </Form>
         </Panel>
     </Page>
+    <Modal :is-showing="isAvatarModalShowing" @close="isAvatarModalShowing = false;">
+        <FormLogo @error="isAvatarModalShowing = false;" @done="isAvatarModalShowing = false;" @success="onAvatarChange"/>
+    </Modal>
 </template>
 
 <script>
-import { defineComponent, onBeforeMount, reactive } from "vue";
+import { defineComponent, onBeforeMount, reactive, ref } from "vue";
 import { trans } from "@/helpers/i18n";
 import { useAuthStore } from "@/stores/auth";
 import Button from "@/views/components/input/Button";
@@ -45,11 +49,16 @@ import { fillObject, reduceProperties } from "@/helpers/data"
 import { toUrl } from "@/helpers/routing";
 import Form from "@/views/components/Form";
 import { useRoute } from "vue-router";
+import Modal from "@/views/components/Modal";
+import FormLogo from "@/views/pages/private/settings/FormLogo";
+import OverviewSetting from "@/views/pages/private/settings/OverviewSetting";
 
 export default defineComponent({
     name: 'settingindex',
-    components: { Form, Panel, Alert, Dropdown, TextInput, Button, Page },
+    components: { Form, Panel, Alert, Dropdown, TextInput, Button, Page, Modal, OverviewSetting, FormLogo },
     setup() {
+        const isAvatarModalShowing = ref(false);
+
         const { user } = useAuthStore();
         //Router vue
         const route = useRoute();
@@ -65,7 +74,8 @@ export default defineComponent({
             state_id: undefined,
             city_id: undefined,
             country_id: undefined,
-            currency_id: undefined
+            currency_id: undefined,
+            logo_thumb_url: undefined
         });
 
         //Configuracion del breadcrumbs (navegacion y botones superiores) 
@@ -100,7 +110,7 @@ export default defineComponent({
                     fillObject(form, response.data.model);
                     //
                     page.loading = false;
-                })
+                });
         });
 
         function onAction(data) {
@@ -119,6 +129,10 @@ export default defineComponent({
             return false;
         }
 
+        function onAvatarChange(data) {
+            form.logo_thumb_url = data.logo_thumb_url;
+        }
+
         return {
             trans,
             user,
@@ -126,6 +140,8 @@ export default defineComponent({
             page,
             onSubmit,
             onAction,
+            isAvatarModalShowing,
+            onAvatarChange
         }
     }
 });
