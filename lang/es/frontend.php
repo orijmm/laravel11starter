@@ -220,7 +220,8 @@ return [
             'hasto_savecolumn_first' => 'Debe guardar las columnas en las filas primero.',
             'hasto_add_content' => 'Debe agregar más contenido al componente.',
             'hasto_add_img' => 'Debe agregar una imagen al componente.',
-            'not_accepted_type' => 'tiene un tipo no permitido. '
+            'not_accepted_type' => 'tiene un tipo no permitido. ',
+            'data_bussiness' => 'Datos de la empresa'
         ],
         'buttons' => [
             'add_new' => 'Añadir nuevo',
