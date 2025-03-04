@@ -24,6 +24,11 @@ return new class extends Migration
             $table->unsignedBigInteger('city_id');
             $table->unsignedBigInteger('country_id');
             $table->unsignedBigInteger('currency_id');
+            $table->text('googlemaps')->nullable();
+            $table->text('instagram')->nullable();
+            $table->text('facebook')->nullable();
+            $table->text('twitter')->nullable();
+            $table->text('tiktok')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -16,6 +16,12 @@
               <li class="text-sm text-[#666666] my-1 focus:outline-none focus:shadow-outline">{{ menus.webdata.phone }}</li>
               <li class="text-sm text-[#666666] my-1 focus:outline-none focus:shadow-outline">{{ menus.webdata.email }}</li>
               <li class="text-sm text-[#666666] my-1 focus:outline-none focus:shadow-outline">{{ menus.webdata.address }}</li>
+              <li class="text-md text-[#666666] my-1 focus:outline-none focus:shadow-outline">
+                <a target="_blank" class="mr-2" v-if="menus.webdata.instagram" :href="menus.webdata.instagram"><Icon name="instagram"/></a>
+                <a target="_blank" class="mx-2" v-if="menus.webdata.facebook" :href="menus.webdata.facebook"><Icon name="facebook"/></a>
+                <a target="_blank" class="mx-2" v-if="menus.webdata.tiktok" :href="menus.webdata.tiktok"><Icon name="tiktok"/></a>
+                <a target="_blank" class="mx-2" v-if="menus.webdata.twitter" :href="menus.webdata.twitter"><Icon name="twitter"/></a>
+              </li>
             </ul>
           </div>
         </div>
@@ -51,10 +57,11 @@
 
 import Link from '@/views/pages/public/template/components/Link';
 import { trans } from "@/helpers/i18n";
+import Icon from "@/views/components/icons/Icon";
 
 export default {
   name: 'BaseFooter',
-  components: { Link },
+  components: { Link, Icon },
   props: {
     menus: {
       type: Object,

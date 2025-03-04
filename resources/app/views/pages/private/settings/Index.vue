@@ -2,12 +2,13 @@
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction"
         :is-loading="page.loading">
         <OverviewSetting :logo="form.logo_thumb_url" class="mb-4" @change-logo-started="isAvatarModalShowing = true;" />
-        <Panel otherClass="overflow-visible">
-            <h4 class="text-gray-500 text-xl my-3">{{ trans('global.phrases.data_bussiness') }}</h4>
-            <Form id="edit-setting" @submit.prevent="onSubmit">
+        <Form id="edit-setting" @submit.prevent="onSubmit">
+
+            <Panel otherClass="overflow-visible">
+                <h4 class="text-gray-500 text-xl my-3">{{ trans('global.phrases.data_bussiness') }}</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-                    <TextInput class="col-span-2" type="text" :required="true" name="name_company" v-model="form.name_company"
-                        :label="trans('users.labels.first_name')" />
+                    <TextInput class="col-span-1 md:col-span-2" type="text" :required="true" name="name_company"
+                        v-model="form.name_company" :label="trans('users.labels.first_name')" />
                     <TextInput type="text" :required="true" name="description" v-model="form.description"
                         :label="trans('users.labels.description')" />
                     <TextInput type="text" :required="true" name="address" v-model="form.address"
@@ -28,9 +29,26 @@
                         v-model="form.city_id" :label="trans('users.labels.city')" />
                     <Dropdown :server="'currencies'" :server-per-page="15" :required="true" name="type"
                         v-model="form.currency_id" :label="trans('users.labels.currency')" />
+                    <TextInput class="col-span-1 md:col-span-3" type="text" :required="true" name="googlemaps"
+                        v-model="form.googlemaps" :label="trans('users.labels.google_maps')" />
                 </div>
-            </Form>
-        </Panel>
+            </Panel>
+
+            <Panel otherClass="overflow-visible">
+                <h4 class="text-gray-500 text-xl my-3">{{ trans('users.labels.socialmedia') }}</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
+                    <TextInput type="text" :required="true" name="instagram" v-model="form.instagram"
+                        :label="trans('users.labels.instagram')" />
+                    <TextInput type="text" :required="true" name="facebook" v-model="form.facebook"
+                        :label="trans('users.labels.facebook')" />
+                    <TextInput type="text" :required="true" name="twitter" v-model="form.twitter"
+                        :label="trans('users.labels.twitter')" />
+                    <TextInput type="text" :required="true" name="tiktok" v-model="form.tiktok"
+                        :label="trans('users.labels.tiktok')" />
+                </div>
+
+            </Panel>
+        </Form>
     </Page>
     <Modal :is-showing="isAvatarModalShowing" @close="isAvatarModalShowing = false;">
         <FormLogo @error="isAvatarModalShowing = false;" @done="isAvatarModalShowing = false;"

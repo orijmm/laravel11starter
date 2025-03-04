@@ -39,7 +39,12 @@ class Setting extends Model implements HasMedia
         'state_id',
         'city_id',
         'country_id',
-        'currency_id'
+        'currency_id',
+        'googlemaps',
+        'instagram',
+        'facebook',
+        'twitter',
+        'tiktok',
     ];
 
     /**

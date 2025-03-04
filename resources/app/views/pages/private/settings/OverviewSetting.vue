@@ -1,7 +1,7 @@
 <template>
     <Panel>
         <div class="flex">
-            <div class="w-1/6 px-2">
+            <div class="w-1/2 md:w-1/6 px-2">
                 <img v-if="logo" :src="logo" class="w-full rounded-full" alt="logosite"/>
                 <div v-else class="rounded-full">
                     <NoLogo></NoLogo>

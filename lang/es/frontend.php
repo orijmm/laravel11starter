@@ -75,7 +75,13 @@ return [
             'classes' => 'Clases',
             'number_content' => 'Número de contenido',
             'number_img' => 'Número de imagenes',
-            'homepage' => 'Página de inicio'
+            'homepage' => 'Página de inicio',
+            'socialmedia' => 'Redes sociales',
+            'instagram' => 'Instagram',
+            'facebook' => 'Facebook',
+            'twitter' => 'X (twitter)',
+            'tiktok' => 'Tiktok',
+            'google_maps' => 'Google Maps',
         ],
     ],
     'messages' => [
