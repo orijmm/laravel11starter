@@ -38,7 +38,7 @@ return [
             'description' => 'Descripción',
             'address' => 'Dirección',
             'phone' => 'Teléfono',
-            'email' => 'Email',
+            'addemail' => 'Ingresa tu email',
             'locale' => 'Idioma',
             'timezone' => 'Zona Horaria',
             'state' => 'Región',
@@ -168,8 +168,8 @@ return [
             'column_classes' => 'Clases de la columna',
             'filename_case_sensitive' => 'Nombre del archivo, sensible a mayúsculas y minúsculas',
             'case_sensitive' => 'Sensible a mayúsculas y minúsculas',
-            'added_components' => 'Componentes agreagados'
-
+            'added_components' => 'Componentes agreagados',
+            'newsletter' => 'Subcripción'
         ],
         'phrases' => [
             'clear_filters' => 'Limpiar todo',
@@ -221,7 +221,8 @@ return [
             'hasto_add_content' => 'Debe agregar más contenido al componente.',
             'hasto_add_img' => 'Debe agregar una imagen al componente.',
             'not_accepted_type' => 'tiene un tipo no permitido. ',
-            'data_bussiness' => 'Datos de la empresa'
+            'data_bussiness' => 'Datos de la empresa',
+            'newsletter_text' => 'No te pierdas ninguna de nuestras novedades.'
         ],
         'buttons' => [
             'add_new' => 'Añadir nuevo',

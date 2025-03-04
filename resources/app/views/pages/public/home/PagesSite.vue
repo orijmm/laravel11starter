@@ -9,36 +9,39 @@
         <Content :page="page" />
       </main>
 
-      <BaseFooter />
+      <Footer :menus="menus" />
     </div>
   </div>
 </template>
 <script>
 import BaseNavbar from '@/views/pages/public/template/components/base/Navbar';
-import BaseFooter from '@/views/pages/public/template/components/base/Footer';
+import Footer from '@/views/pages/public/template/components/base/Footer';
 import Content from '@/views/pages/public/home/Content';
 import { useRoute } from 'vue-router';
 import { useAlertStore } from "@/stores";
 import { onMounted, reactive } from 'vue';
-import { getResponseError } from "@/helpers/api";
+import { getResponseError, prepareQuery } from "@/helpers/api";
 import ModelService from '@/services/ModelService';
+import SettingService from '@/services/SettingService';
 
 
 
 export default {
   name: 'DefaultLayout',
-  components: { BaseNavbar, Content, BaseFooter },
+  components: { BaseNavbar, Content, Footer },
   setup() {
     const service = new ModelService;
+    const settings = new SettingService();
     const alertStore = useAlertStore();
     const route = useRoute();
-    //const currentRoute = route.path;
 
 
     // Variables reactivas
     const menus = reactive({
       total: 0,
-      data: []
+      data: [],
+      logo: null,
+      webdata: []
     });
     const page = reactive({
       sections: []
@@ -46,13 +49,11 @@ export default {
 
     //metodos
     function fetchPage() {
-      //Menutop ID TODO
-      let menutop = 2;
-
-      let page_id = route.params.id;
-
+      let page_id = typeof route.params.id != 'undefined' ? route.params.id : '';
+      //Colocar menu-top como menu principal
+      let query = prepareQuery({ search: 'menu-top' });
       service
-        .find(menutop, 'menus')
+        .index(query, 'menus/searchname')
         .then((response) => {
           menus.data = response.data.model.items;
           menus.total = response.data.model.length;
@@ -60,17 +61,24 @@ export default {
         .catch((error) => {
           alertStore.error(getResponseError(error));
         });
+        console.log(page_id);
 
       //page
       service
-        .find(page_id, 'page/showpage')
+        .find(page_id, 'getpage')
         .then((response) => {
           page.sections = response.data.page.sections ?? [];
         })
         .catch((error) => {
           alertStore.error(getResponseError(error));
           console.log(error);
+        });
 
+      //Setting
+      settings.edit(1)
+        .then((response) => {
+          menus.logo = response.data.model.logo_thumb_url;
+          menus.webdata = response.data.model;
         });
     }
 

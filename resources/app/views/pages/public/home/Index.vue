@@ -9,13 +9,13 @@
         <Content :page="page" />
       </main>
 
-      <BaseFooter />
+      <Footer :menus="menus" />
     </div>
   </div>
 </template>
 <script>
 import BaseNavbar from '@/views/pages/public/template/components/base/Navbar';
-import BaseFooter from '@/views/pages/public/template/components/base/Footer';
+import Footer from '@/views/pages/public/template/components/base/Footer';
 import Content from '@/views/pages/public/home/Content';
 import { useRoute } from 'vue-router';
 import { useAlertStore } from "@/stores";
@@ -27,20 +27,20 @@ import SettingService from '@/services/SettingService';
 
 export default {
   name: 'DefaultLayout',
-  components: { BaseNavbar, Content, BaseFooter },
+  components: { BaseNavbar, Content, Footer },
   setup() {
     const service = new ModelService;
     const settings = new SettingService();
     const alertStore = useAlertStore();
     const route = useRoute();
-    const currentRoute = route.path;
 
 
     // Variables reactivas
     const menus = reactive({
       total: 0,
       data: [],
-      logo: null
+      logo: null,
+      webdata: []
     });
     const page = reactive({
       sections: []
@@ -75,8 +75,8 @@ export default {
       //Setting
       settings.edit(1)
         .then((response) => {
-          console.log(response.data.model, 'response.data.record');
           menus.logo = response.data.model.logo_thumb_url;
+          menus.webdata = response.data.model;
         });
     }
 
