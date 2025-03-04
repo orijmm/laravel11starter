@@ -24,7 +24,12 @@ class UpdateSettingRequest extends FormRequest
             'state_id' => 'required',
             'city_id' => 'required',
             'country_id' => 'required',
-            'currency_id' => 'required'
+            'currency_id' => 'required',
+            'googlemaps' => 'nullable',
+            'instagram' => 'nullable',
+            'facebook' => 'nullable',
+            'twitter' => 'nullable',
+            'tiktok' => 'nullable',
         ];
     }
 }

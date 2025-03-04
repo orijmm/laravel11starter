@@ -8,10 +8,25 @@ use App\Http\Requests\UpdateComponentRequest;
 use App\Http\Resources\ComponentResource;
 use App\Models\Pages\Component;
 use Illuminate\Http\Request;
-
+use App\Services\Media\MediaService;
 
 class ComponentController extends Controller
 {
+    /**
+     * The service instance
+     *
+     * @var MediaService
+     */
+    protected $mediaService;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->mediaService = new MediaService();
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -69,16 +84,28 @@ class ComponentController extends Controller
      */
     public function update(UpdateComponentRequest $request, Component $component)
     {
-        $this->authorize('edit_page');
+        try {
+            $this->authorize('edit_page');
+            $data = $request->validated();
+            $data['component_type_id'] = $data['component_type_id']['id'];
+            if (!isset($request->contents)) {
+                $data['contents'] = [];
+            }
 
-        $data = $request->validated();
-        $data['component_type_id'] = $data['component_type_id']['id'];
-        $newcomponent = $component->update($data);
+            if (!empty($request->inputImg)) {
+                $imgArray = $request->img ?? [];
+                $this->mediaService->replaceMany($component, 'componentimg', $imgArray, $request->inputImg);
+            }
 
-        if ($newcomponent) {
-            return $this->responseUpdateSuccess(['record' => $component]);
-        } else {
-            return $this->responseUpdateFail();
+            $newcomponent = $component->update($data);
+
+            if ($newcomponent) {
+                return $this->responseUpdateSuccess(['record' => $component]);
+            } else {
+                return $this->responseUpdateFail();
+            }
+        } catch (\Exception $e) {
+            return $this->responseFail($e);
         }
     }
 

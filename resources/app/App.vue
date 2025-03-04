@@ -304,12 +304,12 @@ export default {
                             ]
                         },
                         {
-                            name: trans('global.menu.components'),
+                            name: trans('global.menu.componenttype'),
                             icon: 'tachometer',
                             showDesktop: true,
                             showMobile: true,
                             requiresAbility: false,
-                            to: '/panel/pages/components',
+                            to: '/panel/pages/componenttype',
                             children: [
                                 {
                                     name: trans('global.buttons.add_new'),

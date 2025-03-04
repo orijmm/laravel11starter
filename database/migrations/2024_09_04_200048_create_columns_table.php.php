@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('width');
             $table->integer('order');
+            $table->text('classes')->nullable();
             $table->foreignId('row_id')->constrained('rows')->onDelete('cascade');
             $table->timestamps();
         });

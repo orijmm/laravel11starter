@@ -3,9 +3,11 @@
     <div class="flex flex-col max-w-screen-xl px-8 mx-auto lg:items-center lg:justify-between lg:flex-row py-4">
       <div class="flex flex-col lg:flex-row items-center space-x-4 xl:space-x-8">
         <div class="w-full flex flex-row items-center justify-between py-6">
-          <div>
-            <img src="@/views/pages/public/template/assets/img/logo/nefa.svg" class="w-24 xl:w-28" alt="Nefa Logo" />
-          </div>
+          <router-link to="/">
+            <img v-if="menus.logo" :src="menus.logo" class="w-24 xl:w-28" alt="Logo" />
+            <img v-else src="@/views/pages/public/template/assets/img/logo/nefa.svg" class="w-24 xl:w-28" alt="Nefa Logo" />
+            
+          </router-link>
           <button class="rounded-lg lg:hidden focus:outline-none focus:shadow-outline" @click="open = !open">
             <Segment v-if="!open" :size="24" />
             <Close v-else :size="24" />
@@ -16,11 +18,16 @@
           <NavLink :dataLink="menus.data" />
         </ul>
       </div>
-      <div :class="[open ? 'flex' : 'hidden lg:flex']" class="space-x-3">
-        <BaseButton class="px-8 xl:px-10 py-3 mt-2 bg-inherit text-gradient border border-[#0c66ee]">
+       <div v-if="authStore.user">
+        <BaseButton class="px-3 xl:px-5 py-1 mt-2 bg-inherit text-gradient border border-[#0c66ee]">
+          <a href="/panel/dashboard">Panel</a>
+        </BaseButton>
+       </div>
+      <div v-else :class="[open ? 'flex' : 'hidden lg:flex']" class="space-x-3">
+        <BaseButton class="px-3 xl:px-5 py-1 mt-2 bg-inherit text-gradient border border-[#0c66ee]">
           <a href="/login">Login</a>
         </BaseButton>
-        <BaseButton class="px-8 xl:px-10 py-3 mt-2 bg-gradient-to-r from-[#468ef9] to-[#0c66ee] text-white">
+        <BaseButton class="px-3 xl:px-5 py-1 mt-2 bg-gradient-to-r from-[#468ef9] to-[#0c66ee] text-white">
           <a href="/register">Register</a>
         </BaseButton>
       </div>
@@ -30,6 +37,7 @@
 <script>
 import NavLink from '@/views/pages/public/template/components/NavLink';
 import { ref } from 'vue';
+import { useAuthStore } from "@/stores/auth";
 import BaseButton from '@/views/pages/public/template/components/base/Button';
 
 export default {
@@ -43,10 +51,12 @@ export default {
     },
   },
   setup() {
+    const authStore = useAuthStore();
     const open = ref(false);
 
     return {
-      open
+      open,
+      authStore
     }
   }
 }

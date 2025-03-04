@@ -1,10 +1,8 @@
 import BaseService from "@/services/BaseService";
 import axios from "@/plugins/axios";
 
-import {useAlertStore} from "@/stores";
+import {useAlertStore, useGlobalStateStore} from "@/stores";
 import {getResponseError} from "@/helpers/api";
-
-import {useGlobalStateStore} from "@/stores";
 
 export default abstract class ModelService extends BaseService {
 
@@ -18,7 +16,7 @@ export default abstract class ModelService extends BaseService {
     }
 
     public find(object_id, customUrl = null) {
-        let url = customUrl ? customUrl : this.url;
+        let url = customUrl || this.url;
 
         return this.get(url + `/${object_id}`, {});
     }
@@ -28,7 +26,7 @@ export default abstract class ModelService extends BaseService {
     }
 
     public store(payload, customUrl = null) {
-        let url = customUrl ? customUrl : this.url;
+        let url = customUrl || this.url;
         let data = this.transformPayloadForSubmission(payload);
         return this.post(url, data, {
             headers: {
@@ -38,7 +36,8 @@ export default abstract class ModelService extends BaseService {
     }
 
     public update(object_id, payload, customUrl = null, noTransform = false) {
-        let url = customUrl ? customUrl : this.url;
+        let url = customUrl || this.url;
+
         let data = noTransform ? payload : this.transformPayloadForSubmission(payload);
         return this.patch(url + `/${object_id}`, data, {
             headers: {
@@ -47,12 +46,14 @@ export default abstract class ModelService extends BaseService {
         });
     }
 
-    public delete(object_id) {
-        return super.delete(this.url + `/${object_id}`, {});
+    public delete(object_id, customUrl = null) {
+        let url = customUrl || this.url;
+        return super.delete(url + `/${object_id}`, {});
     }
 
-    public index(params = {}) {
-        let path = this.url;
+    public index(params = {}, customUrl = null) {
+        let url = customUrl || this.url;
+        let path = url;
         let query = new URLSearchParams(params).toString();
         if (query) {
             path += '?' + query
@@ -60,11 +61,11 @@ export default abstract class ModelService extends BaseService {
         return this.get(path, {});
     }
 
-    public handleUpdate(ui_element_id, object_id, data, customUrl = null) {
+    public handleUpdate(ui_element_id, object_id, data, customUrl = null, noTransform = false) {
         const alertStore = useAlertStore();
         const globalUserState = useGlobalStateStore();
         globalUserState.loadingElements[ui_element_id] = true;
-        return this.update(object_id, data, customUrl).then((response) => {
+        return this.update(object_id, data, customUrl, noTransform).then((response) => {
             let answer = response.data;
             alertStore.success(answer.message);
             return response;
@@ -93,9 +94,9 @@ export default abstract class ModelService extends BaseService {
         const alertStore = useAlertStore();
         const globalUserState = useGlobalStateStore();
         globalUserState.loadingElements[ui_element_id] = true;
-        let url = customUrl ? customUrl : this.url + `/${object_id}`;
+        let url = customUrl || this.url + `/${object_id}`;
         let payload = this.transformPayloadForSubmission(data);
-        this.put(url, payload, {
+        return this.put(url, payload, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             },

@@ -18,7 +18,8 @@
                @input="onInput"
                :placeholder="placeholder"
                :autocomplete="autocomplete"
-               class="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-theme-500 focus:border-theme-500 text-sm"/>
+               class="block w-full placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-theme-500 focus:border-theme-500"
+               :class="size"/>
         <textarea v-else
             :id="name"
             :value="modelValue"
@@ -33,7 +34,7 @@
 
 <script>
 
-import {defineComponent} from "vue";
+import {defineComponent, ref} from "vue";
 
 export default defineComponent({
     inheritAttrs: false,
@@ -80,15 +81,36 @@ export default defineComponent({
             type: String,
             default: null,
         },
+        sizeInput: {
+            type: String,
+            default: 'md',
+        }
     },
     emits: ['update:modelValue'],
     setup(props, {emit}) {
+
+        let size = ref('');
+
         function onInput(event) {
             emit("update:modelValue", event.target.value);
         }
 
+        if(props.sizeInput){
+            switch (props.sizeInput) {
+                case 'sm':
+                    size.value = 'p-1 text-xs';
+                    break;
+                case 'lg':
+                    size.value = 'px-3 py-2 text-md';
+                    break;
+                default:
+                    size.value = 'px-3 py-2 text-sm';
+            }
+        }
+
         return {
-            onInput
+            onInput,
+            size
         }
     }
 });

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('rows', function (Blueprint $table) {
             $table->id();
             $table->integer('order');
+            $table->text('classes')->nullable();
             $table->foreignId('section_id')->constrained('sections')->onDelete('cascade');
             $table->timestamps();
         });

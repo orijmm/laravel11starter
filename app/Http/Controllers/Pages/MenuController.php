@@ -8,6 +8,8 @@ use App\Http\Requests\UpdateMenuRequest;
 use App\Http\Resources\MenuResource;
 use App\Models\Pages\Menu;
 use App\Models\Pages\MenuItem;
+use App\Models\Pages\Page;
+use App\Utilities\Data;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -61,6 +63,17 @@ class MenuController extends Controller
         return $this->responseDataSuccess(['model' => $model]);
     }
 
+    public function showByName(Request $request)
+    {
+        $model = [];
+        $menu = Menu::where('name', $request->search)->first();
+        if($menu){
+            $menu->load(['items.parent', 'items.page', 'items.menu', 'items.children']);
+            $model = new MenuResource($menu);
+        }
+        return $this->responseDataSuccess(['model' => $model]);
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -90,11 +103,22 @@ class MenuController extends Controller
     }
 
     ############ ITEMS ##############
+    public function showItem(Menu $menu, MenuItem $menuitem)
+    {
+        $itemsParents = $menu->items ?? [];
+        //Select de parent y page
+        $allItems = MenuItem::select('label as name', 'id')->get();
+        $allpages = Page::select('title as name', 'id')->get();
+        $menuitem['parent_id'] = Data::getSelectedLocation($allItems, $menuitem->parent_id, 'id', 'label');
+        $menuitem['page_id'] = Data::getSelectedLocation($allpages, $menuitem->page_id, 'id', 'title');
+        return $this->responseDataSuccess(['model' => $menuitem, 'parents' => $itemsParents]);
+    }
+
     public function storeItem(Request $request, Menu $menu)
     {
         $data = $request->validate([
             'label' => 'required|string|unique:menu_items',
-            'url' => 'required|string',
+            'url' => 'nullable',
             'description' => 'nullable|string',
             'order' => 'required|integer',
             'parent_id' => 'nullable',
@@ -115,16 +139,17 @@ class MenuController extends Controller
         }
     }
 
-    public function updateItem(Request $request, MenuItem $menuitem)
+    public function updateItem(Menu $menu, MenuItem $menuitem, Request $request)
     {
         $data = $request->validate([
             'label' => 'required|string',
-            'url' => 'required|string|unique:menu_items,url,'.$this->route('menuitem')->id,
+            'url' => 'nullable|string|unique:menu_items,url,'.$menuitem->id,
             'description' => 'nullable|string',
             'order' => 'required|integer',
-            'parent_id' => 'nullable|integer',
-            'page_id' => 'nullable|integer|exists:pages,id',
+            'parent_id' => 'nullable',
+            'page_id' => 'nullable',
         ]);
+
         $edititem = $menuitem->update($data);
 
         if ($edititem) {

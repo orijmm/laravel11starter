@@ -1,37 +1,63 @@
 <template>
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction"
         :is-loading="page.loading">
-        <Panel otherClass="overflow-visible">
-            <Form id="edit-setting" @submit.prevent="onSubmit">
-                <TextInput class="mb-4" type="text" :required="true" name="name_company" v-model="form.name_company"
-                    :label="trans('users.labels.first_name')" />
-                <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
-                    :label="trans('users.labels.description')" />
-                <TextInput class="mb-4" type="text" :required="true" name="address" v-model="form.address"
-                    :label="trans('users.labels.address')" />
-                <TextInput class="mb-4" type="text" :required="true" name="phone" v-model="form.phone"
-                    :label="trans('users.labels.phone')" />
-                <TextInput class="mb-4" type="text" :required="true" name="email" v-model="form.email"
-                    :label="trans('users.labels.email')" />
-                <Dropdown class="mb-4" :server="'languages'" :server-per-page="15"
-                    :required="true" name="type" v-model="form.locale" :label="trans('users.labels.locale')" />
-                <Dropdown class="mb-4" :server="'timezones'" :server-per-page="15"
-                    :required="true" name="type" v-model="form.timezone" :label="trans('users.labels.timezone')" />
-                <Dropdown class="mb-4" :server="'countries'" :server-per-page="15"
-                    :required="true" name="type" v-model="form.country_id" :label="trans('users.labels.country')" />
-                <Dropdown class="mb-4" :server="'states'" :server-per-page="15"
-                    :required="true" name="type" v-model="form.state_id" :label="trans('users.labels.state')" />
-                <Dropdown class="mb-4" :server="'cities'" :server-per-page="15"
-                    :required="true" name="type" v-model="form.city_id" :label="trans('users.labels.city')" />
-                <Dropdown class="mb-4" :server="'currencies'" :server-per-page="15"
-                    :required="true" name="type" v-model="form.currency_id" :label="trans('users.labels.currency')" />
-            </Form>
-        </Panel>
+        <OverviewSetting :logo="form.logo_thumb_url" class="mb-4" @change-logo-started="isAvatarModalShowing = true;" />
+        <Form id="edit-setting" @submit.prevent="onSubmit">
+
+            <Panel otherClass="overflow-visible">
+                <h4 class="text-gray-500 text-xl my-3">{{ trans('global.phrases.data_bussiness') }}</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                    <TextInput class="col-span-1 md:col-span-2" type="text" :required="true" name="name_company"
+                        v-model="form.name_company" :label="trans('users.labels.first_name')" />
+                    <TextInput type="text" :required="true" name="description" v-model="form.description"
+                        :label="trans('users.labels.description')" />
+                    <TextInput type="text" :required="true" name="address" v-model="form.address"
+                        :label="trans('users.labels.address')" />
+                    <TextInput type="text" :required="true" name="phone" v-model="form.phone"
+                        :label="trans('users.labels.phone')" />
+                    <TextInput type="text" :required="true" name="email" v-model="form.email"
+                        :label="trans('users.labels.email')" />
+                    <Dropdown :server="'languages'" :server-per-page="15" :required="true" name="type"
+                        v-model="form.locale" :label="trans('users.labels.locale')" />
+                    <Dropdown :server="'timezones'" :server-per-page="15" :required="true" name="type"
+                        v-model="form.timezone" :label="trans('users.labels.timezone')" />
+                    <Dropdown :server="'countries'" :server-per-page="15" :required="true" name="type"
+                        v-model="form.country_id" :label="trans('users.labels.country')" />
+                    <Dropdown :server="'states'" :server-per-page="15" :required="true" name="type"
+                        v-model="form.state_id" :label="trans('users.labels.state')" />
+                    <Dropdown :server="'cities'" :server-per-page="15" :required="true" name="type"
+                        v-model="form.city_id" :label="trans('users.labels.city')" />
+                    <Dropdown :server="'currencies'" :server-per-page="15" :required="true" name="type"
+                        v-model="form.currency_id" :label="trans('users.labels.currency')" />
+                    <TextInput class="col-span-1 md:col-span-3" type="text" :required="true" name="googlemaps"
+                        v-model="form.googlemaps" :label="trans('users.labels.google_maps')" />
+                </div>
+            </Panel>
+
+            <Panel otherClass="overflow-visible">
+                <h4 class="text-gray-500 text-xl my-3">{{ trans('users.labels.socialmedia') }}</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
+                    <TextInput type="text" :required="true" name="instagram" v-model="form.instagram"
+                        :label="trans('users.labels.instagram')" />
+                    <TextInput type="text" :required="true" name="facebook" v-model="form.facebook"
+                        :label="trans('users.labels.facebook')" />
+                    <TextInput type="text" :required="true" name="twitter" v-model="form.twitter"
+                        :label="trans('users.labels.twitter')" />
+                    <TextInput type="text" :required="true" name="tiktok" v-model="form.tiktok"
+                        :label="trans('users.labels.tiktok')" />
+                </div>
+
+            </Panel>
+        </Form>
     </Page>
+    <Modal :is-showing="isAvatarModalShowing" @close="isAvatarModalShowing = false;">
+        <FormLogo @error="isAvatarModalShowing = false;" @done="isAvatarModalShowing = false;"
+            @success="onAvatarChange" />
+    </Modal>
 </template>
 
 <script>
-import { defineComponent, onBeforeMount, reactive } from "vue";
+import { defineComponent, onBeforeMount, reactive, ref } from "vue";
 import { trans } from "@/helpers/i18n";
 import { useAuthStore } from "@/stores/auth";
 import Button from "@/views/components/input/Button";
@@ -45,11 +71,16 @@ import { fillObject, reduceProperties } from "@/helpers/data"
 import { toUrl } from "@/helpers/routing";
 import Form from "@/views/components/Form";
 import { useRoute } from "vue-router";
+import Modal from "@/views/components/Modal";
+import FormLogo from "@/views/pages/private/settings/FormLogo";
+import OverviewSetting from "@/views/pages/private/settings/OverviewSetting";
 
 export default defineComponent({
     name: 'settingindex',
-    components: { Form, Panel, Alert, Dropdown, TextInput, Button, Page },
+    components: { Form, Panel, Alert, Dropdown, TextInput, Button, Page, Modal, OverviewSetting, FormLogo },
     setup() {
+        const isAvatarModalShowing = ref(false);
+
         const { user } = useAuthStore();
         //Router vue
         const route = useRoute();
@@ -65,7 +96,8 @@ export default defineComponent({
             state_id: undefined,
             city_id: undefined,
             country_id: undefined,
-            currency_id: undefined
+            currency_id: undefined,
+            logo_thumb_url: undefined
         });
 
         //Configuracion del breadcrumbs (navegacion y botones superiores) 
@@ -100,7 +132,7 @@ export default defineComponent({
                     fillObject(form, response.data.model);
                     //
                     page.loading = false;
-                })
+                });
         });
 
         function onAction(data) {
@@ -113,10 +145,14 @@ export default defineComponent({
 
         function onSubmit() {
             service.handleUpdate('edit-setting', route.params.id, reduceProperties(form, [], 'id'))
-            .then((response) => {
-                window.location.reload();
-            });
+                .then((response) => {
+                    window.location.reload();
+                });
             return false;
+        }
+
+        function onAvatarChange(data) {
+            form.logo_thumb_url = data.logo_thumb_url;
         }
 
         return {
@@ -126,6 +162,8 @@ export default defineComponent({
             page,
             onSubmit,
             onAction,
+            isAvatarModalShowing,
+            onAvatarChange
         }
     }
 });

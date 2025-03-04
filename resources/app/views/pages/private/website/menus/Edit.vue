@@ -19,16 +19,16 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                         <TextInput class="mb-4" type="text" :required="true" name="label" v-model="formItem.label"
                             :label="trans('users.labels.label')" />
-                        <TextInput class="mb-4" type="text" :required="true" name="url" v-model="formItem.url"
+                        <TextInput class="mb-4" type="text"  name="url" v-model="formItem.url"
                             :label="trans('users.labels.url')" />
                         <TextInput class="mb-4" type="text" :required="true" name="description"
                             v-model="formItem.description" :label="trans('users.labels.description')" />
                         <TextInput class="mb-4" type="number" :required="true" name="order" v-model="formItem.order"
                             :label="trans('users.labels.order')" />
-                        <Dropdown class="mb-4" :server="'pages/page'" :server-per-page="15" :required="true"
+                        <Dropdown class="mb-4" :server="'pages/page'" :server-per-page="15" 
                             name="type" v-model="formItem.page_id" :label="trans('global.pages.page')"
                             :serverSearchMinCharacters="0" />
-                        <Dropdown class="mb-4" :required="true" :options="form.items" optionLabel="label"
+                        <Dropdown class="mb-4" :options="form.items" optionLabel="label"
                             name="label" v-model="formItem.parent_id" :label="trans('users.labels.parent_id')" /> 
                     </div>
                     <div class="text-right mb-4">
@@ -160,7 +160,7 @@ export default defineComponent({
                     name: trans('global.actions.edit'),
                     icon: "fa fa-edit",
                     showName: false,
-                    to: toUrl('/pages/menus/{id}'),
+                    to: toUrl(`/pages/menus/${route.params.id}/showitem/{id}`),
                     isAllowed: isAllowed(['edit_pages'])
                 },
                 delete: {
@@ -199,7 +199,7 @@ export default defineComponent({
         const service = new ModelService;
 
         function fetchItems() {
-            service.find(route.params.id, 'menus').then((response) => {
+            service.find(route.params.id, 'pages/menus').then((response) => {
                 fillObject(form, response.data.model);
                 table.records = response.data.model.items;
                 page.loading = false;

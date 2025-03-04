@@ -35,7 +35,8 @@
                 </Form>
             </div>
             <Table :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" :actions="table.actions"
-                :records="table.records" :pagination="table.pagination" :is-loading="table.loading">
+                :records="table.records" :pagination="table.pagination" :is-loading="table.loading"
+                @page-changed="onTablePageChange" @action="onTableAction" @sort="onTableSort">
                 <template v-slot:content-page="props">
                     <div>
                         {{ props.item.page?.name ?? '-' }}
@@ -69,6 +70,8 @@ import Dropdown from "@/views/components/input/Dropdown";
 import { isAllowed } from "@/helpers/isreq";
 import Table from "@/views/components/Table";
 import ModelService from "@/services/ModelService";
+import PagesService from "@/services/PagesService";
+import alertHelpers from "@/helpers/alert";
 
 export default defineComponent({
     components: {
@@ -127,6 +130,7 @@ export default defineComponent({
         });
 
         const service = new ModelService;
+        const servicePage = new PagesService('page');
 
         function fetchItems() {
             service.find(route.params.id, 'page').then((response) => {
@@ -149,7 +153,7 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleUpdate('edit-page', route.params.id, reduceProperties(form, ['roles'], 'id'));
+            servicePage.handleUpdate('edit-page', route.params.id, reduceProperties(form, [], 'id'), null);
             return false;
         }
 
@@ -207,6 +211,19 @@ export default defineComponent({
             return false;
         }
 
+        function onTableAction(params) {
+
+            switch (params.action.id) {
+                case 'delete':
+                    alertHelpers.confirmWarning(function () {
+                        service.delete(params.item.id, `pages/page/${route.params.id}/deletesection`).then(function (response) {
+                            fetchItems();
+                        });
+                    })
+                    break;
+            }
+        }
+
         return {
             trans,
             user,
@@ -217,7 +234,8 @@ export default defineComponent({
             table,
             onSubmitSection,
             toggleAddItems,
-            formItem
+            formItem,
+            onTableAction
         }
     }
 })

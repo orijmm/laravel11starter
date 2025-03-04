@@ -12,7 +12,7 @@ class Column extends Model
 
     protected $table = 'columns';
 
-    protected $fillable = ['width', 'order', 'row_id'];
+    protected $fillable = ['width', 'order', 'row_id', 'classes'];
 
     public function components()
     {

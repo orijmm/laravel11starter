@@ -23,6 +23,7 @@ import { default as PageAbilityEdit } from "@/views/pages/private/abilities/Edit
 import { default as PageMenu } from "@/views/pages/private/website/menus/Index";
 import { default as PageMenuCreate } from "@/views/pages/private/website/menus/Create";
 import { default as PageMenuEdit } from "@/views/pages/private/website/menus/Edit";
+import { default as EditItem } from "@/views/pages/private/website/menus/EditItem";
 
 import { default as PageTemplate } from "@/views/pages/private/website/templates/Index";
 import { default as PageTemplateCreate } from "@/views/pages/private/website/templates/Create";
@@ -35,7 +36,6 @@ import { default as PageShowSection } from "@/views/pages/private/website/pages/
 import { default as PageStoreComponents } from "@/views/pages/private/website/pages/StoreComponents";
 
 import { default as PageComponent } from "@/views/pages/private/website/components/Index";
-import { default as PageComponentCreate } from "@/views/pages/private/website/components/Create";
 import { default as PageComponentEdit } from "@/views/pages/private/website/components/Edit";
 import { default as PageComponentType } from "@/views/pages/private/website/components/TypeIndex";
 import { default as PageComponentTypeCreate } from "@/views/pages/private/website/components/CreateType";
@@ -43,6 +43,7 @@ import { default as PageComponentTypeEdit } from "@/views/pages/private/website/
 
 /* Web Site pages */
 import { default as PageIndexSite } from "@/views/pages/public/home/Index";
+import { default as PagesSite } from "@/views/pages/public/home/PagesSite";
 
 import abilities from "@/stub/abilities";
 
@@ -52,6 +53,12 @@ const routes = [
         path: "/",
         meta: { requiresAuth: false },
         component: PageIndexSite,
+    },
+    {
+        name: "webpages",
+        path: "/page/:id",
+        meta: { requiresAuth: false },
+        component: PagesSite,
     },
     {
         name: "panel",
@@ -161,6 +168,12 @@ const routes = [
                         component: PageMenuEdit,
                     },
                     {
+                        name: "menus.showitem",
+                        path: "menus/:menu/showitem/:id",
+                        meta: { requiresAuth: true },
+                        component: EditItem,
+                    },
+                    {
                         name: "templates.list",
                         path: "templates",
                         meta: { requiresAuth: true },
@@ -213,12 +226,6 @@ const routes = [
                         path: "components",
                         meta: { requiresAuth: true },
                         component: PageComponent,
-                    },
-                    {
-                        name: "components.create",
-                        path: "components/create",
-                        meta: { requiresAuth: true },
-                        component: PageComponentCreate,
                     },
                     {
                         name: "components.edit",

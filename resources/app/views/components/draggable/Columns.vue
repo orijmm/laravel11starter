@@ -7,23 +7,28 @@
                     <div class="flex justify-between items-center text-sm">
                         <span class="text-gray-200">{{ `${trans('global.pages.column')} ${index + 1}` }}</span>
                         <span>
-                            <i @click="onDeleteItems(localColumns, index)" class="text-gray-200 fa fa-times cursor-pointer"></i>
+                            <i @click="onDeleteItems(localColumns, index)"
+                                class="text-gray-200 fa fa-times cursor-pointer"></i>
                         </span>
                     </div>
                     <div class="grid mb-2">
-                        <div v-if="showColumnBlock[element.id] ?? false" class="text-xs text-red-400 m-2 break-normal">{{trans('global.phrases.hasto_savecolumn_first')}}</div>
-                        <Button  type="button" @click="checkColumnSaved(element.id)" theme="light-grey" :to="String(element.id).startsWith('0000') ? null : `/panel/pages/page/${sectionList.pageid}/section/${sectionList.sectionid}/column/${element.id}`" class="cursor-pointer" :label="trans('global.buttons.store_components')" />
+                        <div v-if="showColumnBlock[element.id] ?? false" class="text-xs text-red-400 m-2 break-normal">
+                            {{ trans('global.phrases.hasto_savecolumn_first') }}</div>
+                        <Button type="button" @click="checkColumnSaved(element.id)" theme="light-grey"
+                            :to="String(element.id).startsWith('xxxx') ? null : `/panel/pages/page/${sectionList.pageid}/section/${sectionList.sectionid}/column/${element.id}`"
+                            class="cursor-pointer" :label="trans('global.buttons.store_column')" />
                     </div>
                 </div>
             </template>
         </draggable>
         <Tooltip :text="trans('global.phrases.add_morecolumns')" position="bottom"><i
-                @click="onToggleAddItems(localColumns, 'row_id', rowid)" class="fa fa-plus cursor-pointer"></i></Tooltip>
+                @click="onToggleAddItems(localColumns, 'row_id', rowid)" class="fa fa-plus cursor-pointer"></i>
+        </Tooltip>
     </div>
 </template>
 
 <script>
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, reactive, ref, watch } from "vue";
 import { toggleAddItems, deleteItems, updateOrder } from "@/helpers/draggable";
 import draggable from 'vuedraggable';
 import { trans } from "@/helpers/i18n";
@@ -75,8 +80,8 @@ export default defineComponent({
         }
 
         function checkColumnSaved(columnId) {
-            if(String(columnId).startsWith('0000')){
-                showColumnBlock.value = {[columnId]: true};
+            if (String(columnId).startsWith('xxxx')) {
+                showColumnBlock.value = { [columnId]: true };
             }
         }
 
@@ -99,7 +104,7 @@ export default defineComponent({
             deleteItems,
             onDeleteItems,
             updateOrder,
-            checkColumnSaved
+            checkColumnSaved,
         }
     }
 })

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->json('contents');
             $table->foreignId('component_type_id')->constrained('component_types');
             $table->foreignId('column_id')->constrained('columns')->onDelete('cascade');
-            $table->softDeletes();
             $table->timestamps();
         });
     }

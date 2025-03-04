@@ -25,6 +25,7 @@ import ModelService from '@/services/ModelService';
 import SettingService from '@/services/SettingService';
 
 
+
 export default {
   name: 'DefaultLayout',
   components: { BaseNavbar, Content, Footer },
@@ -60,6 +61,7 @@ export default {
         .catch((error) => {
           alertStore.error(getResponseError(error));
         });
+        console.log(page_id);
 
       //page
       service
@@ -84,7 +86,7 @@ export default {
       fetchPage();
     });
 
-    //obtener config desde el backend TODO
+    //TODO obtener config desde el backend
 
     return {
       menus,

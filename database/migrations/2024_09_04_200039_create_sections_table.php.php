@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->integer('order');
-            $table->text('classes')->nullable(); 
+            $table->text('classes')->nullable();
             $table->foreignId('page_id')->constrained('pages')->onDelete('cascade');
             $table->timestamps();
         });

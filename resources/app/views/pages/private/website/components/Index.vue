@@ -119,7 +119,7 @@ export default defineComponent({
                 content: trans('users.labels.content'),
                 description: trans('users.labels.description'),
                 order: trans('users.labels.order'),
-                componenttype: trans('users.labels.componenttype'),
+                componenttype: trans('global.menu.componenttype'),
             },
             sorting: {
                 name: true,

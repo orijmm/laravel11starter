@@ -15,6 +15,8 @@ use App\Models\Pages\Row;
 use App\Models\Pages\Section;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class PagesController extends Controller
 {
@@ -87,6 +89,19 @@ class PagesController extends Controller
     }
 
     /**
+     * Select Home page
+     */
+    public function checkHomePage(Page $page)
+    {
+        $this->authorize('edit_page');
+
+        Page::where('home', true)->update(['home' => false]);
+        $page->update(['home' => true]);
+
+        return $this->responseUpdateSuccess(['record' => $page]);
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
@@ -97,20 +112,40 @@ class PagesController extends Controller
     /**
      * Display page.
      */
-    public function showPageItem(Request $request)
+    public function displayPageItems(?String $id = null)
     {
-        $menuitem = MenuItem::where('url', $request->url)->first();
-        if (!$menuitem)
-            return $this->responseFail(trans('frontend.global.phrases.no_menuitempage'));
-        $page = Page::where('id', $menuitem->page_id)->with('sections.rows.columns.components')->first();
+        if($id){
+            $page = Page::where('id', $id)->with('sections.rows.columns.components.componenttype')->first();
+        }else{
+            $page = Page::where('home', true)->with('sections.rows.columns.components.componenttype')->first();
+        }
         return $this->responseDataSuccess(['page' => $page], trans('frontend.global.phrases.record_show'));
     }
 
     ############ SECTIONS ##############
+    public function listSection(Request $request)
+    {
+        $query = Section::query();
+        if (! empty($request['search'])) {
+            $query = $query->search($request['search']);
+        }
+
+        if (! empty($request['filters'])) {
+            filter($query, $request['filters']);
+        }
+
+        if (! empty($request['sort_by']) && ! empty($request['sort'])) {
+            $query = $query->orderBy($request['sort_by'], $request['sort']);
+        }
+
+        //Response json con paginación
+        return responseMetaLinks($query, 10);
+    }
+
     public function showSection(Page $page, Section $section)
     {
         $model = Section::where('id', $section->id)->with(['rows.columns', 'rows' => function (Builder $query) {
-            $query->select('id', 'order', 'section_id')->orderBy('order', 'asc');
+            $query->select('id', 'order', 'section_id', 'classes')->orderBy('order', 'asc');
         }])->first();
         return $this->responseDataSuccess(['model' => $model]);
     }
@@ -137,9 +172,13 @@ class PagesController extends Controller
     public function updateSection(Request $request, Section $section)
     {
         $data = $request->validate([
-            'name' => 'required|string|unique:sections,name,' . $this->route('section')->id,
             'classes' => 'nullable',
             'order' => 'required|integer',
+            'name' => [
+                'required',
+                'string',
+                Rule::unique('sections', 'name')->ignore($section->id),
+            ],
         ]);
         $edititem = $section->update($data);
 
@@ -150,11 +189,12 @@ class PagesController extends Controller
         }
     }
 
-    public function deleteSection(Section $section)
+    public function deleteSection(Page $page, Section $section)
     {
+        $name = $section->name;
         $this->authorize('delete_page');
         $section->delete();
-        return $this->responseDeleteSuccess();
+        return $this->responseDeleteSuccess(['name' => $name]);
     }
 
     ###### ROWS and COLUMS ######
@@ -162,36 +202,51 @@ class PagesController extends Controller
     {
         try {
             $rows = $request->rows;
-            // Obtener los IDs de la consulta y los id de la base de datos y compara
-            $currentRowIds = $section->rows->pluck('id')->toArray();
-            $rowIdsFromRequest = array_column($rows, 'id');
-            //Elimina filas borradas
-            $rowsToDelete = array_diff($currentRowIds, $rowIdsFromRequest);
-            Row::destroy($rowsToDelete);
+            if (isset($rows)) {
+                // Obtener los IDs de la consulta y los id de la base de datos y compara
+                $currentRowIds = $section->rows->pluck('id')->toArray();
+                $rowIdsFromRequest = array_column($rows, 'id');
+                //Elimina filas borradas
+                $rowsToDelete = array_diff($currentRowIds, $rowIdsFromRequest);
+                Row::destroy($rowsToDelete);
 
-            foreach ($rows as $row) {
-                // Usamos updateOrCreate para verificar si existe el registro y actualizarlo o insertarlo
-                $rowid = Row::updateOrCreate(
-                    ['id' => $row['id'], 'section_id' => $row['section_id']],  // Verifica la existencia por 'id' y 'section_id'
-                    ['order' => $row['order'], 'updated_at' => now()]  // Actualiza el campo 'order' y 'updated_at'
-                );
+                foreach ($rows as $row) {
+                    // Usamos updateOrCreate para verificar si existe el registro y actualizarlo o insertarlo
+                    $rowid = Row::updateOrCreate(
+                        ['id' => $row['id'], 'section_id' => $row['section_id']],  // Verifica la existencia por 'id' y 'section_id'
+                        ['order' => $row['order'], 'classes' => $row['classes'] ?? null, 'updated_at' => now()]  // Actualiza el campo 'order' y 'updated_at'
+                    );
 
-                //TODO: En vez de borrar todas las columnas, solo borrar las eliminadas y actualizar o crear desde el front
-                if (isset($row['columns']) && $row['columns']) {
-                    //Delete columns
-                    Column::where('row_id', $rowid->id)->delete();
-                    //Add columns to row
-                    foreach ($row['columns'] as $col) {
-                        Column::create([
-                            'row_id' => $rowid->id,
-                            'width' => $col['width'],
-                            'order' => $col['order']
-                        ]);
+                    if (isset($row['columns']) && $row['columns']) {
+
+                        $allColumnRows = Column::where('row_id', $rowid->id)->pluck('id')->toArray();
+                        $columnsIds = array_column($row['columns'], 'id');
+                        $columnsToDelete = array_diff($allColumnRows, $columnsIds);
+                        //Delete columns
+                        Column::whereIn('id', $columnsToDelete)->delete();
+
+                        //Agregar columnas a row
+                        foreach ($row['columns'] as $col) {
+                            Column::updateOrCreate(
+                                ['id' => $col['id']],
+                                ['row_id' => $rowid->id, 'width' => $col['width'], 'order' => $col['order']]
+                            );
+                        }
                     }
                 }
+            }else{
+                //Si se borran todas las filas que limpie
+                $deleteAllRow = Row::where('section_id', $request->sectionid)->pluck('id')->toArray();
+                Row::destroy($deleteAllRow);
             }
 
             $updateRows = Row::where('section_id', $section->id)->with('columns.components')->get();
+
+            //Borrar medios si no tienen componentes asociados
+            $orphanedMedia = Media::doesntHaveMorph('model', Component::class)->get();
+            $orphanedMedia->each(function ($media) {
+                $media->delete(); 
+            });
 
             return $this->responseUpdateSuccess(['record' => $updateRows]);
         } catch (\Exception $e) {
@@ -205,6 +260,23 @@ class PagesController extends Controller
         return $this->responseDataSuccess(['column' => $model]);
     }
 
+    public function updateColumn(Request $request, Column $column)
+    {
+        $data = $request->validate([
+            'classes' => 'nullable',
+            'order' => 'nullable',
+            'width' => 'nullable'
+        ]);
+        
+        $edititem = $column->update($data);
+
+        if ($edititem) {
+            return $this->responseUpdateSuccess(['record' => $column]);
+        } else {
+            return $this->responseUpdateFail();
+        }
+    }
+
     ###### COMPONENTS ######
 
     public function addComponentToColumn(StoreComponentRequest $request, Column $column)
@@ -215,9 +287,12 @@ class PagesController extends Controller
 
         $data['component_type_id'] = $data['component_type_id']['id'];
 
-        for ($i = 0; $i < $request->number_content['id']; $i++) {
-            $contents[] = ['type' => 'text', 'text' => 'ipsum quia dolor sit amet', 'img' => ''];
+        if($request->number_content){
+            for ($i = 0; $i < $request->number_content['id']; $i++) {
+                $contents[] = ['type' => 'text', 'text' => 'ipsum quia dolor sit amet', 'img' => ''];
+            }
         }
+        
         $data['contents'] = $contents;
         $data['column_id'] = $column->id;
         $component = Component::create($data);
@@ -231,7 +306,6 @@ class PagesController extends Controller
     public function saveComponentContent(Request $request, Column $column)
     {
         foreach ($request->components as $k => $v) {
-            //$comp =  Component::find($v->id);
             $component = Component::updateOrCreate(
                 ['id' => $v['id'], 'column_id' => $column->id],
                 ['contents' => $v['contents']]

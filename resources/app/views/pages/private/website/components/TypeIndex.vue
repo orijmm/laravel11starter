@@ -80,13 +80,6 @@ export default defineComponent({
             ],
             actions: [
                 {
-                    id: 'back',
-                    name: trans('global.buttons.back'),
-                    icon: "fa fa-angle-left",
-                    to: toUrl('/pages/components'),
-                    theme: 'outline',
-                },
-                {
                     id: 'filters',
                     name: trans('global.buttons.filters'),
                     icon: "fa fa-filter",

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateLogoRequest;
 use App\Http\Requests\UpdateSettingRequest;
 use App\Models\Setting;
 use App\Models\User;
@@ -65,6 +66,25 @@ class SettingController extends Controller
         $data = $request->validated();
         if ($this->settingService->update($settingad, $data)) {
             return $this->responseUpdateSuccess(['record' => $settingad->fresh()]);
+        } else {
+            return $this->responseUpdateFail();
+        }
+    }
+
+    /**
+     * Update logo in for specified user
+     *
+     * @return JsonResponse
+     *
+     * @throws AuthorizationException
+     */
+    public function updateLogo(UpdateLogoRequest $request, Setting $setting)
+    {
+        $this->authorize('edit-profile', User::class);
+
+        $data = $request->validated();
+        if ($this->settingService->updateLogo($setting, $data)) {
+            return $this->responseUpdateSuccess(['record' => $setting->fresh()]);
         } else {
             return $this->responseUpdateFail();
         }
