@@ -34,8 +34,6 @@ class SettingController extends Controller
      */
     public function show(Setting $settingad)
     {
-        $this->authorize('edit_setting', User::class);
-
         $model = $this->settingService->get($settingad);
 
         return $this->responseDataSuccess(['model' => $model, 'properties' => $this->properties()]);

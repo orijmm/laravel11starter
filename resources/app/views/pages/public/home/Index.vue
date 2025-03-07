@@ -73,7 +73,7 @@ export default {
         });
 
       //Setting
-      settings.edit(1)
+      settings.find(1)
         .then((response) => {
           menus.logo = response.data.model.logo_thumb_url;
           menus.webdata = response.data.model;
