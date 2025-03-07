@@ -61,7 +61,6 @@ export default {
         .catch((error) => {
           alertStore.error(getResponseError(error));
         });
-        console.log(page_id);
 
       //page
       service
@@ -75,7 +74,7 @@ export default {
         });
 
       //Setting
-      settings.edit(1)
+      settings.find(1)
         .then((response) => {
           menus.logo = response.data.model.logo_thumb_url;
           menus.webdata = response.data.model;

@@ -63,7 +63,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
     /**
      * Settings Admin
      */
-    Route::resource('settingad', SettingController::class);
+    Route::resource('settingad', SettingController::class)->except('show');
     Route::put('/settingad/{setting}/logo', [SettingController::class, 'updateLogo']);
 
     /**
@@ -106,6 +106,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
 ### Website public routes ####
 Route::get('menus/searchname', [MenuController::class, 'showByName'])->name('menus.search.name');
 Route::get('page/{page}', [PagesController::class, 'show'])->name('page.show');
+Route::get('settingad/{settingad}', [SettingController::class, 'show'])->name('settingad.show');
 Route::get('getpage/{id?}', [PagesController::class, 'displayPageItems'])->name('display.getpage');
 
 ## Ubicaciones
