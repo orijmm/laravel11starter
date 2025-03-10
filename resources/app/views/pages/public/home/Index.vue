@@ -28,9 +28,6 @@ import { onMounted, reactive } from 'vue';
 import { getResponseError, prepareQuery } from "@/helpers/api";
 import ModelService from '@/services/ModelService';
 import SettingService from '@/services/SettingService';
-import initClipboard from "../template/utlis/initClipboard";
-import initPrism from "../template/utlis/initPrism";
-import initPlayer from "../template/utlis/initVideoplayer";
 import { injectSvg } from "../template/utlis/injextSvg";
 
 export default {
@@ -41,9 +38,6 @@ export default {
     const alertStore = useAlertStore();
     const route = useRoute();
     injectSvg();
-    initPrism();
-    initClipboard();
-    initPlayer();
     // Variables reactivas
     const menus = reactive({
       total: 0,

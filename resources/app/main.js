@@ -12,6 +12,9 @@ import mdiPlugin from "@/plugins/mdicons"; // Ajusta la ruta a donde tengas `mdi
 import AOS from 'aos';
 import "aos/dist/aos.css";
 import VSmoothScroll from 'v-smooth-scroll';
+import initClipboard from "./views/pages/public/template/utlis/initClipboard";
+import initPrism from "./views/pages/public/template/utlis/initPrism";
+import initPlayer from "./views/pages/public/template/utlis/initVideoplayer";
 import { injectSvg } from "./views/pages/public/template/utlis/injextSvg";
 
 //Componentes
@@ -35,6 +38,12 @@ import ModalVideo from "./views/pages/public/template/components/base/ModalVideo
 
 const app = createApp(App)
     .use(AOS.init({ disable: 'phone' }));
+
+
+// Ejecutar utilidades después de montar la app
+initPrism();
+initClipboard();
+initPlayer();
 
 app.use(VSmoothScroll, {
     duration: 800, // Duración del scroll en milisegundos
