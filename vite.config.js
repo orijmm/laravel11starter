@@ -15,6 +15,7 @@ export default defineConfig({
                 'resources/styles/main.scss',
                 'resources/styles/scss/style.scss',
                 'resources/styles/plugins.css',
+                'resources/styles/colors/colors.css',
                 'resources/app/main.js',
             ],
             refresh: true,

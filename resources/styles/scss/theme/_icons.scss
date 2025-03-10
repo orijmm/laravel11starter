@@ -237,16 +237,16 @@ img.svg-inject {
 //----------------------------------------------------------//
 @font-face {
   font-family: "Unicons";
-  src: url("/assets/fonts/unicons/Unicons.woff2") format("woff2"),
-    url("/assets/fonts/unicons/Unicons.woff") format("woff");
+  src: url("/resources/styles/fonts/unicons/Unicons.woff2") format("woff2"),
+    url("/resources/styles/fonts/unicons/Unicons.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
 @font-face {
   font-family: "Custom";
-  src: url("/assets/fonts/custom/Custom.woff2") format("woff2"),
-    url("/assets/fonts/custom/Custom.woff") format("woff");
+  src: url("/resources/styles/fonts/custom/Custom.woff2") format("woff2"),
+    url("/resources/styles/fonts/custom/Custom.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: block;
