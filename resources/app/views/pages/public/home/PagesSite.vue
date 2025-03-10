@@ -85,8 +85,6 @@ export default {
       fetchPage();
     });
 
-    //TODO obtener config desde el backend
-
     return {
       menus,
       page

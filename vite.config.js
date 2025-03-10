@@ -13,6 +13,8 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/styles/main.scss',
+                'resources/styles/scss/style.scss',
+                'resources/styles/plugins.css',
                 'resources/app/main.js',
             ],
             refresh: true,

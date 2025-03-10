@@ -5,8 +5,8 @@
         <div class="w-full flex flex-row items-center justify-between py-6">
           <router-link to="/">
             <img v-if="menus.logo" :src="menus.logo" class="w-24 xl:w-28" alt="Logo" />
-            <img v-else src="@/views/pages/public/template/assets/img/logo/nefa.svg" class="w-24 xl:w-28" alt="Nefa Logo" />
-            
+            <img v-else src="" class="w-24 xl:w-28" alt="Nefa Logo" />
+
           </router-link>
           <button class="rounded-lg lg:hidden focus:outline-none focus:shadow-outline" @click="open = !open">
             <Segment v-if="!open" :size="24" />
@@ -18,11 +18,11 @@
           <NavLink :dataLink="menus.data" />
         </ul>
       </div>
-       <div v-if="authStore.user">
+      <!-- <div v-if="authStore.user">
         <BaseButton class="px-3 xl:px-5 py-1 mt-2 bg-inherit text-gradient border border-[#0c66ee]">
           <a href="/panel/dashboard">Panel</a>
         </BaseButton>
-       </div>
+      </div>
       <div v-else :class="[open ? 'flex' : 'hidden lg:flex']" class="space-x-3">
         <BaseButton class="px-3 xl:px-5 py-1 mt-2 bg-inherit text-gradient border border-[#0c66ee]">
           <a href="/login">Login</a>
@@ -30,7 +30,7 @@
         <BaseButton class="px-3 xl:px-5 py-1 mt-2 bg-gradient-to-r from-[#468ef9] to-[#0c66ee] text-white">
           <a href="/register">Register</a>
         </BaseButton>
-      </div>
+      </div> -->
     </div>
   </nav>
 </template>
@@ -38,11 +38,11 @@
 import NavLink from '@/views/pages/public/template/components/NavLink';
 import { ref } from 'vue';
 import { useAuthStore } from "@/stores/auth";
-import BaseButton from '@/views/pages/public/template/components/base/Button';
+// import BaseButton from '@/views/pages/public/template/components/base/Button';
 
 export default {
   name: 'BaseNavbar',
-  components: { NavLink, BaseButton },
+  components: { NavLink },
   props: {
     menus: {
       type: Object,
