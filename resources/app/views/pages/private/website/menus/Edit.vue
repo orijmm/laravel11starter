@@ -55,7 +55,8 @@
 </template>
 
 <script>
-import { defineComponent, onBeforeMount, reactive, ref } from "vue";
+import { defineComponent, onBeforeMount, reactive } from "vue";
+import alertHelpers from "@/helpers/alert";
 import { trans } from "@/helpers/i18n";
 import { fillObject, reduceProperties, clearObject } from "@/helpers/data"
 import { useRoute } from "vue-router";
@@ -188,8 +189,8 @@ export default defineComponent({
             switch (params.action.id) {
                 case 'delete':
                     alertHelpers.confirmWarning(function () {
-                        service.delete(params.item.id).then(function (response) {
-                            fetchPage(mainQuery);
+                        service.deleteCustom(`pages/menus/${params.item.id}/deleteitem`).then(function (response) {
+                            fetchItems();
                         });
                     })
                     break;

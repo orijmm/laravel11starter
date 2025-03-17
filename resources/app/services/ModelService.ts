@@ -51,6 +51,10 @@ export default abstract class ModelService extends BaseService {
         return super.delete(url + `/${object_id}`, {});
     }
 
+    public deleteCustom(customUrl = null) {
+        return super.delete(customUrl, {});
+    }
+
     public index(params = {}, customUrl = null) {
         let url = customUrl || this.url;
         let path = url;
