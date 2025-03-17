@@ -13,7 +13,7 @@
                 :src="service.icon"
                 class="icon-svg icon-svg-sm solid-mono"
                 :class="service.iconColorClass"
-                alt="photo"
+                alt="featureimg"
               />
               <h4>{{ service.title }}</h4>
               <p class="mb-2">{{ service.description }}</p>
@@ -62,10 +62,9 @@
             "
           >
             <div>
-              <img
-                src="/assets/img/icons/solid/bulb.svg"
+              <img src="/assets/img/icons/solid/bulb.svg"
                 class="icon-svg icon-svg-sm solid-mono text-fuchsia me-4"
-                alt="photo"
+                alt="imgfeatue"
               />
             </div>
             <div>
@@ -89,7 +88,7 @@
               <img
                 src="/assets/img/icons/solid/compare.svg"
                 class="icon-svg icon-svg-sm solid-mono text-violet me-4"
-                alt="photo"
+                alt="imgfeatue"
               />
             </div>
             <div>
@@ -113,7 +112,7 @@
               <img
                 src="/assets/img/icons/solid/delivery-box.svg"
                 class="icon-svg icon-svg-sm solid-mono text-green me-4"
-                alt="photo"
+                alt="imgfeatue"
               />
             </div>
             <div>
@@ -132,7 +131,7 @@
                 <img
                   src="/assets/img/photos/se5.jpg"
                   srcset="/assets/img/photos/se5@2x.jpg 2x"
-                  alt="photo"
+                  alt="imgfeatue"
                 />
               </figure>
             </div>
@@ -171,7 +170,7 @@
                 <img
                   src="/assets/img/photos/se6.jpg"
                   srcset="/assets/img/photos/se6@2x.jpg 2x"
-                  alt="photo"
+                  alt="imgfeatue"
                 />
               </figure>
             </div>
@@ -210,7 +209,7 @@
                 <img
                   src="/assets/img/photos/se7.jpg"
                   srcset="/assets/img/photos/se7@2x.jpg 2x"
-                  alt="photo"
+                  alt="imgfeatue"
                 />
               </figure>
             </div>

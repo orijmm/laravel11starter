@@ -1,10 +1,16 @@
 <template>
   <div class="violet-theme urbanist-font">
     <div class="content-wrapper">
-      <HeadersHeader />
+      <HeadersHome :menus="menus"/>
       <Hero />
       <Features />
+      <section>
+        <div class="py-16 py-md-18">
+        <BlockBackgorund />
+        </div>
+      </section>
       <Facts />
+
       <section class="wrapper bg-light">
         <div class="container py-16 py-md-18">
           <Testimonials />

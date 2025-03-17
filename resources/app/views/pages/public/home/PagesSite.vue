@@ -3,18 +3,17 @@
     <div class="relative">
       <div class="absolute top-0 left-0 w-full h-[125vh] sm:h-[225vh] lg:h-[125vh] cover-gradient-2 sm:cover-gradient">
       </div>
-      <BaseNavbar :menus="menus" />
+      <!-- <BaseNavbar :menus="menus" />
 
       <main class="text-neutral-800">
         <Content :page="page" />
       </main>
 
-      <Footer :menus="menus" />
+      <Footer :menus="menus" /> -->
     </div>
   </div>
 </template>
 <script>
-import BaseNavbar from '@/views/pages/public/template/components/base/Navbar';
 import Footer from '@/views/pages/public/template/components/base/Footer';
 import Content from '@/views/pages/public/home/Content';
 import { useRoute } from 'vue-router';
@@ -28,7 +27,7 @@ import SettingService from '@/services/SettingService';
 
 export default {
   name: 'DefaultLayout',
-  components: { BaseNavbar, Content, Footer },
+  components: { Content, Footer },
   setup() {
     const service = new ModelService;
     const settings = new SettingService();

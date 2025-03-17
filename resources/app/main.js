@@ -1,4 +1,4 @@
-import { createApp, nextTick } from 'vue'
+import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -18,7 +18,7 @@ import initPlayer from "./views/pages/public/template/utlis/initVideoplayer";
 import { injectSvg } from "./views/pages/public/template/utlis/injextSvg";
 
 //Componentes
-import HeadersHeader from "./views/pages/public/template/components/home/Header";
+import HeadersHome from "./views/pages/public/template/components/home/Header";
 import Hero from "./views/pages/public/template/components/home/Hero";
 import Features from "./views/pages/public/template/components/home/Features";
 import Facts from "./views/pages/public/template/components/home/Facts";
@@ -28,13 +28,14 @@ import Features2 from "./views/pages/public/template/components/home/Features2";
 import Footer from "./views/pages/public/template/components/home/Footer";
 import Footer2 from "./views/pages/public/template/components/home/Footer2";
 import Lightbox from "./views/pages/public/template/components/base/Lightbox";
-import Menu2 from "./views/pages/public/template/components/base/Menu2";
+import Navbar from "./views/pages/public/template/components/base/Navbar";
 import Socials from "./views/pages/public/template/components/base/Socials";
 import Links from "./views/pages/public/template/components/base/Links";
 import CircleProgressbar from "./views/pages/public/template/components/base/CircleProgressbar";
 import Scrolltop from "./views/pages/public/template/components/base/Scrolltop";
 import LineProgressbar from "./views/pages/public/template/components/base/LineProgressbar";
 import ModalVideo from "./views/pages/public/template/components/base/ModalVideo";
+import BlockBackgorund from "./views/pages/public/template/components/home/BlockBackgorund";
 
 const app = createApp(App)
     .use(AOS.init({ disable: 'phone' }));
@@ -61,7 +62,7 @@ const components = {
     // 'BaseNavbar': BaseNavbar,
     // 'Footer': Footer,
     // 'Content': Content,
-    'HeadersHeader': HeadersHeader,
+    'HeadersHome': HeadersHome,
     'Hero': Hero,
     'Features': Features,
     'Facts': Facts,
@@ -71,13 +72,14 @@ const components = {
     'Footer': Footer,
     'Footer2': Footer2,
     'Lightbox': Lightbox,
-    'Menu2': Menu2,
+    'Navbar': Navbar,
     'Socials': Socials,
     'Links': Links,
     'CircleProgressbar': CircleProgressbar,
     'Scrolltop': Scrolltop,
     'LineProgressbar': LineProgressbar,
-    'ModalVideo': ModalVideo
+    'ModalVideo': ModalVideo,
+    'BlockBackgorund': BlockBackgorund
 };
 Object.entries(components).forEach(([name, component]) => {
     app.component(name, component);

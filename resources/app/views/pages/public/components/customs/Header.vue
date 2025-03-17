@@ -1,73 +1,123 @@
 <template>
-    <BaseSection>
-        <div class="col-span-12 lg:col-span-6 mt-12 xl:mt-10 space-y-4 sm:space-y-6 px-6 text-center sm:text-left">
-            <span data-aos="fade-right" data-aos-once="true" class="text-base text-gradient font-semibold uppercase">{{
-                content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</span>
-            <h1 data-aos="fade-right" data-aos-once="true"
-                class="text-[2.5rem] sm:text-5xl xl:text-6xl font-bold leading-tight capitalize sm:pr-8 xl:pr-10">
-                {{ content[1]?.text ?? trans('global.phrases.hasto_add_content') }}<span class="text-header-gradient">{{
-                    content[2]?.text ?? trans('global.phrases.hasto_add_content') }}</span> {{ content[3]?.text ??
-                        trans('global.phrases.hasto_add_content') }}
-            </h1>
-            <p data-aos="fade-down" data-aos-once="true" data-aos-delay="300" class="paragraph hidden sm:block">
-                {{ content[4]?.text ?? trans('global.phrases.hasto_add_content') }}
-            </p>
-            <div data-aos="fade-up" data-aos-once="true" data-aos-delay="700"
-                class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mt-2">
-                <BaseButton class="max-w-full px-8 py-4 rounded-full bg-blue-500 text-white">
-                    {{ content[5]?.text ?? trans('global.phrases.hasto_add_content') }}
-                </BaseButton>
-                <BaseButton
-                    class="max-w-full px-6 py-4 bg-inherit text-gradient rounded-full border border-blue-500  flex items-center justify-center">
-                    <span>{{ content[6]?.text ?? trans('global.phrases.hasto_add_content') }}</span>
-                    <ChevronDown :size="20" class="mt-1 text-[#0c66ee]" />
-                </BaseButton>
-            </div>
+  <header class="wrapper">
+    <nav aria-label="menu-top" :class="`navbar navbar-expand-lg center-nav transparent position-absolute px-md-10 px-xxl-0 ${addClass2 ? 'fixed navbar-clone' : ''
+      } ${addClass
+        ? 'navbar-clone navbar-stick navbar-light'
+        : ' navbar-unstick navbar-dark'
+      } `">
+      <div class="container flex-lg-row flex-nowrap align-items-center">
+        <div class="navbar-brand w-100">
+          <router-link to="/">
+            <img class="logo-light" src="/assets/img/logo-light.png" srcset="/assets/img/logo-light@2x.png 2x"
+              alt="logos-light" />
+          </router-link>
         </div>
-        <div class="hidden sm:block col-span-12 lg:col-span-6">
-            <div class="w-full">
-                <img v-if="img[0] ?? false" :src="img[0]" data-aos="fade-up" data-aos-once="true" class="mt-4"
-                    :alt="img" />
-                <NoImage v-else />
+        <div id="ofCanvasBody" class="navbar-collapse offcanvas offcanvas-nav offcanvas-start">
+          <div class="offcanvas-header d-lg-none">
+            <h3 class="text-white fs-30 mb-0">Sandbox</h3>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"
+              @click="menuClose"></button>
+          </div>
+          <div class="offcanvas-body ms-lg-auto d-flex flex-column h-100">
+            <ul class="navbar-nav">
+              <Navbar :menus="menus" />
+            </ul>
+            <!-- /.navbar-nav -->
+            <div class="offcanvas-footer d-lg-none">
+              <div>
+                <a href="mailto:first.last@email.com" class="link-inverse">info@email.com</a>
+                <br />
+                00 (123) 456 78 90 <br />
+                <nav class="nav social social-white mt-4">
+                  <Socials />
+                </nav>
+                <!-- /.social -->
+              </div>
             </div>
+            <!-- /.offcanvas-footer -->
+          </div>
+          <!-- /.offcanvas-body -->
         </div>
-        <img data-aos="fade-up" data-aos-delay="300" alt="ellipse-1"
-            src="@/views/pages/public/template/assets/img/pattern/ellipse-1.png"
-            class="hidden sm:block absolute bottom-12 xl:bottom-16 left-4 xl:left-0 w-6" />
-        <img data-aos="fade-up" data-aos-delay="300" alt="ellipse-2"
-            src="@/views/pages/public/template/assets/img/pattern/ellipse-2.png"
-            class="hidden sm:block absolute top-4 sm:top-10 right-64 sm:right-96 xl:right-[32rem] w-6" />
-        <img data-aos="fade-up" data-aos-delay="300" alt="ellipse-3"
-            src="@/views/pages/public/template/assets/img/pattern/ellipse-3.png"
-            class="hidden sm:block absolute bottom-56 right-24 w-6" />
-        <img data-aos="fade-up" data-aos-delay="300" alt="ellipse-4"
-            src="@/views/pages/public/template/assets/img/pattern/star.png"
-            class="hidden sm:block absolute top-20 sm:top-28 right-16 lg:right-0 lg:left-[30rem] w-8" />
-    </BaseSection>
+        <!-- /.navbar-collapse -->
+        <div class="navbar-other w-100 d-flex ms-auto">
+          <ul class="navbar-nav flex-row align-items-center ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-search"><i
+                  class="uil uil-search"></i></a>
+            </li>
+            <li class="nav-item d-lg-none">
+              <button @click="menuOpen" class="hamburger offcanvas-nav-btn">
+                <span></span>
+              </button>
+            </li>
+          </ul>
+          <!-- /.navbar-nav -->
+        </div>
+        <!-- /.navbar-other -->
+        <div id="offcanvasBackdrop" @click="menuClose" class="offcanvas-backdrop fade" style="display: none"></div>
+      </div>
+      <!-- /.container -->
+    </nav>
+    <div class="offcanvas offcanvas-top bg-light" id="offcanvas-search" data-bs-scroll="true">
+      <div class="container d-flex flex-row py-6">
+        <form @submit.prevent="() => { }" class="search-form w-100">
+          <input type="text" class="form-control" placeholder="Type keyword and hit enter" />
+        </form>
+        <!-- /.search-form -->
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <!-- /.container -->
+    </div>
+    <!-- /.offcanvas -->
+  </header>
 </template>
+
 <script>
-import BaseSection from '@/views/pages/public/template/components/base/Section';
-import BaseButton from '@/views/pages/public/template/components/base/Button';
-import NoImage from '@/views/pages/private/website/components/noImage';
-import { trans } from "@/helpers/i18n";
-
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 export default {
-    components: { BaseSection, BaseButton, NoImage },
-    props: {
-        content: {
-            type: [Array],
-            default: [],
-        },
-        img: {
-            type: String,
-            default: [],
-        }
+  props: {
+    menus: {
+      type: Object,
+      required: true,
+      default: {},
     },
-    setup(props) {
+  },
+  setup() {
+    const menuOpen = () => {
+      document.getElementById("ofCanvasBody").classList.toggle("show");
+      document.getElementById("offcanvasBackdrop").style.display = "block";
+      document.getElementById("offcanvasBackdrop").classList.toggle("show");
+    };
 
-        return {
-            trans
-        }
+    const menuClose = () => {
+      document.getElementById("ofCanvasBody").classList.toggle("show");
+      document.getElementById("offcanvasBackdrop").classList.toggle("show");
+      setTimeout(() => {
+        document.getElementById("offcanvasBackdrop").style.display = "none";
+      }, 300);
+    };
+
+    const addClass = ref(false);
+    const addClass2 = ref(false);
+
+    const handleScroll = () => {
+      addClass2.value = window.scrollY >= 200;
+      addClass.value = window.scrollY >= 300;
+    };
+
+    onMounted(() => {
+      window.addEventListener("scroll", handleScroll);
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener("scroll", handleScroll);
+    });
+
+    return {
+      menuOpen,
+      menuClose
     }
+
+  }
 }
 </script>
