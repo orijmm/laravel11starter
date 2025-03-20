@@ -5,7 +5,7 @@
                 <slot></slot>
             </div>
             <div class="md:block hidden w-1/2">
-                <img :alt="AppConfig.name" class="rounded-2xl" src="/assets/images/login.jpg">
+                <img :alt="AppConfig.name" class="rounded-2xl" src="/assets/panel/images/login.jpg">
             </div>
         </div>
     </main>

@@ -15,13 +15,17 @@
         @vite(['resources/styles/main.scss', 'resources/app/main.js'])
     @else
         <!--Estilos del frontend website -->
-        @vite(['resources/styles/scss/style.scss', 'resources/styles/plugins.css', 'resources/styles/colors/colors.css', 'resources/app/main.js'])
+        @vite(['resources/styles/scss/style.scss',
+         'resources/styles/plugins.css',
+         'resources/styles/colors/colors.css',
+         'resources/app/main.js'//no quitar
+         ])
     @endif
 
     <script>
         window.AppConfig = {
             name: '{{ env('APP_NAME') }}',
-            logo: '{{ url('/assets/images/logo.png') }}',
+            logo: '{{ url('/assets/panel/images/logo.png') }}',
             url: '{{ env('APP_URL') }}',
             csrf: '{{ csrf_token() }}',
             defaultLocale: '{{ App\Models\Setting::where('id', 1)->first()['locale'], env('APP_LOCALE') }}',

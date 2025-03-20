@@ -44,6 +44,7 @@ import { default as PageComponentTypeEdit } from "@/views/pages/private/website/
 /* Web Site pages */
 import { default as PageIndexSite } from "@/views/pages/public/home/Index";
 import { default as PagesSite } from "@/views/pages/public/home/PagesSite";
+import { default as PageNotFoundSite } from "@/views/pages/public/template/components/not-found/404";
 
 import abilities from "@/stub/abilities";
 
@@ -285,6 +286,19 @@ const routes = [
         meta: { requiresAuth: false },
         component: PageNotFound,
     },
+    {
+        path: '/:pathMatch(.*)*',
+        name: "notFound",
+        meta: { requiresAuth: false },
+        beforeEnter: (to, from, next) => {
+            if (to.path.startsWith("/panel")) {
+                to.matched[0].components = { default: PageNotFound };
+            } else {
+                to.matched[0].components = { default: PageNotFoundSite };
+            }
+            next();
+        }
+    }
 ]
 
 export default routes;

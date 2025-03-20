@@ -4,11 +4,7 @@
 
 # Laravel Vue Starter
 
-The project was created to save myself time for redoing the same things all over again when starting a new Laravel/Vue project.
-
-The main goal of this project is to reduce code and make everything simpler for bootstrapping new projects. 
-
-The project is built with the following components:
+Componentes del panel:
 
 - Vue 3 / Pinia / VueRouter
 - Vue 3 Composition API
@@ -21,9 +17,7 @@ The project is built with the following components:
 - Media Library (by Spatie)
 - Bouncer (by JosephSilber)
 
-## ⚡️ How to install
-
-Installation is simple. Just like your ordinary Laravel app.
+## ⚡️ Como instalar
 
 1. `git clone`
 2. `cd laravel-vue-starter`
@@ -33,7 +27,7 @@ Installation is simple. Just like your ordinary Laravel app.
 6. `npm install`
 7. `npm run watch` (or if production `npm run build`)
 
-## ⚡️ How it works
+## ⚡️ Como funciona
 
 ### ➡️ Theming
 
@@ -54,73 +48,63 @@ module.exports = {
 };
 ```
 
-### ➡️ Authentication
+### ➡️ Authenticación
 
-The project ships with complete authentication boilerplate including:
 - Login
 - Register
 - Forget Password
 - Reset Password
 
-### ➡️ Authorization
+### ➡️ Auth
 
-The project is configured to use [Bouncer](https://github.com/JosephSilber/bouncer) package for managing authorization across your routes. Authorization is important security subject, so please consult bouncer's package documentation.
+Se usa Bouncer [Bouncer](https://github.com/JosephSilber/bouncer) para manejar los permisos.
 
 ### ➡️ Localization / i18n
 
-The project supports localization / i18n, to translate the front-end use `lang/{code}/frontend.php` file.
+El proyecto usa localización / i18n para traducir. Duplica el archivo segun el idioma `lang/{code}/frontend.php`.
 
 ### ➡️ Users CRUD 
 
-For your convenience the project comes with complete `users` crud that includes examples of:
+- List pagína con filtros y paginación
+- Edit/create páginas para crear y editar
 
-- List page with filters and pagination
-- Edit/create pages with form for editing user that includes ajax based role search field
+### ➡️ Estructura
 
-### ➡️ Structure
-
-The front-end code is located in `resources/app`. The code is organized in different directories to make things more readable.
+El frontend, es decir, vue se encuentra en: `resources/app`. El panel está organizado de la siguiente manera.
 
 | Directory    | Description                           |
 |--------------|---------------------------------------|
-| views        | The home of views                     |
-| + pages      | The home of the pages                 |
-| + icons      | The home of the icons                 |
-| + layouts    | The home of the global layouts        |
-| + components | The home of the reusable components   |
-| helpers      | The home of the helper utilites       |
-| plugins      | The home of the plugins configuration |
-| router       | The home of the router configuration  |
-| services     | The home of the HTTP services         |
-| stores       | The home of the Pinia stores          |
-| stub         | The home of the static constants      |
+| views        | Raiz de las vistas                     |
+| + pages      | Páginas                |
+| + icons      | iconos                 |
+| + layouts    | layouts del panel       |
+| + components | Componentes reusables   |
+| helpers      | Helpers       |
+| plugins      | plugins configuration |
+| router       | Rutas  |
+| services     | Servicios         |
+| stores       | Stores          |
+| stub         | Constantes estáticas   |
 
-### ➡️ Components
+### ➡️ Componentes del panel
+El proyecto incluye los componentes más útiles requeridos para una aplicación (sin elementos innecesarios), incluyendo:
 
-The project ships with the most useful components that are required for one application (no bullshit), including:
-
-| Name      | Description                                                | Parameters                                                                                                                                                     | Events                                   | Location               |
-|-----------|------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------|------------------------|
-| Page      | The main page wrapper                                      | title, breadcrumbs (array), actions (array of actions on top), is-loading                                                                                      | n/a                                      | views/layouts          |
-| Panel     | Panel wrapper for displaying panels into the pages         | title, is-loading, body-padding                                                                                                                                | n/a                                      | views/components       |
-| Modal     | Modal wrapper for creating modals                          | is-showing, is-loading, show-close                                                                                                                             | @close                                   | views/components       |
-| Form      | Form wrapper                                               | title, is-loading                                                                                                                                              | n/a                                      | views/components       |
-| Table     | A custom table with sorting and pagination support         | headers (array), records (array), actions (array of row actions), sorting (object of keys with true/false), pagination: (object of Laravel pagination data)    | @page-changed, @action, $sort            | views/components       |
-| Alert     | Alert component that pulls alrts from AlertStore           | n/a                                                                                                                                                            | n/a                                      | views/components       |
-| Badge     | Component that displays highlighted text with background   | theme (success, info, warning, danger, error)                                                                                                                  | n/a                                      | views/components       |
-| TextInput | Custom text field with type={text,..., textarea} support   | name, label, v-model, type (text,...,textarea, etc), show-label, required, disabled, placeholder                                                               | default                                  | views/components/input |
-| FileInput | File input with custom button and multiple choices support | name, label, v-model, show-label, required, disabled, placeholder, multiple, accept                                                                            | default + @click, @error, @input, @clear | views/components/input |
-| Dropdown  | Dropdown field with server side support                    | name, label, v-model, show-label, required, disabled, placeholder, multiple, server (endpoint), server-per-page (items per page), server-search-min-characters | default                                  | views/components/input |
-| Button    | Button/Router link component                               | label, icon, theme (success, info, warning, danger, error), disabled, to (:to is router url, when specified the button is rendered as router-link)             | default                                  | views/components/input |
-| Spinner   | Spinner icon used mostly for loading                       | text, text-new-line (whether to break the text under the spinner)                                                                                              | n/a                                      | views/components/icons |
-| Icon      | Icon wrapper, currently uses fork awesome                  | name (the icon name without the fa- part)                                                                                                                      | n/a                                      | views/components/icons |
-| Avatar    | Default Avatar icon                                        | n/a                                                                                                                                                            | n/a                                      | views/components/icons |
-
-Note: Please always look in the components, this table does not show everything.
-
-From here, you are on your own. Develop new pages, models, components, use professional IDE for development to improve your efficiency.
-
-<p><img width="100%" src="https://user-images.githubusercontent.com/5760249/210167222-e04312ac-46ef-4dcd-a4d5-00c3a207bf32.gif"/></p>
+| Name      | Descripción                                              | Parámetros                                                                                                                                                     | Eventos                                   | Ubicación              |
+|-----------|----------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------|------------------------|
+| Page      | Contenedor principal de la página                        | title, breadcrumbs (array), actions (array de acciones en la parte superior), is-loading                                                                      | n/a                                      | views/layouts          |
+| Panel     | Contenedor para mostrar paneles dentro de las páginas    | title, is-loading, body-padding                                                                                                                                | n/a                                      | views/components       |
+| Modal     | Contenedor para crear modales                            | is-showing, is-loading, show-close                                                                                                                             | @close                                   | views/components       |
+| Form      | Contenedor de formulario                                 | title, is-loading                                                                                                                                              | n/a                                      | views/components       |
+| Table     | Tabla personalizada con soporte para ordenación y paginación | headers (array), records (array), actions (array de acciones por fila), sorting (objeto con claves y valores true/false), pagination (objeto con datos de paginación de Laravel) | @page-changed, @action, @sort            | views/components       |
+| Alert     | Componente de alerta que obtiene alertas desde AlertStore | n/a                                                                                                                                                            | n/a                                      | views/components       |
+| Badge     | Componente que muestra texto resaltado con fondo         | theme (success, info, warning, danger, error)                                                                                                                  | n/a                                      | views/components       |
+| TextInput | Campo de texto personalizado con soporte para diferentes tipos (text, textarea, etc.) | name, label, v-model, type (text, textarea, etc.), show-label, required, disabled, placeholder                                                               | default                                  | views/components/input |
+| FileInput | Campo de carga de archivos con botón personalizado y soporte para múltiples selecciones | name, label, v-model, show-label, required, disabled, placeholder, multiple, accept                                                                            | default + @click, @error, @input, @clear | views/components/input |
+| Dropdown  | Campo desplegable con soporte para carga desde el servidor | name, label, v-model, show-label, required, disabled, placeholder, multiple, server (endpoint), server-per-page (ítems por página), server-search-min-characters | default                                  | views/components/input |
+| Button    | Componente de botón/enlace de router                    | label, icon, theme (success, info, warning, danger, error), disabled, to (:to es la URL del router; si se especifica, el botón se renderiza como un router-link) | default                                  | views/components/input |
+| Spinner   | Ícono de carga, utilizado principalmente para mostrar estados de carga | text, text-new-line (indica si se debe mostrar el texto debajo del spinner)                                             | n/a                                      | views/components/icons |
+| Icon      | Contenedor de ícono, actualmente usa Fork Awesome        | name (nombre del ícono sin la parte `fa-`)                                                                                                                    | n/a                                      | views/components/icons |
+| Avatar    | Ícono de avatar predeterminado                           | n/a                                                                                                                                                            | n/a                                      | views/components/icons |
 
 ### ➡️ CORS
 
@@ -142,31 +126,6 @@ APP_URL=http://localhost:8000
 
 SANCTUM_STATEFUL_DOMAINS=localhost:8000
 SESSION_DOMAIN=localhost
-```
-
-## ⚡️ Contributions
-
-Pull requests are welcome, feel free to contribute to this project.
-
-## ⚡️ License
-
-```
-Copyright (C) 2022 Darko Gjorgjijoski (https://darkog.com)
-
-This file is part of Laravel Vue Starter
-
-Laravel Vue Starter is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or
-(at your option) any later version.
-
-Laravel Vue Starter is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with Laravel Vue Starter. If not, see <https://www.gnu.org/licenses/>.
 ```
 
 ## Agregar elementos al menú panel de control
@@ -194,11 +153,14 @@ Agregar en router/routes.js:
 crear el componente en resources/app/views/pages/ruta/Componente.vue
 
 
-## Ciclo de vida y props
+## Ciclo de vida y props de los componentes (vue3)
 ```
+import { trans } from "@/helpers/i18n";
+import Form from "@/views/components/Form";
+
 export default defineComponent({
     components: {
-        Page
+        Form
     },
     props: {
         myProp: {
@@ -210,6 +172,7 @@ export default defineComponent({
         // Puedes acceder a props directamente en setup
         console.log(props.myProp);
 
+        //Debes retornar variables y metodos, si los vas a usar dentro de <template>
         return {
             trans
         };
