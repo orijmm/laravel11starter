@@ -2,7 +2,7 @@
     <Alert class="mb-4"></Alert>
     <Form id="login-form" @submit.prevent="onFormSubmit">
         <TextInput type="email" :label="trans('users.labels.email')" name="email" v-model="form.email" autocomplete="email" class="mb-2"/>
-        <TextInput type="password" :label="trans('users.labels.password')" name="password" v-model="form.password" class="mb-4"/>
+        <TextInput type="password" :label="trans('users.labels.password')" name="password" v-model="form.password" class="mb-4" autocomplete="off"/>
         <div class="text-center">
             <Button type="submit" :label="trans('global.buttons.login')"/>
         </div>
