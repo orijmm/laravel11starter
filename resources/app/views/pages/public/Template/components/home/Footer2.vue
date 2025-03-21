@@ -1,32 +1,6 @@
 <template>
-  <footer class="bg-light">
-    <div class="container pb-13 pb-md-15">
-      <div
-        class="card image-wrapper bg-full bg-image bg-overlay bg-overlay-300 mb-14"
-        style="background-image: url(/assets/img/photos/bg16.png)"
-      >
-        <div class="card-body p-10 p-xl-12">
-          <div class="row text-center">
-            <div class="col-xl-11 col-xxl-9 mx-auto">
-              <h2 class="fs-16 text-uppercase text-white mb-3">
-                Join Our Community
-              </h2>
-              <h3 class="display-3 mb-8 px-lg-8 text-white">
-                We are
-                <span class="underline-3 style-2 yellow">trusted</span> by over
-                5000+ clients. Join them now and grow your business.
-              </h3>
-            </div>
-            <!-- /column -->
-          </div>
-          <!-- /.row -->
-          <div class="d-flex justify-content-center">
-            <span><a class="btn btn-white rounded">Get Started</a></span>
-          </div>
-        </div>
-        <!--/.card-body -->
-      </div>
-      <!--/.card -->
+  <footer class="bg-gray">
+    <div class="container py-13 py-md-15">
       <div class="row gy-6 gy-lg-0">
         <div class="col-md-4 col-lg-3">
           <div class="widget">
@@ -34,7 +8,7 @@
               class="mb-4"
               src="/assets/img/logo-dark.png"
               srcset="/assets/img/logo-dark@2x.png 2x"
-              alt="photo"
+              alt="imgfooter"
             />
             <p class="mb-4">
               © {{ new Date().getFullYear() }} Sandbox.

@@ -13,7 +13,6 @@
                     que su Tienda Online tenga un mayor alcance. VENDA SUS PRODUCTOS ONLINE! 
                     </div>
                     <a href="#" class="btn btn-outline-gradient gradient-7 rounded-pill mt-3"><span>Cotize con nosotros</span></a>
-
                     <!-- /.swiper-container -->
                 </div>
                 <!-- /column -->

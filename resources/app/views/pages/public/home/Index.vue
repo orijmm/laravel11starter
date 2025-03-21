@@ -1,29 +1,12 @@
 <template>
   <div class="violet-theme urbanist-font">
     <div class="content-wrapper">
-      <HeadersHome :menus="menus"/>
-      <Hero />
-      <Features />
-      <section>
-        <div class="py-16 py-md-18">
-        <BlockBackgorund />
-        </div>
-      </section>
-      <Facts />
+      <HeadersHome :menus="menus" />
+      
+      <Content :page="page" />
 
-      <section class="wrapper bg-light">
-        <div class="container py-16 py-md-18">
-          <Testimonials />
-        </div>
-      </section>
-      <Projects />
-      <section class="wrapper bg-light">
-        <div class="container mt-8 pb-16 pb-md-18">
-          <Features2 />
-        </div>
-      </section>
     </div>
-    <Footer2 />
+    <Footer2 :menus="menus" />
   </div>
 </template>
 <script>

@@ -17,16 +17,20 @@ import initPrism from "./views/pages/public/template/utlis/initPrism";
 import initPlayer from "./views/pages/public/template/utlis/initVideoplayer";
 import { injectSvg } from "./views/pages/public/template/utlis/injextSvg";
 
+//Content
+import Content from "./views/pages/public/home/Content";
+
+
 //Componentes
-import HeadersHome from "./views/pages/public/template/components/home/Header";
-import Hero from "./views/pages/public/template/components/home/Hero";
-import Features from "./views/pages/public/template/components/home/Features";
-import Facts from "./views/pages/public/template/components/home/Facts";
-import Testimonials from "./views/pages/public/template/components/home/Testimonials";
-import Projects from "./views/pages/public/template/components/home/Projects";
-import Features2 from "./views/pages/public/template/components/home/Features2";
-import Footer from "./views/pages/public/template/components/home/Footer";
-import Footer2 from "./views/pages/public/template/components/home/Footer2";
+import HeadersHome from "./views/pages/public/components/customs/Header";
+import Hero from "./views/pages/public/components/customs/Hero";
+import Features from "./views/pages/public/components/customs/Features";
+import Facts from "./views/pages/public/components/customs/Facts";
+import Testimonials from "./views/pages/public/components/customs/Testimonials";
+import Projects from "./views/pages/public/components/customs/Projects";
+import Features2 from "./views/pages/public/components/customs/Features2";
+import Footer from "./views/pages/public/components/customs/Footer";
+import Footer2 from "./views/pages/public/components/customs/Footer2";
 import Lightbox from "./views/pages/public/template/components/base/Lightbox";
 import Navbar from "./views/pages/public/template/components/base/Navbar";
 import Socials from "./views/pages/public/template/components/base/Socials";
@@ -35,7 +39,7 @@ import CircleProgressbar from "./views/pages/public/template/components/base/Cir
 import Scrolltop from "./views/pages/public/template/components/base/Scrolltop";
 import LineProgressbar from "./views/pages/public/template/components/base/LineProgressbar";
 import ModalVideo from "./views/pages/public/template/components/base/ModalVideo";
-import BlockBackgorund from "./views/pages/public/template/components/home/BlockBackgorund";
+import BlockBackgorund from "./views/pages/public/components/customs/BlockBackgorund";
 
 const app = createApp(App)
     .use(AOS.init({ disable: 'phone' }));
@@ -61,7 +65,7 @@ app.use(mdiPlugin);
 const components = {
     // 'BaseNavbar': BaseNavbar,
     // 'Footer': Footer,
-    // 'Content': Content,
+    'Content': Content,
     'HeadersHome': HeadersHome,
     'Hero': Hero,
     'Features': Features,

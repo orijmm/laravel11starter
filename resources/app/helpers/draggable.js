@@ -4,9 +4,24 @@ export const toggleAddItems = function (obj, parent,parentid) {
 }
 
 export const updateOrder = function (obj, drag) {
+    const cols = {
+        1: 12,
+        2: 6,
+        3: 4,
+        4: 3,
+        5: 1,
+        6: 2,
+        7: 1,
+        8: 1,
+        9: 1,
+        10: 1,
+        12: 1
+    };
+
     drag = false;
     obj.forEach((item, index) => {
         item.order = index + 1; // El orden comienza desde 1
+        item.width = cols[obj.length];
     });
 }
 

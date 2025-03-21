@@ -6,8 +6,7 @@
                 <TextInput sizeInput="md" type="text" name="classes" v-model="classesCol.classes"
                     :label="trans('global.pages.column_classes')" />
                 <div class="flex items-end">
-                    <Button type="button" @click="updateColumn" :label="trans('global.buttons.add')"
-                        :disabled="!classesCol.classes" />
+                    <Button type="button" @click="updateColumn" :label="trans('global.buttons.add')" />
                 </div>
             </div>
         </Panel>

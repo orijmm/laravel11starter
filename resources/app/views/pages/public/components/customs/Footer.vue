@@ -92,6 +92,27 @@
   <Scrolltop />
 </template>
 
-<script setup></script>
+<script>
+import { trans } from "@/helpers/i18n";
+
+export default {
+  props: {
+    content: {
+      type: [Array],
+      default: [],
+    },
+    img: {
+      type: String,
+      default: [],
+    }
+  },
+  setup(props) {
+
+    return {
+      trans
+    }
+  }
+}
+</script>
 
 

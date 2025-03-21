@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { defineComponent, reactive, ref, watch } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import { toggleAddItems, deleteItems, updateOrder } from "@/helpers/draggable";
 import draggable from 'vuedraggable';
 import { trans } from "@/helpers/i18n";

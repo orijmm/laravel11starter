@@ -5,8 +5,7 @@
         <div
           class="col-md-6 col-xl-3"
           v-for="service in services4"
-          :key="service.id"
-        >
+          :key="service.id">
           <div class="card shadow-lg">
             <div class="card-body">
               <img
@@ -21,7 +20,7 @@
                 :href="service.learnMoreLink"
                 class="more hover"
                 :class="service.linkColorClass"
-                >Learn More</a
+                >{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</a
               >
             </div>
             <!--/.card-body -->
@@ -36,12 +35,12 @@
           class="col-md-10 offset-md-1 col-lg-8 offset-lg-2 mx-auto text-center"
         >
           <h2 class="fs-16 text-uppercase text-muted mb-3">
-            Why Choose Sandbox?
+            {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
           </h2>
           <h3 class="display-3 mb-10 px-xl-10 px-xxl-15">
-            Here are a few
-            <span class="underline-3 style-2 yellow">reasons</span> why our
-            customers choose Sandbox.
+            {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
+            <span class="underline-3 style-2 yellow">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</span> 
+            {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
           </h3>
         </div>
         <!-- /column -->
@@ -68,8 +67,8 @@
               />
             </div>
             <div>
-              <h4>Collect Ideas</h4>
-              <p>Duis mollis commodo luctus cursus commodo tortor mauris.</p>
+              <h4>{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
+              <p>{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</p>
             </div>
           </div>
         </li>
@@ -92,8 +91,8 @@
               />
             </div>
             <div>
-              <h4>Data Analysis</h4>
-              <p>Vivamus sagittis lacus augue fusce dapibus tellus nibh.</p>
+              <h4>{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
+              <p>{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</p>
             </div>
           </div>
         </li>
@@ -116,8 +115,8 @@
               />
             </div>
             <div>
-              <h4>Finalize Product</h4>
-              <p>Vestibulum ligula porta felis maecenas faucibus mollis.</p>
+              <h4>{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
+              <p>{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</p>
             </div>
           </div>
         </li>
@@ -137,14 +136,9 @@
             </div>
             <!--/column -->
             <div class="col-lg-6">
-              <h2 class="mb-3">Collect Ideas</h2>
+              <h2 class="mb-3">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</h2>
               <p>
-                Etiam porta sem malesuada magna mollis euismod. Donec
-                ullamcorper nulla non metus auctor fringilla. Morbi leo risus,
-                porta ac consectetur ac, vestibulum at eros. Fusce dapibus,
-                tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-                fermentum massa justo sit amet risus. Nullam quis risus eget
-                urna.
+                {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
               </p>
               <ul class="icon-list bullet-bg bullet-soft-fuchsia">
                 <li
@@ -156,7 +150,7 @@
                   <span>{{ item.text }}</span>
                 </li>
               </ul>
-              <a href="#" class="btn btn-fuchsia mt-2">Learn More</a>
+              <a href="#" class="btn btn-fuchsia mt-2">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</a>
             </div>
             <!--/column -->
           </div>
