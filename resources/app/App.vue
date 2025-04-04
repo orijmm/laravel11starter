@@ -155,7 +155,7 @@ export default {
             mainMenu: [
                 {
                     name: trans('global.pages.home'),
-                    icon: 'tachometer',
+                    icon: 'gear',
                     showDesktop: true,
                     showMobile: true,
                     requiresAbility: false,
@@ -340,6 +340,70 @@ export default {
                     ]
                 },
                 {
+                    name: trans('global.menu.maintainer'),
+                    icon: 'window-restore',
+                    showDesktop: true,
+                    showMobile: true,
+                    requiresAbility: false,
+                    to: '/panel/manteiners',
+                    children: [
+                        {
+                            name: trans('global.pages.services'),
+                            icon: '',
+                            showDesktop: true,
+                            showMobile: true,
+                            requiresAbility: false,
+                            to: '/panel/manteiners/services',
+                            children: [
+                                {
+                                    name: trans('global.buttons.add_new'),
+                                    icon: '',
+                                    showDesktop: true,
+                                    showMobile: true,
+                                    requiresAbility: false,
+                                    to: '/panel/manteiners/services/create',
+                                }
+                            ]
+                        },
+                        {
+                            name: trans('global.pages.testimonials'),
+                            icon: '',
+                            showDesktop: true,
+                            showMobile: true,
+                            requiresAbility: false,
+                            to: '/panel/manteiners/testimonials',
+                            children: [
+                                {
+                                    name: trans('global.buttons.add_new'),
+                                    icon: '',
+                                    showDesktop: true,
+                                    showMobile: true,
+                                    requiresAbility: false,
+                                    to: '/panel/manteiners/testimonials/create',
+                                }
+                            ]
+                        },
+                        {
+                            name: trans('global.pages.projects'),
+                            icon: '',
+                            showDesktop: true,
+                            showMobile: true,
+                            requiresAbility: false,
+                            to: '/panel/manteiners/projects',
+                            children: [
+                                {
+                                    name: trans('global.buttons.add_new'),
+                                    icon: '',
+                                    showDesktop: true,
+                                    showMobile: true,
+                                    requiresAbility: false,
+                                    to: '/panel/manteiners/projects/create',
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
                     name: trans('global.phrases.sign_out'),
                     icon: 'sign-out',
                     showDesktop: false,
@@ -355,12 +419,12 @@ export default {
             //     to: '',
             //     href: '#',
             // },
-            footerLeftLink: {
-                name: trans('global.buttons.documentation'),
-                icon: 'paperclip',
-                to: '',
-                href: '#',
-            },
+            // footerLeftLink: {
+            //     name: trans('global.buttons.documentation'),
+            //     icon: 'paperclip',
+            //     to: '',
+            //     href: '#',
+            // },
             isAccountDropdownOpen: false,
             isMobileMenuOpen: false,
             currentExpandedMenuItem: null,

@@ -41,6 +41,11 @@ import { default as PageComponentType } from "@/views/pages/private/website/comp
 import { default as PageComponentTypeCreate } from "@/views/pages/private/website/components/CreateType";
 import { default as PageComponentTypeEdit } from "@/views/pages/private/website/components/EditType";
 
+/* Matainers */
+import { default as PageService } from "@/views/pages/private/maintainers/services/Index";
+import { default as PageServiceCreate } from "@/views/pages/private/maintainers/services/Create";
+import { default as PageServiceEdit } from "@/views/pages/private/maintainers/services/Edit";
+
 /* Web Site pages */
 import { default as PageIndexSite } from "@/views/pages/public/home/Index";
 import { default as PagesSite } from "@/views/pages/public/home/PagesSite";
@@ -251,6 +256,30 @@ const routes = [
                         path: "componenttype/:id",
                         meta: { requiresAuth: true },
                         component: PageComponentTypeEdit,
+                    },
+                ]
+            },
+            {
+                name: "manteiners",
+                path: "manteiners",
+                children: [
+                    {
+                        name: "services.list",
+                        path: "services",
+                        meta: { requiresAuth: false },
+                        component: PageService,
+                    },
+                    {
+                        name: "services.create",
+                        path: "services/create",
+                        meta: { requiresAuth: true },
+                        component: PageServiceCreate,
+                    },
+                    {
+                        name: "services.edit",
+                        path: "services/:id",
+                        meta: { requiresAuth: true },
+                        component: PageServiceEdit,
                     },
                 ]
             }

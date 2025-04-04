@@ -102,6 +102,10 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
     });
 });
 
+Route::prefix('manteiners')->group(function () {
+    //
+});
+
 
 ### Website public routes ####
 Route::get('menus/searchname', [MenuController::class, 'showByName'])->name('menus.search.name');

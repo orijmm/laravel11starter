@@ -100,6 +100,7 @@ return [
             'component' => 'Component',
             'components' => 'Componentes',
             'componenttype' => 'Tipo de Componente',
+            'maintainer' => 'Mantenedores'
         ],
         'pages' => [
             'home' => 'Panel de control',
@@ -175,7 +176,11 @@ return [
             'filename_case_sensitive' => 'Nombre del archivo, sensible a mayúsculas y minúsculas',
             'case_sensitive' => 'Sensible a mayúsculas y minúsculas',
             'added_components' => 'Componentes agreagados',
-            'newsletter' => 'Subcripción'
+            'newsletter' => 'Subcripción',
+
+            'services' => 'Servicios',
+            'testimonials' => 'Testimonios',
+            'projects' => 'Proyectos',
         ],
         'phrases' => [
             'clear_filters' => 'Limpiar todo',

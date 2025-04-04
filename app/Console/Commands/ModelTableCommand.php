@@ -56,13 +56,6 @@ class ModelTableCommand extends Command
                 $modelContent
             );
 
-            // Insertar scopes personalizados
-            $modelContent = str_replace(
-                "}\n",
-                "\n    public function scopeListado(\$query)\n    {\n        // Define the listado scope\n    }\n\n    public function scopeSearch(\$query, \$term)\n    {\n        // Define the search scope\n    }\n}\n",
-                $modelContent
-            );
-
             // Escribir el contenido modificado de nuevo al archivo
             file_put_contents($modelPath, $modelContent);
 
