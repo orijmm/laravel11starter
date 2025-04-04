@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Str;
 
-class ControllerRequestModel extends Command
+class ControllerRequestModelCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -37,8 +37,11 @@ class ControllerRequestModel extends Command
             $tableName = Str::snake(Str::pluralStudly($modelName));
 
             $modelFolder = $this->argument('folder');
+
+            $flagExistModel = true;
             if (!File::exists($modelPath)) {
                 $this->call('make:model', ['name' => $modelFolder ? $modelFolder . "\\" . $modelName : $modelName]);
+                $flagExistModel = false;
             }
 
             $modelClass = $modelFolder ? "App\\Models\\{$modelFolder}\\{$modelName}" : "App\\Models\\{$modelName}";
@@ -52,7 +55,9 @@ class ControllerRequestModel extends Command
                 return !in_array($column, ['id', 'created_at', 'updated_at', 'deleted_at']);
             });
             // Generar archivos
-            $this->modelContent($modelName, $fillable, $tableName, $modelFolder);
+            if(!$flagExistModel){
+                $this->modelContent($modelName, $fillable, $tableName, $modelFolder);
+            }
             $this->createController($modelName, $modelFolder);
             $this->modelResource($modelName);
             $this->createStoreRequest($modelName, $fillable, $tableName);
@@ -79,11 +84,11 @@ class ControllerRequestModel extends Command
             $requestName = "Store{$modelName}Request";
             $modelPath = app_path("Http/Requests/{$requestName}.php");
 
-            $columnsNullable = Schema::getColumns($tableName);
+            // $columnsNullable = Schema::getColumns($tableName);
 
-            $this->info($columnsNullable);
-
+            
             $fields = collect($fillable)->map(function ($field) {
+                // $this->info(json_encode($columnsNullable, JSON_PRETTY_PRINT));
                 return "'$field' => 'required',";
             })->implode("\n            ");
 
@@ -198,7 +203,6 @@ class ControllerRequestModel extends Command
             // Ruta al archivo del modelo
             $modelPath = app_path("Models/{$model}.php");
 
-            $this->info("testtt {$modelPath} ");
             // Leer el contenido del modelo generado
             $modelContent = file_get_contents($modelPath);
 
