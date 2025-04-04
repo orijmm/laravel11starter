@@ -11,21 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('component_types', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->text('img_src')->nullable();
+            $table->string('img_alt', 100)->nullable();
+            $table->text('link')->nullable();
+            $table->string('category', 100)->nullable();
+            $table->string('title', 100);
             $table->text('description')->nullable();
-            $table->string('filename')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('component_types');
+        Schema::dropIfExists('projects');
     }
 };

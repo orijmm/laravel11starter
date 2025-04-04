@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
+use Str;
 
 class ControllerRequestModel extends Command
 {
@@ -21,106 +22,136 @@ class ControllerRequestModel extends Command
      *
      * @var string
      */
-    protected $description = 'Crea controlador y store/update request';
+    protected $description = 'Crea controlador y store/update request. La tabla debe estar creada';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $modelName = $this->argument('model');
-        $modelFolder = $this->argument('folder');
-        $modelClass = $modelFolder ? "App\\Models\\{$modelFolder}\\{$modelName}" : "App\\Models\\{$modelName}";
-        $tableName = (new $modelClass)->getTable();
+        try {
+            //Argumentos
+            $modelName = $this->argument('model');
+            $modelPath = app_path("Models/{$modelName}.php");//opcional
+            //Nombre tabla se convierte en plural y a snake case
+            $tableName = Str::snake(Str::pluralStudly($modelName));
 
-        // Obtener columnas de la tabla
-        $columns = Schema::getColumnListing($tableName);
+            $modelFolder = $this->argument('folder');
+            if (!File::exists($modelPath)) {
+                $this->call('make:model', ['name' => $modelFolder ? $modelFolder . "\\" . $modelName : $modelName]);
+            }
 
-        // Filtrar columnas 'id', 'created_at', y 'updated_at'
-        $fillable = array_filter($columns, function ($column) {
-            return !in_array($column, ['id', 'created_at', 'updated_at', 'deleted_at']);
-        });
+            $modelClass = $modelFolder ? "App\\Models\\{$modelFolder}\\{$modelName}" : "App\\Models\\{$modelName}";
+            $tableName = (new $modelClass)->getTable();
 
-        // Generar archivos
-        $this->createController($modelName, $modelFolder);
-        $this->modelResource($modelName);
-        $this->createStoreRequest($modelName, $fillable);
-        $this->createUpdateRequest($modelName, $fillable);
+            // Obtener columnas de la tabla
+            $columns = Schema::getColumnListing($tableName);
+
+            // Filtrar columnas 'id', 'created_at', y 'updated_at'
+            $fillable = array_filter($columns, function ($column) {
+                return !in_array($column, ['id', 'created_at', 'updated_at', 'deleted_at']);
+            });
+            // Generar archivos
+            $this->modelContent($modelName, $fillable, $tableName, $modelFolder);
+            $this->createController($modelName, $modelFolder);
+            $this->modelResource($modelName);
+            $this->createStoreRequest($modelName, $fillable, $tableName);
+            $this->createUpdateRequest($modelName, $fillable);
+        } catch (\Exception $e) {
+            $this->error("Error: " . $e->getMessage());
+        }
     }
 
     protected function createController($modelName, $modelFolder = null)
     {
-        $controllerName = $modelFolder ? "{$modelFolder}\\{$modelName}Controller" : "{$modelName}Controller";
-        Artisan::call('make:controller', ['name' => $controllerName, '--resource' => true, '--model' => "Pages/{$modelName}", '--requests' => true, '--api' => true]);
-        $this->info("Controller $controllerName created successfully.");
+        try {
+            $controllerName = $modelFolder ? "{$modelFolder}\\{$modelName}Controller" : "{$modelName}Controller";
+            Artisan::call('make:controller', ['name' => $controllerName, '--resource' => true, '--model' => $modelFolder ? "{$modelFolder}/{$modelName}" : $modelName, '--requests' => true, '--api' => true]);
+            $this->info("Controller $controllerName created successfully.");
+        } catch (\Exception $e) {
+            $this->warn("Error: " . $e->getMessage());
+        }
     }
 
-    protected function createStoreRequest($modelName, $fillable)
+    protected function createStoreRequest($modelName, $fillable, $tableName = null)
     {
-        $requestName = "Store{$modelName}Request";
-        $modelPath = app_path("Http/Requests/{$requestName}.php");
+        try {
+            $requestName = "Store{$modelName}Request";
+            $modelPath = app_path("Http/Requests/{$requestName}.php");
 
-        $fields = collect($fillable)->map(function ($field) {
-            return "'$field' => 'required',";
-        })->implode("\n            ");
+            $columnsNullable = Schema::getColumns($tableName);
 
-        // Leer el contenido del modelo generado
-        $modelContent = file_get_contents($modelPath);
+            $this->info($columnsNullable);
 
-        // Insertar $table, $fillable, y SoftDeletes en el modelo
-        $modelContent = str_replace(
-            "return false;",
-            "return true;",
-            $modelContent
-        );
-        $modelContent = str_replace(
-            "//",
-            $fields,
-            $modelContent
-        );
+            $fields = collect($fillable)->map(function ($field) {
+                return "'$field' => 'required',";
+            })->implode("\n            ");
 
-        file_put_contents($modelPath, $modelContent);
+            // Leer el contenido del modelo generado
+            $modelContent = file_get_contents($modelPath);
+
+            // Insertar $table, $fillable, y SoftDeletes en el modelo
+            $modelContent = str_replace(
+                "return false;",
+                "return true;",
+                $modelContent
+            );
+            $modelContent = str_replace(
+                "//",
+                $fields,
+                $modelContent
+            );
+
+            file_put_contents($modelPath, $modelContent);
+        } catch (\Exception $e) {
+            $this->error("Error: " . $e->getMessage());
+        }
     }
 
     protected function createUpdateRequest($modelName, $fillable)
     {
-        $requestName = "Update{$modelName}Request";
-        $modelPath = app_path("Http/Requests/{$requestName}.php");
+        try {
+            $requestName = "Update{$modelName}Request";
+            $modelPath = app_path("Http/Requests/{$requestName}.php");
 
-        $fields = collect($fillable)->map(function ($field) {
-            return "'$field' => 'required',";
-        })->implode("\n            ");
+            $fields = collect($fillable)->map(function ($field) {
+                return "'$field' => 'required',";
+            })->implode("\n            ");
 
-        // Leer el contenido del modelo generado
-        $modelContent = file_get_contents($modelPath);
+            // Leer el contenido del modelo generado
+            $modelContent = file_get_contents($modelPath);
 
-        // Insertar $table, $fillable, y SoftDeletes en el modelo
-        $modelContent = str_replace(
-            "return false;",
-            "return true;",
-            $modelContent
-        );
-        $modelContent = str_replace(
-            "//",
-            $fields,
-            $modelContent
-        );
+            // Insertar $table, $fillable, y SoftDeletes en el modelo
+            $modelContent = str_replace(
+                "return false;",
+                "return true;",
+                $modelContent
+            );
+            $modelContent = str_replace(
+                "//",
+                $fields,
+                $modelContent
+            );
 
-        file_put_contents($modelPath, $modelContent);
-        $this->info("Request $requestName created successfully.");
+            file_put_contents($modelPath, $modelContent);
+            $this->info("Request $requestName created successfully.");
+        } catch (\Exception $e) {
+            $this->error("Error: " . $e->getMessage());
+        }
     }
 
     protected function modelResource($modelName)
     {
-        //Crear ModeloResources.php
-        $resourceName = "{$modelName}Resource"; // Nombre del recurso que vas a crear
-        $filePathResources = app_path("Http/Resources/{$resourceName}.php"); // Ruta del archivo
-        // Crear el directorio si no existe
-        if (!File::exists(app_path('Http/Resources'))) {
-            File::makeDirectory(app_path('Http/Resources'), 0755, true);
-        }
-        // Contenido del archivo Resource
-        $fileContent = <<<PHP
+        try {
+            //Crear ModeloResources.php
+            $resourceName = "{$modelName}Resource"; // Nombre del recurso que vas a crear
+            $filePathResources = app_path("Http/Resources/{$resourceName}.php"); // Ruta del archivo
+            // Crear el directorio si no existe
+            if (!File::exists(app_path('Http/Resources'))) {
+                File::makeDirectory(app_path('Http/Resources'), 0755, true);
+            }
+            // Contenido del archivo Resource
+            $fileContent = <<<PHP
         <?php
         
         namespace App\Http\Resources;
@@ -146,12 +177,54 @@ class ControllerRequestModel extends Command
         
         PHP;
 
-        // Guardar el archivo
-        if (!File::exists($filePathResources)) {
-            File::put($filePathResources, $fileContent);
-            $this->info("Resource {$resourceName} creado exitosamente en app/Http/Resources.");
-        } else {
-            $this->error("El resource {$resourceName} ya existe.");
+            // Guardar el archivo
+            if (!File::exists($filePathResources)) {
+                File::put($filePathResources, $fileContent);
+                $this->info("Resource {$resourceName} creado exitosamente en app/Http/Resources.");
+            } else {
+                $this->error("El resource {$resourceName} ya existe.");
+            }
+        } catch (\Exception $e) {
+            $this->error("Error: " . $e->getMessage());
+        }
+    }
+
+    protected function modelContent($modelName, $fillable, $tableName,  $modelFolder = null)
+    {
+        try {
+            $fillableArray = "['" . implode("', '", $fillable) . "']";
+
+            $model = $modelFolder ? "{$modelFolder}\\{$modelName}" : $modelName;
+            // Ruta al archivo del modelo
+            $modelPath = app_path("Models/{$model}.php");
+
+            $this->info("testtt {$modelPath} ");
+            // Leer el contenido del modelo generado
+            $modelContent = file_get_contents($modelPath);
+
+            // Insertar $table, $fillable, y SoftDeletes en el modelo
+            $modelContent = str_replace(
+                "use Illuminate\Database\Eloquent\Model;",
+                "use Illuminate\Database\Eloquent\Model;\nuse Illuminate\Database\Eloquent\SoftDeletes;",
+                $modelContent
+            );
+            $modelContent = str_replace(
+                "//",
+                "use SoftDeletes;\n\n    protected \$table = '$tableName';\n\n    protected \$fillable = $fillableArray;",
+                $modelContent
+            );
+
+            // Insertar scopes personalizados
+            // $modelContent = str_replace(
+            //     "}\n",
+            //     "\n    public function scopeListado(\$query)\n    {\n        // Define the listado scope\n    }\n\n    public function scopeSearch(\$query, \$term)\n    {\n        // Define the search scope\n    }\n}\n",
+            //     $modelContent
+            // );
+
+            // Escribir el contenido modificado de nuevo al archivo
+            file_put_contents($modelPath, $modelContent);
+        } catch (\Exception $e) {
+            $this->error("Error: " . $e->getMessage());
         }
     }
 }

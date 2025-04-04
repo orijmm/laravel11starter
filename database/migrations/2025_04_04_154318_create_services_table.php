@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('component_types', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('icon_color_class', 100)->nullable();
+            $table->string('icon', 40)->nullable();
+            $table->string('title', 100);
             $table->text('description')->nullable();
-            $table->string('filename')->nullable();
+            $table->text('link')->nullable();
+            $table->string('link_color_class', 100)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('component_types');
+        Schema::dropIfExists('services');
     }
 };

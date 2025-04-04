@@ -59,7 +59,7 @@ class ModelTableResourceControllerCommand extends Command
 
             // Insertar $table, $fillable, y SoftDeletes en el modelo
             $modelContent = str_replace(
-                "use HasFactory;",
+                "//",
                 "use HasFactory, SoftDeletes;\n\n    protected \$table = '$tableName';\n\n    protected \$fillable = $fillableArray;",
                 $modelContent
             );

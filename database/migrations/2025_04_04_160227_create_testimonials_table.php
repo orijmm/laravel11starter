@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('component_types', function (Blueprint $table) {
+        Schema::create('testimonials', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->string('filename')->nullable();
+            $table->string('name', 100);
+            $table->text('quote');
+            $table->text('avatar_src')->nullable();
+            $table->text('img_src')->nullable();
+            $table->string('img_alt', 100)->nullable();
+            $table->string('role', 100)->nullable();
+            $table->text('bg_class')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -26,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('component_types');
+        Schema::dropIfExists('testimonials');
     }
 };
