@@ -2,26 +2,15 @@
   <section class="wrapper bg-light">
     <div class="container pb-15 pb-md-17">
       <div class="row gx-md-5 gy-5 mt-n19 mb-14 mb-md-17">
-        <div
-          class="col-md-6 col-xl-3"
-          v-for="service in services4"
-          :key="service.id">
+        <div class="col-md-6 col-xl-3" v-for="service in services4" :key="service.id">
           <div class="card shadow-lg">
             <div class="card-body">
-              <img
-                :src="service.icon"
-                class="icon-svg icon-svg-sm solid-mono"
-                :class="service.iconColorClass"
-                alt="featureimg"
-              />
+              <div class="icon-svg" :class="service.iconColorClass"
+                :style="{ '-webkit-mask-image': `url(${service.icon})`, 'mask-image': `url(${service.icon})` }"></div>
               <h4>{{ service.title }}</h4>
               <p class="mb-2">{{ service.description }}</p>
-              <a
-                :href="service.learnMoreLink"
-                class="more hover"
-                :class="service.linkColorClass"
-                >{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</a
-              >
+              <a :href="service.learnMoreLink" class="more hover" :class="service.linkColorClass">{{ content[0]?.text ??
+                trans('global.phrases.hasto_add_content') }}</a>
             </div>
             <!--/.card-body -->
           </div>
@@ -31,40 +20,31 @@
       </div>
       <!--/.row -->
       <div class="row">
-        <div
-          class="col-md-10 offset-md-1 col-lg-8 offset-lg-2 mx-auto text-center"
-        >
+        <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2 mx-auto text-center">
           <h2 class="fs-16 text-uppercase text-muted mb-3">
             {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
           </h2>
           <h3 class="display-3 mb-10 px-xl-10 px-xxl-15">
             {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
-            <span class="underline-3 style-2 yellow">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</span> 
+            <span class="underline-3 style-2 yellow">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content')
+              }}</span>
             {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
           </h3>
         </div>
         <!-- /column -->
       </div>
       <!-- /.row -->
-      <ul
-        class="nav nav-tabs nav-tabs-bg nav-tabs-shadow-lg d-flex justify-content-between nav-justified flex-lg-row flex-column"
-      >
+      <ul class="nav nav-tabs nav-tabs-bg nav-tabs-shadow-lg d-flex justify-content-between nav-justified flex-lg-row flex-column">
         <li class="nav-item">
-          <div
-            :class="`nav-link d-flex flex-row cursor-pointer ${
-              activeTab == 1 ? 'active' : ''
-            }`"
-            @click="
+          <div :class="`nav-link d-flex flex-row cursor-pointer ${activeTab == 1 ? 'active' : ''
+            }`" @click="
               () => {
                 activeTab = 1;
               }
-            "
-          >
+            ">
             <div>
-              <img src="/assets/img/icons/solid/bulb.svg"
-                class="icon-svg icon-svg-sm solid-mono text-fuchsia me-4"
-                alt="imgfeatue"
-              />
+              <div class="icon-svg icon-svg-sm solid-mono text-fuchsia me-4"
+                :style="{ '-webkit-mask-image': `url(/assets/img/icons/solid/bulb.svg)`, 'mask-image': `url(/assets/img/icons/solid/bulb.svg)` }"></div>
             </div>
             <div>
               <h4>{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
@@ -73,22 +53,15 @@
           </div>
         </li>
         <li class="nav-item">
-          <div
-            :class="`nav-link d-flex flex-row cursor-pointer ${
-              activeTab == 2 ? 'active' : ''
-            }`"
-            @click="
+          <div :class="`nav-link d-flex flex-row cursor-pointer ${activeTab == 2 ? 'active' : ''
+            }`" @click="
               () => {
                 activeTab = 2;
               }
-            "
-          >
+            ">
             <div>
-              <img
-                src="/assets/img/icons/solid/compare.svg"
-                class="icon-svg icon-svg-sm solid-mono text-violet me-4"
-                alt="imgfeatue"
-              />
+                <div class="icon-svg icon-svg-sm solid-mono text-violet me-4"
+                :style="{ '-webkit-mask-image': `url(/assets/img/icons/solid/compare.svg)`, 'mask-image': `url(/assets/img/icons/solid/compare.svg)` }"></div>
             </div>
             <div>
               <h4>{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
@@ -97,22 +70,15 @@
           </div>
         </li>
         <li class="nav-item">
-          <div
-            :class="`nav-link d-flex flex-row cursor-pointer ${
-              activeTab == 3 ? 'active' : ''
-            }`"
-            @click="
+          <div :class="`nav-link d-flex flex-row cursor-pointer ${activeTab == 3 ? 'active' : ''
+            }`" @click="
               () => {
                 activeTab = 3;
               }
-            "
-          >
+            ">
             <div>
-              <img
-                src="/assets/img/icons/solid/delivery-box.svg"
-                class="icon-svg icon-svg-sm solid-mono text-green me-4"
-                alt="imgfeatue"
-              />
+                <div class="icon-svg icon-svg-sm solid-mono text-green me-4"
+                :style="{ '-webkit-mask-image': `url(/assets/img/icons/solid/delivery-box.svg)`, 'mask-image': `url(/assets/img/icons/solid/delivery-box.svg)` }"></div>
             </div>
             <div>
               <h4>{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
@@ -127,11 +93,7 @@
           <div class="row gx-lg-8 gx-xl-12 gy-10 align-items-center">
             <div class="col-lg-6">
               <figure class="rounded shadow-lg">
-                <img
-                  src="/assets/img/photos/se5.jpg"
-                  srcset="/assets/img/photos/se5@2x.jpg 2x"
-                  alt="imgfeatue"
-                />
+                <img src="/assets/img/photos/se5.jpg" srcset="/assets/img/photos/se5@2x.jpg 2x" alt="imgfeatue" />
               </figure>
             </div>
             <!--/column -->
@@ -141,16 +103,13 @@
                 {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
               </p>
               <ul class="icon-list bullet-bg bullet-soft-fuchsia">
-                <li
-                  v-for="(item, index) in checklistItems.slice(0, 3)"
-                  :key="index"
-                  :class="{ 'mt-3': index > 0 }"
-                >
+                <li v-for="(item, index) in checklistItems.slice(0, 3)" :key="index" :class="{ 'mt-3': index > 0 }">
                   <span><i class="uil uil-check"></i></span>
                   <span>{{ item.text }}</span>
                 </li>
               </ul>
-              <a href="#" class="btn btn-fuchsia mt-2">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</a>
+              <a href="#" class="btn btn-fuchsia mt-2">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content')
+                }}</a>
             </div>
             <!--/column -->
           </div>
@@ -161,11 +120,7 @@
           <div class="row gx-lg-8 gx-xl-12 gy-10 align-items-center">
             <div class="col-lg-6 order-lg-2">
               <figure class="rounded shadow-lg">
-                <img
-                  src="/assets/img/photos/se6.jpg"
-                  srcset="/assets/img/photos/se6@2x.jpg 2x"
-                  alt="imgfeatue"
-                />
+                <img src="/assets/img/photos/se6.jpg" srcset="/assets/img/photos/se6@2x.jpg 2x" alt="imgfeatue" />
               </figure>
             </div>
             <!--/column -->
@@ -180,11 +135,7 @@
                 urna.
               </p>
               <ul class="icon-list bullet-bg bullet-soft-violet">
-                <li
-                  v-for="(item, index) in checklistItems.slice(0, 3)"
-                  :key="index"
-                  :class="{ 'mt-3': index > 0 }"
-                >
+                <li v-for="(item, index) in checklistItems.slice(0, 3)" :key="index" :class="{ 'mt-3': index > 0 }">
                   <span><i class="uil uil-check"></i></span>
                   <span>{{ item.text }}</span>
                 </li>
@@ -200,11 +151,7 @@
           <div class="row gx-lg-8 gx-xl-12 gy-10 align-items-center">
             <div class="col-lg-6">
               <figure class="rounded shadow-lg">
-                <img
-                  src="/assets/img/photos/se7.jpg"
-                  srcset="/assets/img/photos/se7@2x.jpg 2x"
-                  alt="imgfeatue"
-                />
+                <img src="/assets/img/photos/se7.jpg" srcset="/assets/img/photos/se7@2x.jpg 2x" alt="imgfeatue" />
               </figure>
             </div>
             <!--/column -->
@@ -219,11 +166,7 @@
                 urna.
               </p>
               <ul class="icon-list bullet-bg bullet-soft-green">
-                <li
-                  v-for="(item, index) in checklistItems.slice(0, 3)"
-                  :key="index"
-                  :class="{ 'mt-3': index > 0 }"
-                >
+                <li v-for="(item, index) in checklistItems.slice(0, 3)" :key="index" :class="{ 'mt-3': index > 0 }">
                   <span><i class="uil uil-check"></i></span>
                   <span>{{ item.text }}</span>
                 </li>
@@ -248,25 +191,25 @@ import { checklistItems, services4 } from "./data/features";
 import { ref } from 'vue';
 
 export default {
-    props: {
-        content: {
-            type: [Array],
-            default: [],
-        },
-        img: {
-            type: String,
-            default: [],
-        }
+  props: {
+    content: {
+      type: [Array],
+      default: [],
     },
-    setup(props) {
-      const activeTab = ref(1);
-
-        return {
-            trans,
-            activeTab,
-            checklistItems,
-            services4
-        }
+    img: {
+      type: String,
+      default: [],
     }
+  },
+  setup(props) {
+    const activeTab = ref(1);
+
+    return {
+      trans,
+      activeTab,
+      checklistItems,
+      services4
+    }
+  }
 }
 </script>

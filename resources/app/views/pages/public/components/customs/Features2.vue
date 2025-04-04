@@ -35,6 +35,7 @@
            {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
           </h3>
           <div class="row gy-6">
+            <!-- TODO REVISAR -->
             <div v-for="(elm, i) in features" :key="i" class="col-md-6">
               <div class="d-flex flex-row">
                 <div>
