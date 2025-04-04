@@ -28,7 +28,7 @@
 <script>
 
 import { trans } from "@/helpers/i18n";
-import { watch, onMounted, defineComponent, reactive } from 'vue';
+import { watch, onMounted, defineComponent, reactive, ref } from 'vue';
 import { getResponseError, prepareQuery } from "@/helpers/api";
 import { toUrl } from "@/helpers/routing";
 import { useAlertStore } from "@/stores";
@@ -36,6 +36,7 @@ import { isAllowed } from "@/helpers/isreq";
 import alertHelpers from "@/helpers/alert";
 import Page from "@/views/layouts/Page";
 import Table from "@/views/components/Table";
+import Avatar from "@/views/components/icons/Avatar";
 import Filters from "@/views/components/filters/Filters";
 import FiltersRow from "@/views/components/filters/FiltersRow";
 import FiltersCol from "@/views/components/filters/FiltersCol";
@@ -49,10 +50,11 @@ export default defineComponent({
         FiltersRow,
         Filters,
         Page,
-        Table
+        Table,
+        Avatar
     },
     setup() {
-        const service = new ManteinerService('services');
+        const service = new ManteinerService('testimonials');
         const alertStore = useAlertStore();
         const mainQuery = reactive({
             page: 1,
@@ -71,12 +73,12 @@ export default defineComponent({
         });
 
         const page = reactive({
-            id: 'list_services',
-            title: trans('global.pages.services'),
+            id: 'list_testimonials',
+            title: trans('global.pages.testimonials'),
             breadcrumbs: [
                 {
-                    name: trans('global.pages.services'),
-                    to: toUrl('/manteiners/services'),
+                    name: trans('global.pages.testimonials'),
+                    to: toUrl('/manteiners/testimonials'),
                     active: true,
                 }
             ],
@@ -91,8 +93,8 @@ export default defineComponent({
                     id: 'new',
                     name: trans('global.buttons.add_new'),
                     icon: "fa fa-plus",
-                    to: toUrl('/manteiners/services/create'),
-                    isAllowed: isAllowed(['create_services'])
+                    to: toUrl('/manteiners/testimonials/create'),
+                    isAllowed: isAllowed(['create_testimonials'])
                 }
             ],
             toggleFilters: false,
@@ -117,8 +119,8 @@ export default defineComponent({
                     name: trans('global.actions.edit'),
                     icon: "fa fa-edit",
                     showName: false,
-                    to: toUrl('/manteiners/services/{id}'),
-                    isAllowed: isAllowed(['edit_services'])
+                    to: toUrl('/manteiners/testimonials/{id}'),
+                    isAllowed: isAllowed(['edit_testimonials'])
                 },
                 delete: {
                     id: 'delete',
@@ -126,7 +128,7 @@ export default defineComponent({
                     icon: "fa fa-trash",
                     showName: false,
                     danger: true,
-                    isAllowed: isAllowed(['delete_services'])
+                    isAllowed: isAllowed(['delete_testimonials'])
                 }
             },
             loading: false,

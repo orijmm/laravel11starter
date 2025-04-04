@@ -46,6 +46,14 @@ import { default as PageService } from "@/views/pages/private/maintainers/servic
 import { default as PageServiceCreate } from "@/views/pages/private/maintainers/services/Create";
 import { default as PageServiceEdit } from "@/views/pages/private/maintainers/services/Edit";
 
+import { default as PageTestimonial } from "@/views/pages/private/maintainers/testimonials/Index";
+import { default as PageTestimonialCreate } from "@/views/pages/private/maintainers/testimonials/Create";
+import { default as PageTestimonialEdit } from "@/views/pages/private/maintainers/testimonials/Edit";
+
+import { default as PageProject } from "@/views/pages/private/maintainers/projects/Index";
+import { default as PageProjectCreate } from "@/views/pages/private/maintainers/projects/Create";
+import { default as PageProjectEdit } from "@/views/pages/private/maintainers/projects/Edit";
+
 /* Web Site pages */
 import { default as PageIndexSite } from "@/views/pages/public/home/Index";
 import { default as PagesSite } from "@/views/pages/public/home/PagesSite";
@@ -281,6 +289,42 @@ const routes = [
                         meta: { requiresAuth: true },
                         component: PageServiceEdit,
                     },
+                    {
+                        name: "testimonials.list",
+                        path: "testimonials",
+                        meta: { requiresAuth: false },
+                        component: PageTestimonial,
+                    },
+                    {
+                        name: "testimonials.create",
+                        path: "testimonials/create",
+                        meta: { requiresAuth: true },
+                        component: PageTestimonialCreate,
+                    },
+                    {
+                        name: "testimonials.edit",
+                        path: "testimonials/:id",
+                        meta: { requiresAuth: true },
+                        component: PageTestimonialEdit,
+                    },
+                    {
+                        name: "projects.list",
+                        path: "projects",
+                        meta: { requiresAuth: false },
+                        component: PageProject,
+                    },
+                    {
+                        name: "projects.create",
+                        path: "projects/create",
+                        meta: { requiresAuth: true },
+                        component: PageProjectCreate,
+                    },
+                    {
+                        name: "projects.edit",
+                        path: "projects/:id",
+                        meta: { requiresAuth: true },
+                        component: PageProjectEdit,
+                    }
                 ]
             }
         ]

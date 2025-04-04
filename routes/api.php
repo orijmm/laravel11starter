@@ -10,6 +10,9 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Pages\TemplateController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\TestimonialController;
 use App\Utilities\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -103,7 +106,12 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
 });
 
 Route::prefix('manteiners')->group(function () {
-    //
+    #Service
+    Route::apiResource('services', ServiceController::class);
+    #Testimonial
+    Route::apiResource('testimonials', TestimonialController::class);
+    #Project
+    Route::apiResource('projects', ProjectController::class);
 });
 
 

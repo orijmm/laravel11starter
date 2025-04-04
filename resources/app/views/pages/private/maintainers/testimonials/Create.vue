@@ -1,7 +1,7 @@
 <template>
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction">
         <Panel>
-            <Form id="create-service" @submit.prevent="onSubmit">
+            <Form id="create-testimonial" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name" :label="trans('users.labels.first_name')" :labelsmall="trans('global.pages.lowercase')"/>
                 <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description" :label="trans('users.labels.description')"/>
             </Form>
@@ -25,7 +25,7 @@ import Form from "@/views/components/Form";
 import ManteinerService from "@/services/ManteinerService";
 
 export default defineComponent({
-    name: 'PageServiceCreate',
+    name: 'PageTestimonialCreate',
     components: {Form, FileInput, Panel, Alert, TextInput, Button, Page},
     setup() {
         const {user} = useAuthStore();
@@ -35,17 +35,17 @@ export default defineComponent({
         });
 
         const page = reactive({
-            id: 'create_services',
-            title: trans('global.pages.service_create'),
+            id: 'create_testimonials',
+            title: trans('global.pages.testimonial_create'),
             filters: false,
             breadcrumbs: [
                 {
-                    name: trans('global.pages.services'),
-                    to: toUrl('/manteiners/services'),
+                    name: trans('global.pages.testimonials'),
+                    to: toUrl('/manteiners/testimonials'),
 
                 },
                 {
-                    name: trans('global.pages.service_create'),
+                    name: trans('global.pages.testimonial_create'),
                     active: true,
                 }
             ],
@@ -54,7 +54,7 @@ export default defineComponent({
                     id: 'back',
                     name: trans('global.buttons.back'),
                     icon: "fa fa-angle-left",
-                    to: toUrl('/manteiners/services'),
+                    to: toUrl('/manteiners/testimonials'),
                     theme: 'outline',
                 },
                 {
@@ -66,7 +66,7 @@ export default defineComponent({
             ]
         });
 
-        const service = new ManteinerService('services');
+        const service = new ManteinerService('testimonials');
 
         function onAction(data) {
             switch(data.action.id) {
@@ -77,7 +77,7 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleCreate('create-service', reduceProperties(form, [], 'id')).then(() => {
+            service.handleCreate('create-testimonial', reduceProperties(form, [], 'id')).then(() => {
                 clearObject(form)
             })
             return false;

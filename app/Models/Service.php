@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\Filterable;
+use App\Traits\Searchable;
 
 class Service extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Filterable, Searchable;
 
     protected $table = 'services';
 

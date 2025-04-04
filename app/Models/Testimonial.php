@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\Filterable;
+use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Testimonial extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Filterable, Searchable;
 
     protected $table = 'testimonials';
 
