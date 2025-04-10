@@ -22,12 +22,12 @@ class StoreServiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'icon_color_class' => 'required',
-            'icon' => 'required',
+            'icon_color_class' => 'nullable',
+            'icon' => 'nullable',
             'title' => 'required',
-            'description' => 'required',
-            'link' => 'required',
-            'link_color_class' => 'required',
+            'description' => 'nullable',
+            'link' => 'nullable',
+            'link_color_class' => 'nullable',
         ];
     }
 }

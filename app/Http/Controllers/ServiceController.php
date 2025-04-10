@@ -6,6 +6,7 @@ use App\Http\Requests\StoreServiceRequest;
 use App\Http\Requests\UpdateServiceRequest;
 use App\Http\Resources\ServiceResource;
 use App\Models\Service;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -63,15 +64,19 @@ class ServiceController extends Controller
      */
     public function update(UpdateServiceRequest $request, Service $service)
     {
-        $this->authorize('edit_service');
+        try {
+            $this->authorize('edit_service');
 
-        $data = $request->validated();
-        $newservice = $service->update($data);
+            $data = $request->validated();
+            $newservice = $service->update($data);
 
-        if ($newservice) {
-            return $this->responseUpdateSuccess(['record' => $service]);
-        } else {
-            return $this->responseUpdateFail();
+            if ($newservice) {
+                return $this->responseUpdateSuccess(['record' => $service]);
+            } else {
+                return $this->responseUpdateFail();
+            }
+        } catch (QueryException $e) {
+            return $this->responseFail(getQueryErrors($e));
         }
     }
 

@@ -82,6 +82,11 @@ return [
             'twitter' => 'X (twitter)',
             'tiktok' => 'Tiktok',
             'google_maps' => 'Google Maps',
+            'icon_color_class' =>  'Clase Color icono',
+            'icon' =>  'Icono',
+            'link' =>  'Link',
+            'link_color_class' =>  'Clase Color link',
+            'select' => 'Seleccione'
         ],
     ],
     'messages' => [
@@ -141,7 +146,7 @@ return [
             'page_edit' => 'Editar página',
             'without_page' => 'Sin página',
             'without_parent' => 'Sin Padre',
-            
+
             'menus' => 'Menús',
             'menu' => 'Menú',
             'menu_items' => 'Items de Menús',
@@ -179,8 +184,14 @@ return [
             'newsletter' => 'Subcripción',
 
             'services' => 'Servicios',
+            'service_create' => 'Nuevo servicio',
+            'service_edit' => 'Editar servicio',
             'testimonials' => 'Testimonios',
+            'testimonial_create' => 'Nuevo testimonio',
+            'testimonial_edit' => 'Editar testimonio',
             'projects' => 'Proyectos',
+            'project_create' => 'Nuevo proyecto',
+            'project_edit' => 'Editar proyecto',
         ],
         'phrases' => [
             'clear_filters' => 'Limpiar todo',
@@ -233,7 +244,14 @@ return [
             'hasto_add_img' => 'Debe agregar una imagen al componente.',
             'not_accepted_type' => 'tiene un tipo no permitido. ',
             'data_bussiness' => 'Datos de la empresa',
-            'newsletter_text' => 'No te pierdas ninguna de nuestras novedades.'
+            'newsletter_text' => 'No te pierdas ninguna de nuestras novedades.',
+            'add_path_icon' => 'Agregar el path o nombre del icono',
+
+            'error_query_general' => 'Error en la base de datos',
+            'duplicate_entry' => 'Ya existe un registro con ese valor',
+            'integrity_constraint_violation' => 'No se puede realizar la operación por una relación inválida',
+            'value_toolong' => 'El valor ingresado es demasiado largo para el campo',
+            'unknown_column' => 'Columna desconocida en la consulta',
         ],
         'buttons' => [
             'add_new' => 'Añadir nuevo',

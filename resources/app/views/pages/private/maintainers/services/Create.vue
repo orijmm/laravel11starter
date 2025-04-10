@@ -1,37 +1,55 @@
 <template>
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction">
-        <Panel>
+        <Panel otherClass="overflow-visible">
             <Form id="create-service" @submit.prevent="onSubmit">
-                <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name" :label="trans('users.labels.first_name')" :labelsmall="trans('global.pages.lowercase')"/>
-                <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description" :label="trans('users.labels.description')"/>
+                <TextInput class="mb-4" type="text" :required="true" name="title" v-model="form.title"
+                    :label="trans('users.labels.title')" />
+                <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
+                    :label="trans('users.labels.description')" />
+                <TextInput class="mb-4" type="text" :required="true" name="icon" v-model="form.icon"
+                    :label="trans('users.labels.icon')" :labelsmall="trans('global.phrases.add_path_icon')" />
+                <Dropdown class="mb-4" :options="textcolor" name="icon_color_class"
+                    :placeholder="trans('users.labels.select')" v-model="form.icon_color_class"
+                    :label="trans('users.labels.icon_color_class')" />
+                <TextInput class="mb-4" type="text" :required="true" name="link" v-model="form.link"
+                    :label="trans('users.labels.link')" />
+                <Dropdown class="mb-4" :options="linkcolor" name="link_color_class"
+                    :placeholder="trans('users.labels.select')" v-model="form.link_color_class"
+                    :label="trans('users.labels.link_color_class')" />
             </Form>
         </Panel>
     </Page>
 </template>
 
 <script>
-import {defineComponent, reactive} from "vue";
-import {trans} from "@/helpers/i18n";
-import {useAuthStore} from "@/stores/auth";
+import { defineComponent, reactive } from "vue";
+import { trans } from "@/helpers/i18n";
+import { useAuthStore } from "@/stores/auth";
 import Button from "@/views/components/input/Button";
 import TextInput from "@/views/components/input/TextInput";
+import Dropdown from "@/views/components/input/Dropdown";
 import Alert from "@/views/components/Alert";
 import Panel from "@/views/components/Panel";
 import Page from "@/views/layouts/Page";
 import FileInput from "@/views/components/input/FileInput";
-import {clearObject, reduceProperties} from "@/helpers/data";
-import {toUrl} from "@/helpers/routing";
+import { clearObject, reduceProperties } from "@/helpers/data";
+import { toUrl } from "@/helpers/routing";
 import Form from "@/views/components/Form";
 import ManteinerService from "@/services/ManteinerService";
+import { textcolor, linkcolor } from "@/views/pages/private/maintainers/frontUtils/colors";
 
 export default defineComponent({
     name: 'PageServiceCreate',
-    components: {Form, FileInput, Panel, Alert, TextInput, Button, Page},
+    components: { Form, FileInput, Panel, Alert, TextInput, Dropdown, Button, Page },
     setup() {
-        const {user} = useAuthStore();
+        const { user } = useAuthStore();
         const form = reactive({
-            name: undefined,
+            icon_color_class: undefined,
+            icon: undefined,
+            title: undefined,
             description: undefined,
+            link: undefined,
+            link_color_class: undefined
         });
 
         const page = reactive({
@@ -69,7 +87,7 @@ export default defineComponent({
         const service = new ManteinerService('services');
 
         function onAction(data) {
-            switch(data.action.id) {
+            switch (data.action.id) {
                 case 'submit':
                     onSubmit();
                     break;
@@ -77,7 +95,7 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleCreate('create-service', reduceProperties(form, [], 'id')).then(() => {
+            service.handleCreate('create-service', reduceProperties(form, ['icon_color_class', 'link_color_class'], 'id')).then(() => {
                 clearObject(form)
             })
             return false;
@@ -89,12 +107,10 @@ export default defineComponent({
             form,
             page,
             onSubmit,
-            onAction
+            onAction,
+            textcolor,
+            linkcolor
         }
     }
 })
 </script>
-
-<style scoped>
-
-</style>

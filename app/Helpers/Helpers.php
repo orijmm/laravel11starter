@@ -2,8 +2,6 @@
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Arr;
-use App\Traits\Filterable;
 
 if (!function_exists('responseMetaLinks')) {
     function responseMetaLinks($query, $numPages)
@@ -43,7 +41,7 @@ if (!function_exists('filter')) {
 if (!function_exists('filterArrObj')) {
     function filterArrObj($arrObj, $search, $field)
     {
-        return collect($arrObj)->filter(function ($item) use($search, $field) {
+        return collect($arrObj)->filter(function ($item) use ($search, $field) {
             return str_contains(strtolower($item[$field]), strtolower($search));
         })->values();
     }
@@ -59,5 +57,37 @@ if (!function_exists('filterArr')) {
         return array_filter($arr, function ($item) use ($search) {
             return str_contains(strtolower($item), strtolower($search));
         });
+    }
+}
+
+/*
+* Obtener nombre campo de error en base de datos
+* Argumentos: Illuminate\Database\QueryException $e
+* Return String
+*/
+if (!function_exists('getQueryErrors')) {
+    function getQueryErrors($e)
+    {
+        $queryErrors = [
+            1062 => trans('frontend.global.phrases.duplicate_entry'),
+            1451 => trans('frontend.global.phrases.integrity_constraint_violation'),
+            1452 => trans('frontend.global.phrases.integrity_constraint_violation'),
+            1406 => trans('frontend.global.phrases.value_toolong'),
+            1054 => trans('frontend.global.phrases.unknown_column')
+        ];
+
+        if(!array_key_exists($e->errorInfo[1], $queryErrors)){
+            return trans('frontend.global.phrases.error_query_general').' '.$e->getMessage();
+        }
+
+        preg_match("/Data too long for column '(.+?)'/", $e->getMessage(), $getErrorField);
+
+        $fieldError = isset($getErrorField[1]) ? trans('frontend.users.labels.'.$getErrorField[1]) : '';
+
+        if ($e->errorInfo[1] == 1406) {
+            return $queryErrors[$e->errorInfo[1]].': '.$fieldError;
+        }
+        
+        return trans('frontend.global.phrases.error_query_general').' '.$e->getMessage();
     }
 }

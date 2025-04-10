@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->id();
             $table->string('icon_color_class', 100)->nullable();
-            $table->string('icon', 40)->nullable();
+            $table->string('icon', 100)->nullable();
             $table->string('title', 100);
             $table->text('description')->nullable();
             $table->text('link')->nullable();

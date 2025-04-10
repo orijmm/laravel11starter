@@ -5,8 +5,8 @@
             <Filters @clear="onFiltersClear">
                 <FiltersRow>
                     <FiltersCol>
-                        <TextInput name="name" :label="trans('users.labels.first_name')"
-                            v-model="mainQuery.filters.name.value"></TextInput>
+                        <TextInput name="title" :label="trans('users.labels.title')"
+                            v-model="mainQuery.filters.title.value"></TextInput>
                     </FiltersCol>
                     <FiltersCol>
                         <TextInput name="description" :label="trans('users.labels.description')"
@@ -20,6 +20,11 @@
             <Table :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" :actions="table.actions"
                 :records="table.records" :pagination="table.pagination" :is-loading="table.loading"
                 @page-changed="onTablePageChange" @action="onTableAction" @sort="onTableSort">
+                <template v-slot:content-description="props">
+                    <div>
+                        {{ truncate(props.item.description, 80) }}
+                    </div>
+                </template>
             </Table>
         </template>
     </Page>
@@ -30,6 +35,7 @@
 import { trans } from "@/helpers/i18n";
 import { watch, onMounted, defineComponent, reactive } from 'vue';
 import { getResponseError, prepareQuery } from "@/helpers/api";
+import { truncate } from "@/helpers/stringConvert"
 import { toUrl } from "@/helpers/routing";
 import { useAlertStore } from "@/stores";
 import { isAllowed } from "@/helpers/isreq";
@@ -59,7 +65,7 @@ export default defineComponent({
             search: '',
             sort: '',
             filters: {
-                name: {
+                title: {
                     value: '',
                     comparison: '='
                 },
@@ -100,12 +106,11 @@ export default defineComponent({
 
         const table = reactive({
             headers: {
-                id: trans('users.labels.id_pound'),
-                name: trans('users.labels.first_name'),
+                title: trans('users.labels.title'),
                 description: trans('users.labels.description'),
             },
             sorting: {
-                name: true,
+                title: true,
             },
             pagination: {
                 meta: null,
@@ -205,7 +210,8 @@ export default defineComponent({
             onPageAction,
             onFiltersClear,
             mainQuery,
-            isAllowed
+            isAllowed,
+            truncate
         }
 
     },
