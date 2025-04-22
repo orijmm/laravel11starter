@@ -155,7 +155,13 @@ return [
         'password' => 'contraseña',
         'roles' => 'Roles',
         'email' => 'Correo',
-        'filename' => 'Nombre de archivo'
+        'filename' => 'Nombre de archivo',
+        'quote' => 'Cita',
+        'avatar_src' => 'Archivo de avatar',
+        'img_src' => 'Archivo de imagen',
+        'img_alt' => 'Título de imagen',
+        'role' => 'Rol',
+        'bg_class' => 'Clase de fondo'
     ],
 
 ];

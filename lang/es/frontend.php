@@ -86,7 +86,12 @@ return [
             'icon' =>  'Icono',
             'link' =>  'Link',
             'link_color_class' =>  'Clase Color link',
-            'select' => 'Seleccione'
+            'select' => 'Seleccione',
+            'quote' => 'Cita',
+            'img_alt' => 'Título de imagen',
+            'bg_class' => 'Clase de fondo',
+            'img_src' => 'Archivo de imagen',
+            'category' => 'Categoria'
         ],
     ],
     'messages' => [

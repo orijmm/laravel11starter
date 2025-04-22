@@ -38,15 +38,19 @@ class ServiceController extends Controller
      */
     public function store(StoreServiceRequest $request)
     {
-        $this->authorize('create_service');
+        try {
+            $this->authorize('create_service');
 
-        $data = $request->validated();
-        $newservice = Service::query()->create($data);
+            $data = $request->validated();
+            $newservice = Service::query()->create($data);
 
-        if ($newservice) {
-            return $this->responseStoreSuccess(['record' => $newservice]);
-        } else {
-            return $this->responseStoreFail();
+            if ($newservice) {
+                return $this->responseStoreSuccess(['record' => $newservice]);
+            } else {
+                return $this->responseStoreFail();
+            }
+        } catch (QueryException $e) {
+            return $this->responseFail(getQueryErrors($e));
         }
     }
 

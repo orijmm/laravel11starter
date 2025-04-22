@@ -8,10 +8,6 @@
                         <TextInput name="name" :label="trans('users.labels.first_name')"
                             v-model="mainQuery.filters.name.value"></TextInput>
                     </FiltersCol>
-                    <FiltersCol>
-                        <TextInput name="description" :label="trans('users.labels.description')"
-                            v-model="mainQuery.filters.description.value"></TextInput>
-                    </FiltersCol>
                 </FiltersRow>
             </Filters>
         </template>
@@ -64,10 +60,6 @@ export default defineComponent({
                 name: {
                     value: '',
                     comparison: '='
-                },
-                description: {
-                    value: '',
-                    comparison: '='
                 }
             }
         });
@@ -104,7 +96,6 @@ export default defineComponent({
             headers: {
                 id: trans('users.labels.id_pound'),
                 name: trans('users.labels.first_name'),
-                description: trans('users.labels.description'),
             },
             sorting: {
                 name: true,

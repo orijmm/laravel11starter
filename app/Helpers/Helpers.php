@@ -76,6 +76,10 @@ if (!function_exists('getQueryErrors')) {
             1054 => trans('frontend.global.phrases.unknown_column')
         ];
 
+        if(!isset($e->errorInfo[1])){
+            return $e->getMessage();
+        }
+
         if(!array_key_exists($e->errorInfo[1], $queryErrors)){
             return trans('frontend.global.phrases.error_query_general').' '.$e->getMessage();
         }

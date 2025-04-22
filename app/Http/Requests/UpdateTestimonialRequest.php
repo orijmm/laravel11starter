@@ -24,11 +24,11 @@ class UpdateTestimonialRequest extends FormRequest
         return [
             'name' => 'required',
             'quote' => 'required',
-            'avatar_src' => 'required',
-            'img_src' => 'required',
-            'img_alt' => 'required',
-            'role' => 'required',
-            'bg_class' => 'required',
+            'avatar_src' => 'nullable',
+            'img_src' => 'nullable',
+            'img_alt' => 'nullable',
+            'role' => 'nullable',
+            'bg_class' => 'nullable',
         ];
     }
 }

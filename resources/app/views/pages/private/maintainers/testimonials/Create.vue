@@ -1,37 +1,56 @@
 <template>
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction">
-        <Panel>
+        <Panel otherClass="overflow-visible">
             <Form id="create-testimonial" @submit.prevent="onSubmit">
-                <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name" :label="trans('users.labels.first_name')" :labelsmall="trans('global.pages.lowercase')"/>
-                <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description" :label="trans('users.labels.description')"/>
+                <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name"
+                    :label="trans('users.labels.name')" />
+                <TextInput class="mb-4" type="text" :required="true" name="quote" v-model="form.quote"
+                    :label="trans('users.labels.quote')" />
+                <TextInput class="mb-4" type="text" :required="true" name="avatar_src" v-model="form.avatar_src"
+                    :label="trans('users.labels.avatar')" />
+                <TextInput class="mb-4" type="text" :required="true" name="img_src" v-model="form.img_src"
+                    :label="trans('users.labels.img')" />
+                <TextInput class="mb-4" type="text" :required="true" name="img_alt" v-model="form.img_alt"
+                    :label="trans('users.labels.img_alt')" />
+                <TextInput class="mb-4" type="text" :required="true" name="role" v-model="form.role"
+                    :label="trans('users.labels.role')" />
+                <Dropdown class="mb-4" :options="bgcolor" name="bg_class" :placeholder="trans('users.labels.select')"
+                    v-model="form.bg_class" :label="trans('users.labels.bg_class')" />
             </Form>
         </Panel>
     </Page>
 </template>
 
 <script>
-import {defineComponent, reactive} from "vue";
-import {trans} from "@/helpers/i18n";
-import {useAuthStore} from "@/stores/auth";
+import { defineComponent, reactive } from "vue";
+import { trans } from "@/helpers/i18n";
+import { useAuthStore } from "@/stores/auth";
 import Button from "@/views/components/input/Button";
 import TextInput from "@/views/components/input/TextInput";
 import Alert from "@/views/components/Alert";
 import Panel from "@/views/components/Panel";
 import Page from "@/views/layouts/Page";
 import FileInput from "@/views/components/input/FileInput";
-import {clearObject, reduceProperties} from "@/helpers/data";
-import {toUrl} from "@/helpers/routing";
+import { clearObject, reduceProperties } from "@/helpers/data";
+import { toUrl } from "@/helpers/routing";
 import Form from "@/views/components/Form";
 import ManteinerService from "@/services/ManteinerService";
+import Dropdown from "@/views/components/input/Dropdown";
+import { bgcolor } from "@/views/pages/private/maintainers/frontUtils/colors";
 
 export default defineComponent({
     name: 'PageTestimonialCreate',
-    components: {Form, FileInput, Panel, Alert, TextInput, Button, Page},
+    components: { Form, FileInput, Panel, Alert, TextInput, Button, Page, Dropdown },
     setup() {
-        const {user} = useAuthStore();
+        const { user } = useAuthStore();
         const form = reactive({
             name: undefined,
-            description: undefined,
+            quote: undefined,
+            avatar_src: undefined,
+            img_src: undefined,
+            img_alt: undefined,
+            role: undefined,
+            bg_class: undefined
         });
 
         const page = reactive({
@@ -69,7 +88,7 @@ export default defineComponent({
         const service = new ManteinerService('testimonials');
 
         function onAction(data) {
-            switch(data.action.id) {
+            switch (data.action.id) {
                 case 'submit':
                     onSubmit();
                     break;
@@ -77,7 +96,7 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleCreate('create-testimonial', reduceProperties(form, [], 'id')).then(() => {
+            service.handleCreate('create-testimonial', reduceProperties(form, ['bg_class'], 'id')).then(() => {
                 clearObject(form)
             })
             return false;
@@ -89,12 +108,9 @@ export default defineComponent({
             form,
             page,
             onSubmit,
-            onAction
+            onAction,
+            bgcolor
         }
     }
 })
 </script>
-
-<style scoped>
-
-</style>

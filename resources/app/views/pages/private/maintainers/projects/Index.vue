@@ -5,12 +5,8 @@
             <Filters @clear="onFiltersClear">
                 <FiltersRow>
                     <FiltersCol>
-                        <TextInput name="name" :label="trans('users.labels.first_name')"
-                            v-model="mainQuery.filters.name.value"></TextInput>
-                    </FiltersCol>
-                    <FiltersCol>
-                        <TextInput name="description" :label="trans('users.labels.description')"
-                            v-model="mainQuery.filters.description.value"></TextInput>
+                        <TextInput name="title" :label="trans('users.labels.title')"
+                            v-model="mainQuery.filters.title.value"></TextInput>
                     </FiltersCol>
                 </FiltersRow>
             </Filters>
@@ -61,11 +57,7 @@ export default defineComponent({
             search: '',
             sort: '',
             filters: {
-                name: {
-                    value: '',
-                    comparison: '='
-                },
-                description: {
+                title: {
                     value: '',
                     comparison: '='
                 }
@@ -94,7 +86,7 @@ export default defineComponent({
                     name: trans('global.buttons.add_new'),
                     icon: "fa fa-plus",
                     to: toUrl('/manteiners/projects/create'),
-                    isAllowed: isAllowed(['create_project'])
+                    isAllowed: isAllowed(['create_projects'])
                 }
             ],
             toggleFilters: false,
@@ -103,11 +95,10 @@ export default defineComponent({
         const table = reactive({
             headers: {
                 id: trans('users.labels.id_pound'),
-                name: trans('users.labels.first_name'),
-                description: trans('users.labels.description'),
+                title: trans('users.labels.title'),
             },
             sorting: {
-                name: true,
+                title: true,
             },
             pagination: {
                 meta: null,
@@ -120,7 +111,7 @@ export default defineComponent({
                     icon: "fa fa-edit",
                     showName: false,
                     to: toUrl('/manteiners/projects/{id}'),
-                    isAllowed: isAllowed(['edit_project'])
+                    isAllowed: isAllowed(['edit_projects'])
                 },
                 delete: {
                     id: 'delete',
@@ -128,7 +119,7 @@ export default defineComponent({
                     icon: "fa fa-trash",
                     showName: false,
                     danger: true,
-                    isAllowed: isAllowed(['delete_project'])
+                    isAllowed: isAllowed(['delete_projects'])
                 }
             },
             loading: false,

@@ -4,9 +4,19 @@
         <Panel>
             <Form id="edit-testimonial" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="name" v-model="form.name"
-                    :label="trans('users.labels.first_name')" />
-                <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
-                    :label="trans('users.labels.description')" />
+                    :label="trans('users.labels.name')" />
+                <TextInput class="mb-4" type="text" :required="true" name="quote" v-model="form.quote"
+                    :label="trans('users.labels.quote')" />
+                <TextInput class="mb-4" type="text" :required="true" name="avatar_src" v-model="form.avatar_src"
+                    :label="trans('users.labels.avatar')" />
+                <TextInput class="mb-4" type="text" :required="true" name="img_src" v-model="form.img_src"
+                    :label="trans('users.labels.img')" />
+                <TextInput class="mb-4" type="text" :required="true" name="img_alt" v-model="form.img_alt"
+                    :label="trans('users.labels.img_alt')" />
+                <TextInput class="mb-4" type="text" :required="true" name="role" v-model="form.role"
+                    :label="trans('users.labels.role')" />
+                <Dropdown class="mb-4" :options="bgcolor" name="bg_class" :placeholder="trans('users.labels.select')"
+                    v-model="form.bg_class" :label="trans('users.labels.bg_class')" />
             </Form>
         </Panel>
     </Page>
@@ -14,9 +24,8 @@
 
 <script>
 import { defineComponent, onBeforeMount, reactive } from "vue";
-import alertHelpers from "@/helpers/alert";
 import { trans } from "@/helpers/i18n";
-import { fillObject, reduceProperties, clearObject } from "@/helpers/data"
+import { fillObject, reduceProperties } from "@/helpers/data"
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { toUrl } from "@/helpers/routing";
@@ -27,10 +36,9 @@ import Panel from "@/views/components/Panel";
 import Page from "@/views/layouts/Page";
 import FileInput from "@/views/components/input/FileInput";
 import Form from "@/views/components/Form";
-import Table from "@/views/components/Table";
 import Dropdown from "@/views/components/input/Dropdown";
-import { isAllowed } from "@/helpers/isreq";
-import ModelService from "@/services/ModelService";
+import { bgcolor } from "@/views/pages/private/maintainers/frontUtils/colors";
+import ManteinerService from "@/services/ManteinerService";
 
 export default defineComponent({
     components: {
@@ -41,17 +49,19 @@ export default defineComponent({
         TextInput,
         Button,
         Page,
-        Table,
         Dropdown
     },
     setup() {
         const { user } = useAuthStore();
         const route = useRoute();
         const form = reactive({
-            id: undefined,
             name: undefined,
-            description: undefined,
-            items: undefined
+            quote: undefined,
+            avatar_src: undefined,
+            img_src: undefined,
+            img_alt: undefined,
+            role: undefined,
+            bg_class: undefined
         });
 
         const page = reactive({
@@ -86,70 +96,11 @@ export default defineComponent({
             ]
         });
 
-        //tabla de items de testimonial
-        const table = reactive({
-            headers: {
-                order: trans('users.labels.order'),
-                label: trans('users.labels.label'),
-                parent: trans('users.labels.parent'),
-                description: trans('users.labels.description'),
-                page: trans('global.pages.page'),
-            },
-            sorting: {
-                name: true,
-            },
-            pagination: {
-                meta: null,
-                links: null,
-            },
-            actions: {
-                edit: {
-                    id: 'edit',
-                    name: trans('global.actions.edit'),
-                    icon: "fa fa-edit",
-                    showName: false,
-                    to: toUrl(`/manteiners/testimonials/${route.params.id}/showitem/{id}`),
-                    isAllowed: isAllowed(['edit_pages'])
-                },
-                delete: {
-                    id: 'delete',
-                    name: trans('global.actions.delete'),
-                    icon: "fa fa-trash",
-                    showName: false,
-                    danger: true,
-                    isAllowed: isAllowed(['delete_pages'])
-                }
-            },
-            loading: false,
-            records: null
-        })
-
-        function onTableSort(params) {
-            mainQuery.sort = params;
-        }
-
-        function onTablePageChange(page) {
-            mainQuery.page = page;
-        }
-
-        function onTableAction(params) {
-            switch (params.action.id) {
-                case 'delete':
-                    alertHelpers.confirmWarning(function () {
-                        service.deleteCustom(`pages/testimonials/${params.item.id}/deleteitem`).then(function (response) {
-                            fetchItems();
-                        });
-                    })
-                    break;
-            }
-        }
-
-        const service = new ModelService;
+        const service = new ManteinerService('testimonials');
 
         function fetchItems() {
-            service.find(route.params.id, 'pages/testimonials').then((response) => {
+            service.find(route.params.id, 'manteiners/testimonials').then((response) => {
                 fillObject(form, response.data.model);
-                table.records = response.data.model.items;
                 page.loading = false;
             });
         }
@@ -178,13 +129,9 @@ export default defineComponent({
             onSubmit,
             onAction,
             page,
-            table,
-            onTablePageChange,
-            onTableAction,
-            onTableSort
+            bgcolor
         }
     }
 })
 </script>
 
-<style scoped></style>

@@ -6,6 +6,9 @@ use App\Http\Requests\StoreTestimonialRequest;
 use App\Http\Requests\UpdateTestimonialRequest;
 use App\Http\Resources\TestimonialResource;
 use App\Models\Testimonial;
+use ErrorException;
+use Exception;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class TestimonialController extends Controller
@@ -37,15 +40,25 @@ class TestimonialController extends Controller
      */
     public function store(StoreTestimonialRequest $request)
     {
-        $this->authorize('create_menu');
+        try {
+            $this->authorize('create_testimonial');
 
-        $data = $request->validated();
-        $newmenu = Testimonial::query()->create($data);
+            $data = $request->validated();
+            $newtestimonial = Testimonial::query()->create($data);
 
-        if ($newmenu) {
-            return $this->responseStoreSuccess(['record' => $newmenu]);
-        } else {
-            return $this->responseStoreFail();
+            if ($newtestimonial) {
+                return $this->responseStoreSuccess(['record' => $newtestimonial]);
+            } else {
+                return $this->responseStoreFail();
+            }
+        } catch (ErrorException $e) {
+            // Error inesperado
+            return $this->responseFail($e->getMessage());
+        } catch (QueryException $e) {
+            return $this->responseFail(getQueryErrors($e));
+        } catch (Exception $e) {
+            // Error inesperado
+            return $this->responseFail($e->getMessage());
         }
     }
 
@@ -54,7 +67,6 @@ class TestimonialController extends Controller
      */
     public function show(Testimonial $testimonial)
     {
-        $testimonial->load(['items.parent', 'items.page', 'items.menu', 'items.children']);
         $model = new TestimonialResource($testimonial);
         return $this->responseDataSuccess(['model' => $model]);
     }
@@ -64,15 +76,19 @@ class TestimonialController extends Controller
      */
     public function update(UpdateTestimonialRequest $request, Testimonial $testimonial)
     {
-        $this->authorize('edit_menu');
+        try {
+            $this->authorize('edit_testimonial');
 
-        $data = $request->validated();
-        $newmenu = $testimonial->update($data);
+            $data = $request->validated();
+            $newtestimonial = $testimonial->update($data);
 
-        if ($newmenu) {
-            return $this->responseUpdateSuccess(['record' => $testimonial]);
-        } else {
-            return $this->responseUpdateFail();
+            if ($newtestimonial) {
+                return $this->responseUpdateSuccess(['record' => $testimonial]);
+            } else {
+                return $this->responseUpdateFail();
+            }
+        } catch (QueryException $e) {
+            return $this->responseFail(getQueryErrors($e));
         }
     }
 
@@ -82,7 +98,7 @@ class TestimonialController extends Controller
     public function destroy(Testimonial $testimonial)
     {
         $name = $testimonial->name;
-        $this->authorize('delete_menu');
+        $this->authorize('delete_testimonial');
         $testimonial->delete();
         return $this->responseDeleteSuccess(['name' => $name]);
     }
