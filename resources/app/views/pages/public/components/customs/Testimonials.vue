@@ -16,7 +16,7 @@
                     1024: { slidesPerView: 1 },
                     1200: { slidesPerView: 1 },
                   }">
-                  <SwiperSlide v-for="(elm, i) in testimonials3" :key="i" class="text-center">
+                  <SwiperSlide v-for="(elm, i) in extradata.testimonials" :key="i" class="text-center">
                     <span class="ratings five mt-4 mb-3"></span>
                     <blockquote class="border-0 fs-lg mb-2">
                       <p>
@@ -54,7 +54,6 @@
 import { trans } from "@/helpers/i18n";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination } from "swiper/modules";
-import { testimonials3 } from "./data/testimonials";
 export default {
   components: {
     Swiper,
@@ -68,13 +67,16 @@ export default {
     img: {
       type: String,
       default: [],
+    },
+    extradata: {
+      type: String,
+      default: [],
     }
   },
   setup(props) {
 
     return {
       trans,
-      testimonials3,
       Pagination
     }
   }

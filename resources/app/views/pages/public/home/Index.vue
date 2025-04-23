@@ -3,7 +3,7 @@
     <div class="content-wrapper">
       <HeadersHome :menus="menus" />
       
-      <Content :page="page" />
+      <Content :page="page" :extradata="extradata" />
 
     </div>
     <Footer2 :menus="menus" />
@@ -35,7 +35,8 @@ export default {
       webdata: []
     });
     const page = reactive({
-      sections: []
+      sections: [],
+      extradata: []
     });
 
     //metodos
@@ -58,6 +59,7 @@ export default {
         .find(page_id, 'getpage')
         .then((response) => {
           page.sections = response.data.page.sections ?? [];
+          page.extradata = response.data.extradata ?? [];
         })
         .catch((error) => {
           alertStore.error(getResponseError(error));

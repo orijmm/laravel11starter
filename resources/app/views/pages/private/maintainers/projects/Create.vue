@@ -6,13 +6,13 @@
                     :label="trans('users.labels.title')" />
                 <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
                     :label="trans('users.labels.description')" />
-                <TextInput class="mb-4" type="text" :required="true" name="img_src" v-model="form.img_src"
-                    :label="trans('users.labels.link')" />
-                <TextInput class="mb-4" type="text" :required="true" name="img_alt" v-model="form.img_alt"
-                    :label="trans('users.labels.category')" />
                 <TextInput class="mb-4" type="text" :required="true" name="link" v-model="form.link"
-                    :label="trans('users.labels.img_src')" />
+                    :label="trans('users.labels.link')" />
                 <TextInput class="mb-4" type="text" :required="true" name="category" v-model="form.category"
+                    :label="trans('users.labels.category')" />
+                <TextInput class="mb-4" type="text" :required="true" name="img_src" v-model="form.img_src"
+                    :label="trans('users.labels.img_src')" />
+                <TextInput class="mb-4" type="text" :required="true" name="img_alt" v-model="form.img_alt"
                     :label="trans('users.labels.img_alt')" />
             </Form>
         </Panel>

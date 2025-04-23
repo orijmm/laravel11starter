@@ -5,9 +5,9 @@
         <h2 class="fs-15 text-uppercase text-muted mb-3">{{ content[0]?.text ??
           trans('global.phrases.hasto_add_content') }}</h2>
         <h3 class="display-4 mb-10">
-          {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
-          <span class="underline-3 style-2 yellow">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content')
-            }}</span> {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
+          {{ content[1]?.text ?? trans('global.phrases.hasto_add_content') }}
+          <span class="underline-3 style-2 yellow">{{ content[2]?.text ?? trans('global.phrases.hasto_add_content')
+            }}</span> {{ content[3]?.text ?? trans('global.phrases.hasto_add_content') }}
         </h3>
       </div>
       <!-- /column -->
@@ -21,9 +21,9 @@
           1024: { slidesPerView: 3 },
           1200: { slidesPerView: 3 },
         }">
-        <SwiperSlide v-for="(elm, i) in projects" :key="i">
+        <SwiperSlide v-for="(elm, i) in extradata.projects" :key="i">
           <figure class="rounded mb-6">
-            <img :src="elm.imgSrc" :srcset="elm.imgSrcset" alt="photo" />
+            <img :src="elm.img_src" :alt="elm.img_alt" />
             <div class="item-link cursor-pointer" @click="() => setActiveLightBox(true, i)">
               <i class="uil uil-focus-add"></i>
             </div>
@@ -66,7 +66,6 @@
 import { trans } from "@/helpers/i18n";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination } from "swiper/modules";
-import { projects } from "./data/projects";
 import { ref, onMounted } from 'vue';
 
 export default {
@@ -82,6 +81,10 @@ export default {
     img: {
       type: String,
       default: [],
+    },
+    extradata: {
+      type: String,
+      default: [],
     }
   },
   setup(props) {
@@ -89,7 +92,7 @@ export default {
     const currentSlideIndex = ref();
     const images = ref([]);
     onMounted(() => {
-      images.value = projects.map((elm) => elm.imgSrc);
+      images.value = props.extradata.projects.map((elm) => elm.imgSrc);
     });
 
     const setActiveLightBox = (val, i) => {
@@ -100,7 +103,6 @@ export default {
     return {
       trans,
       setActiveLightBox,
-      projects,
       Pagination,
       images
     }

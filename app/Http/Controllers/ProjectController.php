@@ -54,7 +54,6 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $project->load(['items.parent', 'items.page', 'items.project', 'items.children']);
         $model = new ProjectResource($project);
         return $this->responseDataSuccess(['model' => $model]);
     }

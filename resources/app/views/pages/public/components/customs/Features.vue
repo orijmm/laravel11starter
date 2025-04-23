@@ -2,14 +2,14 @@
   <section class="wrapper bg-light">
     <div class="container pb-15 pb-md-17">
       <div class="row gx-md-5 gy-5 mt-n19 mb-14 mb-md-17">
-        <div class="col-md-6 col-xl-3" v-for="service in services4" :key="service.id">
+        <div class="col d-flex" v-for="service in extradata.services" :key="service.id">
           <div class="card shadow-lg">
             <div class="card-body">
-              <div class="icon-svg" :class="service.iconColorClass"
+              <div class="icon-svg" :class="service.icon_color_class"
                 :style="{ '-webkit-mask-image': `url(${service.icon})`, 'mask-image': `url(${service.icon})` }"></div>
               <h4>{{ service.title }}</h4>
               <p class="mb-2">{{ service.description }}</p>
-              <a :href="service.learnMoreLink" class="more hover" :class="service.linkColorClass">{{ content[0]?.text ??
+              <a :href="service.link" class="more hover" :class="service.link_color_class">{{ content[13]?.text ??
                 trans('global.phrases.hasto_add_content') }}</a>
             </div>
             <!--/.card-body -->
@@ -25,10 +25,11 @@
             {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
           </h2>
           <h3 class="display-3 mb-10 px-xl-10 px-xxl-15">
-            {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
-            <span class="underline-3 style-2 yellow">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content')
-              }}</span>
-            {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
+            {{ content[1]?.text ?? trans('global.phrases.hasto_add_content') }}
+            <span class="underline-3 style-2 yellow">
+              {{ content[2]?.text ?? trans('global.phrases.hasto_add_content')}}
+              </span>
+            {{ content[3]?.text ?? trans('global.phrases.hasto_add_content') }}
           </h3>
         </div>
         <!-- /column -->
@@ -47,8 +48,8 @@
                 :style="{ '-webkit-mask-image': `url(/assets/img/icons/solid/bulb.svg)`, 'mask-image': `url(/assets/img/icons/solid/bulb.svg)` }"></div>
             </div>
             <div>
-              <h4>{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
-              <p>{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</p>
+              <h4>{{ content[4]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
+              <p>{{ content[5]?.text ?? trans('global.phrases.hasto_add_content') }}</p>
             </div>
           </div>
         </li>
@@ -64,8 +65,8 @@
                 :style="{ '-webkit-mask-image': `url(/assets/img/icons/solid/compare.svg)`, 'mask-image': `url(/assets/img/icons/solid/compare.svg)` }"></div>
             </div>
             <div>
-              <h4>{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
-              <p>{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</p>
+              <h4>{{ content[6]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
+              <p>{{ content[7]?.text ?? trans('global.phrases.hasto_add_content') }}</p>
             </div>
           </div>
         </li>
@@ -81,8 +82,8 @@
                 :style="{ '-webkit-mask-image': `url(/assets/img/icons/solid/delivery-box.svg)`, 'mask-image': `url(/assets/img/icons/solid/delivery-box.svg)` }"></div>
             </div>
             <div>
-              <h4>{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
-              <p>{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</p>
+              <h4>{{ content[8]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
+              <p>{{ content[9]?.text ?? trans('global.phrases.hasto_add_content') }}</p>
             </div>
           </div>
         </li>
@@ -98,9 +99,9 @@
             </div>
             <!--/column -->
             <div class="col-lg-6">
-              <h2 class="mb-3">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</h2>
+              <h2 class="mb-3">{{ content[10]?.text ?? trans('global.phrases.hasto_add_content') }}</h2>
               <p>
-                {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
+                {{ content[11]?.text ?? trans('global.phrases.hasto_add_content') }}
               </p>
               <ul class="icon-list bullet-bg bullet-soft-fuchsia">
                 <li v-for="(item, index) in checklistItems.slice(0, 3)" :key="index" :class="{ 'mt-3': index > 0 }">
@@ -108,7 +109,7 @@
                   <span>{{ item.text }}</span>
                 </li>
               </ul>
-              <a href="#" class="btn btn-fuchsia mt-2">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content')
+              <a href="#" class="btn btn-fuchsia mt-2">{{ content[12]?.text ?? trans('global.phrases.hasto_add_content')
                 }}</a>
             </div>
             <!--/column -->
@@ -197,6 +198,10 @@ export default {
       default: [],
     },
     img: {
+      type: String,
+      default: [],
+    },
+    extradata: {
       type: String,
       default: [],
     }

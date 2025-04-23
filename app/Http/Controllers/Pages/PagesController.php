@@ -13,6 +13,9 @@ use App\Models\Pages\MenuItem;
 use App\Models\Pages\Page;
 use App\Models\Pages\Row;
 use App\Models\Pages\Section;
+use App\Models\Project;
+use App\Models\Service;
+use App\Models\Testimonial;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -119,7 +122,15 @@ class PagesController extends Controller
         }else{
             $page = Page::where('home', true)->with('sections.rows.columns.components.componenttype')->first();
         }
-        return $this->responseDataSuccess(['page' => $page], trans('frontend.global.phrases.record_show'));
+        $services = Service::get();
+        $testimonials = Testimonial::get();
+        $projects = Project::get();
+        $extradata = [];
+        $extradata['services'] = $services ?? null;
+        $extradata['testimonials'] = $testimonials ?? null;
+        $extradata['projects'] = $projects ?? null;
+
+        return $this->responseDataSuccess(['page' => $page, 'extradata' => $extradata], trans('frontend.global.phrases.record_show'));
     }
 
     ############ SECTIONS ##############
