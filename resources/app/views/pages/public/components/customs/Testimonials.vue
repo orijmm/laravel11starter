@@ -4,7 +4,9 @@
       <div class="card shadow-lg mt-n21 mt-md-n23">
         <div class="row gx-0">
           <div class="col-lg-6 image-wrapper bg-image bg-cover rounded-top rounded-lg-start"
-            style="background-image: url(/assets/img/photos/tm2.jpg)"></div>
+          v-if="img[0] ?? false" :style="`background-image: url('${img[0]}')`"></div>
+          <div class="col-lg-6 image-wrapper bg-image bg-cover rounded-top rounded-lg-start"
+          v-else style="background-image: url(/assets/img/photos/tm2.jpg)"></div>
           <!--/column -->
           <div class="col-lg-6">
             <div class="p-10 p-md-11 px-lg-13 py-lg-14">

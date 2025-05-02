@@ -7,7 +7,7 @@
         <h3 class="display-4 mb-10">
           {{ content[1]?.text ?? trans('global.phrases.hasto_add_content') }}
           <span class="underline-3 style-2 yellow">{{ content[2]?.text ?? trans('global.phrases.hasto_add_content')
-            }}</span> {{ content[3]?.text ?? trans('global.phrases.hasto_add_content') }}
+          }}</span> {{ content[3]?.text ?? trans('global.phrases.hasto_add_content') }}
         </h3>
       </div>
       <!-- /column -->
@@ -24,16 +24,13 @@
         <SwiperSlide v-for="(elm, i) in extradata.projects" :key="i">
           <figure class="rounded mb-6">
             <img :src="elm.img_src" :alt="elm.img_alt" />
-            <div class="item-link cursor-pointer" @click="() => setActiveLightBox(true, i)">
-              <i class="uil uil-focus-add"></i>
-            </div>
           </figure>
           <div class="project-details d-flex justify-content-center flex-column">
             <div class="post-header">
               <h2 class="post-title h3">
                 <router-link to="/single-project" class="link-dark">{{
                   elm.title
-                }}</router-link>
+                  }}</router-link>
               </h2>
               <div class="post-category text-ash">{{ elm.category }}</div>
             </div>
@@ -51,9 +48,6 @@
     </div>
     <!-- /.swiper-container -->
   </div>
-  <Lightbox :images="images" :activeLightBox="activeLightBox" :firstSlideIndex="currentSlideIndex"
-    @setActiveLightBox="setActiveLightBox" />
-  <!-- Component for lightbox image slider  from omponents>common>Lightbox -->
 </template>
 
 <script setup>
@@ -88,23 +82,10 @@ export default {
     }
   },
   setup(props) {
-    const activeLightBox = ref(false);
-    const currentSlideIndex = ref();
-    const images = ref([]);
-    onMounted(() => {
-      images.value = props.extradata.projects.map((elm) => elm.imgSrc);
-    });
-
-    const setActiveLightBox = (val, i) => {
-      currentSlideIndex.value = i;
-      activeLightBox.value = val;
-    };
 
     return {
       trans,
-      setActiveLightBox,
       Pagination,
-      images
     }
   }
 }
