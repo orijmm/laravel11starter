@@ -18,7 +18,6 @@ import TextInput from "@/views/components/input/TextInput";
 import Alert from "@/views/components/Alert";
 import Panel from "@/views/components/Panel";
 import Page from "@/views/layouts/Page";
-import FileInput from "@/views/components/input/FileInput";
 import RolesService from "@/services/RoleService";
 import {clearObject, reduceProperties} from "@/helpers/data";
 import {toUrl} from "@/helpers/routing";
@@ -26,7 +25,7 @@ import Form from "@/views/components/Form";
 
 export default defineComponent({
     name: 'PageRoleCreate',
-    components: {Form, FileInput, Panel, Alert, TextInput, Button, Page},
+    components: {Form, Panel, Alert, TextInput, Button, Page},
     setup() {
         const {user} = useAuthStore();
         const form = reactive({

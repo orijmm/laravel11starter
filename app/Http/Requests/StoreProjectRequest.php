@@ -22,9 +22,7 @@ class StoreProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'img_src' => 'nullable',
             'img_alt' => 'nullable',
-            'link' => 'required',
             'category' => 'nullable',
             'title' => 'required',
             'description' => 'nullable',

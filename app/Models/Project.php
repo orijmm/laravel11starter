@@ -6,12 +6,44 @@ use App\Traits\Filterable;
 use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
-class Project extends Model
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+class Project extends Model implements HasMedia
 {
-    use SoftDeletes, Filterable, Searchable;
+    use SoftDeletes, Filterable, Searchable, InteractsWithMedia;
 
     protected $table = 'projects';
 
-    protected $fillable = ['img_src', 'img_alt', 'link', 'category', 'title', 'description'];
+    protected $fillable = ['img_alt', 'category', 'title', 'description'];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'img_src'
+    ];
+
+    protected static function booted()
+    {
+        static::deleting(function ($model) {
+            $model->clearMediaCollection(); // Elimina los medios asociados
+        });
+    }
+
+    /*
+    * Get image's component
+    */
+    public function getImgSrcAttribute()
+    {
+        $img = $this->getMedia('projectimg');
+        if ($img && count($img)) {
+            return $img->map(function ($item) {
+                return $item->getFullUrl();
+            });
+        }
+
+        return [];
+    }
 }

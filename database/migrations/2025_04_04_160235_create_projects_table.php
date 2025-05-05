@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->text('img_src')->nullable();
             $table->string('img_alt', 100)->nullable();
-            $table->text('link')->nullable();
             $table->string('category', 100)->nullable();
             $table->string('title', 100);
             $table->text('description')->nullable();

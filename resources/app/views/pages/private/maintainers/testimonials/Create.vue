@@ -30,7 +30,6 @@ import TextInput from "@/views/components/input/TextInput";
 import Alert from "@/views/components/Alert";
 import Panel from "@/views/components/Panel";
 import Page from "@/views/layouts/Page";
-import FileInput from "@/views/components/input/FileInput";
 import { clearObject, reduceProperties } from "@/helpers/data";
 import { toUrl } from "@/helpers/routing";
 import Form from "@/views/components/Form";
@@ -40,7 +39,7 @@ import { bgcolor } from "@/views/pages/private/maintainers/frontUtils/colors";
 
 export default defineComponent({
     name: 'PageTestimonialCreate',
-    components: { Form, FileInput, Panel, Alert, TextInput, Button, Page, Dropdown },
+    components: { Form, Panel, Alert, TextInput, Button, Page, Dropdown },
     setup() {
         const { user } = useAuthStore();
         const form = reactive({

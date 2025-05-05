@@ -6,10 +6,25 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
+use App\Services\Media\MediaService;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
+    /**
+     * The service instance
+     *
+     * @var MediaService
+     */
+    protected $mediaService;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->mediaService = new MediaService();
+    }
     /**
      * Display a listing of the resource.
      */
@@ -66,6 +81,12 @@ class ProjectController extends Controller
         $this->authorize('edit_project');
 
         $data = $request->validated();
+
+        if (!empty($request->inputImg)) {
+            $imgArray = $request->img ?? [];
+            $this->mediaService->replaceMany($project, 'projectimg', $imgArray, $request->img_src);
+        }
+
         $newproject = $project->update($data);
 
         if ($newproject) {

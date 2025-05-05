@@ -7,8 +7,6 @@
                     :label="trans('users.labels.title')" />
                 <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
                     :label="trans('users.labels.description')" />
-                <TextInput class="mb-4" type="text" :required="true" name="link" v-model="form.link"
-                    :label="trans('users.labels.link')" />
                 <TextInput class="mb-4" type="text" :required="true" name="category" v-model="form.category"
                     :label="trans('users.labels.category')" />
                 <TextInput class="mb-4" type="text" :required="true" name="img_src" v-model="form.img_src"
@@ -53,7 +51,6 @@ export default defineComponent({
         const form = reactive({
             img_src: undefined,
             img_alt: undefined,
-            link: undefined,
             category: undefined,
             title: undefined,
             description: undefined

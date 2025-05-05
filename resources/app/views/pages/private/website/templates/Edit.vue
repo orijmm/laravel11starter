@@ -23,13 +23,11 @@ import TextInput from "@/views/components/input/TextInput";
 import Alert from "@/views/components/Alert";
 import Panel from "@/views/components/Panel";
 import Page from "@/views/layouts/Page";
-import FileInput from "@/views/components/input/FileInput";
 import Form from "@/views/components/Form";
 
 export default defineComponent({
     components: {
         Form,
-        FileInput,
         Panel,
         Alert,
         TextInput,

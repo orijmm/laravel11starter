@@ -34,7 +34,6 @@ import TextInput from "@/views/components/input/TextInput";
 import Alert from "@/views/components/Alert";
 import Panel from "@/views/components/Panel";
 import Page from "@/views/layouts/Page";
-import FileInput from "@/views/components/input/FileInput";
 import Form from "@/views/components/Form";
 import Dropdown from "@/views/components/input/Dropdown";
 import { bgcolor } from "@/views/pages/private/maintainers/frontUtils/colors";
@@ -43,7 +42,6 @@ import ManteinerService from "@/services/ManteinerService";
 export default defineComponent({
     components: {
         Form,
-        FileInput,
         Panel,
         Alert,
         TextInput,

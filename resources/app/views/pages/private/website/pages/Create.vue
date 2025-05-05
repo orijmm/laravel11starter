@@ -26,7 +26,6 @@ import Alert from "@/views/components/Alert";
 import Panel from "@/views/components/Panel";
 import Dropdown from "@/views/components/input/Dropdown";
 import Page from "@/views/layouts/Page";
-import FileInput from "@/views/components/input/FileInput";
 import PagesService from "@/services/PagesService";
 import { clearObject, reduceProperties } from "@/helpers/data";
 import { toUrl } from "@/helpers/routing";
@@ -34,7 +33,7 @@ import Form from "@/views/components/Form";
 
 export default defineComponent({
     name: 'PagePageCreate',
-    components: { Form, FileInput, Panel, Alert, TextInput, Button, Page, Dropdown },
+    components: { Form, Panel, Alert, TextInput, Button, Page, Dropdown },
     setup() {
         const { user } = useAuthStore();
         const form = reactive({

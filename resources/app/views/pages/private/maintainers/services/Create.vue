@@ -31,7 +31,6 @@ import Dropdown from "@/views/components/input/Dropdown";
 import Alert from "@/views/components/Alert";
 import Panel from "@/views/components/Panel";
 import Page from "@/views/layouts/Page";
-import FileInput from "@/views/components/input/FileInput";
 import { clearObject, reduceProperties } from "@/helpers/data";
 import { toUrl } from "@/helpers/routing";
 import Form from "@/views/components/Form";
@@ -40,7 +39,7 @@ import { textcolor, linkcolor } from "@/views/pages/private/maintainers/frontUti
 
 export default defineComponent({
     name: 'PageServiceCreate',
-    components: { Form, FileInput, Panel, Alert, TextInput, Dropdown, Button, Page },
+    components: { Form, Panel, Alert, TextInput, Dropdown, Button, Page },
     setup() {
         const { user } = useAuthStore();
         const form = reactive({

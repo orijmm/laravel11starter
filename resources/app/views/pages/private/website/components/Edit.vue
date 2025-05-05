@@ -60,14 +60,12 @@ import TextInput from "@/views/components/input/TextInput";
 import Alert from "@/views/components/Alert";
 import Panel from "@/views/components/Panel";
 import Page from "@/views/layouts/Page";
-import FileInput from "@/views/components/input/FileInput";
 import Form from "@/views/components/Form";
 import FormImg from "@/views/pages/private/profile/partials/FormImg.vue";
 
 export default defineComponent({
     components: {
         Form,
-        FileInput,
         Panel,
         Alert,
         TextInput,
