@@ -1,6 +1,7 @@
 <template>
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction">
         <Panel otherClass="overflow-visible">
+            {{ form.inputImg }}
             <Form id="create-project" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="title" v-model="form.title"
                     :label="trans('users.labels.title')" />
@@ -11,13 +12,23 @@
                 <TextInput class="mb-4" type="text" :required="true" name="img_alt" v-model="form.img_alt"
                     :label="trans('users.labels.img_alt')" />
                 <FormImg @error="errorImg = true" @success="setImgFile" />
+                <div class="flex flex-row gap-2">
+                    <div class="bg-gray-50 rounded p-1" v-for="(imgI, i) in form.inputImg" :key="`inputImg-${i}`">
+                        <button class="file-input__clear text-gray-300" type="button"
+                            @click="onClearImg(i, 'inputImg')">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <img :src="getImgVisual(imgI)" class="object-scale-down h-48 w-96"
+                            :alt="trans('users.labels.img')" />
+                    </div>
+                </div>
             </Form>
         </Panel>
     </Page>
 </template>
 
 <script>
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import { trans } from "@/helpers/i18n";
 import { useAuthStore } from "@/stores/auth";
 import Button from "@/views/components/input/Button";
@@ -38,12 +49,14 @@ export default defineComponent({
     setup() {
         const { user } = useAuthStore();
         const form = reactive({
-            img_src: undefined,
+            inputImg: [],
             img_alt: undefined,
             category: undefined,
             title: undefined,
             description: undefined
         });
+
+        let errorImg = ref(false);
 
         const page = reactive({
             id: 'create_projects',
@@ -88,7 +101,7 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleCreate('create-project', reduceProperties(form, ['bg_class'], 'id')).then(() => {
+            service.handleCreate('create-project', reduceProperties(form, ['bg_class'], 'id'), null, true).then(() => {
                 clearObject(form)
             })
             return false;
@@ -96,9 +109,17 @@ export default defineComponent({
 
         //Asignar el valor del archivo 
         function setImgFile(data) {
-            form.img_src.push(data);
+            form.inputImg.push(data);
         }
 
+        function getImgVisual(img) {
+            return typeof img == 'string' ? img : URL.createObjectURL(img);
+        }
+
+        //Borra la imagen
+        function onClearImg(i, type) {
+            form[type].splice(i, 1);
+        }
 
         return {
             trans,
@@ -108,7 +129,10 @@ export default defineComponent({
             onSubmit,
             onAction,
             bgcolor,
-            setImgFile
+            errorImg,
+            setImgFile,
+            onClearImg,
+            getImgVisual
         }
     }
 })

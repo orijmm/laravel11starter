@@ -35,7 +35,7 @@ class Component extends Model implements HasMedia
     protected static function booted()
     {
         static::deleting(function ($model) {
-            $model->clearMediaCollection(); // Elimina los medios asociados
+            $model->clearMediaCollection('componentimg'); // Elimina los medios asociados
         });
     }
 

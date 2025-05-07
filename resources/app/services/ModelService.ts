@@ -25,9 +25,9 @@ export default abstract class ModelService extends BaseService {
         return this.get(this.url + `/${object_id}/edit`, {});
     }
 
-    public store(payload, customUrl = null) {
+    public store(payload, customUrl = null, noTransform = false) {
         let url = customUrl || this.url;
-        let data = this.transformPayloadForSubmission(payload);
+        let data = noTransform ? payload : this.transformPayloadForSubmission(payload);
         return this.post(url, data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -80,11 +80,11 @@ export default abstract class ModelService extends BaseService {
         })
     }
 
-    public handleCreate(ui_element_id, data, customUrl = null) {
+    public handleCreate(ui_element_id, data, customUrl = null, noTransform = false) {
         const alertStore = useAlertStore();
         const globalUserState = useGlobalStateStore();
         globalUserState.setElementLoading(ui_element_id, true);
-        return this.store(data, customUrl).then((response) => {
+        return this.store(data, customUrl, noTransform).then((response) => {
             let answer = response.data;
             alertStore.success(answer.message);
         }).catch((error) => {

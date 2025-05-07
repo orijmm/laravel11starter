@@ -22,13 +22,13 @@
           1200: { slidesPerView: 3 },
         }">
         <SwiperSlide v-for="(elm, i) in extradata.projects" :key="i">
-          <figure class="rounded mb-6">
-            <img :src="elm.img_src" :alt="elm.img_alt" />
+          <figure class="rounded mb-6 fixed-height">
+            <img :src="elm.img" :alt="elm.img_alt" class="img-cover" />
           </figure>
           <div class="project-details d-flex justify-content-center flex-column">
             <div class="post-header">
               <h2 class="post-title h3">
-                <router-link to="/single-project" class="link-dark">{{
+                <router-link :to="`/project/${elm.id}`" class="link-dark">{{
                   elm.title
                   }}</router-link>
               </h2>

@@ -25,7 +25,6 @@ class StoreTestimonialRequest extends FormRequest
             'name' => 'required',
             'quote' => 'required',
             'avatar_src' => 'nullable',
-            'img_src' => 'nullable',
             'img_alt' => 'nullable',
             'role' => 'nullable',
             'bg_class' => 'nullable',

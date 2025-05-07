@@ -9,17 +9,33 @@
                     :label="trans('users.labels.description')" />
                 <TextInput class="mb-4" type="text" :required="true" name="category" v-model="form.category"
                     :label="trans('users.labels.category')" />
-                <TextInput class="mb-4" type="text" :required="true" name="img_src" v-model="form.img_src"
-                    :label="trans('users.labels.img_src')" />
                 <TextInput class="mb-4" type="text" :required="true" name="img_alt" v-model="form.img_alt"
                     :label="trans('users.labels.img_alt')" />
+                <FormImg @error="errorImg = true" @success="setImgFile" />
+                <div class="flex flex-row gap-2">
+                    <div class="bg-gray-50 rounded p-1" v-for="(image, i) in form.img" :key="`img-${i}`">
+                        <button class="file-input__clear text-gray-300" type="button" @click="onClearImg(i, 'img')">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <img :src="getImgVisual(image)" class="object-scale-down h-48 w-96"
+                            :alt="trans('users.labels.img')" />
+                    </div>
+                    <div class="bg-gray-50 rounded p-1" v-for="(imgI, i) in form.inputImg" :key="`inputImg-${i}`">
+                        <button class="file-input__clear text-gray-300" type="button"
+                            @click="onClearImg(i, 'inputImg')">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <img :src="getImgVisual(imgI)" class="object-scale-down h-48 w-96"
+                            :alt="trans('users.labels.img')" />
+                    </div>
+                </div>
             </Form>
         </Panel>
     </Page>
 </template>
 
 <script>
-import { defineComponent, onBeforeMount, reactive } from "vue";
+import { defineComponent, onBeforeMount, reactive, ref } from "vue";
 import { trans } from "@/helpers/i18n";
 import { fillObject, reduceProperties } from "@/helpers/data"
 import { useRoute } from "vue-router";
@@ -34,6 +50,7 @@ import FileInput from "@/views/components/input/FileInput";
 import Form from "@/views/components/Form";
 import { bgcolor } from "@/views/pages/private/maintainers/frontUtils/colors";
 import ManteinerService from "@/services/ManteinerService";
+import FormImg from "@/views/pages/private/profile/partials/FormImg.vue";
 
 export default defineComponent({
     components: {
@@ -43,18 +60,22 @@ export default defineComponent({
         Alert,
         TextInput,
         Button,
-        Page
+        Page,
+        FormImg
     },
     setup() {
         const { user } = useAuthStore();
         const route = useRoute();
         const form = reactive({
-            img_src: undefined,
+            inputImg: [],
+            img: [],
             img_alt: undefined,
             category: undefined,
             title: undefined,
             description: undefined
         });
+
+        let errorImg = ref(false);
 
         const page = reactive({
             id: 'edit_project',
@@ -110,8 +131,23 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleUpdate('edit-project', route.params.id, reduceProperties(form, ['roles'], 'id'));
+            // se agrega null, true para archivos
+            service.handleUpdate('edit-project', route.params.id, reduceProperties(form, [], 'id'), null, true);
             return false;
+        }
+
+        //Asignar el valor del archivo 
+        function setImgFile(data) {
+            form.inputImg.push(data);
+        }
+
+        function getImgVisual(img) {
+            return typeof img == 'string' ? img : URL.createObjectURL(img);
+        }
+
+        //Borra la imagen
+        function onClearImg(i, type) {
+            form[type].splice(i, 1);
         }
 
         return {
@@ -121,7 +157,11 @@ export default defineComponent({
             onSubmit,
             onAction,
             page,
-            bgcolor
+            bgcolor,
+            errorImg,
+            setImgFile,
+            onClearImg,
+            getImgVisual
         }
     }
 })

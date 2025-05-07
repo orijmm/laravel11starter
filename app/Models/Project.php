@@ -22,20 +22,20 @@ class Project extends Model implements HasMedia
      * @var array
      */
     protected $appends = [
-        'img_src'
+        'img'
     ];
 
     protected static function booted()
     {
         static::deleting(function ($model) {
-            $model->clearMediaCollection(); // Elimina los medios asociados
+            $model->clearMediaCollection('projectimg'); // Elimina los medios asociados
         });
     }
 
     /*
     * Get image's component
     */
-    public function getImgSrcAttribute()
+    public function getImgAttribute()
     {
         $img = $this->getMedia('projectimg');
         if ($img && count($img)) {

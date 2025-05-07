@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100);
             $table->text('quote');
-            $table->text('avatar_src')->nullable();
-            $table->text('img_src')->nullable();
             $table->string('img_alt', 100)->nullable();
             $table->string('role', 100)->nullable();
             $table->text('bg_class')->nullable();

@@ -56,7 +56,13 @@ class ProjectController extends Controller
 
         $data = $request->validated();
         $newproject = Project::query()->create($data);
-
+        if (!empty($request->inputImg)) {
+            $imgArray = $request->inputImg ?? [];
+            $this->mediaService->replaceMany($newproject, 'projectimg', $imgArray, $request->inputImg);
+            // $newproject
+            // ->addMediaFromRequest('inputImg')
+            // ->toMediaCollection('projectimg');
+        }
         if ($newproject) {
             return $this->responseStoreSuccess(['record' => $newproject]);
         } else {
@@ -83,8 +89,8 @@ class ProjectController extends Controller
         $data = $request->validated();
 
         if (!empty($request->inputImg)) {
-            $imgArray = $request->img ?? [];
-            $this->mediaService->replaceMany($project, 'projectimg', $imgArray, $request->img_src);
+            $imgArray = $request->inputImg ?? [];
+            $this->mediaService->replaceMany($project, 'projectimg', $imgArray, $request->inputImg);
         }
 
         $newproject = $project->update($data);
