@@ -14,7 +14,7 @@ class Project extends Model implements HasMedia
 
     protected $table = 'projects';
 
-    protected $fillable = ['img_alt', 'category', 'title', 'description'];
+    protected $fillable = ['img_alt', 'category', 'title', 'description', 'slug', 'url', 'date', 'client_name'];
 
     /**
      * The accessors to append to the model's array form.

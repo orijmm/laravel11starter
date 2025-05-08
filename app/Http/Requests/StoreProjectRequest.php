@@ -25,7 +25,11 @@ class StoreProjectRequest extends FormRequest
             'img_alt' => 'nullable',
             'category' => 'nullable',
             'title' => 'required',
+            'slug' => 'required|alpha_dash|unique:projects',
             'description' => 'nullable',
+            'url' => 'nullable',
+            'date' => 'nullable',
+            'client_name' => 'nullable'
         ];
     }
 }

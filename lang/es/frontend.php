@@ -197,6 +197,11 @@ return [
             'projects' => 'Proyectos',
             'project_create' => 'Nuevo proyecto',
             'project_edit' => 'Editar proyecto',
+
+            'project_date' => 'Fecha del proyecto',
+            'project_client_name' => 'Nombre de cliente',
+            'project_url' => 'Sitio web del proyecto',
+            'project_details' => 'Detalles del proyecto',
         ],
         'phrases' => [
             'clear_filters' => 'Limpiar todo',

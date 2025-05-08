@@ -18,6 +18,7 @@
                @input="onInput"
                :placeholder="placeholder"
                :autocomplete="autocomplete"
+               :readonly="readOnly"
                class="block w-full placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-theme-500 focus:border-theme-500"
                :class="size"/>
         <textarea v-else
@@ -84,6 +85,10 @@ export default defineComponent({
         sizeInput: {
             type: String,
             default: 'md',
+        },
+        readOnly: {
+            type: Boolean,
+            default: false,
         }
     },
     emits: ['update:modelValue'],

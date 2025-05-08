@@ -103,23 +103,24 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
         Route::post('page/column/{column}/storecomponent', [PagesController::class, 'addComponentToColumn'])->name('page.store.column.component');
         Route::patch('page/savecontents/{column}', [PagesController::class, 'saveComponentContent'])->name('pages.save.component.content');
     });
-});
 
-Route::prefix('manteiners')->group(function () {
-    #Service
-    Route::apiResource('services', ServiceController::class);
-    #Testimonial
-    Route::apiResource('testimonials', TestimonialController::class);
-    #Project
-    Route::apiResource('projects', ProjectController::class);
+    Route::prefix('manteiners')->group(function () {
+        #Service
+        Route::apiResource('services', ServiceController::class);
+        #Testimonial
+        Route::apiResource('testimonials', TestimonialController::class);
+        #Project
+        Route::apiResource('projects', ProjectController::class)->except('show');
+    });
 });
-
 
 ### Website public routes ####
 Route::get('menus/searchname', [MenuController::class, 'showByName'])->name('menus.search.name');
 Route::get('page/{page}', [PagesController::class, 'show'])->name('page.show');
 Route::get('settingad/{settingad}', [SettingController::class, 'show'])->name('settingad.show');
 Route::get('getpage/{id?}', [PagesController::class, 'displayPageItems'])->name('display.getpage');
+Route::get('manteiners/projects/{project}', [ProjectController::class, 'show'])->name('project.show');
+
 
 ## Ubicaciones
 Route::get('languages', function (Request $request) {

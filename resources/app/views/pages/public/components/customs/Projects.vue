@@ -7,7 +7,7 @@
         <h3 class="display-4 mb-10">
           {{ content[1]?.text ?? trans('global.phrases.hasto_add_content') }}
           <span class="underline-3 style-2 yellow">{{ content[2]?.text ?? trans('global.phrases.hasto_add_content')
-          }}</span> {{ content[3]?.text ?? trans('global.phrases.hasto_add_content') }}
+            }}</span> {{ content[3]?.text ?? trans('global.phrases.hasto_add_content') }}
         </h3>
       </div>
       <!-- /column -->
@@ -22,15 +22,15 @@
           1200: { slidesPerView: 3 },
         }">
         <SwiperSlide v-for="(elm, i) in extradata.projects" :key="i">
-          <figure class="rounded mb-6 fixed-height">
+          <figure v-if="elm.img.length" class="rounded mb-6 fixed-height">
             <img :src="elm.img" :alt="elm.img_alt" class="img-cover" />
           </figure>
-          <div class="project-details d-flex justify-content-center flex-column">
+          <div v-if="elm.img" class="project-details d-flex justify-content-center flex-column">
             <div class="post-header">
               <h2 class="post-title h3">
-                <router-link :to="`/project/${elm.id}`" class="link-dark">{{
+                <router-link :to="`/projects/${elm.id}/${elm.slug}`" class="link-dark">{{
                   elm.title
-                  }}</router-link>
+                }}</router-link>
               </h2>
               <div class="post-category text-ash">{{ elm.category }}</div>
             </div>
@@ -43,24 +43,16 @@
           class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal pbutton2">
         </div>
       </div>
-
       <!-- /.swiper -->
     </div>
     <!-- /.swiper-container -->
   </div>
 </template>
 
-<script setup>
-
-
-
-</script>
-
 <script>
 import { trans } from "@/helpers/i18n";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination } from "swiper/modules";
-import { ref, onMounted } from 'vue';
 
 export default {
   components: {

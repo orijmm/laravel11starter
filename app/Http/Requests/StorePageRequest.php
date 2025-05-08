@@ -24,7 +24,7 @@ class StorePageRequest extends FormRequest
         return [
             'title' => 'required',
             'description' => 'required',
-            'slug' => 'required|alpha_dash|unique:pages', 
+            'slug' => 'required|alpha_dash|unique:pages',
             'template_id' => 'required',
         ];
     }

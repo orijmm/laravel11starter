@@ -57,6 +57,7 @@ import { default as PageProjectEdit } from "@/views/pages/private/maintainers/pr
 /* Web Site pages */
 import { default as PageIndexSite } from "@/views/pages/public/home/Index";
 import { default as PagesSite } from "@/views/pages/public/home/PagesSite";
+import { default as PageWebProject } from "@/views/pages/public/home/PageProject";
 import { default as PageNotFoundSite } from "@/views/pages/public/template/components/not-found/404";
 
 import abilities from "@/stub/abilities";
@@ -73,6 +74,12 @@ const routes = [
         path: "/page/:id",
         meta: { requiresAuth: false },
         component: PagesSite,
+    },
+    {
+        name: "single-project",
+        path: "/projects/:id/:slug",
+        meta: { requiresAuth: false },
+        component: PageWebProject,
     },
     {
         name: "panel",

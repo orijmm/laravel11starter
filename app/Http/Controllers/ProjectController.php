@@ -8,6 +8,7 @@ use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use App\Services\Media\MediaService;
 use Illuminate\Http\Request;
+use Str;
 
 class ProjectController extends Controller
 {
@@ -55,13 +56,13 @@ class ProjectController extends Controller
         $this->authorize('create_project');
 
         $data = $request->validated();
+        if (isset($data['url']) && !Str::startsWith($data['url'], ['http://', 'https://'])) {
+            $data['url'] = 'http://' . $data['url'];
+        }
         $newproject = Project::query()->create($data);
         if (!empty($request->inputImg)) {
             $imgArray = $request->inputImg ?? [];
             $this->mediaService->replaceMany($newproject, 'projectimg', $imgArray, $request->inputImg);
-            // $newproject
-            // ->addMediaFromRequest('inputImg')
-            // ->toMediaCollection('projectimg');
         }
         if ($newproject) {
             return $this->responseStoreSuccess(['record' => $newproject]);
@@ -92,7 +93,9 @@ class ProjectController extends Controller
             $imgArray = $request->inputImg ?? [];
             $this->mediaService->replaceMany($project, 'projectimg', $imgArray, $request->inputImg);
         }
-
+        if ($data['url'] && !Str::startsWith($data['url'], ['http://', 'https://'])) {
+            $data['url'] = 'http://' . $data['url'];
+        }
         $newproject = $project->update($data);
 
         if ($newproject) {

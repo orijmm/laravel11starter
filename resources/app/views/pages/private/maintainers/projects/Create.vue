@@ -1,15 +1,21 @@
 <template>
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction">
         <Panel otherClass="overflow-visible">
-            {{ form.inputImg }}
             <Form id="create-project" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="title" v-model="form.title"
                     :label="trans('users.labels.title')" />
-                <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
+                <TextInput class="mb-4" type="text" :readOnly="true" name="slug" v-model="form.slug"
+                    :label="trans('users.labels.slug')" />
+                <TextInput class="mb-4" type="text" name="description" v-model="form.description"
                     :label="trans('users.labels.description')" />
-                <TextInput class="mb-4" type="text" :required="true" name="category" v-model="form.category"
+                <TextInput class="mb-4" type="text" name="url" v-model="form.url" :label="trans('global.pages.project_url')" />
+                <TextInput class="mb-4" type="text" name="client_name" v-model="form.client_name"
+                    :label="trans('global.pages.project_client_name')" />
+                <TextInput class="mb-4" type="text" name="date" v-model="form.date"
+                    :label="trans('global.pages.project_date')" />
+                <TextInput class="mb-4" type="text" name="category" v-model="form.category"
                     :label="trans('users.labels.category')" />
-                <TextInput class="mb-4" type="text" :required="true" name="img_alt" v-model="form.img_alt"
+                <TextInput class="mb-4" type="text" name="img_alt" v-model="form.img_alt"
                     :label="trans('users.labels.img_alt')" />
                 <FormImg @error="errorImg = true" @success="setImgFile" />
                 <div class="flex flex-row gap-2">
@@ -28,7 +34,8 @@
 </template>
 
 <script>
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, reactive, ref, watch } from "vue";
+import _ from 'lodash';
 import { trans } from "@/helpers/i18n";
 import { useAuthStore } from "@/stores/auth";
 import Button from "@/views/components/input/Button";
@@ -53,7 +60,11 @@ export default defineComponent({
             img_alt: undefined,
             category: undefined,
             title: undefined,
-            description: undefined
+            slug: undefined,
+            description: undefined,
+            url: undefined,
+            client_name: undefined,
+            date: undefined
         });
 
         let errorImg = ref(false);
@@ -89,6 +100,15 @@ export default defineComponent({
                 }
             ]
         });
+
+        watch(
+            () => form.title,
+            (title) => {
+                if (title) {
+                    form.slug = _.kebabCase(title);
+                }
+            }
+        )
 
         const service = new ManteinerService('projects');
 

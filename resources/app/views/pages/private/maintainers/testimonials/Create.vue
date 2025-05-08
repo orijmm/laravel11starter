@@ -6,13 +6,13 @@
                     :label="trans('users.labels.name')" />
                 <TextInput class="mb-4" type="text" :required="true" name="quote" v-model="form.quote"
                     :label="trans('users.labels.quote')" />
-                <TextInput class="mb-4" type="text" :required="true" name="avatar_src" v-model="form.avatar_src"
+                <TextInput class="mb-4" type="text" name="avatar_src" v-model="form.avatar_src"
                     :label="trans('users.labels.avatar')" />
-                <TextInput class="mb-4" type="text" :required="true" name="img_src" v-model="form.img_src"
+                <TextInput class="mb-4" type="text" name="img_src" v-model="form.img_src"
                     :label="trans('users.labels.img')" />
-                <TextInput class="mb-4" type="text" :required="true" name="img_alt" v-model="form.img_alt"
+                <TextInput class="mb-4" type="text" name="img_alt" v-model="form.img_alt"
                     :label="trans('users.labels.img_alt')" />
-                <TextInput class="mb-4" type="text" :required="true" name="role" v-model="form.role"
+                <TextInput class="mb-4" type="text" name="role" v-model="form.role"
                     :label="trans('users.labels.role')" />
                 <Dropdown class="mb-4" :options="bgcolor" name="bg_class" :placeholder="trans('users.labels.select')"
                     v-model="form.bg_class" :label="trans('users.labels.bg_class')" />

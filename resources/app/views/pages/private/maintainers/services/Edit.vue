@@ -5,14 +5,14 @@
             <Form id="edit-service" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="title" v-model="form.title"
                     :label="trans('users.labels.title')" />
-                <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
+                <TextInput class="mb-4" type="text" name="description" v-model="form.description"
                     :label="trans('users.labels.description')" />
-                <TextInput class="mb-4" type="text" :required="true" name="icon" v-model="form.icon"
+                <TextInput class="mb-4" type="text" name="icon" v-model="form.icon"
                     :label="trans('users.labels.icon')" :labelsmall="trans('global.phrases.add_path_icon')" />
                 <Dropdown class="mb-4" :options="textcolor" name="icon_color_class"
                     :placeholder="trans('users.labels.select')" v-model="form.icon_color_class"
                     :label="trans('users.labels.icon_color_class')" />
-                <TextInput class="mb-4" type="text" :required="true" name="link" v-model="form.link"
+                <TextInput class="mb-4" type="text" name="link" v-model="form.link"
                     :label="trans('users.labels.link')" />
                 <Dropdown class="mb-4" :options="linkcolor" name="link_color_class"
                     :placeholder="trans('users.labels.select')" v-model="form.link_color_class"

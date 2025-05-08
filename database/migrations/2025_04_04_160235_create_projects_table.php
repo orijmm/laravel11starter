@@ -16,7 +16,11 @@ return new class extends Migration
             $table->string('img_alt', 100)->nullable();
             $table->string('category', 100)->nullable();
             $table->string('title', 100);
+            $table->string('slug')->unique();
             $table->text('description')->nullable();
+            $table->string('client_name', 100)->nullable();
+            $table->date('date')->nullable();
+            $table->text('url')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
