@@ -8,7 +8,7 @@
       <div class="container flex-lg-row flex-nowrap align-items-center">
         <div class="navbar-brand w-100">
           <router-link to="/">
-            <img class="logo-light" :src="menus.logo" srcset="/assets/img/logo-light@2x.png 2x"
+            <img class="logo-light" :src="menus.logo"
               alt="logos-light" />
           </router-link>
         </div>
@@ -25,9 +25,9 @@
             <!-- /.navbar-nav -->
             <div class="offcanvas-footer d-lg-none">
               <div>
-                <a href="mailto:first.last@email.com" class="link-inverse">info@email.com</a>
+                <a href="mailto:first.last@email.com" class="link-inverse">{{ menus.webdata.email }}</a>
                 <br />
-                00 (123) 456 78 90 <br />
+                {{ menus.webdata.phone }} <br />
                 <nav class="nav social social-white mt-4">
                   <Socials :webdata="menus.webdata"/>
                 </nav>

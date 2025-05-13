@@ -4,9 +4,10 @@
       <div class="row gy-6 gy-lg-0">
         <div class="col-md-6 col-lg-4">
           <div class="widget">
-            <img class="mb-4" src="/assets/img/logo-dark.png" srcset="/assets/img/logo-dark@2x.png 2x" alt="imgfooter" />
+            <!-- <img class="mb-4" src="/assets/img/logo-dark.png" srcset="/assets/img/logo-dark@2x.png 2x" alt="imgfooter" /> -->
+            <h1>{{ menus.webdata.name_company ?? '' }}</h1>
             <p class="mb-4">
-              © {{ new Date().getFullYear() }} Sandbox.
+              © {{ new Date().getFullYear() }} {{ menus.webdata.name_company ?? '' }}.
               <br class="d-none d-lg-block" />All rights reserved.
             </p>
             <nav class="nav social">
@@ -80,12 +81,8 @@ import { trans } from "@/helpers/i18n";
 
 export default {
   props: {
-    content: {
-      type: [Array],
-      default: [],
-    },
-    img: {
-      type: String,
+    menus: {
+      type: Object,
       default: [],
     }
   },

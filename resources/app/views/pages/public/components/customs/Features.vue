@@ -1,7 +1,7 @@
 <template>
   <section class="wrapper bg-light">
     <div class="container pb-15 pb-md-17">
-      <div class="row gx-md-5 gy-5 mt-n19 mb-14 mb-md-17">
+      <div class="row gx-md-5 gy-5 mt-0 mt-lg-8 mt-xl-10 mt-xxl-10">
         <div class="col d-flex" v-for="service in extradata.services" :key="service.id">
           <div class="card shadow-lg">
             <div class="card-body">
@@ -109,7 +109,7 @@
                   <span>{{ item.text }}</span>
                 </li>
               </ul>
-              <a href="#" class="btn btn-fuchsia mt-2">{{ content[12]?.text ?? trans('global.phrases.hasto_add_content')
+              <a href="#" class="btn btn-fuchsia mt-2">{{ content[6]?.text ?? trans('global.phrases.hasto_add_content')
                 }}</a>
             </div>
             <!--/column -->

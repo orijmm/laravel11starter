@@ -6,11 +6,11 @@
           <router-link v-if="menu.page_id" :class="`${isActiveMenu([], menu.page_id) ? 'active' : ''
             }`" :to="generateUrl(menu)">{{ menu.label }}
           </router-link>
-          <a v-else-if="!menu.page_id && menu.url" v-smooth-scroll data-aos="flip-down" data-aos-delay="150" class="nav-link"
+          <a v-else-if="!menu.page_id && menu.url && !isDesktop" v-smooth-scroll data-aos="flip-down" data-aos-delay="150" class="nav-link"
             :href="menu.url || '#'">
             {{ menu.label }}
           </a>
-          <div v-else="!menu.page_id" class="nav-link">{{ menu.label }}</div>
+          <div v-else class="nav-link">{{ menu.label }}</div>
         </li>
         <li v-if="!menu.parent_id && menu.children.length > 0" class="nav-item dropdown">
           <a :class="`nav-link dropdown-toggle ${isActiveMenu(menus.data) ? 'active' : ''}`" href="#"
@@ -27,20 +27,11 @@
               <router-link v-else :class="`dropdown-item   ${isActiveMenu([], item.page_id) ? 'active' : ''
                 }`" :to="generateUrl(item)">{{ item.label }}
               </router-link>
-              <!-- <ul class="dropdown-menu" v-if="item.children && item.children.length">
-                <li class="nav-item" v-for="submenuItem in item.children" :key="submenuItem.id">
-                  <router-link :class="`dropdown-item ${isActiveMenu([], submenuItem.page_id) ? 'active' : ''
-                    }`" :to="submenuItem.page_id">{{ submenuItem.label }}
-                  </router-link>
-                  {{ submenuItem.label }}
-                </li>
-              </ul> -->
             </li>
           </ul>
         </li>
       </div>
     </ul>
-    <!-- /.navbar-nav -->
   </div>
 </template>
 
@@ -69,7 +60,7 @@ export default {
     },
   },
   setup(props) {
-    // const authStore = useAuthStore();
+    const isDesktop = window.innerWidth > 768;
     const open = ref(false);
     const route = useRoute();
     const router = useRouter();
@@ -124,7 +115,8 @@ export default {
       styleGuideItems,
       usage,
       generateUrl,
-      navigateTo
+      navigateTo,
+      isDesktop
     }
   }
 }
