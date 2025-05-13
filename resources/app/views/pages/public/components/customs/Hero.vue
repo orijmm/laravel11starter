@@ -3,7 +3,7 @@
       <div class="row">
         <div class="col-lg-8 col-xl-7 col-xxl-6 mx-auto">
           <h1 class="display-1 text-white fs-60 mb-4 px-md-15 px-lg-0" data-aos="fade-up" data-aos-once="true"
-            data-aos-delay="">
+            data-aos-delay="200">
             {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
             <span class="underline-3 style-2 yellow">{{ content[1]?.text ?? trans('global.phrases.hasto_add_content')
               }}</span>

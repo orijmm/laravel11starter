@@ -41,9 +41,9 @@ import LineProgressbar from "./views/pages/public/template/components/base/LineP
 import ModalVideo from "./views/pages/public/template/components/base/ModalVideo";
 import BlockBackgorund from "./views/pages/public/components/customs/BlockBackgorund";
 
-const app = createApp(App)
-    .use(AOS.init({ disable: 'phone' }));
+const app = createApp(App);
 
+AOS.init({ disable: 'phone' });
 
 // Ejecutar utilidades después de montar la app
 initPrism();
