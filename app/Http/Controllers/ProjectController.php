@@ -93,7 +93,7 @@ class ProjectController extends Controller
             $imgArray = $request->inputImg ?? [];
             $this->mediaService->replaceMany($project, 'projectimg', $imgArray, $request->inputImg);
         }
-        if ($data['url'] && !Str::startsWith($data['url'], ['http://', 'https://'])) {
+        if ($data['url'] ?? false && !Str::startsWith($data['url'], ['http://', 'https://'])) {
             $data['url'] = 'http://' . $data['url'];
         }
         $newproject = $project->update($data);

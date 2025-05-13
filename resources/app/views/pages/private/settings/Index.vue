@@ -1,7 +1,7 @@
 <template>
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction"
         :is-loading="page.loading">
-        <OverviewSetting :logo="form.logo_thumb_url" class="mb-4" @change-logo-started="isAvatarModalShowing = true;" />
+        <OverviewSetting :logo="form.logo_url" class="mb-4" @change-logo-started="isAvatarModalShowing = true;" />
         <Form id="edit-setting" @submit.prevent="onSubmit">
 
             <Panel otherClass="overflow-visible">
@@ -97,7 +97,7 @@ export default defineComponent({
             city_id: undefined,
             country_id: undefined,
             currency_id: undefined,
-            logo_thumb_url: undefined
+            logo_url: undefined
         });
 
         //Configuracion del breadcrumbs (navegacion y botones superiores) 
@@ -152,7 +152,7 @@ export default defineComponent({
         }
 
         function onAvatarChange(data) {
-            form.logo_thumb_url = data.logo_thumb_url;
+            form.logo_url = data.logo_url;
         }
 
         return {

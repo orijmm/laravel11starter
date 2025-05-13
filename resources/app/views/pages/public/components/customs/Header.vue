@@ -8,13 +8,13 @@
       <div class="container flex-lg-row flex-nowrap align-items-center">
         <div class="navbar-brand w-100">
           <router-link to="/">
-            <img class="logo-light" src="/assets/img/logo-light.png" srcset="/assets/img/logo-light@2x.png 2x"
+            <img class="logo-light" :src="menus.logo" srcset="/assets/img/logo-light@2x.png 2x"
               alt="logos-light" />
           </router-link>
         </div>
         <div id="ofCanvasBody" class="navbar-collapse offcanvas offcanvas-nav offcanvas-start">
           <div class="offcanvas-header d-lg-none">
-            <h3 class="text-white fs-30 mb-0">Sandbox</h3>
+            <h3 class="text-white fs-30 mb-0">{{ menus.webdata.name_company ?? '' }}</h3>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"
               @click="menuClose"></button>
           </div>
@@ -29,7 +29,7 @@
                 <br />
                 00 (123) 456 78 90 <br />
                 <nav class="nav social social-white mt-4">
-                  <Socials />
+                  <Socials :webdata="menus.webdata"/>
                 </nav>
                 <!-- /.social -->
               </div>

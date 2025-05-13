@@ -22,7 +22,7 @@
           1200: { slidesPerView: 3 },
         }">
         <SwiperSlide v-for="(elm, i) in extradata.projects" :key="i">
-          <figure v-if="elm.img.length" class="rounded mb-6 fixed-height">
+          <figure v-if="elm.img.length" class="mb-6 fixed-height">
             <img :src="elm.img" :alt="elm.img_alt" class="img-cover" />
           </figure>
           <div v-if="elm.img" class="project-details d-flex justify-content-center flex-column">

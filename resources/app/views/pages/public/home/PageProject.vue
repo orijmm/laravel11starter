@@ -5,7 +5,6 @@
             <!-- <Content :page="page" :extradata="extradata" /> -->
 
             <section class="wrapper image-wrapper bg-image bg-overlay text-white hero-background">
-                {{ window }}
                 <div class="container pt-17 pb-12 pt-md-19 pb-md-16 text-center">
                     <div class="row">
                         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
@@ -51,7 +50,8 @@
                                             </li>
                                         </ul>
 
-                                        <a v-if="project.data.url" target="_blank" :href="project.data.url" class="more hover">
+                                        <a v-if="project.data.url" target="_blank" :href="project.data.url"
+                                            class="more hover">
                                             {{ trans('global.pages.project_url') }}
                                         </a>
 
@@ -68,17 +68,35 @@
                 </div>
                 <!-- /.container -->
                 <div v-if="project.data.img" class="container-fluid px-md-6">
-                    <div class="swiper-container blog grid-view mb-17 mb-md-19">
-                        <Swiper :space-between="30" :pagination="{ el: '.pbutton2', clickable: true }"
-                            :modules="[Pagination]" :grab-cursor="true" :breakpoints="{
+                    <div class="row gx-md-8 gy-10 gy-md-13 isotope">
+                        <div v-for="(elm, i) in project.data.img" :key="project.data.id" class="project item col-md-6 col-xl-4">
+                            <figure class="rounded mb-6">
+                                <img :src="elm" :alt="project.data.img_alt" />
+                                <div class="item-link cursor-pointer" @click="() => setActiveLightBox(true, i)">
+                                    <i class="uil uil-focus-add"></i>
+                                </div>
+                            </figure>
+                        </div>
+                        <!-- /.item -->
+                    </div>
+                    <!-- <div class="swiper-container blog grid-view mb-17 mb-md-19">
+
+                        <Swiper :space-between="10" :pagination="{ el: '.pbutton2', clickable: true }"
+                            :modules="[Pagination, Navigation]" :navigation="{
+                                prevEl: '.snpb2',
+                                nextEl: '.snnb2',
+                            }" :breakpoints="{
                                 500: { slidesPerView: 1 },
-                                768: { slidesPerView: 2 },
-                                1024: { slidesPerView: 3 },
-                                1200: { slidesPerView: 3 },
-                            }">
+                                768: { slidesPerView: 1 },
+                                1024: { slidesPerView: 1 },
+                                1400: { slidesPerView: 1 },
+                            }" :grab-cursor="true">
                             <SwiperSlide v-for="(elm, i) in project.data.img" :key="i">
-                                <figure class="rounded">
-                                    <img :src="elm" alt="projects-img" />
+                                <figure class="rounded mb-6  cursor-pointer" @click="setActiveLightBox(true, i)">
+                                    <img :src="elm" :alt="elm.img_alt" />
+                                    <div class="item-link">
+                                        <i class="uil uil-focus-add"></i>
+                                    </div>
                                 </figure>
                             </SwiperSlide>
                         </Swiper>
@@ -88,12 +106,13 @@
                                 class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal pbutton2">
                             </div>
                         </div>
-                        <!-- /.swiper -->
-                    </div>
-                    <!-- /.swiper-container -->
+                    </div> -->
+
                 </div>
                 <!-- /.container-fluid -->
             </section>
+            <Lightbox :images="images" :activeLightBox="activeLightBox" :firstSlideIndex="currentSlideIndex"
+                @setActiveLightBox="setActiveLightBox" />
         </div>
         <Footer2 :menus="menus" />
     </div>
@@ -105,13 +124,12 @@ import Footer from '@/views/pages/public/template/components/base/Footer';
 import Content from '@/views/pages/public/home/Content';
 import { useRoute } from 'vue-router';
 import { useAlertStore } from "@/stores";
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { getResponseError, prepareQuery } from "@/helpers/api";
 import ModelService from '@/services/ModelService';
 import SettingService from '@/services/SettingService';
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination } from "swiper/modules";
-import { projects3 } from "../components/customs/data/projects";
 
 export default {
     name: 'DefaultLayout',
@@ -121,7 +139,6 @@ export default {
         const settings = new SettingService();
         const alertStore = useAlertStore();
         const route = useRoute();
-
 
         // Variables reactivas
         const menus = reactive({
@@ -133,6 +150,10 @@ export default {
         const project = reactive({
             data: []
         });
+
+        const currentSlideIndex = ref();
+        const activeLightBox = ref(false);
+        const images = ref([]);
 
         //metodos
         function fetchPage() {
@@ -153,6 +174,7 @@ export default {
                 .find(route.params.id, 'manteiners/projects')
                 .then((response) => {
                     project.data = response.data.model ?? [];
+                    images.value = response.data.model.img;
                 })
                 .catch((error) => {
                     alertStore.error(getResponseError(error));
@@ -171,13 +193,20 @@ export default {
             fetchPage();
         });
 
+        const setActiveLightBox = (val, i) => {
+            currentSlideIndex.value = i;
+            activeLightBox.value = val;
+        };
         return {
             trans,
             date,
             menus,
             project,
-            projects3,
-            Pagination
+            Pagination,
+            currentSlideIndex,
+            activeLightBox,
+            setActiveLightBox,
+            images
         }
     }
 }

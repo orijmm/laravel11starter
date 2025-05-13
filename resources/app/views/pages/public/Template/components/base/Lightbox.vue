@@ -23,8 +23,7 @@
         :style="{
           display: currentSlideIndex === i ? 'block' : 'none',
           height: '100%',
-        }"
-      >
+        }">
         <img
           :src="elm"
           style="

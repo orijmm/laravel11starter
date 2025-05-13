@@ -229,7 +229,7 @@ html {
 
 .img-cover {
   height: 100% !important;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   display: block;
 }
