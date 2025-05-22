@@ -53,7 +53,8 @@ export default defineComponent({
             description: undefined,
             link: undefined,
             link_color_class: undefined,
-            component_type_id: undefined
+            component_type_id: undefined,
+            content: undefined
         });
 
         const page = reactive({
