@@ -2,10 +2,14 @@
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction">
         <Panel otherClass="overflow-visible">
             <Form id="create-service" @submit.prevent="onSubmit">
+                <Dropdown class="mb-4" :server="'pages/componenttype'" :server-per-page="15" :required="true"
+                    name="type" v-model="form.component_type_id" :label="trans('global.menu.componenttype')"
+                    :serverSearchMinCharacters="0" />
                 <TextInput class="mb-4" type="text" :required="true" name="title" v-model="form.title"
                     :label="trans('users.labels.title')" />
                 <TextInput class="mb-4" type="text" name="description" v-model="form.description"
                     :label="trans('users.labels.description')" />
+                    <div contenteditable="true" class="form-control" @input="onInput" v-html="content"></div>
                 <TextInput class="mb-4" type="text" name="icon" v-model="form.icon"
                     :label="trans('users.labels.icon')" :labelsmall="trans('global.phrases.add_path_icon')" />
                 <Dropdown class="mb-4" :options="textcolor" name="icon_color_class"
@@ -48,7 +52,8 @@ export default defineComponent({
             title: undefined,
             description: undefined,
             link: undefined,
-            link_color_class: undefined
+            link_color_class: undefined,
+            component_type_id: undefined
         });
 
         const page = reactive({

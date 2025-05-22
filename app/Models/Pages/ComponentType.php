@@ -2,6 +2,7 @@
 
 namespace App\Models\Pages;
 
+use App\Models\Service;
 use App\Traits\Filterable;
 use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,5 +21,10 @@ class ComponentType extends Model
     public function components(): HasMany
     {
         return $this->hasMany(Component::class);
+    }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class);
     }
 }

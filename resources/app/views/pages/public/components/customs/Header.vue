@@ -63,10 +63,8 @@
         <form @submit.prevent="() => { }" class="search-form w-100">
           <input type="text" class="form-control" placeholder="Type keyword and hit enter" />
         </form>
-        <!-- /.search-form -->
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
-      <!-- /.container -->
     </div>
     <!-- /.offcanvas -->
   </header>

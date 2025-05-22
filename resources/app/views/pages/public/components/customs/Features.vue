@@ -1,16 +1,15 @@
 <template>
   <section class="wrapper bg-light">
-    <div class="container pb-15 pb-md-17">
-      <div class="row gx-md-5 gy-5 mt-0 mt-lg-8 mt-xl-10 mt-xxl-10">
-        <div class="col d-flex" v-for="service in extradata.services" :key="service.id">
+    <div class="container pb-15 pb-md-17 mt-0 mt-lg-8 mt-xl-10 mt-xxl-10">
+      <div v-if="services" class="row gx-md-5 gy-5 mb-10">
+        <div class="col d-flex" v-for="service in services" :key="service.id">
           <div class="card shadow-lg">
             <div class="card-body">
               <div class="icon-svg" :class="service.icon_color_class"
                 :style="{ '-webkit-mask-image': `url(${service.icon})`, 'mask-image': `url(${service.icon})` }"></div>
               <h4>{{ service.title }}</h4>
               <p class="mb-2">{{ service.description }}</p>
-              <a :href="service.link" class="more hover" :class="service.link_color_class">{{ content[13]?.text ??
-                trans('global.phrases.hasto_add_content') }}</a>
+              <a v-if="service.link" :href="service.link" class="more hover" :class="service.link_color_class">{{ service.link }}</a>
             </div>
             <!--/.card-body -->
           </div>
@@ -99,9 +98,9 @@
             </div>
             <!--/column -->
             <div class="col-lg-6">
-              <h2 class="mb-3">{{ content[10]?.text ?? trans('global.phrases.hasto_add_content') }}</h2>
+              <h2 class="mb-3">Titulo</h2>
               <p>
-                {{ content[11]?.text ?? trans('global.phrases.hasto_add_content') }}
+                texto
               </p>
               <ul class="icon-list bullet-bg bullet-soft-fuchsia">
                 <li v-for="(item, index) in checklistItems.slice(0, 3)" :key="index" :class="{ 'mt-3': index > 0 }">
@@ -197,11 +196,11 @@ export default {
       type: [Array],
       default: [],
     },
-    img: {
-      type: String,
+    services: {
+      type: [Array],
       default: [],
     },
-    extradata: {
+    img: {
       type: String,
       default: [],
     }

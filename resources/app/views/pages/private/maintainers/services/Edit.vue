@@ -3,6 +3,9 @@
         :is-loading="page.loading">
         <Panel otherClass="overflow-visible">
             <Form id="edit-service" @submit.prevent="onSubmit">
+                <Dropdown class="mb-4" :server="'pages/componenttype'" :server-per-page="15" :required="true"
+                    name="type" v-model="form.component_type_id" :label="trans('global.menu.componenttype')"
+                    :serverSearchMinCharacters="0" />
                 <TextInput class="mb-4" type="text" :required="true" name="title" v-model="form.title"
                     :label="trans('users.labels.title')" />
                 <TextInput class="mb-4" type="text" name="description" v-model="form.description"
@@ -60,7 +63,8 @@ export default defineComponent({
             title: undefined,
             description: undefined,
             link: undefined,
-            link_color_class: undefined
+            link_color_class: undefined,
+            component_type_id: undefined
         });
 
         const page = reactive({

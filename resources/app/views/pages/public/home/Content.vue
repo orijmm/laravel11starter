@@ -8,6 +8,7 @@
                     <div v-for="component in col.components">
                         <component :is="component.componenttype.name || 'div'" :content="component.contents"
                             :img="component.img"
+                            :services="component.componenttype.services"
                             :extradata="page.extradata"
                             :data-aos="checkAnimate(component.componenttype.filename) ? 'flip-down' : ''">
                             {{ component.componenttype.name ? '' : 'Componente no encontrado' }}

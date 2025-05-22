@@ -61,7 +61,7 @@
 </template>
 <script>
 import { trans } from "@/helpers/i18n";
-import { checklistItems, services4 } from "./data/features";
+import { features } from "./data/features";
 import { ref } from 'vue';
 
 export default {
@@ -80,7 +80,8 @@ export default {
 
     return {
       trans,
-      activeTab
+      activeTab,
+      features
     }
   }
 }

@@ -17,10 +17,15 @@ return new class extends Migration
             $table->string('icon', 100)->nullable();
             $table->string('title', 100);
             $table->text('description')->nullable();
+            $table->text('content')->nullable();
             $table->text('link')->nullable();
             $table->string('link_color_class', 100)->nullable();
             $table->softDeletes();
             $table->timestamps();
+            
+            $table->foreignId('component_type_id')
+            ->constrained('component_types')
+            ->cascadeOnDelete();
         });
     }
 

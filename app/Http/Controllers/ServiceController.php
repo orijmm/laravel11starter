@@ -42,6 +42,7 @@ class ServiceController extends Controller
             $this->authorize('create_service');
 
             $data = $request->validated();
+            $data['component_type_id'] = $data['component_type_id']['id'];
             $newservice = Service::query()->create($data);
 
             if ($newservice) {
@@ -72,6 +73,7 @@ class ServiceController extends Controller
             $this->authorize('edit_service');
 
             $data = $request->validated();
+            $data['component_type_id'] = $data['component_type_id']['id'];
             $newservice = $service->update($data);
 
             if ($newservice) {

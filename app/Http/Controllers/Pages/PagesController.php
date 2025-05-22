@@ -118,15 +118,13 @@ class PagesController extends Controller
     public function displayPageItems(?String $id = null)
     {
         if($id){
-            $page = Page::where('id', $id)->with('sections.rows.columns.components.componenttype')->first();
+            $page = Page::where('id', $id)->with('sections.rows.columns.components.componenttype.services')->first();
         }else{
-            $page = Page::where('home', true)->with('sections.rows.columns.components.componenttype')->first();
+            $page = Page::where('home', true)->with('sections.rows.columns.components.componenttype.services')->first();
         }
-        $services = Service::get();
         $testimonials = Testimonial::get();
         $projects = Project::get();
         $extradata = [];
-        $extradata['services'] = $services ?? null;
         $extradata['testimonials'] = $testimonials ?? null;
         $extradata['projects'] = $projects ?? null;
 

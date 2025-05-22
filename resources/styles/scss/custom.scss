@@ -209,10 +209,6 @@ html {
   max-height: 100%;
   object-fit: contain;
 }
-.pdf-viewer {
-  width: 100%;
-  height: 100vh;
-}
 
 .hero-background {
   background-image: url(/assets/img/photos/bg16.png);
@@ -251,11 +247,6 @@ html {
     overflow: hidden;
   }
 
-  .pdf-viewer {
-    width: 100%;
-    height: 500px;
-  }
-
   [data-aos] {
     opacity: 1 !important;
     transform: none !important;
@@ -267,10 +258,6 @@ html {
     width: 280px;
     height: 207px;
     overflow: hidden;
-  }
-  .pdf-viewer {
-    width: 100%;
-    height: 500px;
   }
 
   .fixed-height {

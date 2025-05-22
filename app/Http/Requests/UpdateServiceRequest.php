@@ -25,6 +25,7 @@ class UpdateServiceRequest extends FormRequest
             'icon_color_class' => 'nullable',
             'icon' => 'nullable',
             'title' => 'required',
+            'component_type_id' => 'required',
             'description' => 'nullable',
             'link' => 'nullable',
             'link_color_class' => 'nullable',
