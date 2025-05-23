@@ -1,9 +1,11 @@
 <template>
     <div :class="$props.class">
-        <label class="text-sm text-gray-500" :class="{ 'sr-only': !$props.showLabel }" v-if="$props.showLabel && $props.label">
+        <label class="text-sm text-gray-500" :class="{ 'sr-only': !$props.showLabel }"
+            v-if="$props.showLabel && $props.label">
             {{ $props.label }}<span class="text-red-600" v-if="$props.required">*</span>
         </label>
-        <div :class="classes" @click="onClick" @mouseover="hover = true" @mouseleave="hover = false" @drop.prevent="onDrop" @dragover.prevent="hover = true" @dragleave.prevent="hover = false">
+        <div :class="classes" @click="onClick" @mouseover="hover = true" @mouseleave="hover = false"
+            @drop.prevent="onDrop" @dragover.prevent="hover = true" @dragleave.prevent="hover = false">
             <button class="file-input__clear" type="button" @click.stop="onClear" v-if="canClear">
                 <i class="fa fa-times"></i></button>
             <div v-if="!files.length">
@@ -12,7 +14,7 @@
             </div>
             <div v-else>
                 <template v-if="$props.multiple">
-                    <span>{{ trans('global.phrases.input_files_selected', {count: files.length}) }}</span>
+                    <span>{{ trans('global.phrases.input_files_selected', { count: files.length }) }}</span>
                     <div v-for="(file, index) in files" :key="index">
                         <small>{{ file.name }}</small>
                     </div>
@@ -21,15 +23,16 @@
                     <span>{{ files[0].name }}</span>
                 </template>
             </div>
-            <input type="file" ref="input" :disabled="disabled" :multiple="multiple" :accept="$props.accept" @input="onChange"/>
+            <input type="file" ref="input" :disabled="disabled" :multiple="multiple" :accept="$props.accept"
+                @input="onChange" />
         </div>
     </div>
 </template>
 
 <script>
-import {computed, defineComponent, ref} from "vue";
-
-import {trans} from "@/helpers/i18n";
+import { computed, defineComponent, ref } from "vue";
+import alertHelpers from "@/helpers/alert";
+import { trans } from "@/helpers/i18n";
 
 
 export default defineComponent({
@@ -74,7 +77,7 @@ export default defineComponent({
         }
     },
     emits: ['update:modelValue', 'change', 'click', 'input', 'error', 'clear'],
-    setup(props, {emit}) {
+    setup(props, { emit }) {
 
         let hover = ref(false);
 
@@ -84,7 +87,7 @@ export default defineComponent({
             if (props.placeholder) {
                 return props.placeholder;
             } else {
-                return trans('global.phrases.input_files_select', {count: props.multiple ? 2 : 1});
+                return trans('global.phrases.input_files_select', { count: props.multiple ? 2 : 1 });
             }
         })
 
@@ -134,6 +137,18 @@ export default defineComponent({
         })
 
         function onChange(e) {
+            const files = e.target.files;
+            const maxSizeMB = 5; // Por ejemplo, 5 MB
+            const maxSizeBytes = maxSizeMB * 1024 * 1024;
+
+            for (let file of files) {
+                if (file.size > maxSizeBytes) {
+                    alertHelpers.messageDanger(`El archivo "${file.name}" excede el tamaño máximo de ${maxSizeMB}MB.`)
+                    // Limpia el input si es necesario
+                    e.target.value = null;
+                    return;
+                }
+            }
             emitEvent(Array.from(e.target.files));
             emit('change');
         }

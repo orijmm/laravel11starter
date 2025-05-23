@@ -9,9 +9,22 @@
                     :label="trans('users.labels.title')" />
                 <TextInput class="mb-4" type="text" name="description" v-model="form.description"
                     :label="trans('users.labels.description')" />
-                    <div contenteditable="true" class="form-control" @input="onInput" v-html="content"></div>
-                <TextInput class="mb-4" type="text" name="icon" v-model="form.icon"
-                    :label="trans('users.labels.icon')" :labelsmall="trans('global.phrases.add_path_icon')" />
+                <div class="text-gray-500 text-sm">{{ trans('users.labels.content') }}</div>
+                <quill-editor v-model:value="form.content" :options="state.editorOption" :disabled="state.disabled" />
+                <div class="text-gray-500 text-sm mt-4">{{ trans('users.labels.img') }}</div>
+                <FormImg @error="errorImg = true" @success="setImgFile" />
+                <div class="flex flex-row gap-2">
+                    <div class="bg-gray-50 rounded p-1" v-for="(imgI, i) in form.inputImg" :key="`inputImg-${i}`">
+                        <button class="file-input__clear text-gray-300" type="button"
+                            @click="onClearImg(i, 'inputImg')">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <img :src="getImgVisual(imgI)" class="object-scale-down h-48 w-96"
+                            :alt="trans('users.labels.img')" />
+                    </div>
+                </div>
+                <TextInput class="mb-4" type="text" name="icon" v-model="form.icon" :label="trans('users.labels.icon')"
+                    :labelsmall="trans('global.phrases.add_path_icon')" />
                 <Dropdown class="mb-4" :options="textcolor" name="icon_color_class"
                     :placeholder="trans('users.labels.select')" v-model="form.icon_color_class"
                     :label="trans('users.labels.icon_color_class')" />
@@ -26,7 +39,7 @@
 </template>
 
 <script>
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import { trans } from "@/helpers/i18n";
 import { useAuthStore } from "@/stores/auth";
 import Button from "@/views/components/input/Button";
@@ -40,10 +53,12 @@ import { toUrl } from "@/helpers/routing";
 import Form from "@/views/components/Form";
 import ManteinerService from "@/services/ManteinerService";
 import { textcolor, linkcolor } from "@/views/pages/private/maintainers/frontUtils/colors";
+import { quillEditor } from 'vue3-quill';
+import FormImg from "@/views/pages/private/profile/partials/FormImg.vue";
 
 export default defineComponent({
     name: 'PageServiceCreate',
-    components: { Form, Panel, Alert, TextInput, Dropdown, Button, Page },
+    components: { Form, Panel, Alert, TextInput, Dropdown, Button, Page, quillEditor, FormImg },
     setup() {
         const { user } = useAuthStore();
         const form = reactive({
@@ -54,7 +69,8 @@ export default defineComponent({
             link: undefined,
             link_color_class: undefined,
             component_type_id: undefined,
-            content: undefined
+            content: undefined,
+            inputImg: [],
         });
 
         const page = reactive({
@@ -89,6 +105,30 @@ export default defineComponent({
             ]
         });
 
+        const state = reactive({
+            _content: '',
+            editorOption: {
+                placeholder: 'core',
+                modules: {
+                    toolbar: [
+                        ['bold', 'italic', 'underline', 'strike'],
+                        ['blockquote'],
+                        [{ header: 1 }, { header: 2 }],
+                        [{ list: 'ordered' }, { list: 'bullet' }],
+                        [{ indent: '-1' }, { indent: '+1' }],
+                        [{ size: ['small', false, 'large', 'huge'] }],
+                        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+                        [{ color: [] }, { background: [] }],
+                        [{ align: [] }],
+                        ['clean'],
+                    ]
+                }
+            },
+            disabled: false
+        });
+
+        let errorImg = ref(false);
+
         const service = new ManteinerService('services');
 
         function onAction(data) {
@@ -106,6 +146,20 @@ export default defineComponent({
             return false;
         }
 
+         //Asignar el valor del archivo 
+         function setImgFile(data) {
+            form.inputImg.push(data);
+        }
+
+        function getImgVisual(img) {
+            return typeof img == 'string' ? img : URL.createObjectURL(img);
+        }
+
+        //Borra la imagen
+        function onClearImg(i, type) {
+            form[type].splice(i, 1);
+        }
+
         return {
             trans,
             user,
@@ -114,7 +168,12 @@ export default defineComponent({
             onSubmit,
             onAction,
             textcolor,
-            linkcolor
+            linkcolor,
+            state,
+            errorImg,
+            onClearImg,
+            setImgFile,
+            getImgVisual
         }
     }
 })

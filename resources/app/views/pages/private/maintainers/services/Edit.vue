@@ -10,8 +10,29 @@
                     :label="trans('users.labels.title')" />
                 <TextInput class="mb-4" type="text" name="description" v-model="form.description"
                     :label="trans('users.labels.description')" />
-                <TextInput class="mb-4" type="text" name="icon" v-model="form.icon"
-                    :label="trans('users.labels.icon')" :labelsmall="trans('global.phrases.add_path_icon')" />
+                <div class="text-gray-500 text-sm">Contenido</div>
+                <quill-editor v-model:value="form.content" :options="state.editorOption" :disabled="state.disabled" />
+                <div class="text-gray-500 text-sm mt-4">{{ trans('users.labels.img') }}</div>
+                <FormImg @error="errorImg = true" @success="setImgFile" />
+                <div class="flex flex-row gap-2">
+                    <div class="bg-gray-50 rounded p-1" v-for="(image, i) in form.img" :key="`img-${i}`">
+                        <button class="file-input__clear text-gray-300" type="button" @click="onClearImg(i, 'img')">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <img :src="getImgVisual(image)" class="object-scale-down h-48 w-96"
+                            :alt="trans('users.labels.img')" />
+                    </div>
+                    <div class="bg-gray-50 rounded p-1" v-for="(imgI, i) in form.inputImg" :key="`inputImg-${i}`">
+                        <button class="file-input__clear text-gray-300" type="button"
+                            @click="onClearImg(i, 'inputImg')">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <img :src="getImgVisual(imgI)" class="object-scale-down h-48 w-96"
+                            :alt="trans('users.labels.img')" />
+                    </div>
+                </div>
+                <TextInput class="mb-4" type="text" name="icon" v-model="form.icon" :label="trans('users.labels.icon')"
+                    :labelsmall="trans('global.phrases.add_path_icon')" />
                 <Dropdown class="mb-4" :options="textcolor" name="icon_color_class"
                     :placeholder="trans('users.labels.select')" v-model="form.icon_color_class"
                     :label="trans('users.labels.icon_color_class')" />
@@ -26,7 +47,7 @@
 </template>
 
 <script>
-import { defineComponent, onBeforeMount, reactive } from "vue";
+import { defineComponent, onBeforeMount, reactive, ref } from "vue";
 import { textcolor, linkcolor } from "@/views/pages/private/maintainers/frontUtils/colors";
 import { trans } from "@/helpers/i18n";
 import { fillObject, reduceProperties } from "@/helpers/data"
@@ -42,6 +63,8 @@ import Form from "@/views/components/Form";
 import Table from "@/views/components/Table";
 import Dropdown from "@/views/components/input/Dropdown";
 import ManteinerService from "@/services/ManteinerService";
+import { quillEditor } from 'vue3-quill';
+import FormImg from "@/views/pages/private/profile/partials/FormImg.vue";
 
 export default defineComponent({
     components: {
@@ -52,7 +75,9 @@ export default defineComponent({
         Button,
         Page,
         Table,
-        Dropdown
+        Dropdown,
+        quillEditor,
+        FormImg
     },
     setup() {
         const { user } = useAuthStore();
@@ -64,7 +89,10 @@ export default defineComponent({
             description: undefined,
             link: undefined,
             link_color_class: undefined,
-            component_type_id: undefined
+            component_type_id: undefined,
+            content: undefined,
+            inputImg: [],
+            img: [],
         });
 
         const page = reactive({
@@ -99,6 +127,27 @@ export default defineComponent({
             ]
         });
 
+        const state = reactive({
+            _content: '',
+            editorOption: {
+                placeholder: 'core',
+                modules: {
+                    toolbar: [
+                        ['bold', 'italic', 'underline', 'strike'],
+                        ['blockquote'],
+                        [{ header: 1 }, { header: 2 }],
+                        [{ list: 'ordered' }, { list: 'bullet' }],
+                        [{ indent: '-1' }, { indent: '+1' }],
+                        [{ size: ['small', false, 'large', 'huge'] }],
+                        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+                        [{ color: [] }, { background: [] }],
+                        [{ align: [] }],
+                        ['clean'],
+                    ]
+                }
+            },
+            disabled: false
+        });
 
         const service = new ManteinerService('services');
 
@@ -106,9 +155,8 @@ export default defineComponent({
             service.find(route.params.id, 'manteiners/services').then((response) => {
                 fillObject(form, response.data.model);
                 //Dropdown Selected
-                console.log(form.icon_color_class, form.link_color_class);
-                form.icon_color_class = {id: form.icon_color_class, name: form.icon_color_class}
-                form.link_color_class = {id: form.link_color_class, name: form.link_color_class}
+                form.icon_color_class = { id: form.icon_color_class, name: form.icon_color_class }
+                form.link_color_class = { id: form.link_color_class, name: form.link_color_class }
                 page.loading = false;
             });
         }
@@ -126,8 +174,24 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleUpdate('edit-service', route.params.id, reduceProperties(form,['icon_color_class', 'link_color_class'], 'id'));
+            service.handleUpdate('edit-service', route.params.id, reduceProperties(form, ['icon_color_class', 'link_color_class'], 'id'), null, true);
             return false;
+        }
+
+        let errorImg = ref(false);
+
+        //Asignar el valor del archivo 
+        function setImgFile(data) {
+            form.inputImg.push(data);
+        }
+
+        function getImgVisual(img) {
+            return typeof img == 'string' ? img : URL.createObjectURL(img);
+        }
+
+        //Borra la imagen
+        function onClearImg(i, type) {
+            form[type].splice(i, 1);
         }
 
         return {
@@ -138,7 +202,12 @@ export default defineComponent({
             onAction,
             page,
             linkcolor,
-            textcolor
+            textcolor,
+            state,
+            errorImg,
+            getImgVisual,
+            setImgFile,
+            onClearImg
         }
     }
 })

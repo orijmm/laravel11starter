@@ -6,11 +6,27 @@ use App\Http\Requests\StoreServiceRequest;
 use App\Http\Requests\UpdateServiceRequest;
 use App\Http\Resources\ServiceResource;
 use App\Models\Service;
+use App\Services\Media\MediaService;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
+    /**
+     * The service instance
+     *
+     * @var MediaService
+     */
+    protected $mediaService;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->mediaService = new MediaService();
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -44,6 +60,10 @@ class ServiceController extends Controller
             $data = $request->validated();
             $data['component_type_id'] = $data['component_type_id']['id'];
             $newservice = Service::query()->create($data);
+            if (!empty($request->inputImg)) {
+                $imgArray = $request->inputImg ?? [];
+                $this->mediaService->replaceMany($newservice, 'serviceimg', $imgArray, $request->inputImg);
+            }
 
             if ($newservice) {
                 return $this->responseStoreSuccess(['record' => $newservice]);
@@ -74,10 +94,14 @@ class ServiceController extends Controller
 
             $data = $request->validated();
             $data['component_type_id'] = $data['component_type_id']['id'];
+            if (!empty($request->inputImg)) {
+                $imgArray = $request->inputImg ?? [];
+                $this->mediaService->replaceMany($service, 'serviceimg', $imgArray, $request->inputImg);
+            }
             $newservice = $service->update($data);
 
             if ($newservice) {
-                return $this->responseUpdateSuccess(['record' => $service]);
+                return $this->responseUpdateSuccess(['record' => $service, 'hh' => $request->inputImg]);
             } else {
                 return $this->responseUpdateFail();
             }

@@ -17,7 +17,7 @@ const _message = function (type, message, title = '') {
             }
         }
     }
-    window.alert(title + ' ' + message);
+    showAlert(title, message, type );
 
 }
 
@@ -43,18 +43,10 @@ const _confirm = function (func_if_yes, func_if_cancel, msg, title, type) {
         title = trans('global.alerts.confirm');
     }
     msg = title + ' - ' + msg;
-    // if (window.confirm(msg)) {
-    //     if (func_if_yes) {
-    //         func_if_yes();
-    //     }
-    // } else {
-    //     if (func_if_cancel) {
-    //         func_if_cancel();
-    //     }
-    // }
+
     // Swal implementation
     
-    showAlert(
+    showConfirmAlert(
         title, 
         msg, 
         type, 
@@ -108,7 +100,7 @@ const messageWarning = function (message, title = '') {
  * @param title
  */
 const messageDanger = function (message, title = '') {
-    _message('danger', message, title);
+    _message('error', message, title);
 }
 
 /**
@@ -144,7 +136,7 @@ const confirmDanger = function (callback_yes, callback_cancel, msg, title) {
     _confirm(callback_yes, callback_cancel, msg, title, 'error')
 }
 
-const showAlert = function (title, msg, type, params = {}, func_if_yes, func_if_cancel) {
+const showConfirmAlert = function (title, msg, type, params = {}, func_if_yes, func_if_cancel) {
     Swal.fire({
         title: title,
         text: msg,
@@ -160,6 +152,15 @@ const showAlert = function (title, msg, type, params = {}, func_if_yes, func_if_
             func_if_yes(); 
         }
     });
+}
+
+const showAlert = function (title, msg, icon = 'error', params = {}) {
+    Swal.fire({
+        icon: icon,
+        title: title,
+        text: msg,
+        ...params
+      })
 }
 
 

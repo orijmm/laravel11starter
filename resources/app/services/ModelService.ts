@@ -39,6 +39,7 @@ export default abstract class ModelService extends BaseService {
         let url = customUrl || this.url;
 
         let data = noTransform ? payload : this.transformPayloadForSubmission(payload);
+        console.log(data, noTransform);
         return this.patch(url + `/${object_id}`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data'

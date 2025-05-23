@@ -11,7 +11,7 @@
                 <TextInput class="mb-4" type="text" name="url" v-model="form.url" :label="trans('global.pages.project_url')" />
                 <TextInput class="mb-4" type="text" name="client_name" v-model="form.client_name"
                     :label="trans('global.pages.project_client_name')" />
-                <TextInput class="mb-4" type="text" name="date" v-model="form.date"
+                    <TextInput class="mb-4" type="date" name="date" v-model="form.date"
                     :label="trans('global.pages.project_date')" />
                 <TextInput class="mb-4" type="text" name="category" v-model="form.category"
                     :label="trans('users.labels.category')" />
