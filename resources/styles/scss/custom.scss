@@ -230,6 +230,16 @@ html {
   display: block;
 }
 
+///////////////////////////////////* Quill Editor *////////////////////////////////////
+.ql-editor .ql-align-center {
+  text-align: center;
+}
+.ql-editor .ql-align-justify {
+  text-align: justify;
+}
+.ql-editor .ql-align-right {
+  text-align: right;
+}
 
 @media (min-width: 769px) and (max-width: 1024px) {
   .fixed-image-container {

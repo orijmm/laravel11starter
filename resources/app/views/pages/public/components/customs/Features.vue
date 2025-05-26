@@ -11,175 +11,10 @@
               <p class="mb-2">{{ service.description }}</p>
               <a v-if="service.link" :href="service.link" class="more hover" :class="service.link_color_class">{{ service.link }}</a>
             </div>
-            <!--/.card-body -->
           </div>
-          <!--/.card -->
         </div>
         <!--/column -->
       </div>
-      <!--/.row -->
-      <div class="row">
-        <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2 mx-auto text-center">
-          <h2 class="fs-16 text-uppercase text-muted mb-3">
-            {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
-          </h2>
-          <h3 class="display-3 mb-10 px-xl-10 px-xxl-15">
-            {{ content[1]?.text ?? trans('global.phrases.hasto_add_content') }}
-            <span class="underline-3 style-2 yellow">
-              {{ content[2]?.text ?? trans('global.phrases.hasto_add_content')}}
-              </span>
-            {{ content[3]?.text ?? trans('global.phrases.hasto_add_content') }}
-          </h3>
-        </div>
-        <!-- /column -->
-      </div>
-      <!-- /.row -->
-      <ul class="nav nav-tabs nav-tabs-bg nav-tabs-shadow-lg d-flex justify-content-between nav-justified flex-lg-row flex-column">
-        <li class="nav-item">
-          <div :class="`nav-link d-flex flex-row cursor-pointer ${activeTab == 1 ? 'active' : ''
-            }`" @click="
-              () => {
-                activeTab = 1;
-              }
-            ">
-            <div>
-              <div class="icon-svg icon-svg-sm solid-mono text-fuchsia me-4"
-                :style="{ '-webkit-mask-image': `url(/assets/img/icons/solid/bulb.svg)`, 'mask-image': `url(/assets/img/icons/solid/bulb.svg)` }"></div>
-            </div>
-            <div>
-              <h4>{{ content[4]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
-              <p>{{ content[5]?.text ?? trans('global.phrases.hasto_add_content') }}</p>
-            </div>
-          </div>
-        </li>
-        <li class="nav-item">
-          <div :class="`nav-link d-flex flex-row cursor-pointer ${activeTab == 2 ? 'active' : ''
-            }`" @click="
-              () => {
-                activeTab = 2;
-              }
-            ">
-            <div>
-                <div class="icon-svg icon-svg-sm solid-mono text-violet me-4"
-                :style="{ '-webkit-mask-image': `url(/assets/img/icons/solid/compare.svg)`, 'mask-image': `url(/assets/img/icons/solid/compare.svg)` }"></div>
-            </div>
-            <div>
-              <h4>{{ content[6]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
-              <p>{{ content[7]?.text ?? trans('global.phrases.hasto_add_content') }}</p>
-            </div>
-          </div>
-        </li>
-        <li class="nav-item">
-          <div :class="`nav-link d-flex flex-row cursor-pointer ${activeTab == 3 ? 'active' : ''
-            }`" @click="
-              () => {
-                activeTab = 3;
-              }
-            ">
-            <div>
-                <div class="icon-svg icon-svg-sm solid-mono text-green me-4"
-                :style="{ '-webkit-mask-image': `url(/assets/img/icons/solid/delivery-box.svg)`, 'mask-image': `url(/assets/img/icons/solid/delivery-box.svg)` }"></div>
-            </div>
-            <div>
-              <h4>{{ content[8]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
-              <p>{{ content[9]?.text ?? trans('global.phrases.hasto_add_content') }}</p>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <!-- /.nav-tabs -->
-      <div class="tab-content mt-6 mt-lg-8">
-        <div :class="`tab-pane fade  ${activeTab == 1 ? 'show active' : ''}`">
-          <div class="row gx-lg-8 gx-xl-12 gy-10 align-items-center">
-            <div class="col-lg-6">
-              <figure class="rounded shadow-lg">
-                <img src="/assets/img/photos/se5.jpg" srcset="/assets/img/photos/se5@2x.jpg 2x" alt="imgfeatue" />
-              </figure>
-            </div>
-            <!--/column -->
-            <div class="col-lg-6">
-              <h2 class="mb-3">Titulo</h2>
-              <p>
-                texto
-              </p>
-              <ul class="icon-list bullet-bg bullet-soft-fuchsia">
-                <li v-for="(item, index) in checklistItems.slice(0, 3)" :key="index" :class="{ 'mt-3': index > 0 }">
-                  <span><i class="uil uil-check"></i></span>
-                  <span>{{ item.text }}</span>
-                </li>
-              </ul>
-              <a href="#" class="btn btn-fuchsia mt-2">{{ content[6]?.text ?? trans('global.phrases.hasto_add_content')
-                }}</a>
-            </div>
-            <!--/column -->
-          </div>
-          <!--/.row -->
-        </div>
-        <!--/.tab-pane -->
-        <div :class="`tab-pane fade  ${activeTab == 2 ? 'show active' : ''}`">
-          <div class="row gx-lg-8 gx-xl-12 gy-10 align-items-center">
-            <div class="col-lg-6 order-lg-2">
-              <figure class="rounded shadow-lg">
-                <img src="/assets/img/photos/se6.jpg" srcset="/assets/img/photos/se6@2x.jpg 2x" alt="imgfeatue" />
-              </figure>
-            </div>
-            <!--/column -->
-            <div class="col-lg-6">
-              <h2 class="mb-3">Data Analysis</h2>
-              <p>
-                Etiam porta sem malesuada magna mollis euismod. Donec
-                ullamcorper nulla non metus auctor fringilla. Morbi leo risus,
-                porta ac consectetur ac, vestibulum at eros. Fusce dapibus,
-                tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-                fermentum massa justo sit amet risus. Nullam quis risus eget
-                urna.
-              </p>
-              <ul class="icon-list bullet-bg bullet-soft-violet">
-                <li v-for="(item, index) in checklistItems.slice(0, 3)" :key="index" :class="{ 'mt-3': index > 0 }">
-                  <span><i class="uil uil-check"></i></span>
-                  <span>{{ item.text }}</span>
-                </li>
-              </ul>
-              <a href="#" class="btn btn-violet mt-2">Learn More</a>
-            </div>
-            <!--/column -->
-          </div>
-          <!--/.row -->
-        </div>
-        <!--/.tab-pane -->
-        <div :class="`tab-pane fade  ${activeTab == 3 ? 'show active' : ''}`">
-          <div class="row gx-lg-8 gx-xl-12 gy-10 align-items-center">
-            <div class="col-lg-6">
-              <figure class="rounded shadow-lg">
-                <img src="/assets/img/photos/se7.jpg" srcset="/assets/img/photos/se7@2x.jpg 2x" alt="imgfeatue" />
-              </figure>
-            </div>
-            <!--/column -->
-            <div class="col-lg-6">
-              <h2 class="mb-3">Finalize Product</h2>
-              <p>
-                Etiam porta sem malesuada magna mollis euismod. Donec
-                ullamcorper nulla non metus auctor fringilla. Morbi leo risus,
-                porta ac consectetur ac, vestibulum at eros. Fusce dapibus,
-                tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-                fermentum massa justo sit amet risus. Nullam quis risus eget
-                urna.
-              </p>
-              <ul class="icon-list bullet-bg bullet-soft-green">
-                <li v-for="(item, index) in checklistItems.slice(0, 3)" :key="index" :class="{ 'mt-3': index > 0 }">
-                  <span><i class="uil uil-check"></i></span>
-                  <span>{{ item.text }}</span>
-                </li>
-              </ul>
-              <a href="#" class="btn btn-green mt-2">Learn More</a>
-            </div>
-            <!--/column -->
-          </div>
-          <!--/.row -->
-        </div>
-        <!--/.tab-pane -->
-      </div>
-      <!-- /.tab-content -->
     </div>
     <!-- /.container -->
   </section>
@@ -187,8 +22,6 @@
 
 <script>
 import { trans } from "@/helpers/i18n";
-import { checklistItems, services4 } from "./data/features";
-import { ref } from 'vue';
 
 export default {
   props: {
@@ -206,13 +39,9 @@ export default {
     }
   },
   setup(props) {
-    const activeTab = ref(1);
 
     return {
       trans,
-      activeTab,
-      checklistItems,
-      services4
     }
   }
 }

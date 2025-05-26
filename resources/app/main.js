@@ -25,6 +25,7 @@ import Content from "./views/pages/public/home/Content";
 import HeadersHome from "./views/pages/public/components/customs/Header";
 import Hero from "./views/pages/public/components/customs/Hero";
 import Features from "./views/pages/public/components/customs/Features";
+import Features1 from "./views/pages/public/components/customs/Features1";
 import Facts from "./views/pages/public/components/customs/Facts";
 import Testimonials from "./views/pages/public/components/customs/Testimonials";
 import Projects from "./views/pages/public/components/customs/Projects";
@@ -69,6 +70,7 @@ const components = {
     'HeadersHome': HeadersHome,
     'Hero': Hero,
     'Features': Features,
+    'Features1': Features1,
     'Facts': Facts,
     'Testimonials': Testimonials,
     'Projects': Projects,
