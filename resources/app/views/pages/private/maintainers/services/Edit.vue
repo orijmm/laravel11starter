@@ -128,7 +128,7 @@ export default defineComponent({
         });
 
         const state = reactive({
-            _content: '',
+            _content: form.content ?? '',
             editorOption: {
                 placeholder: trans('global.phrases.add_content'),
                 modules: {

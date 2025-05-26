@@ -6,7 +6,7 @@
           <router-link v-if="menu.page_id" :class="`${isActiveMenu([], menu.page_id) ? 'active' : ''
             }`" :to="generateUrl(menu)">{{ menu.label }}
           </router-link>
-          <a v-else-if="!menu.page_id && menu.url && !isDesktop" v-smooth-scroll data-aos="flip-down" data-aos-delay="150" class="nav-link"
+          <a v-else-if="!menu.page_id && menu.url && isDesktop" v-smooth-scroll data-aos="flip-down" data-aos-delay="150" class="nav-link"
             :href="menu.url || '#'">
             {{ menu.label }}
           </a>
