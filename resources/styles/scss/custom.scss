@@ -7,30 +7,37 @@
 }
 
 .ticker {
-  & > * {
+  &>* {
     transition-timing-function: linear !important;
-    & > * {
+
+    &>* {
       transition-timing-function: linear !important;
     }
   }
 }
+
 #ofCanvasBody {
   height: 100vh;
 }
+
 @media (max-width: 991.98px) {
   body .navbar-nav .active {
     color: var(--bs-navbar-active-color) !important;
+
     &:hover {
       color: var(--bs-navbar-active-color) !important;
     }
   }
+
   body .navbar-nav .nav-link.active {
     color: var(--bs-navbar-active-color) !important;
+
     &:hover {
       color: var(--bs-navbar-active-color) !important;
     }
   }
 }
+
 .headerSocials2 {
   @media (max-width: 450px) {
     &:last-child {
@@ -38,6 +45,7 @@
     }
   }
 }
+
 .modalcustom {
   /* The Modal (background) */
   box-sizing: border-box;
@@ -56,6 +64,7 @@
   visibility: hidden;
   transition: 0.5s;
 }
+
 .activeImageLightBox {
   opacity: 1;
   visibility: visible;
@@ -92,15 +101,18 @@
   font-weight: bold;
   box-sizing: border-box;
 }
+
 .modalcustom h3,
 .modalcustom h5 {
   width: fit-content;
   margin: 5px auto;
 }
+
 .modalcustom h5 {
   font-size: 16px;
   font-weight: 400;
 }
+
 .modalcustom .close:hover {
   color: #999;
   text-decoration: none;
@@ -138,6 +150,7 @@
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 20000;
 }
+
 .modalcustom .prev:hover,
 .modalcustom .next:hover {
   background-color: rgba(0, 0, 0, 0.8);
@@ -190,10 +203,12 @@
     0 4px 8px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
 a.router-link-active.router-link-exact-active.dropdown-item.active img {
   background: #e668b3;
   padding: 3px;
 }
+
 /* Add your styles here */
 html {
   scroll-behavior: smooth;
@@ -219,7 +234,8 @@ html {
 }
 
 .fixed-height {
-  height: 440px; /* o el alto que desees */
+  height: 440px;
+  /* o el alto que desees */
   overflow: hidden;
 }
 
@@ -231,15 +247,60 @@ html {
 }
 
 ///////////////////////////////////* Quill Editor *////////////////////////////////////
-.ql-editor .ql-align-center {
-  text-align: center;
+///////////////////////////////////
+/// Quill Editor Overrides
+///////////////////////////////////
+
+.ql-editor {
+
+  // Justificaciones de texto
+  .ql-align-center {
+    text-align: center;
+  }
+
+  .ql-align-justify {
+    text-align: justify;
+  }
+
+  .ql-align-right {
+    text-align: right;
+  }
+
+  // Estilos para listas
+  ul,
+  ol {
+    margin-left: 1.25rem; // similar a Bootstrap ms-4
+    padding-left: 0; // elimina padding default del navegador
+    list-style-position: inside; // opcional
+  }
+
+  ul>li,
+  ol>li {
+    padding: 0.5rem 0;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  // Puedes agregar viñetas personalizadas (opcional)
+  ul>li::before {
+    font-family: 'sans-serif';
+    font-weight: normal;
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: var(--bs-primary);
+  }
+
+  // Listas justificada
+  ul>li.ql-align-justify,
+  ol>li.ql-align-justify {
+    text-align: justify;
+  }
+
+  em {
+    color: var(--bs-info);
+  }
 }
-.ql-editor .ql-align-justify {
-  text-align: justify;
-}
-.ql-editor .ql-align-right {
-  text-align: right;
-}
+
 
 @media (min-width: 769px) and (max-width: 1024px) {
   .fixed-image-container {
@@ -271,7 +332,8 @@ html {
   }
 
   .fixed-height {
-    height: 300px; /* o el alto que desees */
+    height: 300px;
+    /* o el alto que desees */
     overflow: hidden;
   }
 
@@ -279,5 +341,5 @@ html {
     opacity: 1 !important;
     transform: none !important;
   }
-  
+
 }

@@ -48,3 +48,9 @@ Este directorio contiene la estructura principal del website.
 - Aquí irán los **SCSS, fuentes y estilos custom** de la plantilla.
 - **No tocar** los del backend panel de configuración: `main.scss` y `tailwind.scss`.
 
+
+## Styles
+
+### Quill Editor - Editor html de contenido
+
+En custom.scss buscar Quill Editor. Agregar (ql-editor)

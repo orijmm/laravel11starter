@@ -262,6 +262,7 @@ return [
             'integrity_constraint_violation' => 'No se puede realizar la operación por una relación inválida',
             'value_toolong' => 'El valor ingresado es demasiado largo para el campo',
             'unknown_column' => 'Columna desconocida en la consulta',
+            'add_content' => 'Ingrese contenido'
         ],
         'buttons' => [
             'add_new' => 'Añadir nuevo',

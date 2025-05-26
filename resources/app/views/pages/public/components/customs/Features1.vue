@@ -17,7 +17,6 @@
         </div>
         <!-- /column -->
       </div>
-      {{ activeTab }}
       <!-- /.row -->
       <ul class="nav nav-tabs nav-tabs-bg nav-tabs-shadow-lg d-flex justify-content-between nav-justified flex-lg-row flex-column">
         <li v-for="(service, i) in services" :key="`tabtitle-${i}`" class="nav-item">
@@ -28,8 +27,8 @@
               }
             ">
             <div>
-              <div class="icon-svg icon-svg-sm solid-mono text-fuchsia me-4"
-                :style="{ '-webkit-mask-image': `url(/assets/img/icons/solid/bulb.svg)`, 'mask-image': `url(/assets/img/icons/solid/bulb.svg)` }"></div>
+                <div class="icon-svg icon-svg-sm solid-mono me-4" :class="service.icon_color_class"
+                :style="{ '-webkit-mask-image': `url(${service.icon})`, 'mask-image': `url(${service.icon})` }"></div>
             </div>
             <div>
               <h4>{{ service.title }}</h4>

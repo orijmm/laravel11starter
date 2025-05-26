@@ -108,7 +108,7 @@ export default defineComponent({
         const state = reactive({
             _content: '',
             editorOption: {
-                placeholder: 'core',
+                placeholder: trans('global.phrases.add_content'),
                 modules: {
                     toolbar: [
                         ['bold', 'italic', 'underline', 'strike'],
@@ -122,7 +122,7 @@ export default defineComponent({
                         [{ align: [] }],
                         ['clean'],
                     ]
-                }
+                },
             },
             disabled: false
         });
@@ -140,7 +140,7 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleCreate('create-service', reduceProperties(form, ['icon_color_class', 'link_color_class'], 'id')).then(() => {
+            service.handleCreate('create-service', reduceProperties(form, ['icon_color_class', 'link_color_class'], 'id'), null, true).then(() => {
                 clearObject(form)
             })
             return false;

@@ -130,7 +130,7 @@ export default defineComponent({
         const state = reactive({
             _content: '',
             editorOption: {
-                placeholder: 'core',
+                placeholder: trans('global.phrases.add_content'),
                 modules: {
                     toolbar: [
                         ['bold', 'italic', 'underline', 'strike'],
