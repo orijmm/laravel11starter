@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->text('content')->nullable();
             $table->text('link')->nullable();
+            $table->foreignId('page_id')->constrained('pages')->nullable();
             $table->string('link_color_class', 100)->nullable();
             $table->softDeletes();
             $table->timestamps();

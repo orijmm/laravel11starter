@@ -29,6 +29,7 @@ class UpdateServiceRequest extends FormRequest
             'component_type_id' => 'required',
             'description' => 'nullable',
             'link' => 'nullable',
+            'page_id' => 'nullable',
             'link_color_class' => 'nullable',
         ];
     }

@@ -94,6 +94,8 @@ class ServiceController extends Controller
 
             $data = $request->validated();
             $data['component_type_id'] = $data['component_type_id']['id'];
+            $data['page_id'] = $data['page_id']['id'] ?? null;
+            
             if (!empty($request->inputImg)) {
                 $imgArray = $request->inputImg ?? [];
                 $this->mediaService->replaceMany($service, 'serviceimg', $imgArray, $request->inputImg);
