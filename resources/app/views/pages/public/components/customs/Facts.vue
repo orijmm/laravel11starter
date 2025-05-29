@@ -20,6 +20,7 @@
 <script>
 import { trans } from "@/helpers/i18n";
 import { onMounted } from "vue";
+import AOS from 'aos';
 
 export default {
   props: {

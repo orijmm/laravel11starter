@@ -2,13 +2,13 @@
   <header class="wrapper">
     <nav aria-label="menu-top" :class="`navbar navbar-expand-lg center-nav transparent position-absolute px-md-10 px-xxl-0 ${addClass2 ? 'fixed navbar-clone' : ''
       } ${addClass
-        ? 'navbar-clone navbar-stick navbar-light'
-        : ' navbar-unstick navbar-dark'
+        ? 'navbar-stick navbar-dark navbar-bg-dark'
+        : 'navbar-unstick navbar-dark'
       } `">
       <div class="container flex-lg-row flex-nowrap align-items-center">
         <div class="navbar-brand w-100">
           <router-link to="/">
-            <img class="logo-light" :src="menus.logo"
+            <img :class="addClass ? 'logo-dark':'logo-light'" :src="menus.logo"
               alt="logos-light" />
           </router-link>
         </div>
@@ -113,7 +113,9 @@ export default {
 
     return {
       menuOpen,
-      menuClose
+      menuClose,
+      addClass2,
+      addClass
     }
 
   }
