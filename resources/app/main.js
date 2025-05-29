@@ -41,10 +41,12 @@ import Scrolltop from "./views/pages/public/template/components/base/Scrolltop";
 import LineProgressbar from "./views/pages/public/template/components/base/LineProgressbar";
 import ModalVideo from "./views/pages/public/template/components/base/ModalVideo";
 import BlockBackgorund from "./views/pages/public/components/customs/BlockBackgorund";
+import Services from "./views/pages/public/components/customs/Services";
+
 
 const app = createApp(App);
 
-AOS.init({ disable: 'phone' });
+AOS.init({ disable: 'phone', offset: 200 });
 
 // Ejecutar utilidades después de montar la app
 initPrism();
@@ -85,7 +87,8 @@ const components = {
     'Scrolltop': Scrolltop,
     'LineProgressbar': LineProgressbar,
     'ModalVideo': ModalVideo,
-    'BlockBackgorund': BlockBackgorund
+    'BlockBackgorund': BlockBackgorund,
+    'Services': Services
 };
 Object.entries(components).forEach(([name, component]) => {
     app.component(name, component);

@@ -1,5 +1,5 @@
 <template>
-    <div class="container pt-17 pb-19 pt-md-18 pb-md-17 text-center">
+    <div class="container pt-15 pb-3 pt-md-18 pb-md-6 text-center">
       <div class="row">
         <div class="col-lg-8 col-xl-7 col-xxl-6 mx-auto">
           <h1 class="display-1 text-white fs-60 mb-4 px-md-15 px-lg-0" data-aos="fade-up" data-aos-once="true"
@@ -12,10 +12,10 @@
             data-aos-delay="200">
             {{ content[2]?.text ?? trans('global.phrases.hasto_add_content') }}.
           </p>
-          <div data-aos="fade-up" data-aos-once="true" data-aos-delay="300">
+          <!-- <div data-aos="fade-up" data-aos-once="true" data-aos-delay="300">
             <router-link class="btn btn-white rounded mb-10 mb-xxl-5" to="/">{{ content[3]?.text ??
               trans('global.phrases.hasto_add_content') }}</router-link>
-          </div>
+          </div> -->
         </div>
         <!-- /column -->
       </div>

@@ -28,8 +28,13 @@
                 <Dropdown class="mb-4" :options="textcolor" name="icon_color_class"
                     :placeholder="trans('users.labels.select')" v-model="form.icon_color_class"
                     :label="trans('users.labels.icon_color_class')" />
-                <TextInput class="mb-4" type="text" name="link" v-model="form.link"
-                    :label="trans('users.labels.link')" />
+                <div class="grid grid-cols-2 gap-2 bg-teal-50 rounded p-2">
+                    <TextInput class="mb-4" type="text" name="link" v-model="form.link"
+                        :label="trans('users.labels.link')" @update:model-value="e => setUrl('link', e)" />
+                    <Dropdown @update:model-value="e => setUrl('page', e)" class="mb-4" :server="'pages/page'"
+                        :server-per-page="15" name="type" v-model="form.page_id" :label="trans('global.pages.page')"
+                        :serverSearchMinCharacters="0" />
+                </div>
                 <Dropdown class="mb-4" :options="linkcolor" name="link_color_class"
                     :placeholder="trans('users.labels.select')" v-model="form.link_color_class"
                     :label="trans('users.labels.link_color_class')" />
@@ -67,6 +72,7 @@ export default defineComponent({
             title: undefined,
             description: undefined,
             link: undefined,
+            page_id: undefined,
             link_color_class: undefined,
             component_type_id: undefined,
             content: undefined,
@@ -146,8 +152,8 @@ export default defineComponent({
             return false;
         }
 
-         //Asignar el valor del archivo 
-         function setImgFile(data) {
+        //Asignar el valor del archivo 
+        function setImgFile(data) {
             form.inputImg.push(data);
         }
 
@@ -158,6 +164,14 @@ export default defineComponent({
         //Borra la imagen
         function onClearImg(i, type) {
             form[type].splice(i, 1);
+        }
+
+        function setUrl(type, even = null) {
+            if (type == 'page') {
+                form.link = undefined;
+            } else {
+                form.page_id = undefined;
+            }
         }
 
         return {
@@ -173,7 +187,8 @@ export default defineComponent({
             errorImg,
             onClearImg,
             setImgFile,
-            getImgVisual
+            getImgVisual,
+            setUrl
         }
     }
 })

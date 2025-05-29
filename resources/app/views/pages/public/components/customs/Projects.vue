@@ -2,9 +2,9 @@
   <div class="container pb-13 pb-md-15">
     <div class="row">
       <div class="col-lg-9 col-xl-8 col-xxl-7 mx-auto text-center">
-        <h2 class="fs-15 text-uppercase text-muted mb-3">{{ content[0]?.text ??
+        <h2 class="fs-15 text-uppercase text-muted mb-3" data-aos="fade-rigth" data-aos-duration="2000">{{ content[0]?.text ??
           trans('global.phrases.hasto_add_content') }}</h2>
-        <h3 class="display-4 mb-10">
+        <h3 class="display-4 mb-10" data-aos="fade-rigth" data-aos-once="true" data-aos-duration="2000">
           {{ content[1]?.text ?? trans('global.phrases.hasto_add_content') }}
           <span class="underline-3 style-2 yellow">{{ content[2]?.text ?? trans('global.phrases.hasto_add_content')
             }}</span> {{ content[3]?.text ?? trans('global.phrases.hasto_add_content') }}
@@ -13,7 +13,7 @@
       <!-- /column -->
     </div>
     <!-- /.row -->
-    <div class="swiper-container grid-view mb-6">
+    <div class="swiper-container grid-view mb-6" data-aos="fade-rigth" data-aos-once="true" data-aos-duration="2000">
       <Swiper :space-between="30" :pagination="{ el: '.pbutton2', clickable: true }" :modules="[Pagination]"
         :grab-cursor="true" :breakpoints="{
           500: { slidesPerView: 1 },

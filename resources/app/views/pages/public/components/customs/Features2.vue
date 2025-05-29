@@ -1,62 +1,62 @@
 <template>
-  <section class="wrapper bg-light">
-    <div class="container mt-8 pb-16 pb-md-18">
-      <div class="row gy-10 gy-sm-13 gx-md-8 gx-xl-12 align-items-center">
-        <div class="col-lg-6">
-          <div class="row gx-md-5 gy-5">
-            <div class="col-12">
-              <figure class="rounded mx-md-5">
-                <img src="/assets/img/photos/g8.jpg" srcset="/assets/img/photos/g8@2x.jpg 2x" alt="testimonioimg" />
-              </figure>
-            </div>
-            <!--/column -->
-            <div class="col-md-6">
-              <figure class="rounded">
-                <img src="/assets/img/photos/g9.jpg" srcset="/assets/img/photos/g9@2x.jpg 2x" alt="testimonioimg" />
-              </figure>
-            </div>
-            <!--/column -->
-            <div class="col-md-6">
-              <figure class="rounded">
-                <img src="/assets/img/photos/g10.jpg" srcset="/assets/img/photos/g10@2x.jpg 2x" alt="testimonioimg" />
-              </figure>
-            </div>
-            <!--/column -->
+  <div class="container mt-8 pb-16 pb-md-18">
+    <div class="row gy-10 gy-sm-13 gx-md-8 gx-xl-12 align-items-center">
+      <div class="col-lg-6">
+        <div class="row gx-md-5 gy-5">
+          <div class="col-12">
+            <figure class="rounded mx-md-5">
+              <img src="/assets/img/photos/g8.jpg" srcset="/assets/img/photos/g8@2x.jpg 2x" alt="testimonioimg" />
+            </figure>
           </div>
-          <!--/.row -->
+          <!--/column -->
+          <div class="col-md-6">
+            <figure class="rounded">
+              <img src="/assets/img/photos/g9.jpg" srcset="/assets/img/photos/g9@2x.jpg 2x" alt="testimonioimg" />
+            </figure>
+          </div>
+          <!--/column -->
+          <div class="col-md-6">
+            <figure class="rounded">
+              <img src="/assets/img/photos/g10.jpg" srcset="/assets/img/photos/g10@2x.jpg 2x" alt="testimonioimg" />
+            </figure>
+          </div>
+          <!--/column -->
         </div>
-        <!--/column -->
-        <div class="col-lg-6">
-          <h2 class="fs-16 text-uppercase text-muted mb-3">
-            {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
-          </h2>
-          <h3 class="display-3 mb-8">
-            {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }} <span class="underline-3 style-2 yellow">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</span> 
-           {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
-          </h3>
-          <div class="row gy-6">
-            <!-- TODO REVISAR -->
-            <div v-for="(elm, i) in features" :key="i" class="col-md-6">
-              <div class="d-flex flex-row">
-                <div>
-                  <img :src="elm.icon" class="icon-svg icon-svg-xs solid-mono text-fuchsia me-4" alt="testimonioimg" />
-                </div>
-                <div>
-                  <h4 class="mb-1">{{ elm.title }}</h4>
-                  <p class="mb-0">{{ elm.description }}</p>
-                </div>
+        <!--/.row -->
+      </div>
+      <!--/column -->
+      <div class="col-lg-6">
+        <h2 class="fs-16 text-uppercase text-muted mb-3">
+          {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
+        </h2>
+        <h3 class="display-3 mb-8">
+          {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }} <span
+            class="underline-3 style-2 yellow">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content')
+            }}</span>
+          {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
+        </h3>
+        <div class="row gy-6">
+          <!-- TODO REVISAR -->
+          <div v-for="(elm, i) in features" :key="i" class="col-md-6">
+            <div class="d-flex flex-row">
+              <div>
+                <img :src="elm.icon" class="icon-svg icon-svg-xs solid-mono text-fuchsia me-4" alt="testimonioimg" />
+              </div>
+              <div>
+                <h4 class="mb-1">{{ elm.title }}</h4>
+                <p class="mb-0">{{ elm.description }}</p>
               </div>
             </div>
-            <!--/column -->
-
-            <!--/column -->
           </div>
-          <!--/.row -->
+          <!--/column -->
+
+          <!--/column -->
         </div>
-        <!--/column -->
+        <!--/.row -->
       </div>
+      <!--/column -->
     </div>
-  </section>
+  </div>
 
 </template>
 <script>
