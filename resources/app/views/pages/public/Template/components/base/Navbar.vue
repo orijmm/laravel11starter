@@ -37,17 +37,6 @@
 
 <script>
 import { ref } from "vue";
-import {
-  blockItems,
-  blogItems,
-  demos,
-  elements,
-  pages,
-  projects,
-  singleProjects,
-  styleGuideItems,
-  usage,
-} from "../home/data/menu";
 
 import { useRoute, useRouter } from "vue-router";
 
@@ -105,15 +94,6 @@ export default {
     return {
       open,
       isActiveMenu,
-      blockItems,
-      blogItems,
-      demos,
-      elements,
-      pages,
-      projects,
-      singleProjects,
-      styleGuideItems,
-      usage,
       generateUrl,
       navigateTo,
       isDesktop
