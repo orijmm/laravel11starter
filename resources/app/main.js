@@ -51,7 +51,7 @@ import Services from "./views/pages/public/components/customs/Services";
 
 const app = createApp(App);
 
-AOS.init({ disable: 'phone', offset: 200 });
+AOS.init({ disable: 'phone' });
 
 // Ejecutar utilidades después de montar la app
 initPrism();
