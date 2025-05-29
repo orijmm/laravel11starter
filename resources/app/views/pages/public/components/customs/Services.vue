@@ -13,7 +13,7 @@
                 <div ref="isotopeContainer" class="d-flex">
                     <div v-for="(item, i) in services" :key="item.id"
                         :class="`item p-4 col-md-6 ${i == 1 ? 'mt-md-17' : ''} `">
-                        <figure class="lift rounded mb-6">
+                        <figure class="lift rounded mb-6" data-aos="zoom-in" data-aos-once="true">
                             <router-link to="/single-project3">
                                 <img v-if="item.img[0] ?? false" :src="item.img[0]" class="w-[100%]"
                                     alt="servicesimg" />

@@ -2,12 +2,13 @@
   <div class="container pb-13 pb-md-15">
     <div class="row">
       <div class="col-lg-9 col-xl-8 col-xxl-7 mx-auto text-center">
-        <h2 class="fs-15 text-uppercase text-muted mb-3" data-aos="fade-rigth" data-aos-duration="2000">{{ content[0]?.text ??
+        <h2 class="fs-15 text-uppercase text-muted mb-3" data-aos="fade-rigth" data-aos-duration="2000">{{
+          content[0]?.text ??
           trans('global.phrases.hasto_add_content') }}</h2>
         <h3 class="display-4 mb-10" data-aos="fade-rigth" data-aos-once="true" data-aos-duration="2000">
           {{ content[1]?.text ?? trans('global.phrases.hasto_add_content') }}
           <span class="underline-3 style-2 yellow">{{ content[2]?.text ?? trans('global.phrases.hasto_add_content')
-            }}</span> {{ content[3]?.text ?? trans('global.phrases.hasto_add_content') }}
+          }}</span> {{ content[3]?.text ?? trans('global.phrases.hasto_add_content') }}
         </h3>
       </div>
       <!-- /column -->
@@ -23,14 +24,16 @@
         }">
         <SwiperSlide v-for="(elm, i) in extradata.projects" :key="i">
           <figure v-if="elm.img.length" class="mb-6 fixed-height">
-            <img :src="elm.img" :alt="elm.img_alt" class="img-cover" />
+            <router-link :to="`/projects/${elm.id}/${elm.slug}`" class="link-dark">
+              <img :src="elm.img" :alt="elm.img_alt" class="img-cover" />
+            </router-link>
           </figure>
           <div v-if="elm.img" class="project-details d-flex justify-content-center flex-column">
             <div class="post-header">
               <h2 class="post-title h3">
                 <router-link :to="`/projects/${elm.id}/${elm.slug}`" class="link-dark">{{
                   elm.title
-                }}</router-link>
+                  }}</router-link>
               </h2>
               <div class="post-category text-ash">{{ elm.category }}</div>
             </div>
