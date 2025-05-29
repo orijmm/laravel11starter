@@ -1,8 +1,7 @@
 <template>
     <div class="container pt-10 pt-md-7 pb-9 pb-md-11">
         <div class="row align-items-center mb-7">
-            <div class="col-md-8 col-lg-8 col-xl-7 col-xxl-6 pe-lg-17"
-            data-aos="zoom-in" data-aos-once="true">
+            <div class="col-md-8 col-lg-8 col-xl-7 col-xxl-6 pe-lg-17" data-aos="zoom-in" data-aos-once="true">
                 <h2 class="display-4 mb-3">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</h2>
                 <p class="lead fs-lg">{{ content[1]?.text ?? trans('global.phrases.hasto_add_content') }}</p>
             </div>
@@ -14,7 +13,7 @@
                     <div v-for="(item, i) in services" :key="item.id"
                         :class="`item p-4 col-md-6 ${i == 1 ? 'mt-md-17' : ''} `">
                         <figure class="lift rounded mb-6" data-aos="zoom-in" data-aos-once="true">
-                            <router-link to="/single-project3">
+                            <router-link :to="generateUrl(item)">
                                 <img v-if="item.img[0] ?? false" :src="item.img[0]" class="w-[100%]"
                                     alt="servicesimg" />
                                 <NoImage v-else />
@@ -36,6 +35,7 @@ import { trans } from "@/helpers/i18n";
 import NoImage from '@/views/pages/private/website/components/noImage';
 import imagesLoaded from "imagesloaded";
 import { onMounted, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 export default {
     components: { NoImage, imagesLoaded },
@@ -54,6 +54,8 @@ export default {
         }
     },
     setup(props) {
+        const route = useRoute();
+        const router = useRouter();
         const isotopeContainer = ref();
         const isotope = ref();
 
@@ -71,9 +73,16 @@ export default {
         onMounted(() => {
             initIsotop();
         });
+        const generateUrl = (item) => {
+            if (item.page_id) {
+                return router.resolve({ name: "webpages", params: { id: item.page_id } }).href;
+            }
+            return item.url || "#";
+        };
         return {
             trans,
-            isotopeContainer
+            isotopeContainer,
+            generateUrl
         }
     }
 }

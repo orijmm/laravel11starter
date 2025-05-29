@@ -22,6 +22,11 @@ import Content from "./views/pages/public/home/Content";
 
 
 //Componentes
+//Defaults
+import TitleOne from "./views/pages/public/components/general/TitleOne";
+import simpleParagraph from "./views/pages/public/components/general/simpleParagraph";
+
+//Custom Components
 import HeadersHome from "./views/pages/public/components/customs/Header";
 import Hero from "./views/pages/public/components/customs/Hero";
 import Features from "./views/pages/public/components/customs/Features";
@@ -66,8 +71,10 @@ app.use(i18n);
 app.use(mdiPlugin);
 
 const components = {
-    // 'BaseNavbar': BaseNavbar,
-    // 'Footer': Footer,
+    // default
+    'TitleOne': TitleOne,
+    'simpleParagraph': simpleParagraph,
+    // custom
     'Content': Content,
     'HeadersHome': HeadersHome,
     'Hero': Hero,
