@@ -180,3 +180,43 @@ export default defineComponent({
 });
 
 ```
+
+## Crear nuevo componente custom
+
+- Copiar el archivo: `resources/app/views/pages/public/components/customs/DefaultComponent.vue`
+- Darle mombre del componente: `NuevoComponente.vue`.
+- Sobreescribir `<template></template>` con el contenido de la plantilla.
+- Agregar en `resources/app/main.js`: 
+```
+import NuevoComponente from "./views/pages/public/components/customs/NuevoComponente";
+```
+
+- Más abajo en main.js agregar en const components = {}: 
+```
+'NuevoComponente': NuevoComponente
+```
+Con esto ya estaría accesible en el proyecto.
+- Agregar por el panel de administración, `Sitio Web -> Tipos de Componentes`, botón "agregar nuevo".
+- Seleccionar en el select el nombre del archivo y descripción del componente, guardar.
+- Con esto ya saldrá en el listado de tipo de componente en `Sitio Web -> Páginas -> Secciones -> Gestionar Columna -> Agregar componentes a la columna ID`
+- Solo queda sustituir los textos por 
+```
+{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
+```
+Aumentando el 0 por cada texto.
+
+- Para las imagenes: 
+```
+import NoImage from '@/views/pages/private/website/components/noImage';
+
+<img v-if="img[0] ?? false" :src="img[0]" alt="imgp" />
+<NoImage v-else />
+```
+
+- Para los servicios:
+```
+<div v-for="(item, i) in services" :key="item.id">
+</div>
+```
+
+- Todos estos se encuentran en los props de DefaultComponent.vue

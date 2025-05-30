@@ -47,7 +47,7 @@ import LineProgressbar from "./views/pages/public/template/components/base/LineP
 import ModalVideo from "./views/pages/public/template/components/base/ModalVideo";
 import BlockBackgorund from "./views/pages/public/components/customs/BlockBackgorund";
 import Services from "./views/pages/public/components/customs/Services";
-
+import LinkTreeService from "./views/pages/public/components/customs/LinkTreeService";
 
 const app = createApp(App);
 
@@ -95,7 +95,8 @@ const components = {
     'LineProgressbar': LineProgressbar,
     'ModalVideo': ModalVideo,
     'BlockBackgorund': BlockBackgorund,
-    'Services': Services
+    'Services': Services,
+    'LinkTreeService': LinkTreeService
 };
 Object.entries(components).forEach(([name, component]) => {
     app.component(name, component);

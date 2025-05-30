@@ -92,6 +92,7 @@ export default defineComponent({
         watch(
             () => form.filename,
             (filename) => {
+                console.log(filename, 'filename');
                 if(filename){
                     form.name = filename.name.split('/')[1];
                 }

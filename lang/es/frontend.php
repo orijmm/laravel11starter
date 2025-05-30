@@ -99,6 +99,7 @@ return [
     ],
     'global' => [
         'menu' => [
+            'home' => 'Inicio',
             'setting' => 'Configuración',
             'pages' => 'Páginas',
             'page' => 'Página',
