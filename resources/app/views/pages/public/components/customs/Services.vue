@@ -22,7 +22,7 @@
                         <div :class="['post-category', item.link_color_class]">
                             {{ item.description }}
                         </div>
-                        <h3 class="post-title">{{ item.title }}</h3>
+                        <router-link :to="generateUrl(item)"><h3 class="post-title">{{ item.title }}</h3></router-link>
                     </div>
                 </div>
             </div>

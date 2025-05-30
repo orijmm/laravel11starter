@@ -7,10 +7,11 @@
                         data-delay="1800" style="bottom: -60%; right: 10%" alt="photitoo" />
                     <img src="/assets/img/svg/doodle6.svg" class="h-15 position-absolute d-none d-lg-block"
                         data-delay="1800" style="top: -40%; left: -5%" alt="photitoo" />
-                    <h2 class="fs-16 text-uppercase text-muted mb-3">How It Works</h2>
+                    <h2 class="fs-16 text-uppercase text-muted mb-3">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</h2>
                     <h3 class="display-3 mb-8 px-xl-6">
-                        Download the app, create your profile and
-                        <span class="text-gradient gradient-7">voilà</span>, you're all set!
+                        {{ content[1]?.text ?? trans('global.phrases.hasto_add_content') }}
+                        <span v-if="content[2]?.text" class="text-gradient gradient-7">{{ content[2]?.text ?? trans('global.phrases.hasto_add_content') }}</span>
+                        <span v-if="content[3]?.text">{{ content[3]?.text ?? trans('global.phrases.hasto_add_content') }}</span>
                     </h3>
                 </div>
                 <!-- /column -->
@@ -21,8 +22,8 @@
                     <div class="row gy-10 gy-lg-0 text-center d-flex align-items-center">
                         <div class="col-md-6 col-lg-4 mx-auto mb-n10 mb-lg-0">
                             <figure class="mx-auto">
-                                <img src="/assets/img/photos/devices4.png"
-                                    srcset="/assets/img/photos/devices4@2x.png 2x" alt="photitoo" />
+                                <img v-if="img[0] ?? false" :src="img[0]" alt="imgp" />
+                                <NoImage v-else />
                             </figure>
                         </div>
                         <!-- /column -->
@@ -30,19 +31,17 @@
                         <div class="col-md-6 col-lg-4 order-lg-first">
                             <div class="mb-8">
                                 <span class="fs-60 lh-1 mb-3 fw-normal text-gradient gradient-7">01</span>
-                                <h4 class="fs-20">Download Application</h4>
+                                <h4 class="fs-20">{{ content[4]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
                                 <p class="mb-0 px-xl-7">
-                                    Nulla vitae elit libero, a pharetra augue. Donec id elit non
-                                    mi porta gravida at eget metus.
+                                    {{ content[5]?.text ?? trans('global.phrases.hasto_add_content') }}
                                 </p>
                             </div>
                             <!-- /div -->
                             <div>
                                 <span class="fs-60 lh-1 mb-3 fw-normal text-gradient gradient-7">02</span>
-                                <h4 class="fs-20">Quick Registration</h4>
+                                <h4 class="fs-20">{{ content[6]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
                                 <p class="mb-0 px-xl-7">
-                                    Nulla vitae elit libero, a pharetra augue. Donec id elit non
-                                    mi porta gravida at eget metus.
+                                     {{ content[7]?.text ?? trans('global.phrases.hasto_add_content') }}
                                 </p>
                             </div>
                             <!-- /div -->
@@ -51,19 +50,17 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="mb-8">
                                 <span class="fs-60 lh-1 mb-3 fw-normal text-gradient gradient-7">03</span>
-                                <h4 class="fs-20">Track Your Spending</h4>
+                                <h4 class="fs-20">{{ content[8]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
                                 <p class="mb-0 px-xl-7">
-                                    Nulla vitae elit libero, a pharetra augue. Donec id elit non
-                                    mi porta gravida at eget metus.
+                                    {{ content[9]?.text ?? trans('global.phrases.hasto_add_content') }}
                                 </p>
                             </div>
                             <!-- /div -->
                             <div>
                                 <span class="fs-60 lh-1 mb-3 fw-normal text-gradient gradient-7">04</span>
-                                <h4 class="fs-20">Have Total Control</h4>
+                                <h4 class="fs-20">{{ content[10]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>
                                 <p class="mb-0 px-xl-7">
-                                    Nulla vitae elit libero, a pharetra augue. Donec id elit non
-                                    mi porta gravida at eget metus.
+                                    {{ content[11]?.text ?? trans('global.phrases.hasto_add_content') }}
                                 </p>
                             </div>
                             <!-- /div -->
@@ -81,8 +78,10 @@
 
 <script>
 import { trans } from "@/helpers/i18n";
+import NoImage from '@/views/pages/private/website/components/noImage';
 
 export default {
+    components: { NoImage },
     props: {
         content: {
             type: [Array],
@@ -100,7 +99,7 @@ export default {
     setup(props) {
 
         return {
-            trans,
+            trans
         }
     }
 }
