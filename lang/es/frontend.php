@@ -91,7 +91,8 @@ return [
             'img_alt' => 'Título de imagen',
             'bg_class' => 'Clase de fondo',
             'img_src' => 'Archivo de imagen',
-            'category' => 'Categoria'
+            'category' => 'Categoria',
+            'join' => 'Unirse'
         ],
     ],
     'messages' => [
@@ -203,6 +204,7 @@ return [
             'project_client_name' => 'Nombre de cliente',
             'project_url' => 'Sitio web del proyecto',
             'project_details' => 'Detalles del proyecto',
+            'contact_us' => 'Contáctanos'
         ],
         'phrases' => [
             'read_more' => 'Leer más',

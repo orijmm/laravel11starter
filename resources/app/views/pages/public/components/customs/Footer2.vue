@@ -13,47 +13,40 @@
             <nav class="nav social">
               <FootersComponentsSocials />
             </nav>
-            <!-- /.social -->
           </div>
-          <!-- /.widget -->
         </div>
-        <!-- /column -->
         <div class="col-md-6 col-lg-4">
           <div class="widget">
-            <h4 class="widget-title mb-3">Get in Touch</h4>
+            <h4 class="widget-title mb-3">{{ trans('global.pages.contact_us') }}</h4>
             <address class="pe-xl-15 pe-xxl-17">
-              Moonshine St. 14/05 Light City, London, United Kingdom
+              {{ menus.webdata.address ?? '' }}
             </address>
-            <a href="mailto:#" class="link-body">info@email.com</a><br />
-            00 (123) 456 78 90
+            <a :href="`mailto:${menus.webdata.email}`" class="link-body">{{ menus.webdata.email ?? '' }}</a><br />
+            {{ menus.webdata.phone ?? '' }}<br>
+            <Socials :webdata="menus.webdata"/>
           </div>
-          <!-- /.widget -->
         </div>
-        <!-- /column -->
         <div class="col-md-12 col-lg-4">
           <div class="widget">
-            <h4 class="widget-title mb-3">Our Newsletter</h4>
+            <h4 class="widget-title mb-3">{{ trans('global.pages.newsletter') }}</h4>
             <p class="mb-5">
-              Subscribe to our newsletter to get our news & deals delivered to
-              you.
+              {{ trans('global.phrases.newsletter_text') }}
             </p>
             <div class="newsletter-wrapper">
-              <!-- Begin Mailchimp Signup Form -->
               <div id="mc_embed_signup2">
                 <form @submit.prevent="() => { }" class="validate">
                   <div id="mc_embed_signup_scroll2">
                     <div class="mc-field-group input-group form-floating">
-                      <input type="email" value="" name="EMAIL" class="required email form-control"
-                        placeholder="Email Address" />
-                      <label>Email Address</label>
-                      <input type="submit" value="Join" name="subscribe" id="mc-embedded-subscribe2"
+                      <input type="email" value="" name="email" class="required email form-control"
+                        :placeholder="trans('users.labels.email')" />
+                      <label for="email">{{ trans('users.labels.email') }}</label>
+                      <input type="submit" :value="trans('users.labels.join')" name="subscribe" id="mc-embedded-subscribe2"
                         class="btn btn-primary" />
                     </div>
                     <div id="mce-responses2" class="clear">
                       <div class="response" id="mce-error-response2" style="display: none"></div>
                       <div class="response" id="mce-success-response2" style="display: none"></div>
                     </div>
-                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
                     <div style="position: absolute; left: -5000px" aria-hidden="true">
                       <input type="text" name="b_ddc180777a163e0f9f66ee014_4b1bcfa0bc" tabindex="-1" value="" />
                     </div>
@@ -61,17 +54,11 @@
                   </div>
                 </form>
               </div>
-              <!--End mc_embed_signup-->
             </div>
-            <!-- /.newsletter-wrapper -->
           </div>
-          <!-- /.widget -->
         </div>
-        <!-- /column -->
       </div>
-      <!--/.row -->
     </div>
-    <!-- /.container -->
   </footer>
   <Scrolltop />
 </template>

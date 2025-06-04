@@ -22,7 +22,6 @@
             <ul class="navbar-nav">
               <Navbar :menus="menus" />
             </ul>
-            <!-- /.navbar-nav -->
             <div class="offcanvas-footer d-lg-none">
               <div>
                 <a href="mailto:first.last@email.com" class="link-inverse">{{ menus.webdata.email }}</a>
@@ -31,42 +30,34 @@
                 <nav class="nav social social-white mt-4">
                   <Socials :webdata="menus.webdata"/>
                 </nav>
-                <!-- /.social -->
               </div>
             </div>
-            <!-- /.offcanvas-footer -->
           </div>
-          <!-- /.offcanvas-body -->
         </div>
-        <!-- /.navbar-collapse -->
         <div class="navbar-other w-100 d-flex ms-auto">
           <ul class="navbar-nav flex-row align-items-center ms-auto">
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-search"><i
                   class="uil uil-search"></i></a>
-            </li>
+            </li> -->
             <li class="nav-item d-lg-none">
               <button @click="menuOpen" class="hamburger offcanvas-nav-btn">
                 <span></span>
               </button>
             </li>
           </ul>
-          <!-- /.navbar-nav -->
         </div>
-        <!-- /.navbar-other -->
         <div id="offcanvasBackdrop" @click="menuClose" class="offcanvas-backdrop fade" style="display: none"></div>
       </div>
-      <!-- /.container -->
     </nav>
-    <div class="offcanvas offcanvas-top bg-light" id="offcanvas-search" data-bs-scroll="true">
+    <!-- <div class="offcanvas offcanvas-top bg-light" id="offcanvas-search" data-bs-scroll="true">
       <div class="container d-flex flex-row py-6">
         <form @submit.prevent="() => { }" class="search-form w-100">
           <input type="text" class="form-control" placeholder="Type keyword and hit enter" />
         </form>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
-    </div>
-    <!-- /.offcanvas -->
+    </div> -->
   </header>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="container pt-10 pt-md-7 pb-9 pb-md-11">
+    <div class="container pt-13 pt-md-15 pb-9 pb-md-11">
         <div class="row align-items-center mb-7">
             <div class="col-md-8 col-lg-8 col-xl-7 col-xxl-6 pe-lg-17" data-aos="zoom-in" data-aos-once="true">
                 <h2 class="display-4 mb-3">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</h2>

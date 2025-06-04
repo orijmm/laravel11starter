@@ -97,7 +97,11 @@ export default defineComponent({
             city_id: undefined,
             country_id: undefined,
             currency_id: undefined,
-            logo_url: undefined
+            logo_url: undefined,
+            twitter: undefined,
+            facebook: undefined,
+            instagram: undefined,
+            tiktok: undefined
         });
 
         //Configuracion del breadcrumbs (navegacion y botones superiores) 
