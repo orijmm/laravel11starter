@@ -55,7 +55,10 @@ export default defineComponent({
         const mainQuery = reactive({
             page: 1,
             search: '',
-            sort: '',
+            sort: {
+                column: 'id',
+                direction: 'desc'
+            },
             filters: {
                 name: {
                     value: '',

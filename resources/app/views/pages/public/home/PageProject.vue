@@ -79,37 +79,7 @@
                         </div>
                         <!-- /.item -->
                     </div>
-                    <!-- <div class="swiper-container blog grid-view mb-17 mb-md-19">
-
-                        <Swiper :space-between="10" :pagination="{ el: '.pbutton2', clickable: true }"
-                            :modules="[Pagination, Navigation]" :navigation="{
-                                prevEl: '.snpb2',
-                                nextEl: '.snnb2',
-                            }" :breakpoints="{
-                                500: { slidesPerView: 1 },
-                                768: { slidesPerView: 1 },
-                                1024: { slidesPerView: 1 },
-                                1400: { slidesPerView: 1 },
-                            }" :grab-cursor="true">
-                            <SwiperSlide v-for="(elm, i) in project.data.img" :key="i">
-                                <figure class="rounded mb-6  cursor-pointer" @click="setActiveLightBox(true, i)">
-                                    <img :src="elm" :alt="elm.img_alt" />
-                                    <div class="item-link">
-                                        <i class="uil uil-focus-add"></i>
-                                    </div>
-                                </figure>
-                            </SwiperSlide>
-                        </Swiper>
-
-                        <div class="swiper-controls">
-                            <div
-                                class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal pbutton2">
-                            </div>
-                        </div>
-                    </div> -->
-
                 </div>
-                <!-- /.container-fluid -->
             </section>
             <Lightbox :images="images" :activeLightBox="activeLightBox" :firstSlideIndex="currentSlideIndex"
                 @setActiveLightBox="setActiveLightBox" />

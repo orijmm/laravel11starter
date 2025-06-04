@@ -14,14 +14,12 @@
                         <span v-if="content[3]?.text">{{ content[3]?.text ?? trans('global.phrases.hasto_add_content') }}</span>
                     </h3>
                 </div>
-                <!-- /column -->
             </div>
-            <!-- /.row -->
             <div class="row">
                 <div class="col-xxl-11 mx-auto">
                     <div class="row gy-10 gy-lg-0 text-center d-flex align-items-center">
                         <div class="col-md-6 col-lg-4 mx-auto mb-n10 mb-lg-0">
-                            <figure class="mx-auto">
+                            <figure class="mx-auto ">
                                 <img v-if="img[0] ?? false" :src="img[0]" alt="imgp" />
                                 <NoImage v-else />
                             </figure>
@@ -55,7 +53,6 @@
                                     {{ content[9]?.text ?? trans('global.phrases.hasto_add_content') }}
                                 </p>
                             </div>
-                            <!-- /div -->
                             <div>
                                 <span class="fs-60 lh-1 mb-3 fw-normal text-gradient gradient-7">04</span>
                                 <h4 class="fs-20">{{ content[10]?.text ?? trans('global.phrases.hasto_add_content') }}</h4>

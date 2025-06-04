@@ -95,6 +95,9 @@ class ComponentController extends Controller
             if (!empty($request->inputImg)) {
                 $imgArray = $request->img ?? [];
                 $this->mediaService->replaceMany($component, 'componentimg', $imgArray, $request->inputImg);
+            }else{
+                $imgArray = $request->img ?? [];
+                $this->mediaService->replaceMany($component, 'componentimg', $imgArray);
             }
 
             $newcomponent = $component->update($data);

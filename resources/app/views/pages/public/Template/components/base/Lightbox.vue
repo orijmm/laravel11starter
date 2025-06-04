@@ -50,7 +50,7 @@ import { ref, computed, watch } from "vue";
 
 const props = defineProps(["images", "activeLightBox", "firstSlideIndex"]);
 const emits = defineEmits(["setActiveLightBox"]);
-const currentSlideIndex = ref();
+const currentSlideIndex = ref(0);
 const index = computed(() => props.firstSlideIndex);
 
 watch(index, () => {

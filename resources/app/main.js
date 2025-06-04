@@ -38,6 +38,7 @@ import Features2 from "./views/pages/public/components/customs/Features2";
 import Footer from "./views/pages/public/components/customs/Footer";
 import Footer2 from "./views/pages/public/components/customs/Footer2";
 import Lightbox from "./views/pages/public/template/components/base/Lightbox";
+import Carousel from "./views/pages/public/template/components/base/Carousel";
 import Navbar from "./views/pages/public/template/components/base/Navbar";
 import Socials from "./views/pages/public/template/components/base/Socials";
 import Links from "./views/pages/public/template/components/base/Links";
@@ -48,6 +49,8 @@ import ModalVideo from "./views/pages/public/template/components/base/ModalVideo
 import BlockBackgorund from "./views/pages/public/components/customs/BlockBackgorund";
 import Services from "./views/pages/public/components/customs/Services";
 import LinkTreeService from "./views/pages/public/components/customs/LinkTreeService";
+import HostingService from "./views/pages/public/components/customs/HostingService";
+import WebDevelopService from "./views/pages/public/components/customs/WebDevelopService";
 
 const app = createApp(App);
 
@@ -87,6 +90,7 @@ const components = {
     'Footer': Footer,
     'Footer2': Footer2,
     'Lightbox': Lightbox,
+    'Carousel': Carousel,
     'Navbar': Navbar,
     'Socials': Socials,
     'Links': Links,
@@ -96,7 +100,9 @@ const components = {
     'ModalVideo': ModalVideo,
     'BlockBackgorund': BlockBackgorund,
     'Services': Services,
-    'LinkTreeService': LinkTreeService
+    'LinkTreeService': LinkTreeService,
+    'HostingService': HostingService,
+    'WebDevelopService': WebDevelopService
 };
 Object.entries(components).forEach(([name, component]) => {
     app.component(name, component);

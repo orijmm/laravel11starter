@@ -205,6 +205,8 @@ return [
             'project_details' => 'Detalles del proyecto',
         ],
         'phrases' => [
+            'read_more' => 'Leer más',
+            'preview_zoom' => 'Vista previa',
             'clear_filters' => 'Limpiar todo',
             'loading' => 'Cargando...',
             'sign_out' => 'Cerrar sesión',
