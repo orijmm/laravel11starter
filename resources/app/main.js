@@ -51,6 +51,7 @@ import Services from "./views/pages/public/components/customs/Services";
 import LinkTreeService from "./views/pages/public/components/customs/LinkTreeService";
 import HostingService from "./views/pages/public/components/customs/HostingService";
 import WebDevelopService from "./views/pages/public/components/customs/WebDevelopService";
+import ContactForm from "./views/pages/public/components/customs/ContactForm";
 
 const app = createApp(App);
 
@@ -102,7 +103,8 @@ const components = {
     'Services': Services,
     'LinkTreeService': LinkTreeService,
     'HostingService': HostingService,
-    'WebDevelopService': WebDevelopService
+    'WebDevelopService': WebDevelopService,
+    'ContactForm': ContactForm
 };
 Object.entries(components).forEach(([name, component]) => {
     app.component(name, component);

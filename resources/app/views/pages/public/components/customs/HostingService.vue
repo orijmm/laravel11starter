@@ -14,7 +14,7 @@
                     <h3 class="display-4 mb-5" v-if="content[1]?.text">
                         {{ content[1]?.text ?? trans('global.phrases.hasto_add_content') }}
                     </h3>
-                    <p class="mb-8" v-if="content[2]?.text">
+                    <p class="mb-8 text-justify" v-if="content[2]?.text">
                         {{ content[2]?.text ?? trans('global.phrases.hasto_add_content') }}
                     </p>
                     <div class="row gy-6 gx-xxl-8 process-wrapper">

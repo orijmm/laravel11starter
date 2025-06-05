@@ -18,10 +18,10 @@
         <div class="col-md-6 col-lg-4">
           <div class="widget">
             <h4 class="widget-title mb-3">{{ trans('global.pages.contact_us') }}</h4>
-            <address class="pe-xl-15 pe-xxl-17">
+            <address v-if="menus.webdata?.address" class="pe-xl-15 pe-xxl-17">
               {{ menus.webdata.address ?? '' }}
             </address>
-            <a :href="`mailto:${menus.webdata.email}`" class="link-body">{{ menus.webdata.email ?? '' }}</a><br />
+            <a v-if="menus.webdata?.email" :href="`mailto:${menus.webdata.email}`" class="link-body">{{ menus.webdata.email ?? '' }}</a><br />
             {{ menus.webdata.phone ?? '' }}<br>
             <Socials :webdata="menus.webdata"/>
           </div>

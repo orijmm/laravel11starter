@@ -62,6 +62,24 @@ class SettingController extends Controller
         $this->authorize('edit_setting', User::class);
 
         $data = $request->validated();
+        $nullableFields = [
+            'address',
+            'googlemaps',
+            'description',
+            'phone',
+            'email',
+            'instagram',
+            'facebook',
+            'twitter',
+            'tiktok',
+        ];
+
+        foreach ($nullableFields as $field) {
+            if (!array_key_exists($field, $data) || $data[$field] === '') {
+                $data[$field] = null;
+            }
+        }
+        \Log::info($data);
         if ($this->settingService->update($settingad, $data)) {
             return $this->responseUpdateSuccess(['record' => $settingad->fresh()]);
         } else {

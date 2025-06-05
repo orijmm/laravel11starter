@@ -207,6 +207,7 @@ return [
             'contact_us' => 'Contáctanos'
         ],
         'phrases' => [
+            'required_field' => 'Campo obligatorio',
             'read_more' => 'Leer más',
             'preview_zoom' => 'Vista previa',
             'clear_filters' => 'Limpiar todo',

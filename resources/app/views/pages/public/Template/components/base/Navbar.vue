@@ -12,7 +12,7 @@
         <!-- |||||||| Si es un menu sin padre y sin hijos |||||| -->
         <li class="nav-item" v-if="!menu.parent_id && menu.children.length == 0">
           <!-- Si tiene página asignada router-link -->
-          <router-link v-if="menu.page_id" :class="`${isActiveMenu([], menu.page_id) ? 'active' : ''
+          <router-link v-if="menu.page_id" :class="`${isActiveMenu([], menu.page_id) ? 'active nav-link' : 'nav-link'
             }`" :to="generateUrl(menu)">{{ menu.label }}
           </router-link>
           <!-- Si no tiene página pero si url/seccion asignada -->
