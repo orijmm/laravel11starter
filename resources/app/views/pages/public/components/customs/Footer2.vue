@@ -39,7 +39,7 @@
                     <div class="mc-field-group input-group form-floating">
                       <input type="email" value="" name="email" class="required email form-control"
                         :placeholder="trans('users.labels.email')" />
-                      <label for="email">{{ trans('users.labels.email') }}</label>
+                      <label for="mc-embedded-subscribe2">{{ trans('users.labels.email') }}</label>
                       <input type="submit" :value="trans('users.labels.join')" name="subscribe" id="mc-embedded-subscribe2"
                         class="btn btn-primary" />
                     </div>

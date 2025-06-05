@@ -9,7 +9,7 @@
             1024: { slidesPerView: 3 },
             1200: { slidesPerView: 3 },
         }">
-        <SwiperSlide v-for="(photo, index) in images" :key="index"  class="d-flex align-items-center">
+        <SwiperSlide v-for="(photo, i) in images" :key="i"  class="d-flex align-items-center">
             <figure class="overlay overlay-1 hover-scale rounded mb-0">
                 <a href="#" @click.prevent="setActiveLightBox(true, i)">
                     <img :src="photo" alt="imascarousel" />
