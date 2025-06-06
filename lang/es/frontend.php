@@ -92,7 +92,8 @@ return [
             'bg_class' => 'Clase de fondo',
             'img_src' => 'Archivo de imagen',
             'category' => 'Categoria',
-            'join' => 'Unirse'
+            'join' => 'Unirse',
+            'invalid_email' => 'Correo invalido'
         ],
     ],
     'messages' => [
@@ -204,7 +205,8 @@ return [
             'project_client_name' => 'Nombre de cliente',
             'project_url' => 'Sitio web del proyecto',
             'project_details' => 'Detalles del proyecto',
-            'contact_us' => 'Contáctanos'
+            'contact_us' => 'Contáctanos',
+            'type_service' => 'Tipo de servicio'
         ],
         'phrases' => [
             'required_field' => 'Campo obligatorio',
@@ -268,7 +270,8 @@ return [
             'value_toolong' => 'El valor ingresado es demasiado largo para el campo',
             'unknown_column' => 'Columna desconocida en la consulta',
             'add_content' => 'Ingrese contenido',
-            'design_diversity' => 'Diversos Diseños que mejor se adapten a tí.'
+            'design_diversity' => 'Diversos Diseños que mejor se adapten a tí.',
+            'all_field_required' => 'Todos los campos son obligatorios'
         ],
         'buttons' => [
             'add_new' => 'Añadir nuevo',

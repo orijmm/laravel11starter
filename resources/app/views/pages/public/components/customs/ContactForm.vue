@@ -5,88 +5,79 @@
                 <div class="col-xl-10 mx-auto">
                     <div class="row gy-10 gx-lg-8 gx-xl-12">
                         <div class="col-lg-8">
-                            <form class="contact-form needs-validation" @submit.prevent="() => { }">
+                            <form id="send-contact" class="contact-form needs-validation" @submit.prevent="handleSubmit" novalidate>
                                 <div class="messages"></div>
                                 <div class="row gx-4">
                                     <div class="col-md-6">
                                         <div class="form-floating mb-4">
-                                            <input type="text" name="name" class="form-control" placeholder="Jane"
+                                            <input type="text" v-model="form.name" name="name" class="form-control" placeholder="Jane"
                                                 required />
-                                            <label>{{ trans('users.labels.first_name')}} *</label>
-                                            
+                                            <label>{{ trans('users.labels.first_name') }} *</label>
+
                                             <div class="invalid-feedback">
-                                                {{ trans('global.phrases.required_field')}}
+                                                {{ trans('global.phrases.required_field') }}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating mb-4">
-                                            <input type="text" name="surname" class="form-control" placeholder="Doe"
+                                            <input type="text" v-model="form.lastname" name="lastname" class="form-control" placeholder="Doe"
                                                 required />
-                                            <label>{{ trans('users.labels.last_name')}} *</label>
-                                            
+                                            <label>{{ trans('users.labels.last_name') }} *</label>
+
                                             <div class="invalid-feedback">
-                                                {{ trans('global.phrases.required_field')}}
+                                                {{ trans('global.phrases.required_field') }}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating mb-4">
-                                            <input type="email" name="email" class="form-control"
+                                            <input type="email" v-model="form.email" name="email" class="form-control"
                                                 placeholder="jane.doe@example.com" required />
-                                            <label>{{ trans('users.labels.email')}} *</label>
-                                            
+                                            <label>{{ trans('users.labels.email') }} *</label>
+
                                             <div class="invalid-feedback">
-                                                {{ trans('global.phrases.required_field')}}
+                                                {{ trans('users.labels.invalid_email') }}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-select-wrapper mb-4">
-                                            <select class="form-select" id="form-select" name="department" required>
+                                            <select class="form-select" id="form-select" v-model="form.type" name="type" required>
                                                 <option selected disabled value="">
-                                                    Select a department
+                                                    {{ trans('global.pages.type_service') }}
                                                 </option>
-                                                <option value="Sales">Sales</option>
-                                                <option value="Marketing">Marketing</option>
-                                                <option value="Customer Support">
-                                                    Customer Support
+                                                <option value="Link Tree">Link Tree</option>
+                                                <option value="Desarrollo Web">Desarrollo Web</option>
+                                                <option value="Hosting">
+                                                    Hosting
+                                                </option>
+                                                <option value="Hosting">
+                                                    Otro
                                                 </option>
                                             </select>
-                                            
+
                                             <div class="invalid-feedback">
-                                                Please select a department.
+                                                {{ trans('global.phrases.required_field') }}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating mb-4">
-                                            <textarea name="message" class="form-control" placeholder="Your message"
+                                            <textarea v-model="form.message" name="message" class="form-control" :placeholder="trans('global.phrases.add_content')"
                                                 style="height: 150px" required></textarea>
-                                            <label>Message *</label>
-                                            
+                                            <label>{{ trans('messages.name') }} *</label>
+
                                             <div class="invalid-feedback">
-                                                {{ trans('global.phrases.required_field')}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-check mb-4">
-                                            <input class="form-check-input" type="checkbox" value="" required />
-                                            <label class="form-check-label">
-                                                I agree to
-                                                <a href="#" class="hover">terms and policy</a>.
-                                            </label>
-                                            <div class="invalid-feedback">
-                                                You must agree before submitting.
+                                                {{ trans('global.phrases.required_field') }}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <input type="submit" class="btn btn-primary rounded-pill btn-send mb-3"
-                                            value="Send message" />
+                                            :value="trans('global.buttons.submit')" />
                                         <p class="text-muted">
-                                            <strong>*</strong> These fields are required.
+                                            <strong>*</strong> {{ trans('global.phrases.all_field_required') }}.
                                         </p>
                                     </div>
                                 </div>
@@ -144,6 +135,8 @@
 
 <script>
 import { trans } from "@/helpers/i18n";
+import { reduceProperties, clearObject } from "@/helpers/data"
+import ModelService from "@/services/ModelService";
 import SettingService from "@/services/SettingService";
 import { onMounted, reactive } from "vue";
 
@@ -163,29 +156,6 @@ export default {
         }
     },
     setup() {
-        const contactInfo2 = [
-            {
-                id: 1,
-                iconClass: "uil uil-location-pin-alt",
-                title: "Address",
-                address: {
-                    line1: "Moonshine St. 14/05 Light City,",
-                    line2: "London, United Kingdom",
-                },
-            },
-            {
-                id: 2,
-                iconClass: "uil uil-phone-volume",
-                title: "Phone",
-                content: ["00 (123) 456 78 90", "00 (987) 654 32 10"],
-            },
-            {
-                id: 3,
-                iconClass: "uil uil-envelope",
-                title: "E-mail",
-                mail: ["sandbox@email.com", "help@sandbox.com"],
-            },
-        ];
 
         const contact = reactive({
             address: undefined,
@@ -193,7 +163,16 @@ export default {
             email: undefined
         });
 
+        const form = reactive({
+            name: undefined,
+            lastname: undefined,
+            email: undefined,
+            type: undefined,
+            message: undefined
+        });
+
         const settings = new SettingService();
+        const service = new ModelService;
 
         function fetchPage() {
             //Setting
@@ -209,10 +188,27 @@ export default {
             fetchPage();
         });
 
+        function handleSubmit(event) {
+            const form = event.target.closest('form');
+            if (!form.checkValidity()) {
+                form.classList.add('was-validated');
+            } else {
+                onSubmit();
+            }
+        }
+
+        function onSubmit() {
+            service.handleCreate('send-contact', reduceProperties(form, [], 'id'), '/contactform/submit').then(() => {
+                clearObject(form)
+            })
+            return false;
+        }
+
         return {
             trans,
+            form,
             contact,
-            contactInfo2
+            handleSubmit
         }
     }
 }

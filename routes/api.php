@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Pages\ComponentController;
 use App\Http\Controllers\Pages\ComponentTypeController;
 use App\Http\Controllers\Pages\MenuController;
@@ -195,3 +196,6 @@ Route::get('testing', function () {
 
     return response()->json(['data' => 'test'], 200);
 });
+
+// Formulario de contacto
+Route::post('contactform/submit', [ContactController::class, 'submitFormContact'])->name('submit.contactform');
