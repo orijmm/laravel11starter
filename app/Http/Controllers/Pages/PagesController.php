@@ -92,6 +92,17 @@ class PagesController extends Controller
     }
 
     /**
+     * Active or inactive section
+     */
+    public function activeSection(Section $section)
+    {
+        $this->authorize('edit_page');
+        $section->update(['active' => !$section->active]);
+
+        return $this->responseUpdateSuccess(['record' => $section]);
+    }
+
+    /**
      * Select Home page
      */
     public function checkHomePage(Page $page)

@@ -37,16 +37,6 @@
             <Table :id="page.id" v-if="table" :headers="table.headers" :sorting="table.sorting" :actions="table.actions"
                 :records="table.records" :pagination="table.pagination" :is-loading="table.loading"
                 @page-changed="onTablePageChange" @action="onTableAction" @sort="onTableSort">
-                <template v-slot:content-page="props">
-                    <div>
-                        {{ props.item.page?.name ?? '-' }}
-                    </div>
-                </template>
-                <template v-slot:content-parent="props">
-                    <div>
-                        {{ props.item.parent?.label ?? '-' }}
-                    </div>
-                </template>
             </Table>
         </Panel>
     </Page>
@@ -161,7 +151,6 @@ export default defineComponent({
 
         const table = reactive({
             headers: {
-                id: trans('users.labels.id_pound'),
                 order: trans('users.labels.order'),
                 name: trans('users.labels.first_name')
             },
@@ -187,6 +176,14 @@ export default defineComponent({
                     icon: "fa fa-trash",
                     showName: false,
                     danger: true,
+                    isAllowed: isAllowed(['delete_pages'])
+                },
+                isActive: {
+                    id: 'isActive',
+                    name: trans('global.actions.active_inactive'),
+                    showName: false,
+                    toggleButton: true,
+                    toggleButtonData: { icons: ['fa fa-toggle-on', 'fa fa-toggle-off'], text: ['Si', 'No'] },
                     isAllowed: isAllowed(['delete_pages'])
                 }
             },
@@ -218,6 +215,13 @@ export default defineComponent({
                             fetchItems();
                         });
                     })
+                    break;
+                case 'isActive':
+                    alertHelpers.confirmWarning(function () {
+                        service.update(params.item.id, null, `pages/page/section/active`).then(r => {
+                            fetchItems();
+                        });
+                    }, null, params.item.active ? trans('global.phrases.inactive_component') : trans('global.phrases.active_component'))
                     break;
             }
         }

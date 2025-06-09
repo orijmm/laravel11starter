@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->integer('order');
             $table->text('classes')->nullable();
+            $table->boolean('active')->default(true);
             $table->foreignId('page_id')->constrained('pages')->onDelete('cascade');
             $table->timestamps();
         });

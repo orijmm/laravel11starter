@@ -206,7 +206,6 @@ export default {
             const form = event.target.closest('form');
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
             if (!emailRegex.test(form.email.value)) {
-                console.log(emailRegex.test(form.email.value), form.email.value, 'reffff');
                 refEmail.value.classList.add('is-invalid');
             } else if (!form.checkValidity()) {
                 refEmail.value.classList.remove('is-invalid');
@@ -223,7 +222,6 @@ export default {
                 clearObject(form);
                 setTimeout(() => {
                     submitAvaible.value = null;
-                    console.log('loggggg', submitAvaible);
                 }, 500);
             })
             return false;

@@ -33,18 +33,27 @@
                     </td>
                     <td v-if="actions" class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                         <slot :name="'actions-' + j" v-for="(action, j) in actions">
-                            <router-link v-if="(action.hasOwnProperty('to') && action.to) && (!action.hasOwnProperty('isAllowed') || action.isAllowed)"
+                            <router-link
+                                v-if="(action.hasOwnProperty('to') && action.to) && (!action.hasOwnProperty('isAllowed') || action.isAllowed)"
                                 :to="getActionPage(action, record)" :class="getActionClass(action)"
                                 :title="action.name">
                                 <i v-if="action.icon" :class="action.icon"></i>
                                 <span v-if="(!action.hasOwnProperty('showName') || action.showName)"
                                     v-html="action.name"></span>
                             </router-link>
-                            <a v-else="!action.hasOwnProperty('to')"
-                                :class="getActionClass(action)" @click="onActionClick({ action: action, item: record })"
-                                :title="action.name">
-                                <i v-if="action.icon && (!action.hasOwnProperty('isAllowed') || action.isAllowed)" :class="action.icon"></i>
-                                <span v-if="(!action.hasOwnProperty('showName') || action.showName) && (!action.hasOwnProperty('isAllowed') || action.isAllowed)"
+                            <Tooltip :text="action.name" position="bottom"
+                                v-else-if="action.hasOwnProperty('toggleButton')" :class="getActionClass(action)">
+                                <a @click="onActionClick({ action: action, item: record })" :title="action.name">
+                                    <i v-if="(!action.hasOwnProperty('isAllowed') || action.isAllowed )&& action.toggleButtonData"
+                                        :class="record.active ? `text-emerald-400 ${action.toggleButtonData.icons[0]}` : `text-danger-400 ${action.toggleButtonData.icons[1]}`"></i>
+                                </a>
+                            </Tooltip>
+                            <a v-else="!action.hasOwnProperty('to')" :class="getActionClass(action)"
+                                @click="onActionClick({ action: action, item: record })" :title="action.name">
+                                <i v-if="action.icon && (!action.hasOwnProperty('isAllowed') || action.isAllowed)"
+                                    :class="action.icon"></i>
+                                <span
+                                    v-if="(!action.hasOwnProperty('showName') || action.showName) && (!action.hasOwnProperty('isAllowed') || action.isAllowed)"
                                     v-html="action.name"></span>
                             </a>
                         </slot>
@@ -76,9 +85,10 @@ import { trans } from "@/helpers/i18n";
 import { computed, defineComponent, reactive } from "vue";
 import Pager from "@/views/components/Pager";
 import Spinner from "@/views/components/icons/Spinner";
+import Tooltip from "@/views/components/Tooltip";
 
 export default defineComponent({
-    components: { Spinner, Pager },
+    components: { Spinner, Pager, Tooltip },
     emits: ['pageChanged', 'action', 'sort'],
     props: {
         id: {

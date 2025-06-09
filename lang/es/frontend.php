@@ -271,7 +271,9 @@ return [
             'unknown_column' => 'Columna desconocida en la consulta',
             'add_content' => 'Ingrese contenido',
             'design_diversity' => 'Diversos Diseños que mejor se adapten a tí.',
-            'all_field_required' => 'Todos los campos son obligatorios'
+            'all_field_required' => 'Todos los campos son obligatorios',
+            'inactive_component' => '¿Quieres deshabilitar el registro?',
+            'active_component' => '¿Quieres habilitar el registro?'
         ],
         'buttons' => [
             'add_new' => 'Añadir nuevo',
@@ -302,7 +304,8 @@ return [
             'name' => 'Acciones',
             'edit' => 'Editar',
             'delete' => 'Eliminar',
-            'filterbytitle' => 'Filtrar por título'
+            'filterbytitle' => 'Filtrar por título',
+            'active_inactive' => 'Habilitar/Desabilitar'
         ],
         'alerts' => [
             'success' => '¡Éxito!',

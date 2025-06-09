@@ -94,6 +94,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
         Route::post('page/{page}/storesection', [PagesController::class, 'storeSection'])->name('page.store.section');
         Route::get('page/{page}/section/{section}', [PagesController::class, 'showSection'])->name('page.show.section');
         Route::patch('page/updatesection/{section}', [PagesController::class, 'updateSection'])->name('page.update.section');
+        Route::patch('page/section/active/{section}', [PagesController::class, 'activeSection'])->name('page.active.section');
         Route::patch('page/checkhome/{page}', [PagesController::class, 'checkHomePage'])->name('page.check.home');
         Route::delete('page/{page}/deletesection/{section}', [PagesController::class, 'deleteSection'])->name('page.delete.section');
         Route::patch('page/updaterows/{section}', [PagesController::class, 'updateRows'])->name('page.section.updaterows');
