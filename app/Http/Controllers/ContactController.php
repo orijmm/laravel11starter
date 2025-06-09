@@ -32,6 +32,6 @@ class ContactController extends Controller
             // Puedes guardar también el error si deseas
         }
 
-        return back()->with('success', 'Tu mensaje fue enviado correctamente.');
+        return $this->responseSuccess('Tu mensaje fue enviado correctamente.');
     }
 }

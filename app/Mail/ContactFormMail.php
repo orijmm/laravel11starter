@@ -3,8 +3,8 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -28,7 +28,8 @@ class ContactFormMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->data['subject'] ?? 'Nuevo mensaje de contacto',
+            from: new Address($this->data['email'], $this->data['name'] ?? 'Usuario del sitio'),
+            subject: $this->data['subject'] ?? 'Mensaje de Contacto sitio ' . env('APP_NAME'),
         );
     }
 

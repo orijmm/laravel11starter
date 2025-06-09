@@ -7,8 +7,8 @@
     <p><strong>Asunto:</strong> {{ $data['subject'] }}</p>
 @endif
 
-@if (!empty($data['department']))
-    <p><strong>Departamento:</strong> {{ $data['department'] }}</p>
+@if (!empty($data['type']))
+    <p><strong>Tipo de servicio:</strong> {{ $data['type'] }}</p>
 @endif
 
 <p><strong>Mensaje:</strong></p>

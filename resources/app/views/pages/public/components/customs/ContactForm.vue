@@ -4,14 +4,16 @@
             <div class="row">
                 <div class="col-xl-10 mx-auto">
                     <div class="row gy-10 gx-lg-8 gx-xl-12">
-                        <div class="col-lg-8">
-                            <form id="send-contact" class="contact-form needs-validation" @submit.prevent="handleSubmit" novalidate>
+                        <div class="col-12 col-lg-8">
+                            {{ submitAvaible }}
+                            <form id="send-contact" class="contact-form needs-validation" @submit.prevent="handleSubmit"
+                                novalidate>
                                 <div class="messages"></div>
                                 <div class="row gx-4">
                                     <div class="col-md-6">
                                         <div class="form-floating mb-4">
-                                            <input type="text" v-model="form.name" name="name" class="form-control" placeholder="Jane"
-                                                required />
+                                            <input type="text" v-model="form.name" name="name" class="form-control"
+                                                placeholder="Jane" required />
                                             <label>{{ trans('users.labels.first_name') }} *</label>
 
                                             <div class="invalid-feedback">
@@ -21,8 +23,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating mb-4">
-                                            <input type="text" v-model="form.lastname" name="lastname" class="form-control" placeholder="Doe"
-                                                required />
+                                            <input type="text" v-model="form.lastname" name="lastname"
+                                                class="form-control" placeholder="Doe" required />
                                             <label>{{ trans('users.labels.last_name') }} *</label>
 
                                             <div class="invalid-feedback">
@@ -32,8 +34,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating mb-4">
-                                            <input type="email" v-model="form.email" name="email" class="form-control"
-                                                placeholder="jane.doe@example.com" required />
+                                            <input type="email" ref="refEmail" v-model="form.email" name="email"
+                                                class="form-control" required />
                                             <label>{{ trans('users.labels.email') }} *</label>
 
                                             <div class="invalid-feedback">
@@ -43,7 +45,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-select-wrapper mb-4">
-                                            <select class="form-select" id="form-select" v-model="form.type" name="type" required>
+                                            <select class="form-select" id="form-select" v-model="form.type" name="type"
+                                                required>
                                                 <option selected disabled value="">
                                                     {{ trans('global.pages.type_service') }}
                                                 </option>
@@ -64,8 +67,9 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating mb-4">
-                                            <textarea v-model="form.message" name="message" class="form-control" :placeholder="trans('global.phrases.add_content')"
-                                                style="height: 150px" required></textarea>
+                                            <textarea v-model="form.message" name="message" class="form-control"
+                                                :placeholder="trans('global.phrases.add_content')" style="height: 150px"
+                                                required></textarea>
                                             <label>{{ trans('messages.name') }} *</label>
 
                                             <div class="invalid-feedback">
@@ -74,7 +78,8 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <input type="submit" class="btn btn-primary rounded-pill btn-send mb-3"
+                                        <input type="submit" :disabled="submitAvaible"
+                                            class="btn btn-primary rounded-pill btn-send mb-3"
                                             :value="trans('global.buttons.submit')" />
                                         <p class="text-muted">
                                             <strong>*</strong> {{ trans('global.phrases.all_field_required') }}.
@@ -82,8 +87,11 @@
                                     </div>
                                 </div>
                             </form>
+                            <div>
+                                <Alert class="mb-4" />
+                            </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-12 col-lg-4">
                             <div v-if="contact?.address" class="d-flex flex-row">
                                 <div>
                                     <div class="icon text-primary fs-28 me-6 mt-n1">
@@ -138,9 +146,13 @@ import { trans } from "@/helpers/i18n";
 import { reduceProperties, clearObject } from "@/helpers/data"
 import ModelService from "@/services/ModelService";
 import SettingService from "@/services/SettingService";
-import { onMounted, reactive } from "vue";
+import { onMounted, reactive, ref } from "vue";
+import Alert from "@/views/components/Alert";
 
 export default {
+    components: {
+        Alert
+    },
     props: {
         content: {
             type: [Array],
@@ -156,6 +168,8 @@ export default {
         }
     },
     setup() {
+        const refEmail = ref(null);
+        const submitAvaible = ref(null);
 
         const contact = reactive({
             address: undefined,
@@ -190,16 +204,27 @@ export default {
 
         function handleSubmit(event) {
             const form = event.target.closest('form');
-            if (!form.checkValidity()) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+            if (!emailRegex.test(form.email.value)) {
+                console.log(emailRegex.test(form.email.value), form.email.value, 'reffff');
+                refEmail.value.classList.add('is-invalid');
+            } else if (!form.checkValidity()) {
+                refEmail.value.classList.remove('is-invalid');
                 form.classList.add('was-validated');
             } else {
+                refEmail.value.classList.remove('is-invalid');
                 onSubmit();
             }
         }
 
         function onSubmit() {
+            submitAvaible.value = true;
             service.handleCreate('send-contact', reduceProperties(form, [], 'id'), '/contactform/submit').then(() => {
-                clearObject(form)
+                clearObject(form);
+                setTimeout(() => {
+                    submitAvaible.value = null;
+                    console.log('loggggg', submitAvaible);
+                }, 500);
             })
             return false;
         }
@@ -208,7 +233,9 @@ export default {
             trans,
             form,
             contact,
-            handleSubmit
+            handleSubmit,
+            refEmail,
+            submitAvaible
         }
     }
 }
