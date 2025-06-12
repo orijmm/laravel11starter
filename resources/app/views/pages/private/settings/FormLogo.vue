@@ -26,6 +26,12 @@ export default defineComponent({
         FileInput,
         Button
     },
+    props: {
+        type: {
+            type: String,
+            default: 'logo_url',
+        }
+    },
     setup(props, { emit }) {
         const service = new ModelService();
         const route = useRoute();
@@ -44,7 +50,7 @@ export default defineComponent({
             service.handleUpdatePut(
                 'edit-logo',
                 route.params.id,//url la toma de la ruta actual
-                reduceProperties({'logo': form.file}, [], 'id'),
+                reduceProperties({[props.type]: form.file}, [], 'id'),
                 `/settingad/${route.params.id}/logo`
             ).then((response) => {
                 emit('success', response?.data?.record);

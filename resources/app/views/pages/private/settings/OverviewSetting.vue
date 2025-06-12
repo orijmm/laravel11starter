@@ -39,13 +39,17 @@ export default defineComponent({
         logo: {
             type: String,
             default: null,
+        },
+        type: {
+            type: String,
+            default: 'logo_url',
         }
     },
     emits: ['change-logo-started'],
     setup(props, {emit}) {
 
         function onChangeLogo() {
-            emit('change-logo-started');
+            emit('change-logo-started', type);
         }
 
         return {

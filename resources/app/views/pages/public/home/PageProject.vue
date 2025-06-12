@@ -69,7 +69,8 @@
                 <!-- /.container -->
                 <div v-if="project.data.img" class="container-fluid px-md-6">
                     <div class="row gx-md-8 gy-10 gy-md-13 isotope">
-                        <div v-for="(elm, i) in project.data.img" :key="project.data.id" class="project item col-md-6 col-xl-4">
+                        <div v-for="(elm, i) in project.data.img" :key="project.data.id"
+                            class="project item col-md-6 col-xl-4">
                             <figure class="rounded mb-6">
                                 <img :src="elm" :alt="project.data.img_alt" />
                                 <div class="item-link cursor-pointer" @click="() => setActiveLightBox(true, i)">
@@ -115,6 +116,7 @@ export default {
             total: 0,
             data: [],
             logo: null,
+            logo2: null,
             webdata: []
         });
         const project = reactive({
@@ -155,6 +157,7 @@ export default {
             settings.find(1)
                 .then((response) => {
                     menus.logo = response.data.model.logo_url;
+                    menus.logo2 = response.data.model.logo_url2;
                     menus.webdata = response.data.model;
                 });
         }

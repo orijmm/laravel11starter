@@ -8,8 +8,9 @@
       <div class="container flex-lg-row flex-nowrap align-items-center">
         <div class="navbar-brand w-100">
           <router-link to="/">
-            <img :class="addClass ? 'logo-dark':'logo-light'" :src="menus.logo"
+            <img v-if="menus.logo" width="250px" :class="addClass ? 'logo-dark m-1':'logo-light m-1'" :src="addClass ? menus.logo : (menus.logo2 ?? menus.logo)"
               alt="logos-light" />
+            <div v-else>{{ menus.webdata.name_company ?? '' }}</div>
           </router-link>
         </div>
         <div id="ofCanvasBody" class="navbar-collapse offcanvas offcanvas-nav offcanvas-start">

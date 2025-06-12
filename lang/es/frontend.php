@@ -31,6 +31,8 @@ return [
             'name' => 'Nombre completo',
             'avatar' => 'Avatar',
             'logo' => 'Logo',
+            'logo_principal' => 'Logo principal',
+            'logo_secondary' => 'Logo secundario',
             'email' => 'Correo electrónico',
             'role' => 'Rol',
             'roles' => 'Roles',

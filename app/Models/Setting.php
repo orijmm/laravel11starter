@@ -54,7 +54,9 @@ class Setting extends Model implements HasMedia
      */
     protected $appends = [
         'logo_url',
+        'logo_url2',
         'logo_thumb_url',
+        'logo_thumb_url2',
     ];
 
     /**
@@ -158,7 +160,7 @@ class Setting extends Model implements HasMedia
      */
     public function logo()
     {
-        return $this->getMedia('logo')->first();
+        return $this->getMedia('logo_url')->first();
     }
 
     /**
@@ -184,6 +186,44 @@ class Setting extends Model implements HasMedia
     public function getLogoThumbUrlAttribute()
     {
         $logo = $this->logo();
+        if ($logo) {
+            return $logo->getAvailableFullUrl(['small_thumb']);
+        }
+
+        return null;
+    }
+
+    /**
+     * @return \Closure|mixed|null|Media
+     */
+    public function logo2()
+    {
+        return $this->getMedia('logo_url2')->first();
+    }
+
+    /**
+     * Returns the logo url attribute
+     *
+     * @return string|null
+     */
+    public function getLogoUrl2Attribute()
+    {
+        $logo = $this->logo2();
+        if ($logo) {
+            return $logo->getFullUrl();
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the logo url attribute
+     *
+     * @return string|null
+     */
+    public function getLogoThumbUrl2Attribute()
+    {
+        $logo = $this->logo2();
         if ($logo) {
             return $logo->getAvailableFullUrl(['small_thumb']);
         }

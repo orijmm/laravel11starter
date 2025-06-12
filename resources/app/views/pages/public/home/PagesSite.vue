@@ -2,7 +2,7 @@
   <div class="violet-theme urbanist-font">
     <div class="content-wrapper">
       <HeadersHome :menus="menus" />
-      
+
       <Content :page="page" :extradata="extradata" />
 
     </div>
@@ -32,6 +32,7 @@ export default {
       total: 0,
       data: [],
       logo: null,
+      logo2: null,
       webdata: []
     });
     const page = reactive({
@@ -70,6 +71,7 @@ export default {
       settings.find(1)
         .then((response) => {
           menus.logo = response.data.model.logo_url;
+          menus.logo2 = response.data.model.logo_url2;
           menus.webdata = response.data.model;
         });
     }

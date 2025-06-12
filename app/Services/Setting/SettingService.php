@@ -130,8 +130,12 @@ class SettingService
      */
     public function updateLogo(Setting $setting, array $data)
     {
-        if (isset($data['logo']) && $data['logo']) {
-            $this->mediaService->replace($data['logo'], $setting, 'logo');
+        if (isset($data['logo_url']) && $data['logo_url']) {
+            $this->mediaService->replace($data['logo_url'], $setting, 'logo_url');
+        }
+
+        if (isset($data['logo_url2']) && $data['logo_url2']) {
+            $this->mediaService->replace($data['logo_url2'], $setting, 'logo_url2');
         }
         if (! empty($data)) {
             return $setting->update($data);

@@ -1,7 +1,10 @@
 <template>
     <Page :title="page.title" :breadcrumbs="page.breadcrumbs" :actions="page.actions" @action="onAction"
         :is-loading="page.loading">
-        <OverviewSetting :logo="form.logo_url" class="mb-4" @change-logo-started="isAvatarModalShowing = true;" />
+        <h4 class="text-gray-500 text-xl">{{ trans('users.labels.logo_principal') }}</h4>
+        <OverviewSetting type="logo_url" :logo="form.logo_url" class="mb-4" @change-logo-started="setIsAvatarModalShowing('logo_url')" />
+        <h4 class="text-gray-500 text-xl">{{ trans('users.labels.logo_secondary') }}</h4>
+        <OverviewSetting type="logo_url2" :logo="form.logo_url2" class="mb-4" @change-logo-started="setIsAvatarModalShowing('logo_url2')" />
         <Form id="edit-setting" @submit.prevent="onSubmit">
 
             <Panel otherClass="overflow-visible">
@@ -52,7 +55,7 @@
     </Page>
     <Modal :is-showing="isAvatarModalShowing" @close="isAvatarModalShowing = false;">
         <FormLogo @error="isAvatarModalShowing = false;" @done="isAvatarModalShowing = false;"
-            @success="onAvatarChange" />
+            @success="onAvatarChange" :type="typeLogo"/>
     </Modal>
 </template>
 
@@ -80,6 +83,7 @@ export default defineComponent({
     components: { Form, Panel, Alert, Dropdown, TextInput, Button, Page, Modal, OverviewSetting, FormLogo },
     setup() {
         const isAvatarModalShowing = ref(false);
+        let typeLogo = ref(null);
 
         const { user } = useAuthStore();
         //Router vue
@@ -98,6 +102,7 @@ export default defineComponent({
             country_id: undefined,
             currency_id: undefined,
             logo_url: undefined,
+            logo_url2: undefined,
             twitter: undefined,
             facebook: undefined,
             instagram: undefined,
@@ -155,8 +160,13 @@ export default defineComponent({
             return false;
         }
 
-        function onAvatarChange(data) {
-            form.logo_url = data.logo_url;
+        function onAvatarChange(data, type = 'logo_url') {
+            form[type] = data.logo_url;
+        }
+
+        function setIsAvatarModalShowing(type) {
+            isAvatarModalShowing.value = true;
+            typeLogo.value = type;
         }
 
         return {
@@ -167,7 +177,9 @@ export default defineComponent({
             onSubmit,
             onAction,
             isAvatarModalShowing,
-            onAvatarChange
+            onAvatarChange,
+            setIsAvatarModalShowing,
+            typeLogo
         }
     }
 });
