@@ -49,6 +49,7 @@ return [
             'currency' => 'Moneda',
             'img' => 'Imagen',
             'nologo' => 'Sin logo',
+            'video' => 'Video',
             'current_password' => 'Contraseña actual',
             'password' => 'Contraseña',
             'new_password' => 'Nueva contraseña',
