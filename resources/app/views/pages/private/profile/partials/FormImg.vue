@@ -1,7 +1,8 @@
 <template>
     <Panel :title="trans('users.labels.img_settings')">
+        <Alert class="mb-4"/>
         <FileInput @error="alertError" @change="onChange" name="file" :label="trans('users.labels.img')" 
-        v-model="form.file" @clear="form.file = ''" accept="image/*" class="mb-4"></FileInput>
+        v-model="form.file" @clear="form.file = ''" :accept="typeFile" class="mb-4"></FileInput>
     </Panel>
 </template>
 
@@ -21,6 +22,12 @@ export default defineComponent({
         FileInput,
         Button,
         Alert
+    },
+    props: {
+        typeFile: {
+            type: String,
+            default: 'image/*'
+        }
     },
     setup(props, {emit}) {
 

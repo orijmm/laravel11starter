@@ -137,11 +137,15 @@ export default defineComponent({
         })
 
         function onChange(e) {
-            const files = e.target.files;
-            const maxSizeMB = 5; // Por ejemplo, 5 MB
-            const maxSizeBytes = maxSizeMB * 1024 * 1024;
 
+            const files = e.target.files;
+            let maxSizeMB = 5;// Por ejemplo, 5 MB
             for (let file of files) {
+                if (file.type.includes('video')) {
+                    maxSizeMB = 20;
+                }
+
+                const maxSizeBytes = maxSizeMB * 1024 * 1024;
                 if (file.size > maxSizeBytes) {
                     alertHelpers.messageDanger(`El archivo "${file.name}" excede el tamaño máximo de ${maxSizeMB}MB.`)
                     // Limpia el input si es necesario
@@ -204,19 +208,22 @@ export default defineComponent({
         function filesAccept(files) {
             return files.every((file) => {
                 let type = file.type.split('/');
-                return acceptMimes.value.some((accepted) => {
-                    if (
+
+                const isAccepted = acceptMimes.value.some((accepted) => {
+                    return (
                         accepted[0] === '*' ||
                         (accepted[0] === type[0] && accepted[1] === '*') ||
                         (accepted[0] === type[0] && accepted[1] === type[1])
-                    ) {
-                        return true;
-                    }
+                    );
+                });
 
-                    let error = new Error(`${trans('global.pages.file')} ${file.name} ${trans('global.phrases.not_accepted_type')} ${file.type}`);
+                if (!isAccepted) {
+                    const error = new Error(`${trans('global.pages.file')} ${file.name} ${trans('global.phrases.not_accepted_type')} ${file.type}`);
                     emit('error', error);
                     throw error;
-                });
+                }
+
+                return true;
             });
         }
 

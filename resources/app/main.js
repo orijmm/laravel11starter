@@ -52,6 +52,7 @@ import LinkTreeService from "./views/pages/public/components/customs/LinkTreeSer
 import HostingService from "./views/pages/public/components/customs/HostingService";
 import WebDevelopService from "./views/pages/public/components/customs/WebDevelopService";
 import ContactForm from "./views/pages/public/components/customs/ContactForm";
+import VideoPlayer from './views/pages/public/template/components/base/VideoPlayer';
 
 const app = createApp(App);
 
@@ -99,6 +100,7 @@ const components = {
     'Scrolltop': Scrolltop,
     'LineProgressbar': LineProgressbar,
     'ModalVideo': ModalVideo,
+    'VideoPlayer': VideoPlayer,
     'BlockBackgorund': BlockBackgorund,
     'Services': Services,
     'LinkTreeService': LinkTreeService,

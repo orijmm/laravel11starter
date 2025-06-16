@@ -19,22 +19,26 @@
                     :label="trans('users.labels.category')" />
                 <TextInput class="mb-4" type="text" name="img_alt" v-model="form.img_alt"
                     :label="trans('users.labels.img_alt')" />
-                <FormImg @error="errorImg = true" @success="setImgFile" />
+                <FormImg @error="errorImg = true" @success="setFile" typeFile="video/*,image/*" />
                 <div class="flex flex-row gap-2">
                     <div class="bg-gray-50 rounded p-1" v-for="(image, i) in form.img" :key="`img-${i}`">
                         <button class="file-input__clear text-gray-300" type="button" @click="onClearImg(i, 'img')">
                             <i class="fa fa-times"></i>
                         </button>
-                        <img :src="getImgVisual(image)" class="object-scale-down h-48 w-96"
+                        <img v-if="isImage(getImgVisual(image))" :src="getImgVisual(image)" class="object-scale-down h-48 w-96"
                             :alt="trans('users.labels.img')" />
+                        <VideoPlayer v-else-if="isVideo(image)" :videopath="image" />
                     </div>
                     <div class="bg-gray-50 rounded p-1" v-for="(imgI, i) in form.inputImg" :key="`inputImg-${i}`">
                         <button class="file-input__clear text-gray-300" type="button"
                             @click="onClearImg(i, 'inputImg')">
                             <i class="fa fa-times"></i>
                         </button>
-                        <img :src="getImgVisual(imgI)" class="object-scale-down h-48 w-96"
-                            :alt="trans('users.labels.img')" />
+                        <img v-if="imgI.type.includes('image')" :src="getImgVisual(imgI)"
+                            class="object-scale-down h-48 w-96" :alt="trans('users.labels.img')" />
+                        <div v-else-if="imgI.type.includes('video')" class="h-48 w-96">
+                            {{ trans('users.labels.video') }}
+                        </div>
                     </div>
                 </div>
             </Form>
@@ -159,8 +163,8 @@ export default defineComponent({
         }
 
         //Asignar el valor del archivo 
-        function setImgFile(data) {
-            form.inputImg.push(data);
+        function setFile(file) {
+            form.inputImg.push(file);
         }
 
         function getImgVisual(img) {
@@ -172,6 +176,15 @@ export default defineComponent({
             form[type].splice(i, 1);
         }
 
+        function isImage(filePath) {
+            return /\.(jpe?g|png|gif|webp)$/i.test(filePath);
+        }
+
+        function isVideo(filePath) {
+            return /\.(mp4|webm|ogg|mov)$/i.test(filePath);
+        }
+
+
         return {
             trans,
             user,
@@ -181,9 +194,11 @@ export default defineComponent({
             page,
             bgcolor,
             errorImg,
-            setImgFile,
+            setFile,
             onClearImg,
-            getImgVisual
+            getImgVisual,
+            isImage,
+            isVideo
         }
     }
 })
