@@ -20,16 +20,16 @@
                 <TextInput class="mb-4" type="text" name="img_alt" v-model="form.img_alt"
                     :label="trans('users.labels.img_alt')" />
                 <FormImg @error="errorImg = true" @success="setFile" typeFile="video/*,image/*" />
-                <div class="flex flex-row gap-2">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
                     <div class="bg-gray-50 rounded p-1" v-for="(image, i) in form.img" :key="`img-${i}`">
                         <button class="file-input__clear text-gray-300" type="button" @click="onClearImg(i, 'img')">
                             <i class="fa fa-times"></i>
                         </button>
-                        <img v-if="isImage(getImgVisual(image))" :src="getImgVisual(image)" class="object-scale-down h-48 w-96"
-                            :alt="trans('users.labels.img')" />
+                        <img v-if="isImage(getImgVisual(image))" :src="getImgVisual(image)"
+                            class="object-scale-down h-48 w-96" :alt="trans('users.labels.img')" />
                         <VideoPlayer v-else-if="isVideo(image)" :videopath="image" />
                     </div>
-                    <div class="bg-gray-50 rounded p-1" v-for="(imgI, i) in form.inputImg" :key="`inputImg-${i}`">
+                    <div v-if="form.inputImg" class="bg-gray-50 rounded p-1" v-for="(imgI, i) in form.inputImg" :key="`inputImg-${i}`">
                         <button class="file-input__clear text-gray-300" type="button"
                             @click="onClearImg(i, 'inputImg')">
                             <i class="fa fa-times"></i>
@@ -158,7 +158,10 @@ export default defineComponent({
 
         function onSubmit() {
             // se agrega null, true para archivos
-            service.handleUpdate('edit-project', route.params.id, reduceProperties(form, [], 'id'), null, true);
+            service.handleUpdatePut('edit-project', route.params.id, reduceProperties(form, [], 'id'), null, true).then((response) => {
+                fetchItems();
+                form.inputImg = [];
+            });
             return false;
         }
 

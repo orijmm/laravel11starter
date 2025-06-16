@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+
 class Project extends Model implements HasMedia
 {
     use SoftDeletes, Filterable, Searchable, InteractsWithMedia;
@@ -46,4 +47,12 @@ class Project extends Model implements HasMedia
 
         return [];
     }
+
+    // public function registerMediaCollections(): void
+    // {
+    //     $this->addMediaCollection('projectimg')
+    //         ->acceptsMimeTypes(['image/*', 'video/*'])
+    //         ->useDisk('public') // opcional
+    //         ->maxFileSize(1024 * 1024 * 100); // 100 MB
+    // }
 }

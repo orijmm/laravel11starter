@@ -142,7 +142,7 @@ export default defineComponent({
             let maxSizeMB = 5;// Por ejemplo, 5 MB
             for (let file of files) {
                 if (file.type.includes('video')) {
-                    maxSizeMB = 20;
+                    maxSizeMB = 50;
                 }
 
                 const maxSizeBytes = maxSizeMB * 1024 * 1024;

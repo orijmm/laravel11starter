@@ -239,13 +239,13 @@ class Setting extends Model implements HasMedia
      */
     public function registerMediaConversions(?Media $media = null): void
     {
-        $this->addMediaConversion('small_thumb')
+        $this->addMediaConversion('small_thumb')->performOnCollections('images')
             ->fit(Fit::Crop, 300, 300)
             ->nonQueued();
-        $this->addMediaConversion('medium_thumb')
+        $this->addMediaConversion('medium_thumb')->performOnCollections('images')
             ->fit(Fit::Crop, 600, 600)
             ->nonQueued();
-        $this->addMediaConversion('large_thumb')
+        $this->addMediaConversion('large_thumb')->performOnCollections('images')
             ->fit(Fit::Crop, 1200, 1200)
             ->nonQueued();
     }

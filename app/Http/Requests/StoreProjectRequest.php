@@ -29,7 +29,9 @@ class StoreProjectRequest extends FormRequest
             'description' => 'nullable',
             'url' => 'nullable',
             'date' => 'nullable',
-            'client_name' => 'nullable'
+            'client_name' => 'nullable',
+            'inputImg' =>'nullable',
+            'img' =>'nullable'
         ];
     }
 }

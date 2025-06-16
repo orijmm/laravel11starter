@@ -39,7 +39,6 @@ export default abstract class ModelService extends BaseService {
         let url = customUrl || this.url;
 
         let data = noTransform ? payload : this.transformPayloadForSubmission(payload);
-        console.log(data, noTransform);
         return this.patch(url + `/${object_id}`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -95,12 +94,12 @@ export default abstract class ModelService extends BaseService {
         })
     }
 
-    public handleUpdatePut(ui_element_id, object_id, data, customUrl = null) {
+    public handleUpdatePut(ui_element_id, object_id, data, customUrl = null, noTransform = false) {
         const alertStore = useAlertStore();
         const globalUserState = useGlobalStateStore();
         globalUserState.loadingElements[ui_element_id] = true;
         let url = customUrl || this.url + `/${object_id}`;
-        let payload = this.transformPayloadForSubmission(data);
+        let payload = noTransform ? data : this.transformPayloadForSubmission(data);
         return this.put(url, payload, {
             headers: {
                 'Content-Type': 'multipart/form-data'

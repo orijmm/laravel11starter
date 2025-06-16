@@ -55,6 +55,8 @@ export default abstract class BaseService {
         } else {
             data._method = 'PUT';
         }
+        console.log('url', url, data);
+
         return this.api.post(url, data, config);
     }
 

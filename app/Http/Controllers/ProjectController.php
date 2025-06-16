@@ -56,6 +56,7 @@ class ProjectController extends Controller
         $this->authorize('create_project');
 
         $data = $request->validated();
+
         if (isset($data['url']) && !Str::startsWith($data['url'], ['http://', 'https://'])) {
             $data['url'] = 'http://' . $data['url'];
         }
@@ -90,10 +91,15 @@ class ProjectController extends Controller
         $data = $request->validated();
 
         if (!empty($request->inputImg)) {
-            $imgArray = $request->inputImg ?? [];
+            $imgArray = $request->img ?? [];
             $this->mediaService->replaceMany($project, 'projectimg', $imgArray, $request->inputImg);
+        }else if(empty($request->inputImg) && empty($request->img)){
+            $this->mediaService->delete($project, 'projectimg');
+        } else {
+            $imgArray = $request->img ?? [];
+            $this->mediaService->replaceMany($project, 'projectimg', $imgArray);
         }
-        if ($data['url'] ?? false && !Str::startsWith($data['url'], ['http://', 'https://'])) {
+        if (isset($data['url']) && !Str::startsWith($data['url'], ['http://', 'https://'])) {
             $data['url'] = 'http://' . $data['url'];
         }
         $newproject = $project->update($data);

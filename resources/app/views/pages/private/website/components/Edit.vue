@@ -26,7 +26,8 @@
             <div v-if="form.type == 'img'">
                 <div class="grid grid-cols-1">
                     <FormImg @error="errorImg = true" @success="setImgFile" />
-                    <div class="flex flex-row gap-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+
                         <div class="bg-gray-50 rounded p-1" v-for="(image, i) in form.img" :key="`img-${i}`">
                             <button class="file-input__clear text-gray-300" type="button" @click="onClearImg(i, 'img')">
                                 <i class="fa fa-times"></i>
