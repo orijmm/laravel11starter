@@ -223,7 +223,7 @@ html {
 }
 
 .fixed-height {
-  height: 440px;
+  height: 300px;
   /* o el alto que desees */
   overflow: hidden;
 }
@@ -306,7 +306,7 @@ html {
 @media (max-width: 576px) {
 
   .fixed-height {
-    height: 300px;
+    height: 250px;
     /* o el alto que desees */
     overflow: hidden;
   }

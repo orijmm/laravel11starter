@@ -74,3 +74,19 @@ export const reduceProperties = (data, properties, singleProperty) => {
     }
     return obj;
 };
+
+/**
+ * Check if is imagen by path
+ * @param object
+ */
+export const isImagePath = (filePath) => {
+    return /\.(jpe?g|png|gif|webp)$/i.test(filePath);
+};
+
+/**
+ * Check if is imagen by path
+ * @param object
+ */
+export const isVideoPath = (filePath) => {
+    return /\.(mp4|webm|ogg|mov)$/i.test(filePath);
+};

@@ -71,8 +71,9 @@
                     <div class="row gx-md-8 gy-10 gy-md-13 isotope">
                         <div v-for="(elm, i) in project.data.img" :key="project.data.id"
                             class="project item col-md-6 col-xl-4">
-                            <figure class="rounded mb-6">
-                                <img :src="elm" :alt="project.data.img_alt" />
+                            <figure class="rounded mb-6 fixed-height">
+                                <img class="img-cover" v-if="isImagePath(elm)" :src="elm" :alt="project.data.img_alt" />
+                                <VideoPlayer v-else-if="isVideoPath(elm)" :videopath="elm" />
                                 <div class="item-link cursor-pointer" @click="() => setActiveLightBox(true, i)">
                                     <i class="uil uil-focus-add"></i>
                                 </div>
@@ -90,6 +91,7 @@
 </template>
 <script>
 import { trans } from "@/helpers/i18n";
+import { isImagePath, isVideoPath } from "@/helpers/data"
 import { date } from "@/helpers/datetimeFormat"
 import Footer from '@/views/pages/public/template/components/base/Footer';
 import Content from '@/views/pages/public/home/Content';
@@ -179,7 +181,9 @@ export default {
             currentSlideIndex,
             activeLightBox,
             setActiveLightBox,
-            images
+            images,
+            isImagePath,
+            isVideoPath
         }
     }
 }

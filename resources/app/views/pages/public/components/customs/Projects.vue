@@ -25,7 +25,8 @@
         <SwiperSlide v-for="(elm, i) in extradata.projects" :key="i">
           <figure v-if="elm.img.length" class="mb-6 fixed-height">
             <router-link :to="`/projects/${elm.id}/${elm.slug}`" class="link-dark">
-              <img :src="elm.img" :alt="elm.img_alt" class="img-cover" />
+              <img v-if="isImagePath(elm.img[0])" :src="elm.img[0]" :alt="elm.img_alt" class="img-cover" />
+              <img v-else-if="elm.img[1] && isImagePath(elm.img[1])" :src="elm.img[1]" :alt="elm.img_alt" class="img-cover" />
             </router-link>
           </figure>
           <div v-if="elm.img" class="project-details d-flex justify-content-center flex-column">
@@ -56,6 +57,7 @@
 import { trans } from "@/helpers/i18n";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination } from "swiper/modules";
+import { isImagePath, isVideoPath } from "@/helpers/data"
 
 export default {
   components: {
@@ -81,6 +83,8 @@ export default {
     return {
       trans,
       Pagination,
+      isImagePath,
+      isVideoPath
     }
   }
 }
