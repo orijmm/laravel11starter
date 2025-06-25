@@ -1,6 +1,6 @@
 <template>
   <footer class="bg-gray">
-    <div class="container py-13 py-md-15">
+    <div class="container py-8 py-md-10">
       <div class="row gy-6 gy-lg-0">
         <div class="col-md-6 col-lg-4">
           <div class="widget">
@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="col-md-12 col-lg-4">
-          <div class="widget">
+          <!-- <div class="widget">
             <h4 class="widget-title mb-3">{{ trans('global.pages.newsletter') }}</h4>
             <p class="mb-5">
               {{ trans('global.phrases.newsletter_text') }}
@@ -55,7 +55,7 @@
                 </form>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
