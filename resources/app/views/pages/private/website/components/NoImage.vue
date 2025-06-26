@@ -9,6 +9,7 @@ import { defineComponent } from "vue";
 import { trans } from "@/helpers/i18n";
 
 export default defineComponent({
+    
     setup() {
         return {
             trans,
