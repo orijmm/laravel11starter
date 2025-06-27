@@ -36,7 +36,7 @@ class Data
     {
         $result = $collection->map(function ($entry) use ($value, $label, $extra) {
             $id = $entry[$value] ?? null;
-            $label = $entry[$label] ?? $entry[$id];
+            $label = $entry[$label] ?? ($entry[$id] ?? null);
 
             $data = [
                 'id' => $id,

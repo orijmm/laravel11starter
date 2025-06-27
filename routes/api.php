@@ -128,11 +128,11 @@ Route::get('manteiners/projects/{project}', [ProjectController::class, 'show'])-
 Route::get('languages', function (Request $request) {
     $languages = [];
     $action = World::languages([
-        'search' => $request->search, // Aquí pasas el término de búsqueda
+        'search' => $request->search,
     ]);
     if ($action->success) {
         //Se trasnforma a id/label
-        $languages = Data::formatCollectionForSelect($action->data, 'code', 'name_native');
+        $languages = Data::formatCollectionForSelect($action->data, 'code', 'name');
     }
     return response()->json(['data' => $languages], 200);
 });

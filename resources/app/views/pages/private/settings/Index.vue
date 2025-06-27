@@ -22,15 +22,15 @@
                         :label="trans('users.labels.email')" />
                     <Dropdown :server="'languages'" :server-per-page="15" :required="true" name="type"
                         v-model="form.locale" :label="trans('users.labels.locale')" />
-                    <Dropdown :server="'timezones'" :server-per-page="15" :required="true" name="type"
+                    <Dropdown :server="'timezones'" :server-per-page="15" :required="true" name="timezone"
                         v-model="form.timezone" :label="trans('users.labels.timezone')" />
-                    <Dropdown :server="'countries'" :server-per-page="15" :required="true" name="type"
+                    <Dropdown :server="'countries'" :server-per-page="15" :required="true" name="country_id"
                         v-model="form.country_id" :label="trans('users.labels.country')" />
-                    <Dropdown :server="'states'" :server-per-page="15" :required="true" name="type"
+                    <Dropdown :server="'states'" :server-per-page="15" :required="true" name="state_id"
                         v-model="form.state_id" :label="trans('users.labels.state')" />
-                    <Dropdown :server="'cities'" :server-per-page="15" :required="true" name="type"
+                    <Dropdown :server="'cities'" :server-per-page="15" :required="true" name="city_id"
                         v-model="form.city_id" :label="trans('users.labels.city')" />
-                    <Dropdown :server="'currencies'" :server-per-page="15" :required="true" name="type"
+                    <Dropdown :server="'currencies'" :server-per-page="15" :required="true" name="currency_id"
                         v-model="form.currency_id" :label="trans('users.labels.currency')" />
                     <TextInput class="col-span-1 md:col-span-3" type="text" :required="true" name="googlemaps"
                         v-model="form.googlemaps" :label="trans('users.labels.google_maps')" />
