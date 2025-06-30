@@ -38,8 +38,8 @@ class SettingService
     {
         try {
             return new SettingResource($setting);
-        } catch (\Throwable $th) {
-            throw $th;
+        } catch (\Exception $e) {
+            return $e->getMessage();
         }
     }
 
