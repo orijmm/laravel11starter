@@ -8,7 +8,6 @@ use App\Models\Setting;
 use App\Models\User;
 use App\Services\Setting\SettingService;
 use Exception;
-use Illuminate\Support\Facades\Log;
 
 class SettingController extends Controller
 {
@@ -40,12 +39,12 @@ class SettingController extends Controller
             \Log::error('Laravel está escribiendo logs');
 
             $model = $this->settingService->get($settingad);
-            Log::info('lang:',['data' => $model]);
-            Log::info('model',['data' => $model->country_id]);
+            \Log::info('lang:',['data' => $model]);
+            \Log::info('model',['data' => $model->country_id]);
             return $this->responseDataSuccess(['model' => $model]);
         } catch (Exception $e) {
             // Error inesperado
-            Log::info($e->getMessage());
+            \Log::info($e->getMessage());
             return $this->responseFail($e->getMessage());
         }
     }
