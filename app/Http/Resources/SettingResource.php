@@ -27,7 +27,7 @@ class SettingResource extends JsonResource
             $states = World::states();
             $cities = World::cities();
 
-            Log::info('Languages:', $languages->data->toArray());
+            Log::info('Languages data', ['data' => $languages->data->toArray()]);
 
             $data = $this->resource->toArray();
 
