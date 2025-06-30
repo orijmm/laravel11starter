@@ -35,6 +35,7 @@ class SettingController extends Controller
      */
     public function show(Setting $settingad)
     {
+        return response()->json(['model' => $settingad, 'pp' => 'testing']);
         try {
 
             $resource = $this->settingService->get($settingad);
