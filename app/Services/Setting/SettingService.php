@@ -37,8 +37,7 @@ class SettingService
     public function get(Setting $setting)
     {
         try {
-            return $setting;
-            //return new SettingResource($setting);
+            return new SettingResource($setting);
         } catch (\Exception $e) {
             return $e->getMessage();
         }
