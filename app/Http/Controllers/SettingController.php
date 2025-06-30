@@ -40,7 +40,7 @@ class SettingController extends Controller
 
             $model = $this->settingService->get($settingad);
             \Log::info('lang:');
-            \Log::info('model',['data' => $model->country_id]);
+            \Log::info('model',['data' => $model]);
             return $this->responseDataSuccess(['model' => $model]);
         } catch (Exception $e) {
             // Error inesperado
