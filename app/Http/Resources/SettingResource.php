@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Utilities\Data;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Log;
 use Nnjeim\World\World;
 
 /**
@@ -26,7 +27,7 @@ class SettingResource extends JsonResource
             $states = World::states();
             $cities = World::cities();
 
-            \Log::info('Languages:', $languages->data->toArray());
+            Log::info('Languages:', $languages->data->toArray());
 
             $data = $this->resource->toArray();
 
@@ -39,7 +40,7 @@ class SettingResource extends JsonResource
 
             return $data;
         } catch (\Throwable $th) {
-            \Log::error('Error en SettingResource: ' . $th->getMessage());
+            Log::error('Error en SettingResource: ' . $th->getMessage());
             return [
                 'error' => true,
                 'message' => $th->getMessage()
