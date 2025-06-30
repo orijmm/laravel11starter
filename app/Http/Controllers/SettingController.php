@@ -37,14 +37,14 @@ class SettingController extends Controller
     {
         try {
 
-            $model = $this->settingService->get($settingad);
-            \Log::info('lang:');
-
-            return $this->responseDataSuccess(['model' => $model]);
-        } catch (Exception $e) {
-            // Error inesperado
-            \Log::info($e->getMessage());
-            return $this->responseFail($e->getMessage());
+            $resource = $this->settingService->get($settingad);
+            $array = $resource->toArray(request()); // fuerza el error aquí si lo hay
+            return response()->json(['model' => $array]);
+        } catch (\Throwable $e) {
+            \Log::error('Error en settingad.show: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString(),
+            ]);
+            return response()->json(['error' => 'Error interno', 'message' => $e->getMessage()], 500);
         }
     }
 
