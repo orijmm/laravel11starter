@@ -39,10 +39,10 @@ class SettingController extends Controller
         try {
             $model = $this->settingService->get($settingad);
             Log::info($model->locale);
-            return $this->responseDataSuccess(['model' => $model, 'properties' => $this->properties()]);
+            return $this->responseDataSuccess(['model' => $model]);
         } catch (Exception $e) {
             // Error inesperado
-            Log::warning($e->getMessage());
+            Log::info($e->getMessage());
             return $this->responseFail($e->getMessage());
         }
     }
