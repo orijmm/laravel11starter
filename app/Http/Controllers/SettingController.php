@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateSettingRequest;
 use App\Models\Setting;
 use App\Models\User;
 use App\Services\Setting\SettingService;
-use Exception;
 
 class SettingController extends Controller
 {
@@ -35,17 +34,12 @@ class SettingController extends Controller
      */
     public function show(Setting $settingad)
     {
-        return response()->json(['model' => $settingad, 'pp' => 'testing']);
         try {
-
-            $resource = $this->settingService->get($settingad);
-            $array = $resource->toArray(request()); // fuerza el error aquí si lo hay
-            return response()->json(['model' => $array]);
-        } catch (\Throwable $e) {
-            \Log::error('Error en settingad.show: ' . $e->getMessage(), [
-                'trace' => $e->getTraceAsString(),
-            ]);
-            return response()->json(['error' => 'Error interno', 'message' => $e->getMessage()], 500);
+            $model = $this->settingService->get($settingad);
+            return response()->json(['model' => $model, 'data' => 'otros']);
+            return $this->responseDataSuccess(['model' => $model]);
+        } catch (\Exception $e) {
+            return $this->responseFail($e->getMessage());
         }
     }
 
