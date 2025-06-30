@@ -26,9 +26,7 @@ class SettingResource extends JsonResource
             $states = World::states();
             $cities = World::cities();
 
-            \Log::info('Languages data1', ['data' => $this->locale]);
-
-            \Log::info('Languages data2', ['data' => $languages->data->toArray()]);
+            \Log::info('Languages data1');
 
             $data = $this->resource->toArray();
 
@@ -40,7 +38,7 @@ class SettingResource extends JsonResource
             $data['city_id'] = Data::getSelectedLocation($cities->data, $this->city_id);
 
             return $data;
-        } catch (\Throwable $th) {
+        } catch (\Exception $th) {
             \Log::error('Error en SettingResource: ' . $th->getMessage());
             return [
                 'error' => true,
