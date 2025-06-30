@@ -39,7 +39,7 @@ class SettingController extends Controller
             \Log::error('Laravel está escribiendo logs');
 
             $model = $this->settingService->get($settingad);
-            \Log::info('lang:',['data' => $model]);
+            \Log::info('lang:');
             \Log::info('model',['data' => $model->country_id]);
             return $this->responseDataSuccess(['model' => $model]);
         } catch (Exception $e) {
