@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateSettingRequest;
 use App\Models\Setting;
 use App\Models\User;
 use App\Services\Setting\SettingService;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class SettingController extends Controller
 {
@@ -34,9 +36,15 @@ class SettingController extends Controller
      */
     public function show(Setting $settingad)
     {
-        $model = $this->settingService->get($settingad);
-
-        return $this->responseDataSuccess(['model' => $model, 'properties' => $this->properties()]);
+        try {
+            $model = $this->settingService->get($settingad);
+            Log::info($model->locale);
+            return $this->responseDataSuccess(['model' => $model, 'properties' => $this->properties()]);
+        } catch (Exception $e) {
+            // Error inesperado
+            Log::warning($e->getMessage());
+            return $this->responseFail($e->getMessage());
+        }
     }
 
     /**
