@@ -36,7 +36,6 @@ class SettingController extends Controller
     {
         try {
             $model = $this->settingService->get($settingad);
-            return response()->json(['model' => $model, 'data' => 'otros']);
             return $this->responseDataSuccess(['model' => $model]);
         } catch (\Exception $e) {
             return $this->responseFail($e->getMessage());
