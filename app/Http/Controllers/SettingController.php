@@ -37,6 +37,8 @@ class SettingController extends Controller
     public function show(Setting $settingad)
     {
         try {
+            \Log::error('Laravel está escribiendo logs');
+
             $model = $this->settingService->get($settingad);
             Log::info('lang:',['data' => $model]);
             Log::info('model',['data' => $model->country_id]);
