@@ -36,7 +36,11 @@ class SettingService
      */
     public function get(Setting $setting)
     {
-        return new SettingResource($setting);
+        try {
+            return new SettingResource($setting);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
