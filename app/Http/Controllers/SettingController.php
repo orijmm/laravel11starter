@@ -38,7 +38,7 @@ class SettingController extends Controller
     {
         try {
             $model = $this->settingService->get($settingad);
-            Log::infoo('lang:',['data' => $model]);
+            Log::info('lang:',['data' => $model]);
             return $this->responseDataSuccess(['model' => $model]);
         } catch (Exception $e) {
             // Error inesperado
