@@ -67,7 +67,15 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
     /**
      * Settings Admin
      */
-    Route::resource('settingad', SettingController::class)->except('show');
+    //Route::resource('settingad', SettingController::class)->except('show');
+
+    Route::get('settingad', [SettingController::class, 'index'])->name('settingad.index');
+    Route::get('settingad/create', [SettingController::class, 'create'])->name('settingad.create');
+    Route::post('settingad', [SettingController::class, 'store'])->name('settingad.store');
+    Route::put('settingad/{settingad}', [SettingController::class, 'update'])->name('settingad.update');
+    Route::patch('settingad/{settingad}', [SettingController::class, 'update']);
+    Route::delete('settingad/{settingad}', [SettingController::class, 'destroy'])->name('settingad.destroy');
+
     Route::put('/settingad/{setting}/logo', [SettingController::class, 'updateLogo']);
 
     /**
@@ -120,6 +128,7 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
 Route::get('menus/searchname', [MenuController::class, 'showByName'])->name('menus.search.name');
 Route::get('page/{page}', [PagesController::class, 'show'])->name('page.show');
 Route::get('settingad/{settingad}', [SettingController::class, 'show'])->name('settingad.show');
+Route::get('settingad/{settingad}/edit', [SettingController::class, 'edit'])->name('settingad.edit');
 Route::get('getpage/{id?}', [PagesController::class, 'displayPageItems'])->name('display.getpage');
 Route::get('manteiners/projects/{project}', [ProjectController::class, 'show'])->name('project.show');
 
