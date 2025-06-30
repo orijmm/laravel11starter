@@ -68,7 +68,7 @@ class CustomModelCommand extends Command
             );
             $modelContent = str_replace(
                 "//",
-                "use HasFactory, SoftDeletes;\n\n    protected \$table = '$tableName';\n\n    protected \$fillable = $fillableArray;",
+                "use SoftDeletes;\n\n    protected \$table = '$tableName';\n\n    protected \$fillable = $fillableArray;",
                 $modelContent
             );
 
