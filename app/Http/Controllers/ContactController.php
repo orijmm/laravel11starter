@@ -26,7 +26,7 @@ class ContactController extends Controller
         ]);
 
         try {
-            Mail::to(env('MAIL_FROM_ADDRESS'))->send(new ContactFormMail($validated));
+            Mail::to('orianajmm@gmail.com')->send(new ContactFormMail($validated));
         } catch (\Exception $e) {
             $emailRecord->update(['was_sent' => false]);
             // Puedes guardar también el error si deseas
