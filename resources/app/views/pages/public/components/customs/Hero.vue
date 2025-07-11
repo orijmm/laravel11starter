@@ -1,34 +1,42 @@
 <template>
-    <div class="container pt-18 pb-3 pb-md-6 text-center">
+  <section
+    class="wrapper image-wrapper bg-cover bg-image bg-xs-none bg-gray"
+    style="background-image: url(/assets/img/photos/bg37.jpg)"
+  >
+    <div class="container pt-17 pb-15 py-sm-17 py-xxl-20">
       <div class="row">
-        <div class="col-lg-8 col-xl-7 col-xxl-6 mx-auto">
-          <h1 class="display-1 text-white fs-60 mb-4 px-md-15 px-lg-0" data-aos="fade-up" data-aos-once="true"
-            data-aos-delay="200">
+        <div class="col-12 col-sm-6 text-center text-sm-start">
+          <h2
+            class="display-1 fs-56 mb-4 mt-0 mt-lg-5 ls-xs pe-xl-5 pe-xxl-0"
+            data-aos="fade-up"
+            data-aos-once="true"
+            data-aos-delay=""
+          >
             {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
-            <span class="underline-3 style-2 yellow">{{ content[1]?.text ?? trans('global.phrases.hasto_add_content')
-              }}</span>
-          </h1>
-          <p class="lead fs-24 text-white lh-sm mb-7 mx-md-13 mx-lg-10" data-aos="fade-up" data-aos-once="true"
-            data-aos-delay="200">
-            {{ content[2]?.text ?? trans('global.phrases.hasto_add_content') }}.
+            <span class="text-bold">{{ content[1]?.text ?? trans('global.phrases.hasto_add_content') }}</span>
+          </h2>
+          <p
+            class="lead fs-23 lh-sm mb-7 pe-lg-5 pe-xl-5 pe-xxl-0"
+            data-aos="fade-up"
+            data-aos-once="true"
+            data-aos-delay="200"
+          >
+            {{ content[2]?.text ?? trans('global.phrases.hasto_add_content') }}
           </p>
-          <!-- <div data-aos="fade-up" data-aos-once="true" data-aos-delay="300">
-            <router-link class="btn btn-white rounded mb-10 mb-xxl-5" to="/">{{ content[3]?.text ??
-              trans('global.phrases.hasto_add_content') }}</router-link>
-          </div> -->
+          <div>
+            <router-link
+              data-aos="fade-up"
+              data-aos-once="true"
+              data-aos-delay="300"
+              class="btn btn-lg btn-primary rounded"
+              to="/blog-post"
+              >{{ content[3]?.text ?? trans('global.phrases.hasto_add_content') }}</router-link
+            >
+          </div>
         </div>
-        <!-- /column -->
-      </div>
-      <!-- /.row -->
-    </div>
-    <!-- /.container -->
-    <div class="overflow-hidden">
-      <div class="divider text-light mx-n2">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60">
-          <path fill="currentColor" d="M0,0V60H1440V0A5771,5771,0,0,1,0,0Z" />
-        </svg>
       </div>
     </div>
+  </section>
 </template>
 
 <script>

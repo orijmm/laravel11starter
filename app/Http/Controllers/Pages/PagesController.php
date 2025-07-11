@@ -128,19 +128,35 @@ class PagesController extends Controller
      */
     public function displayPageItems(?String $id = null)
     {
-        if($id){
-            $page = Page::where('id', $id)->with('sections.rows.columns.components.componenttype.services')->first();
-        }else{
-            $page = Page::where('home', true)->with('sections.rows.columns.components.componenttype.services')->first();
-        }
+        $pageQuery = Page::with([
+            // Carga solo las secciones activas
+            'sections' => function ($q) {
+                $q->where('active', 1)
+                    ->with([
+                        'rows.columns.components.componenttype.services',
+                        'rows.columns.components.componenttype.services'
+                    ]);
+            }
+        ]);
+
+        $page = $id
+            ? $pageQuery->where('id', $id)->first()
+            : $pageQuery->where('home', true)->first();
+
         $testimonials = Testimonial::get();
         $projects = Project::get();
-        $extradata = [];
-        $extradata['testimonials'] = $testimonials ?? null;
-        $extradata['projects'] = $projects ?? null;
 
-        return $this->responseDataSuccess(['page' => $page, 'extradata' => $extradata], trans('frontend.global.phrases.record_show'));
+        $extradata = [
+            'testimonials' => $testimonials ?? null,
+            'projects' => $projects ?? null,
+        ];
+
+        return $this->responseDataSuccess(
+            ['page' => $page, 'extradata' => $extradata],
+            trans('frontend.global.phrases.record_show')
+        );
     }
+
 
     ############ SECTIONS ##############
     public function listSection(Request $request)
@@ -254,7 +270,7 @@ class PagesController extends Controller
                         }
                     }
                 }
-            }else{
+            } else {
                 //Si se borran todas las filas que limpie
                 $deleteAllRow = Row::where('section_id', $request->sectionid)->pluck('id')->toArray();
                 Row::destroy($deleteAllRow);
@@ -265,7 +281,7 @@ class PagesController extends Controller
             //Borrar medios si no tienen componentes asociados
             $orphanedMedia = Media::doesntHaveMorph('model', Component::class)->get();
             $orphanedMedia->each(function ($media) {
-                $media->delete(); 
+                $media->delete();
             });
 
             return $this->responseUpdateSuccess(['record' => $updateRows]);
@@ -287,7 +303,7 @@ class PagesController extends Controller
             'order' => 'nullable',
             'width' => 'nullable'
         ]);
-        
+
         $edititem = $column->update($data);
 
         if ($edititem) {
@@ -307,12 +323,12 @@ class PagesController extends Controller
 
         $data['component_type_id'] = $data['component_type_id']['id'];
 
-        if($request->number_content){
+        if ($request->number_content) {
             for ($i = 0; $i < $request->number_content['id']; $i++) {
                 $contents[] = ['type' => 'text', 'text' => 'ipsum quia dolor sit amet', 'img' => ''];
             }
         }
-        
+
         $data['contents'] = $contents;
         $data['column_id'] = $column->id;
         $component = Component::create($data);

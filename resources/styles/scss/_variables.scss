@@ -114,7 +114,7 @@ $link-colors: map-remove($theme-colors, "dark") !default;
 $main-color: $primary !default;
 $component-active-color: $white !default;
 $component-active-bg: $main-color !default;
-$main-dark: $navy !default;
+$main-dark: $primary !default;
 $focus-border: tint-color($component-active-bg, 50%) !default;
 $color-contrast-dark: $main-dark !default;
 $color-contrast-light: $white !default;

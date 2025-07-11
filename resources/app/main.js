@@ -29,12 +29,10 @@ import simpleParagraph from "./views/pages/public/components/general/simpleParag
 //Custom Components
 import HeadersHome from "./views/pages/public/components/customs/Header";
 import Hero from "./views/pages/public/components/customs/Hero";
-import Features from "./views/pages/public/components/customs/Features";
-import Features1 from "./views/pages/public/components/customs/Features1";
+import HowWeDo from "./views/pages/public/components/customs/HowWeDo";
 import Facts from "./views/pages/public/components/customs/Facts";
 import Testimonials from "./views/pages/public/components/customs/Testimonials";
 import Projects from "./views/pages/public/components/customs/Projects";
-import Features2 from "./views/pages/public/components/customs/Features2";
 import Footer from "./views/pages/public/components/customs/Footer";
 import Footer2 from "./views/pages/public/components/customs/Footer2";
 import Lightbox from "./views/pages/public/template/components/base/Lightbox";
@@ -46,7 +44,7 @@ import CircleProgressbar from "./views/pages/public/template/components/base/Cir
 import Scrolltop from "./views/pages/public/template/components/base/Scrolltop";
 import LineProgressbar from "./views/pages/public/template/components/base/LineProgressbar";
 import ModalVideo from "./views/pages/public/template/components/base/ModalVideo";
-import BlockBackgorund from "./views/pages/public/components/customs/BlockBackgorund";
+import WhatWeDo from "./views/pages/public/components/customs/WhatWeDo";
 import Services from "./views/pages/public/components/customs/Services";
 import LinkTreeService from "./views/pages/public/components/customs/LinkTreeService";
 import HostingService from "./views/pages/public/components/customs/HostingService";
@@ -83,12 +81,10 @@ const components = {
     'Content': Content,
     'HeadersHome': HeadersHome,
     'Hero': Hero,
-    'Features': Features,
-    'Features1': Features1,
+    'HowWeDo': HowWeDo,
     'Facts': Facts,
     'Testimonials': Testimonials,
     'Projects': Projects,
-    'Features2': Features2,
     'Footer': Footer,
     'Footer2': Footer2,
     'Lightbox': Lightbox,
@@ -101,7 +97,7 @@ const components = {
     'LineProgressbar': LineProgressbar,
     'ModalVideo': ModalVideo,
     'VideoPlayer': VideoPlayer,
-    'BlockBackgorund': BlockBackgorund,
+    'WhatWeDo': WhatWeDo,
     'Services': Services,
     'LinkTreeService': LinkTreeService,
     'HostingService': HostingService,

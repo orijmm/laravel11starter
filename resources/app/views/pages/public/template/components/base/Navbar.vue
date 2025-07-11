@@ -3,11 +3,11 @@
     <ul v-if="menus.data" class="navbar-nav ms-lg-auto">
       <div v-if="route.params.id" class="d-flex align-items-center">
         <li class="nav-item">
-        <router-link to="/" class="text-light">
+          <router-link to="/" class="text-light">
             {{ trans('global.menu.home') }}
           </router-link>
-      </li>
-        </div>
+        </li>
+      </div>
       <div v-for="menu in menus.data">
         <!-- |||||||| Si es un menu sin padre y sin hijos |||||| -->
         <li class="nav-item" v-if="!menu.parent_id && menu.children.length == 0">
@@ -16,8 +16,8 @@
             }`" :to="generateUrl(menu)">{{ menu.label }}
           </router-link>
           <!-- Si no tiene página pero si url/seccion asignada -->
-          <a v-else-if="!menu.page_id && menu.url && isDesktop && !route.params.id" v-smooth-scroll data-aos="flip-down" data-aos-delay="150" class="nav-link"
-            :href="menu.url || '#'">
+          <a v-else-if="!menu.page_id && menu.url && isDesktop && !route.params.id" v-smooth-scroll data-aos="flip-down"
+            data-aos-delay="150" class="nav-link" :href="menu.url || '#'">
             {{ menu.label }}
           </a>
           <!-- Si no tiene página ni url/seccion asignada solo imprima sin link -->

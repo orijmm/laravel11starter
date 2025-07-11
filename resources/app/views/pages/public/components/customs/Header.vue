@@ -1,15 +1,12 @@
 <template>
-  <header class="wrapper">
-    <nav aria-label="menu-top" :class="`navbar navbar-expand-lg center-nav transparent position-absolute px-md-10 px-xxl-0 ${addClass2 ? 'fixed navbar-clone' : ''
-      } ${addClass
-        ? 'navbar-stick navbar-dark navbar-bg-dark'
-        : 'navbar-unstick navbar-dark'
-      } `">
+  <header class="wrapper bg-light">
+    <nav :class="`navbar navbar-expand-lg classic transparent position-absolute navbar-light ${addClass2 ? 'fixed navbar-clone' : ''
+      } ${addClass ? 'navbar-clone navbar-stick' : ' navbar-unstick'} `">
       <div class="container flex-lg-row flex-nowrap align-items-center">
         <div class="navbar-brand w-100">
           <router-link to="/">
-            <img v-if="menus.logo" width="250px" :class="addClass ? 'logo-dark m-1':'logo-light m-1'" :src="addClass ? menus.logo : (menus.logo2 ?? menus.logo)"
-              alt="logos-light" />
+            <img v-if="menus.logo" width="250px" :class="addClass ? 'logo-dark m-1' : 'logo-light m-1'"
+              :src="addClass ? menus.logo : (menus.logo2 ?? menus.logo)" alt="logos-light" />
             <div v-else>{{ menus.webdata.name_company ?? '' }}</div>
           </router-link>
         </div>
@@ -20,27 +17,23 @@
               @click="menuClose"></button>
           </div>
           <div class="offcanvas-body ms-lg-auto d-flex flex-column h-100">
-            <ul class="navbar-nav">
+            <ul v-if="menus.data" class="navbar-nav">
               <Navbar :menus="menus" />
             </ul>
             <div class="offcanvas-footer d-lg-none">
               <div>
-                <a href="mailto:first.last@email.com" class="link-inverse">{{ menus.webdata.email }}</a>
+                <a :href="`mailto:${menus.webdata.email}`" class="link-inverse">{{ menus.webdata.email }}</a>
                 <br />
-                {{ menus.webdata.phone }} <br />
+                {{ menus.webdata.phone }}<br />
                 <nav class="nav social social-white mt-4">
-                  <Socials :webdata="menus.webdata"/>
+                  <Socials :webdata="menus.webdata" />
                 </nav>
               </div>
             </div>
           </div>
         </div>
-        <div class="navbar-other w-100 d-flex ms-auto">
+        <div class="navbar-other ms-lg-4">
           <ul class="navbar-nav flex-row align-items-center ms-auto">
-            <!-- <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-search"><i
-                  class="uil uil-search"></i></a>
-            </li> -->
             <li class="nav-item d-lg-none">
               <button @click="menuOpen" class="hamburger offcanvas-nav-btn">
                 <span></span>
@@ -51,14 +44,14 @@
         <div id="offcanvasBackdrop" @click="menuClose" class="offcanvas-backdrop fade" style="display: none"></div>
       </div>
     </nav>
-    <!-- <div class="offcanvas offcanvas-top bg-light" id="offcanvas-search" data-bs-scroll="true">
+    <div class="offcanvas offcanvas-top bg-light" id="offcanvas-search" data-bs-scroll="true">
       <div class="container d-flex flex-row py-6">
         <form @submit.prevent="() => { }" class="search-form w-100">
           <input type="text" class="form-control" placeholder="Type keyword and hit enter" />
         </form>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
-    </div> -->
+    </div>
   </header>
 </template>
 
