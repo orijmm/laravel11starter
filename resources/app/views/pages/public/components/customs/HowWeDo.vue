@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <div class="col-lg-6 position-lg-absolute top-0 start-0 image-wrapper bg-image bg-cover h-100"
-        style="background-image: url(/assets/img/photos/bg38.jpg)">
+        :style="{ backgroundImage: `url(${img[0] ?? '/assets/img/photos/bg38.jpg'})` }">
         <div class="divider text-gray divider-v-end d-none d-lg-block">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 1200">
             <g />
