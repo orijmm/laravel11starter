@@ -1,7 +1,7 @@
 <template>
   <section
     class="wrapper image-wrapper bg-cover bg-image bg-xs-none bg-gray"
-    style="background-image: url(/assets/img/photos/bg37.jpg)"
+    :style="{ backgroundImage: `url(${img[0] ?? '/assets/img/photos/bg37.jpg'})` }"
   >
     <div class="container pt-17 pb-15 py-sm-17 py-xxl-20">
       <div class="row">
@@ -29,7 +29,7 @@
               data-aos-once="true"
               data-aos-delay="300"
               class="btn btn-lg btn-primary rounded"
-              to="/blog-post"
+              to="/"
               >{{ content[3]?.text ?? trans('global.phrases.hasto_add_content') }}</router-link
             >
           </div>

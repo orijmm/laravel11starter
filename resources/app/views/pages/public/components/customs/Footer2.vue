@@ -11,7 +11,7 @@
               <br class="d-none d-lg-block" />All rights reserved.
             </p>
             <nav class="nav social">
-              <FootersComponentsSocials />
+              <Socials />
             </nav>
           </div>
         </div>
@@ -21,9 +21,10 @@
             <address v-if="menus.webdata?.address" class="pe-xl-15 pe-xxl-17">
               {{ menus.webdata.address ?? '' }}
             </address>
-            <a v-if="menus.webdata?.email" :href="`mailto:${menus.webdata.email}`" class="link-body">{{ menus.webdata.email ?? '' }}</a><br />
+            <a v-if="menus.webdata?.email" :href="`mailto:${menus.webdata.email}`" class="link-body">{{
+              menus.webdata.email ?? '' }}</a><br />
             {{ menus.webdata.phone ?? '' }}<br>
-            <Socials :webdata="menus.webdata"/>
+            <Socials :webdata="menus.webdata" />
           </div>
         </div>
         <div class="col-md-12 col-lg-4">
@@ -61,10 +62,13 @@
     </div>
   </footer>
   <Scrolltop />
+  <WhatsappStick :phone="menus.webdata.phone" />
+
 </template>
 
 <script>
 import { trans } from "@/helpers/i18n";
+import WhatsappStick from "../../template/components/base/WhatsappStick.vue";
 
 export default {
   props: {

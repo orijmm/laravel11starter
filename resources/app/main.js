@@ -51,6 +51,7 @@ import HostingService from "./views/pages/public/components/customs/HostingServi
 import WebDevelopService from "./views/pages/public/components/customs/WebDevelopService";
 import ContactForm from "./views/pages/public/components/customs/ContactForm";
 import VideoPlayer from './views/pages/public/template/components/base/VideoPlayer';
+import WhatsappStick from './views/pages/public/template/components/base/WhatsappStick';
 
 const app = createApp(App);
 
@@ -102,7 +103,8 @@ const components = {
     'LinkTreeService': LinkTreeService,
     'HostingService': HostingService,
     'WebDevelopService': WebDevelopService,
-    'ContactForm': ContactForm
+    'ContactForm': ContactForm,
+    'WhatsappStick': WhatsappStick
 };
 Object.entries(components).forEach(([name, component]) => {
     app.component(name, component);
