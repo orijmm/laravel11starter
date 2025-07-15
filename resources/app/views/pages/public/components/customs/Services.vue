@@ -1,24 +1,27 @@
 <template>
-    <div class="container py-15 py-md-17">
-        <div class="row text-center">
-            <div class="col-md-10 col-lg-9 col-xxl-8 mx-auto">
-                <h2 class="fs-15 text-uppercase text-muted mb-3">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</h2>
-                <h3 class="display-3 ls-sm mb-9 px-xl-11">
-                    {{ content[1]?.text ?? trans('global.phrases.hasto_add_content') }}
-                </h3>
-            </div>
+    <div class="row gx-3 gy-10 gy-lg-0 align-items-center">
+        <div class="col-lg-6 order-lg-2">
+            <figure>
+                <img class="w-auto" src="/assets/img/illustrations/3d5.png" alt="servocpohot" />
+            </figure>
         </div>
-        <div class="row gx-lg-8 gx-xl-12 gy-8">
-            <div v-for="(item, i) in services" :key="item.id" class="col-md-6 col-lg-4">
-                <div class="d-flex flex-row">
-                    <div>
-                        <img v-if="item.img[0] ?? false" :src="item.img[0]" class="w-[100%] text-blue me-5 mt-1" alt="servicesimg" />
-                        <NoImage v-else />
+        <div class="col-lg-6 me-auto">
+            <h3 class="display-4 mb-5 pe-xxl-5">
+                {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}
+            </h3>
+            <p class="mb-6">
+                {{ content[1]?.text ?? trans('global.phrases.hasto_add_content') }}
+            </p>
+            <div class="row align-items-center counter-wrapper gy-6">
+                <div v-for="(service, i) in services" :key="service.id" class="col-md-4 text-center">
+                    <div class="d-flex justify-content-center">
+                        <div class="icon-svg icon-svg-xs mt-1 mask-center-contain" :class="service.icon_color_class"
+                            :style="{
+                                WebkitMaskImage: `url(${service.icon})`,
+                                maskImage: `url(${service.icon})`
+                            }"></div>
                     </div>
-                    <div>
-                        <h4 class="fs-20 ls-sm">{{ item.title }}</h4>
-                        <p class="mb-0">{{ item.description }}</p>
-                    </div>
+                    <h6 class="fs-17 mb-1 text-secondary">{{ service.description }}</h6>
                 </div>
             </div>
         </div>
@@ -49,7 +52,7 @@ export default {
     },
     setup(props) {
         const router = useRouter();
-        
+
         const generateUrl = (item) => {
             if (item.page_id) {
                 return router.resolve({ name: "webpages", params: { id: item.page_id } }).href;

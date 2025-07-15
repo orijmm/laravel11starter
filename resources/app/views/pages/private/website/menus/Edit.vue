@@ -41,7 +41,7 @@
                 @page-changed="onTablePageChange" @action="onTableAction" @sort="onTableSort">
                 <template v-slot:content-page="props">
                     <div>
-                        {{ props.item.page?.name ?? '-' }}
+                        {{ props.item.page?.title ?? '-' }}
                     </div>
                 </template>
                 <template v-slot:content-parent="props">

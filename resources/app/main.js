@@ -52,6 +52,7 @@ import WebDevelopService from "./views/pages/public/components/customs/WebDevelo
 import ContactForm from "./views/pages/public/components/customs/ContactForm";
 import VideoPlayer from './views/pages/public/template/components/base/VideoPlayer';
 import WhatsappStick from './views/pages/public/template/components/base/WhatsappStick';
+import AbousUs from './views/pages/public/components/customs/AbousUs.vue';
 
 const app = createApp(App);
 
@@ -104,7 +105,8 @@ const components = {
     'HostingService': HostingService,
     'WebDevelopService': WebDevelopService,
     'ContactForm': ContactForm,
-    'WhatsappStick': WhatsappStick
+    'WhatsappStick': WhatsappStick,
+    'AbousUs': AbousUs
 };
 Object.entries(components).forEach(([name, component]) => {
     app.component(name, component);

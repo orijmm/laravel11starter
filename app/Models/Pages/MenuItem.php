@@ -32,7 +32,7 @@ class MenuItem extends Model
 
     public function page(): BelongsTo
     {
-        return $this->belongsTo(ComponentType::class);
+        return $this->belongsTo(Page::class, 'page_id');
     }
 
 }

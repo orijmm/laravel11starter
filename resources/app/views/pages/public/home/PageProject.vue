@@ -1,5 +1,5 @@
 <template>
-    <div class="violet-theme urbanist-font">
+    <div class="sky-theme urbanist-font">
         <div class="content-wrapper">
             <HeadersHome :menus="menus" />
             <!-- <Content :page="page" :extradata="extradata" /> -->

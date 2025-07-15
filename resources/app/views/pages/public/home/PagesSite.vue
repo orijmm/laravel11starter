@@ -1,10 +1,8 @@
 <template>
-  <div class="violet-theme urbanist-font">
+  <div class="sky-theme urbanist-font">
     <div class="content-wrapper">
       <HeadersHome :menus="menus" />
-
-      <Content :page="page" :extradata="extradata" />
-
+      <Content class="top-content" :page="page" :extradata="extradata" />
     </div>
     <Footer2 :menus="menus" />
   </div>

@@ -3,7 +3,7 @@
     <ul v-if="menus.data" class="navbar-nav ms-lg-auto">
       <div v-if="route.params.id" class="d-flex align-items-center">
         <li class="nav-item">
-          <router-link to="/" class="text-light">
+          <router-link to="/" class="text-primary">
             {{ trans('global.menu.home') }}
           </router-link>
         </li>
