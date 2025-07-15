@@ -3,7 +3,7 @@
     <div class="content-wrapper">
       <HeadersHome :menus="menus" />
       
-      <Content :page="page" :extradata="extradata"/>
+      <Content :page="page" :extradata="extradata" class="top-content"/>
 
     </div>
     <Footer2 :menus="menus" />
@@ -11,10 +11,9 @@
 </template>
 
 <script>
-
 import { useRoute } from 'vue-router';
 import { useAlertStore } from "@/stores";
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, watch } from 'vue'; // <-- Importa watch
 import { getResponseError, prepareQuery } from "@/helpers/api";
 import ModelService from '@/services/ModelService';
 import SettingService from '@/services/SettingService';
@@ -23,12 +22,12 @@ import { injectSvg } from "../template/utlis/injextSvg";
 export default {
   name: 'DefaultLayout',
   setup() {
-    const service = new ModelService;
+    const service = new ModelService();
     const settings = new SettingService();
     const alertStore = useAlertStore();
     const route = useRoute();
     injectSvg();
-    // Variables reactivas
+
     const menus = reactive({
       total: 0,
       data: [],
@@ -36,18 +35,18 @@ export default {
       logo2: null,
       webdata: []
     });
+
     const page = reactive({
       sections: [],
       extradata: []
     });
 
-    //metodos
     function fetchPage() {
-      let page_id = typeof route.params.id != 'undefined' ? route.params.id : '';
-      //Colocar menu-top como menu principal
-      let query = prepareQuery({ search: 'menu-top' });
-      service
-        .index(query, 'menus/searchname')
+      const page_id = route.params.id || '';
+      
+      // Menú
+      const query = prepareQuery({ search: 'menu-top' });
+      service.index(query, 'menus/searchname')
         .then((response) => {
           menus.data = response.data.model.items;
           menus.total = response.data.model.length;
@@ -56,9 +55,8 @@ export default {
           alertStore.error(getResponseError(error));
         });
 
-      //page
-      service
-        .find(page_id, 'getpage')
+      // Página
+      service.find(page_id, 'getpage')
         .then((response) => {
           page.sections = response.data.page.sections ?? [];
           page.extradata = response.data.extradata ?? [];
@@ -68,7 +66,7 @@ export default {
           console.log(error);
         });
 
-      //Setting
+      // Configuraciones
       settings.find(1)
         .then((response) => {
           menus.logo = response.data.model.logo_url;
@@ -81,10 +79,15 @@ export default {
       fetchPage();
     });
 
+    // Observa el cambio en el parámetro de la ruta
+    watch(() => route.params.id, () => {
+      fetchPage();
+    });
+
     return {
       menus,
       page
-    }
+    };
   }
 }
 </script>

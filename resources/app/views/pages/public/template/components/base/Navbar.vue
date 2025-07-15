@@ -1,13 +1,6 @@
 <template>
   <div class="w-100 order-1 order-lg-0 d-lg-flex offcanvas-body">
     <ul v-if="menus.data" class="navbar-nav ms-lg-auto">
-      <div v-if="route.params.id" class="d-flex align-items-center">
-        <li class="nav-item">
-          <router-link to="/" class="text-primary">
-            {{ trans('global.menu.home') }}
-          </router-link>
-        </li>
-      </div>
       <div v-for="menu in menus.data">
         <!-- |||||||| Si es un menu sin padre y sin hijos |||||| -->
         <li class="nav-item" v-if="!menu.parent_id && menu.children.length == 0">
@@ -21,7 +14,7 @@
             {{ menu.label }}
           </a>
           <!-- Si no tiene página ni url/seccion asignada solo imprima sin link -->
-          <div v-else-if="!route.params.id" class="nav-link">{{ menu.label }}</div>
+          <div v-else class="nav-link">{{ menu.label }}</div>
         </li>
         <!-- |||||||| Si es un menu sin padre y con  hijos |||||| -->
         <li v-if="!menu.parent_id && menu.children.length > 0" class="nav-item dropdown">

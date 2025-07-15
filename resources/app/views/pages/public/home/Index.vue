@@ -9,6 +9,7 @@
     <Footer2 :menus="menus" />
   </div>
 </template>
+
 <script>
 
 import { useRoute } from 'vue-router';
