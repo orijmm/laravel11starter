@@ -20,16 +20,12 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <h2 class="fs-15 text-uppercase text-muted mb-3">Who Are We?</h2>
+            <h2 class="fs-15 text-uppercase text-muted mb-3">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</h2>
             <h3 class="display-3 ls-sm mb-5">
-                Company that believes in the power of creative strategy.
+                {{ content[1]?.text ?? trans('global.phrases.hasto_add_content') }}
             </h3>
             <p class="mb-6">
-                Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
-                ridiculus mus. Cras justo odio, dapibus ac facilisis in, egestas eget
-                quam. Praesent commodo cursus magna, vel scelerisque nisl consectetur
-                et. Cum sociis natoque penatibus et magnis dis parturient montes,
-                nascetur ridiculus mus. Aenean lacinia bibendum nulla sed.
+                {{ content[2]?.text ?? trans('global.phrases.hasto_add_content') }}
             </p>
             <div class="row gy-3 gx-xl-8">
                 <div class="col-xl-6">

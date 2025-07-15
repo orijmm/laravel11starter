@@ -53,6 +53,9 @@ import ContactForm from "./views/pages/public/components/customs/ContactForm";
 import VideoPlayer from './views/pages/public/template/components/base/VideoPlayer';
 import WhatsappStick from './views/pages/public/template/components/base/WhatsappStick';
 import AbousUs from './views/pages/public/components/customs/AbousUs.vue';
+import ServiceTree from './views/pages/public/components/customs/ServiceTree.vue';
+import Academic from './views/pages/public/components/customs/Academic.vue';
+
 
 const app = createApp(App);
 
@@ -106,7 +109,9 @@ const components = {
     'WebDevelopService': WebDevelopService,
     'ContactForm': ContactForm,
     'WhatsappStick': WhatsappStick,
-    'AbousUs': AbousUs
+    'AbousUs': AbousUs,
+    'ServiceTree': ServiceTree,
+    'Academic': Academic
 };
 Object.entries(components).forEach(([name, component]) => {
     app.component(name, component);
