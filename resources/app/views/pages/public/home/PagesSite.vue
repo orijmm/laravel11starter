@@ -1,12 +1,15 @@
 <template>
-  <div class="sky-theme urbanist-font">
+  <div class="sky-theme">
     <div class="content-wrapper">
       <HeadersHome :menus="menus" />
-      <Content class="top-content" :page="page" :extradata="extradata" />
+      
+      <Content :page="page" :extradata="extradata"/>
+
     </div>
     <Footer2 :menus="menus" />
   </div>
 </template>
+
 <script>
 
 import { useRoute } from 'vue-router';
