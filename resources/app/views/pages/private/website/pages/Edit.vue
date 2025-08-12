@@ -43,7 +43,8 @@
 </template>
 
 <script>
-import { defineComponent, onBeforeMount, reactive, ref } from "vue";
+import { defineComponent, onBeforeMount, reactive, watch } from "vue";
+import _ from 'lodash';
 import { trans } from "@/helpers/i18n";
 import { fillObject, clearObject, reduceProperties } from "@/helpers/data"
 import { useRoute } from "vue-router";
@@ -225,6 +226,15 @@ export default defineComponent({
                     break;
             }
         }
+
+        watch(
+            () => form.title,
+            (title) => {
+                if (title) {
+                    form.slug = _.kebabCase(title);
+                }
+            }
+        )
 
         return {
             trans,

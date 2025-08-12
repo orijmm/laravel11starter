@@ -15,7 +15,6 @@
                 <div class="text-gray-500 text-sm mt-4">{{ trans('users.labels.img') }}</div>
                 <FormImg @error="errorImg = true" @success="setImgFile" />
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-
                     <div class="bg-gray-50 rounded p-1" v-for="(image, i) in form.img" :key="`img-${i}`">
                         <button class="file-input__clear text-gray-300" type="button" @click="onClearImg(i, 'img')">
                             <i class="fa fa-times"></i>
@@ -32,14 +31,32 @@
                             :alt="trans('users.labels.img')" />
                     </div>
                 </div>
-                <TextInput class="mb-4" type="text" name="icon" v-model="form.icon" :label="trans('users.labels.icon')"
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <!-- Columna 1: Dropdown -->
+                    <TextInput class="mb-4" type="text" name="icon" v-model="form.icon" :label="trans('users.labels.icon')"
                     :labelsmall="trans('global.phrases.add_path_icon')" />
-                <Dropdown class="mb-4" :options="textcolor" name="icon_color_class"
-                    :placeholder="trans('users.labels.select')" v-model="form.icon_color_class"
-                    :label="trans('users.labels.icon_color_class')" />
+                    <!-- Columna 2: Color preview alineado abajo -->
+                    <div class="flex flex-col justify-end mb-4">
+                        <a target="_blank" href="/panel/pages/list/iconsvg"><Button type="button" :label="trans('global.pages.icon_gallery_svg')" /></a>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <!-- Columna 1: Dropdown -->
+                    <Dropdown class="mb-4" :options="textcolor" name="icon_color_class"
+                        @update:model-value="e => getColorExample(e)" :placeholder="trans('users.labels.select')"
+                        v-model="form.icon_color_class" :label="trans('users.labels.icon_color_class')" />
+                    <!-- Columna 2: Color preview alineado abajo -->
+                    <div class="flex flex-col justify-end mb-4">
+                        <div v-if="colorHex" class="p-2 border rounded-md text-gray-200"
+                            :style="{ background: colorHex, fontSize: '0.9rem' }">
+                            {{ colorHex }}
+                        </div>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-2 gap-2 bg-teal-50 rounded p-2">
                     <TextInput class="mb-4" type="text" name="link" v-model="form.link"
-                        :label="trans('users.labels.link')" @update:model-value="e => setUrl('link', e)"/>
+                        :label="trans('users.labels.link')" @update:model-value="e => setUrl('link', e)" />
                     <Dropdown @update:model-value="e => setUrl('page', e)" class="mb-4" :server="'pages/page'"
                         :server-per-page="15" name="type" v-model="form.page_id" :label="trans('global.pages.page')"
                         :serverSearchMinCharacters="0" />
@@ -56,6 +73,7 @@
 import { defineComponent, onBeforeMount, reactive, ref } from "vue";
 import { textcolor, linkcolor } from "@/views/pages/private/maintainers/frontUtils/colors";
 import { trans } from "@/helpers/i18n";
+import { setColorSample } from "@/helpers/SetColor"
 import { fillObject, reduceProperties } from "@/helpers/data"
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
@@ -83,7 +101,8 @@ export default defineComponent({
         Table,
         Dropdown,
         quillEditor,
-        FormImg
+        FormImg,
+        setColorSample
     },
     setup() {
         const { user } = useAuthStore();
@@ -101,6 +120,8 @@ export default defineComponent({
             inputImg: [],
             img: [],
         });
+
+        let colorHex = ref(null);
 
         const page = reactive({
             id: 'edit_service',
@@ -165,6 +186,7 @@ export default defineComponent({
                 form.icon_color_class = { id: form.icon_color_class, name: form.icon_color_class }
                 form.link_color_class = { id: form.link_color_class, name: form.link_color_class }
                 page.loading = false;
+                colorHex.value = setColorSample(form.icon_color_class);
             });
         }
 
@@ -201,12 +223,16 @@ export default defineComponent({
             form[type].splice(i, 1);
         }
 
-        function setUrl(type, even = null){
-            if(type == 'page'){
-                form.link =  undefined;
-            }else{
-                form.page_id =  undefined;
+        function setUrl(type, even = null) {
+            if (type == 'page') {
+                form.link = undefined;
+            } else {
+                form.page_id = undefined;
             }
+        }
+
+        function getColorExample(event) {
+            colorHex.value = setColorSample(event);
         }
 
         return {
@@ -218,6 +244,8 @@ export default defineComponent({
             page,
             linkcolor,
             textcolor,
+            getColorExample,
+            colorHex,
             state,
             errorImg,
             getImgVisual,

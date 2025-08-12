@@ -1,5 +1,6 @@
 <template>
-    <p class="paragraph">{{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }}</p>
+    <!-- <p class="text-navy p-4" v-html="content[0]?.text"></p> -->
+    <p class="text-navy p-4" v-html="content[0]?.text.replace(/\n/g, '<br>')"></p>
 </template>
 <script>
 

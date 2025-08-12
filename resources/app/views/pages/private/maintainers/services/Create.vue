@@ -24,11 +24,28 @@
                             :alt="trans('users.labels.img')" />
                     </div>
                 </div>
-                <TextInput class="mb-4" type="text" name="icon" v-model="form.icon" :label="trans('users.labels.icon')"
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <!-- Columna 1: Dropdown -->
+                    <TextInput class="mb-4" type="text" name="icon" v-model="form.icon" :label="trans('users.labels.icon')"
                     :labelsmall="trans('global.phrases.add_path_icon')" />
-                <Dropdown class="mb-4" :options="textcolor" name="icon_color_class"
-                    :placeholder="trans('users.labels.select')" v-model="form.icon_color_class"
-                    :label="trans('users.labels.icon_color_class')" />
+                    <!-- Columna 2: Color preview alineado abajo -->
+                    <div class="flex flex-col justify-end mb-4">
+                        <a target="_blank" href="/panel/pages/list/iconsvg"><Button type="button" :label="trans('global.pages.icon_gallery_svg')" /></a>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <!-- Columna 1: Dropdown -->
+                    <Dropdown class="mb-4" :options="textcolor" name="icon_color_class"
+                        @update:model-value="e => getColorExample(e)" :placeholder="trans('users.labels.select')"
+                        v-model="form.icon_color_class" :label="trans('users.labels.icon_color_class')" />
+                    <!-- Columna 2: Color preview alineado abajo -->
+                    <div class="flex flex-col justify-end mb-4">
+                        <div v-if="colorHex" class="p-2 border rounded-md text-gray-200"
+                            :style="{ background: colorHex, fontSize: '0.9rem' }">
+                            {{ colorHex }}
+                        </div>
+                    </div>
+                </div>
                 <div class="grid grid-cols-2 gap-2 bg-teal-50 rounded p-2">
                     <TextInput class="mb-4" type="text" name="link" v-model="form.link"
                         :label="trans('users.labels.link')" @update:model-value="e => setUrl('link', e)" />
@@ -48,6 +65,7 @@
 import { defineComponent, reactive, ref } from "vue";
 import { trans } from "@/helpers/i18n";
 import { useAuthStore } from "@/stores/auth";
+import { setColorSample } from "@/helpers/SetColor"
 import Button from "@/views/components/input/Button";
 import TextInput from "@/views/components/input/TextInput";
 import Dropdown from "@/views/components/input/Dropdown";
@@ -64,7 +82,7 @@ import FormImg from "@/views/pages/private/profile/partials/FormImg.vue";
 
 export default defineComponent({
     name: 'PageServiceCreate',
-    components: { Form, Panel, Alert, TextInput, Dropdown, Button, Page, quillEditor, FormImg },
+    components: { Form, Panel, Alert, TextInput, Dropdown, Button, Page, quillEditor, FormImg, setColorSample },
     setup() {
         const { user } = useAuthStore();
         const form = reactive({
@@ -79,6 +97,8 @@ export default defineComponent({
             content: undefined,
             inputImg: [],
         });
+
+        let colorHex = ref(null);
 
         const page = reactive({
             id: 'create_services',
@@ -175,6 +195,10 @@ export default defineComponent({
             }
         }
 
+        function getColorExample(event) {
+            colorHex.value = setColorSample(event);
+        }
+
         return {
             trans,
             user,
@@ -184,6 +208,8 @@ export default defineComponent({
             onAction,
             textcolor,
             linkcolor,
+            getColorExample,
+            colorHex,
             state,
             errorImg,
             onClearImg,

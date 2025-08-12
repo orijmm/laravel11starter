@@ -24,11 +24,11 @@ import Content from "./views/pages/public/home/Content";
 //Componentes
 //Defaults
 import TitleOne from "./views/pages/public/components/general/TitleOne";
-import simpleParagraph from "./views/pages/public/components/general/simpleParagraph";
 
 //Custom Components
 import HeadersHome from "./views/pages/public/components/customs/Header";
 import Hero from "./views/pages/public/components/customs/Hero";
+import NavbarItem from './views/pages/public/template/components/base/NavbarItem';
 import HowWeDo from "./views/pages/public/components/customs/HowWeDo";
 import Facts from "./views/pages/public/components/customs/Facts";
 import Testimonials from "./views/pages/public/components/customs/Testimonials";
@@ -52,9 +52,15 @@ import WebDevelopService from "./views/pages/public/components/customs/WebDevelo
 import ContactForm from "./views/pages/public/components/customs/ContactForm";
 import VideoPlayer from './views/pages/public/template/components/base/VideoPlayer';
 import WhatsappStick from './views/pages/public/template/components/base/WhatsappStick';
-import AbousUs from './views/pages/public/components/customs/AbousUs.vue';
-import ServiceTree from './views/pages/public/components/customs/ServiceTree.vue';
-import Academic from './views/pages/public/components/customs/Academic.vue';
+import AbousUs from './views/pages/public/components/customs/AbousUs';
+import ServiceTree from './views/pages/public/components/customs/ServiceTree';
+import Academic from './views/pages/public/components/customs/Academic';
+import Counter from './views/pages/public/template/components/base/Counter';
+import PageLoader from './views/pages/public/template/components/base/PageLoader';
+import HeaderPage from './views/pages/public/components/customs/HeaderPage';
+import SimpleParagraph from './views/pages/public/components/general/simpleParagraph';
+import Button from './views/pages/public/components/general/Button';
+import Menu from './views/pages/public/template/components/base/Menu';
 
 
 const app = createApp(App);
@@ -71,6 +77,11 @@ app.use(VSmoothScroll, {
     updateHistory: false, // No actualizar el hash en la URL
 });
 
+// app.use(install, {
+//   sitekey: 'xxxxxxxx', 
+//   cnDomains: false,// opcional
+// });
+
 app.use(createPinia());
 app.use(injectSvg());
 
@@ -81,20 +92,25 @@ app.use(mdiPlugin);
 const components = {
     // default
     'TitleOne': TitleOne,
-    'simpleParagraph': simpleParagraph,
+    'SimpleParagraph': SimpleParagraph,
+    'Button': Button,
     // custom
     'Content': Content,
     'HeadersHome': HeadersHome,
     'Hero': Hero,
+    'HeaderPage': HeaderPage,
     'HowWeDo': HowWeDo,
     'Facts': Facts,
     'Testimonials': Testimonials,
     'Projects': Projects,
     'Footer': Footer,
     'Footer2': Footer2,
+    'PageLoader': PageLoader,
     'Lightbox': Lightbox,
     'Carousel': Carousel,
     'Navbar': Navbar,
+    'NavbarItem': NavbarItem,
+    'Menu': Menu,
     'Socials': Socials,
     'Links': Links,
     'CircleProgressbar': CircleProgressbar,
@@ -111,7 +127,8 @@ const components = {
     'WhatsappStick': WhatsappStick,
     'AbousUs': AbousUs,
     'ServiceTree': ServiceTree,
-    'Academic': Academic
+    'Academic': Academic,
+    'Counter': Counter
 };
 Object.entries(components).forEach(([name, component]) => {
     app.component(name, component);

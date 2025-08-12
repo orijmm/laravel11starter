@@ -41,6 +41,8 @@ import { default as PageComponentType } from "@/views/pages/private/website/comp
 import { default as PageComponentTypeCreate } from "@/views/pages/private/website/components/CreateType";
 import { default as PageComponentTypeEdit } from "@/views/pages/private/website/components/EditType";
 
+import { default as GalleryIndex } from "@/views/pages/private/media/icons/GalleryIndex";
+
 /* Matainers */
 import { default as PageService } from "@/views/pages/private/maintainers/services/Index";
 import { default as PageServiceCreate } from "@/views/pages/private/maintainers/services/Create";
@@ -71,7 +73,7 @@ const routes = [
     },
     {
         name: "webpages",
-        path: "/page/:id",
+        path: "/:slug",
         meta: { requiresAuth: false },
         component: PagesSite,
     },
@@ -272,6 +274,12 @@ const routes = [
                         meta: { requiresAuth: true },
                         component: PageComponentTypeEdit,
                     },
+                    {
+                        name: "media.iconsvg",
+                        path: "list/iconsvg",
+                        meta: { requiresAuth: false },
+                        component: GalleryIndex
+                    },
                 ]
             },
             {
@@ -281,7 +289,7 @@ const routes = [
                     {
                         name: "services.list",
                         path: "services",
-                        meta: { requiresAuth: false },
+                        meta: { requiresAuth: true },
                         component: PageService,
                     },
                     {

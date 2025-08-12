@@ -1,31 +1,31 @@
 <template>
     <div class="row gx-3 gy-10 gy-lg-0 py-5 align-items-center">
         <div class="col-12 me-auto text-center">
-            <h2 class="fs-15 text-uppercase text-muted mb-3 text-center">{{ content[0]?.text
-                ??
-                trans('global.phrases.hasto_add_content') }}</h2>
-            <h5 class="display-5 mb-5 text-navy">
-                <span v-if="content[1]?.text" class="text-bold">{{ content[1]?.text ??
+            <h2 class="display-1 fs-56 mb-5 ls-xs pe-xl-5 pe-xxl-0  text-center">
+                <span v-if="content[0]?.text" class="text-white">{{ content[0]?.text ??
                     trans('global.phrases.hasto_add_content') }}</span>
-                <span v-if="content[2]?.text">&nbsp;{{ content[2]?.text ??
+            </h2>
+            <p class="lead fs-23 lh-sm mb-7 pe-lg-5 pe-xl-5 pe-xxl-0 text-center">
+                <span class="text-red" v-if="content[3]?.text">{{ content[3]?.text ??
                     trans('global.phrases.hasto_add_content')
-                }}</span>
-                <span v-if="content[3]?.text" class="text-bold">&nbsp;{{ content[3]?.text ??
+                    }}</span>
+                <span class="text-navy" v-if="content[3]?.text">&nbsp;{{ content[3]?.text ??
                     trans('global.phrases.hasto_add_content')
-                }}</span>
-                <span v-if="content[4]?.text">&nbsp;{{ content[4]?.text ??
-                    trans('global.phrases.hasto_add_content') }}</span>
-            </h5>
+                    }}</span>
+                <span class="text-red" v-if="content[3]?.text">&nbsp;{{ content[3]?.text ??
+                    trans('global.phrases.hasto_add_content')
+                    }}</span>
+                <span class="text-navy" v-if="content[3]?.text">{{ content[3]?.text ??
+                    trans('global.phrases.hasto_add_content')
+                    }}</span>
+            </p>
             <div class="row align-items-center justify-content-center text-center">
                 <div v-for="(service, i) in services" :key="service.id" class="col-md-4">
                     <div class="d-flex justify-content-center">
-                        <div class="icon-svg icon-svg-xxl mt-1 mask-center-contain" :class="service.icon_color_class"
-                            :style="{
-                                WebkitMaskImage: `url(${service.icon})`,
-                                maskImage: `url(${service.icon})`
-                            }"></div>
+                        <img class="img-fluid" width="250px" v-if="service.img[0]" :src="service.img[0]" />
+                        <NoImage v-else />
                     </div>
-                    <div class="fs-22 text-bold my-3 text-navy">{{ service.description }}</div>
+                    <div class="fs-22 text-bold my-3 text-navy">{{ service.title }}</div>
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@ export default {
         }
     },
     setup(props) {
-        
+
         return {
             trans
         }

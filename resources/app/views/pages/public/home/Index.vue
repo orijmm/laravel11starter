@@ -13,7 +13,7 @@
 <script>
 
 import { useRoute } from 'vue-router';
-import { useAlertStore } from "@/stores";
+import { useAlertStore, useGlobalStateStore } from "@/stores";
 import { onMounted, reactive } from 'vue';
 import { getResponseError, prepareQuery } from "@/helpers/api";
 import ModelService from '@/services/ModelService';
@@ -38,12 +38,13 @@ export default {
     });
     const page = reactive({
       sections: [],
-      extradata: []
+      extradata: [],
+      loaded: false 
     });
 
     //metodos
     function fetchPage() {
-      let page_id = typeof route.params.id != 'undefined' ? route.params.id : '';
+      let page_slug = typeof route.params.slug != 'undefined' ? route.params.slug : '';
       //Colocar menu-top como menu principal
       let query = prepareQuery({ search: 'menu-top' });
       service
@@ -58,10 +59,12 @@ export default {
 
       //page
       service
-        .find(page_id, 'getpage')
+        .find(page_slug, 'getpage')
         .then((response) => {
           page.sections = response.data.page.sections ?? [];
           page.extradata = response.data.extradata ?? [];
+          const globalStateStore = useGlobalStateStore();
+          globalStateStore.setUILoading(false);
         })
         .catch((error) => {
           alertStore.error(getResponseError(error));

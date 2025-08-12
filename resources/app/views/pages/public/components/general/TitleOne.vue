@@ -1,5 +1,5 @@
 <template>
-    <h2 class="text-4xl font-semibold display-1 mb-3 py-10 py-lg-13 text-center text-light">
+    <h2 class="display-1 fs-56 p-5">
         {{ content[0]?.text ?? trans('global.phrases.hasto_add_content') }} <span class="text-header-gradient">{{ content[1]?.text ?? '' }}</span> {{ content[2]?.text ?? '' }}
     </h2>
 </template>

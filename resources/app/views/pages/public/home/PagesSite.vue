@@ -2,8 +2,8 @@
   <div class="sky-theme">
     <div class="content-wrapper">
       <HeadersHome :menus="menus" />
-      
-      <Content :page="page" :extradata="extradata" class="top-content"/>
+
+      <Content :page="page" :extradata="extradata" class="top-content" />
 
     </div>
     <Footer2 :menus="menus" />
@@ -12,7 +12,7 @@
 
 <script>
 import { useRoute } from 'vue-router';
-import { useAlertStore } from "@/stores";
+import { useAlertStore, useGlobalStateStore } from "@/stores";
 import { onMounted, reactive, watch } from 'vue'; // <-- Importa watch
 import { getResponseError, prepareQuery } from "@/helpers/api";
 import ModelService from '@/services/ModelService';
@@ -38,12 +38,12 @@ export default {
 
     const page = reactive({
       sections: [],
-      extradata: []
+      extradata: [],
+      loaded: false
     });
 
     function fetchPage() {
-      const page_id = route.params.id || '';
-      
+      const page_slug = route.params.slug || '';
       // Menú
       const query = prepareQuery({ search: 'menu-top' });
       service.index(query, 'menus/searchname')
@@ -56,10 +56,12 @@ export default {
         });
 
       // Página
-      service.find(page_id, 'getpage')
+      service.find(page_slug, 'getpage')
         .then((response) => {
           page.sections = response.data.page.sections ?? [];
           page.extradata = response.data.extradata ?? [];
+          const globalStateStore = useGlobalStateStore();
+          globalStateStore.setUILoading(false);
         })
         .catch((error) => {
           alertStore.error(getResponseError(error));
@@ -80,7 +82,7 @@ export default {
     });
 
     // Observa el cambio en el parámetro de la ruta
-    watch(() => route.params.id, () => {
+    watch(() => route.params.slug, () => {
       fetchPage();
     });
 

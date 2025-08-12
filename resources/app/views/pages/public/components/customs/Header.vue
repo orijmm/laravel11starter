@@ -1,12 +1,11 @@
 <template>
-  <header class="wrapper bg-light">
-    <nav :class="`navbar navbar-expand-lg classic transparent position-absolute navbar-light ${addClass2 ? 'fixed navbar-clone' : ''
-      } ${addClass ? 'navbar-clone navbar-stick' : ' navbar-unstick'} `">
+  <header class="wrapper">
+    <nav :class="`navbar navbar-expand-lg center-logo transparent position-absolute ${addClass2 ? 'fixed navbar-clone' : ''} ${addClass2 ? 'navbar-stick' : 'navbar-unstick  navbar-light' } `">
       <div class="container flex-lg-row flex-nowrap align-items-center">
         <div class="navbar-brand w-100">
           <router-link to="/">
-            <img v-if="menus.logo" width="250px" :class="addClass ? 'logo-dark m-1' : 'logo-light m-1'"
-              :src="addClass ? menus.logo : (menus.logo2 ?? menus.logo)" alt="logos-light" />
+            <img v-if="menus.logo" width="200px" :class="addClass ? 'logo-dark m-1' : 'logo-light m-1'"
+              :src="addClass ? menus.logo : (menus.logo ?? menus.logo)" alt="logos-light" />
             <div v-else>{{ menus.webdata.name_company ?? '' }}</div>
           </router-link>
         </div>

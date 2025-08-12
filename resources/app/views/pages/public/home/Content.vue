@@ -58,6 +58,10 @@ export default {
             type: Object,
             default: {}
         },
+        extradata: {
+            type: Object,
+            default: {}
+        }
     },
     setup() {
         // Variables reactivas
