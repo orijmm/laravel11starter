@@ -67,8 +67,8 @@ class MenuController extends Controller
     {
         $model = [];
         $menu = Menu::where('name', $request->search)->first();
-        if($menu){
-            $menu->load(['items.parent', 'items.page', 'items.menu', 'items.children']);
+        if ($menu) {
+            $menu->load(['items.parent', 'items.page', 'items.menu', 'items.childrenRecursive']);
             $model = new MenuResource($menu);
         }
         return $this->responseDataSuccess(['model' => $model]);
@@ -123,6 +123,8 @@ class MenuController extends Controller
             'order' => 'required|integer',
             'parent_id' => 'nullable',
             'page_id' => 'nullable',
+            'icon' => 'nullable',
+            'icon_color_class' => 'nullable'
         ]);
 
         $data['parent_id'] = $data['parent_id']['id'] ?? null;
@@ -143,12 +145,21 @@ class MenuController extends Controller
     {
         $data = $request->validate([
             'label' => 'required|string',
-            'url' => 'nullable|string|unique:menu_items,url,'.$menuitem->id,
+            'url' => 'nullable|string|unique:menu_items,url,' . $menuitem->id,
             'description' => 'nullable|string',
             'order' => 'required|integer',
             'parent_id' => 'nullable',
             'page_id' => 'nullable',
+            'icon' => 'nullable',
+            'icon_color_class' => 'nullable'
         ]);
+
+        // Forzar valores nulos si no vienen en el request
+        foreach (['url', 'page_id', 'parent_id', 'description', 'icon', 'icon_color_class'] as $field) {
+            if (!$request->has($field)) {
+                $data[$field] = null;
+            }
+        }
 
         $edititem = $menuitem->update($data);
 

@@ -126,7 +126,7 @@ class PagesController extends Controller
     /**
      * Display page.
      */
-    public function displayPageItems(?String $id = null)
+    public function displayPageItems(?String $slug = null)
     {
         $pageQuery = Page::with([
             // Carga solo las secciones activas
@@ -139,8 +139,8 @@ class PagesController extends Controller
             }
         ]);
 
-        $page = $id
-            ? $pageQuery->where('id', $id)->first()
+        $page = $slug
+            ? $pageQuery->where('slug', $slug)->first()
             : $pageQuery->where('home', true)->first();
 
         $testimonials = Testimonial::get();
@@ -149,6 +149,7 @@ class PagesController extends Controller
         $extradata = [
             'testimonials' => $testimonials ?? null,
             'projects' => $projects ?? null,
+            'page_name' => $page->slug
         ];
 
         return $this->responseDataSuccess(

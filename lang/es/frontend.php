@@ -26,6 +26,7 @@ return [
             'id_pound' => '#',
             'first_name' => 'Nombre',
             'last_name' => 'Apellido',
+            'first_name_last_name' => 'Nombre y apellidos',
             'title' => 'Título',
             'middle_name' => 'Segundo nombre',
             'name' => 'Nombre completo',
@@ -34,6 +35,7 @@ return [
             'logo_principal' => 'Logo principal',
             'logo_secondary' => 'Logo secundario',
             'email' => 'Correo electrónico',
+            'email2' => 'Email',
             'role' => 'Rol',
             'roles' => 'Roles',
             'status' => 'Estado',
@@ -81,6 +83,7 @@ return [
             'homepage' => 'Página de inicio',
             'socialmedia' => 'Redes sociales',
             'instagram' => 'Instagram',
+            'linkeding' => 'Linkeding',
             'facebook' => 'Facebook',
             'twitter' => 'X (twitter)',
             'tiktok' => 'Tiktok',
@@ -96,11 +99,13 @@ return [
             'img_src' => 'Archivo de imagen',
             'category' => 'Categoria',
             'join' => 'Unirse',
-            'invalid_email' => 'Correo invalido'
+            'invalid_email' => 'Correo invalido',
+            'whatsapp' => 'Whatsapp'
         ],
     ],
     'messages' => [
         'name' => 'Mensaje',
+        'write_name' => 'Escriba su mensaje',
     ],
     'global' => [
         'menu' => [
@@ -141,6 +146,10 @@ return [
             'settings_edit' => 'Editar configuración',
 
             'name_company' => 'Nombre empresa',
+            'company' => 'Empresa',
+            'company2' => 'Compañia',
+            'follow_us' => 'Síguenos',
+            'resources' => 'Recursos',
             'profile' => 'Perfil',
             'file' => 'Archivo',
             'register' => 'Registro',
@@ -160,6 +169,7 @@ return [
 
             'menus' => 'Menús',
             'menu' => 'Menú',
+
             'menu_items' => 'Items de Menús',
             'menu_item' => 'Item de Menú',
             'menu_create' => 'Nuevo menu',
@@ -209,7 +219,11 @@ return [
             'project_url' => 'Sitio web del proyecto',
             'project_details' => 'Detalles del proyecto',
             'contact_us' => 'Contáctanos',
-            'type_service' => 'Tipo de servicio'
+            'type_service' => 'Tipo de servicio',
+            'service' => 'Servicio',
+            'icon_gallery_svg' => 'Galería de iconos svg',
+            'copied' => 'Copiado',
+            'blog' => 'Blog'
         ],
         'phrases' => [
             'required_field' => 'Campo obligatorio',
@@ -219,7 +233,7 @@ return [
             'loading' => 'Cargando...',
             'sign_out' => 'Cerrar sesión',
             'all_records' => 'Todos los registros',
-            'argh' => '¡Argh!',
+            'argh' => '¡Argh! ',
             'success' => '¡Éxito!',
             'fix_errors' => 'Por favor, corrige los siguientes errores:',
             'no_records' => 'No se encontraron registros.',
@@ -276,7 +290,14 @@ return [
             'design_diversity' => 'Diversos Diseños que mejor se adapten a tí.',
             'all_field_required' => 'Todos los campos son obligatorios',
             'inactive_component' => '¿Quieres deshabilitar el registro?',
-            'active_component' => '¿Quieres habilitar el registro?'
+            'active_component' => '¿Quieres habilitar el registro?',
+            'page_no_found' => 'Oops! Página no encontrada.',
+            'page_no_found_tryother' => 'La página que buscas no está disponible o ha sido movida. Prueba con otra página o ve a la página principal con el botón de abajo.',
+            'company_size' => '¿Cuál es el tamaño de tu empresa?',
+            'bussiness_system' => '¿Tu empresa cuenta con sistemas transaccionales?',
+            'why_visualcore' => '¿Por qué Visual Core?',
+            'about_us' => '¿Quiénes Somos?',
+            'error_recaptcha' => 'Debe resolver el Captcha'
         ],
         'buttons' => [
             'add_new' => 'Añadir nuevo',
@@ -308,7 +329,9 @@ return [
             'edit' => 'Editar',
             'delete' => 'Eliminar',
             'filterbytitle' => 'Filtrar por título',
-            'active_inactive' => 'Habilitar/Desabilitar'
+            'active_inactive' => 'Habilitar/Desabilitar',
+            'need_help' => '¿Necesitas ayuda?',
+            'talk_with_us' => 'Habla con nosotros',
         ],
         'alerts' => [
             'success' => '¡Éxito!',

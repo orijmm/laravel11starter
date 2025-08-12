@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\MediaGalleryController;
 use App\Http\Controllers\Pages\ComponentController;
 use App\Http\Controllers\Pages\ComponentTypeController;
 use App\Http\Controllers\Pages\MenuController;
@@ -129,9 +130,9 @@ Route::get('menus/searchname', [MenuController::class, 'showByName'])->name('men
 Route::get('page/{page}', [PagesController::class, 'show'])->name('page.show');
 Route::get('settingad/{settingad}', [SettingController::class, 'show'])->name('settingad.show');
 Route::get('settingad/{settingad}/edit', [SettingController::class, 'edit'])->name('settingad.edit');
-Route::get('getpage/{id?}', [PagesController::class, 'displayPageItems'])->name('display.getpage');
+Route::get('getpage/{slug?}', [PagesController::class, 'displayPageItems'])->name('display.getpage');
 Route::get('manteiners/projects/{project}', [ProjectController::class, 'show'])->name('project.show');
-
+Route::get('media/iconsvg', [MediaGalleryController::class, 'iconSvg'])->name('list.icons.svg');
 
 ## Ubicaciones
 Route::get('languages', function (Request $request) {
