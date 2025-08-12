@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('label');
             $table->string('url')->nullable()->unique();
-            $table->text('description')->nullable(); 
+            $table->text('description')->nullable();
+            $table->string('icon', 100)->nullable();
+            $table->string('icon_color_class', 100)->nullable();
             $table->integer('order');
-            $table->unsignedBigInteger('parent_id')->nullable();//para submenus
+            $table->unsignedBigInteger('parent_id')->nullable(); //para submenus
             $table->foreignId('menu_id')->constrained('menus')->onDelete('cascade');
             $table->foreignId('page_id')->nullable();
             $table->timestamps();

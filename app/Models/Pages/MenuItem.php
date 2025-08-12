@@ -13,13 +13,13 @@ class MenuItem extends Model
 
     protected $table = 'menu_items';
 
-    protected $fillable = ['label', 'url', 'description', 'order', 'parent_id', 'menu_id', 'page_id'];
+    protected $fillable = ['label', 'url', 'description', 'order', 'parent_id', 'menu_id', 'page_id', 'icon', 'icon_color_class'];
 
     public function menu(): BelongsTo
     {
         return $this->belongsTo(Menu::class, 'menu_id');
     }
-    
+
     public function parent(): BelongsTo
     {
         return $this->belongsTo(MenuItem::class, 'parent_id');
@@ -30,9 +30,13 @@ class MenuItem extends Model
         return $this->hasMany(MenuItem::class, 'parent_id');
     }
 
-    public function page(): BelongsTo
+    public function childrenRecursive()
     {
-        return $this->belongsTo(ComponentType::class);
+        return $this->children()->with('childrenRecursive');
     }
 
+    public function page(): BelongsTo
+    {
+        return $this->belongsTo(Page::class, 'page_id');
+    }
 }

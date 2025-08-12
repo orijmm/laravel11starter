@@ -14,7 +14,7 @@ class Section extends Model
 
     protected $table = 'sections';
 
-    protected $fillable = ['name', 'order', 'classes', 'page_id'];
+    protected $fillable = ['name', 'order', 'classes', 'page_id', 'active'];
 
     /**
      * Get the rows for the blog post.
