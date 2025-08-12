@@ -19,17 +19,33 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                         <TextInput class="mb-4" type="text" :required="true" name="label" v-model="formItem.label"
                             :label="trans('users.labels.label')" />
-                        <TextInput class="mb-4" type="text"  name="url" v-model="formItem.url"
+                        <TextInput class="mb-4" type="text" name="url" v-model="formItem.url"
                             :label="trans('users.labels.url')" />
                         <TextInput class="mb-4" type="text" :required="true" name="description"
                             v-model="formItem.description" :label="trans('users.labels.description')" />
+                        <TextInput class="mb-4" type="text" name="icon" v-model="formItem.icon"
+                            :label="trans('users.labels.icon')" :labelsmall="trans('global.phrases.add_path_icon')" />
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            <!-- Columna 1: Dropdown -->
+                            <Dropdown class="mb-4" :options="textcolor" name="icon_color_class"
+                                @update:model-value="e => getColorExample(e)"
+                                :placeholder="trans('users.labels.select')" v-model="formItem.icon_color_class"
+                                :label="trans('users.labels.icon_color_class')" />
+                            <!-- Columna 2: Color preview alineado abajo -->
+                            <div v-if="colorHex" class="flex flex-col justify-end mb-4">
+                                <div class="p-2 border rounded-md text-gray-200"
+                                    :style="{ background: colorHex, fontSize: '0.9rem' }">
+                                    {{ colorHex }}
+                                </div>
+                            </div>
+                        </div>
                         <TextInput class="mb-4" type="number" :required="true" name="order" v-model="formItem.order"
                             :label="trans('users.labels.order')" />
-                        <Dropdown class="mb-4" :server="'pages/page'" :server-per-page="15" 
-                            name="type" v-model="formItem.page_id" :label="trans('global.pages.page')"
+                        <Dropdown class="mb-4" :server="'pages/page'" :server-per-page="15" name="type"
+                            v-model="formItem.page_id" :label="trans('global.pages.page')"
                             :serverSearchMinCharacters="0" />
-                        <Dropdown class="mb-4" :options="form.items" optionLabel="label"
-                            name="label" v-model="formItem.parent_id" :label="trans('users.labels.parent_id')" /> 
+                        <Dropdown class="mb-4" :options="form.items" optionLabel="label" :serverSearchMinCharacters="0"
+                            name="label" v-model="formItem.parent_id" :label="trans('users.labels.parent_id')" />
                     </div>
                     <div class="text-right mb-4">
                         <Button type="button" @click="onSubmitItem" :label="trans('global.buttons.add')" />
@@ -41,7 +57,7 @@
                 @page-changed="onTablePageChange" @action="onTableAction" @sort="onTableSort">
                 <template v-slot:content-page="props">
                     <div>
-                        {{ props.item.page?.name ?? '-' }}
+                        {{ props.item.page?.title ?? '-' }}
                     </div>
                 </template>
                 <template v-slot:content-parent="props">
@@ -55,9 +71,10 @@
 </template>
 
 <script>
-import { defineComponent, onBeforeMount, reactive } from "vue";
+import { defineComponent, onBeforeMount, reactive, ref } from "vue";
 import alertHelpers from "@/helpers/alert";
 import { trans } from "@/helpers/i18n";
+import { setColorSample } from "@/helpers/SetColor"
 import { fillObject, reduceProperties, clearObject } from "@/helpers/data"
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
@@ -72,6 +89,7 @@ import Table from "@/views/components/Table";
 import Dropdown from "@/views/components/input/Dropdown";
 import { isAllowed } from "@/helpers/isreq";
 import ModelService from "@/services/ModelService";
+import { textcolor } from "@/views/pages/private/maintainers/frontUtils/colors";
 
 export default defineComponent({
     components: {
@@ -82,7 +100,8 @@ export default defineComponent({
         Button,
         Page,
         Table,
-        Dropdown
+        Dropdown,
+        setColorSample
     },
     setup() {
         const { user } = useAuthStore();
@@ -102,7 +121,11 @@ export default defineComponent({
             parent_id: undefined,
             menu_id: undefined,
             page_id: undefined,
+            icon: undefined,
+            icon_color_class: undefined
         });
+
+        let colorHex = ref(null);
 
         const page = reactive({
             id: 'edit_menu',
@@ -223,7 +246,7 @@ export default defineComponent({
         }
 
         function onSubmitItem() {
-            service.handleCreate('add-item', reduceProperties(formItem, [], 'id'), `/pages/menus/${form.id}/storeitem`).then(() => {
+            service.handleCreate('add-item', reduceProperties(formItem, ['icon_color_class'], 'id'), `/pages/menus/${form.id}/storeitem`).then(() => {
                 clearObject(formItem)
             }).then(response => {
                 fetchItems();
@@ -233,6 +256,10 @@ export default defineComponent({
 
         function toggleAddItems() {
             page.toggleAddItems = !page.toggleAddItems;
+        }
+
+        function getColorExample(event) {
+            colorHex.value = setColorSample(event);
         }
 
         return {
@@ -245,10 +272,13 @@ export default defineComponent({
             onAction,
             page,
             table,
+            textcolor,
+            colorHex,
             onTablePageChange,
             onTableAction,
             onTableSort,
-            toggleAddItems
+            toggleAddItems,
+            getColorExample
         }
     }
 })

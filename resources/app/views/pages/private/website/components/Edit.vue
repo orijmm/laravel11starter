@@ -20,7 +20,7 @@
                 v-model="form.number_content" :label="trans('users.labels.number_content')"
                 :serverSearchMinCharacters="0" />
             <div v-if="form.type == 'text'" v-for="(content, i) in form.contents" :key="i">
-                <TextInput :name="i" class="mb-4" type="text" :required="true" v-model="content.text"
+                <TextInput :name="i" class="mb-4" type="textarea" :required="true" v-model="content.text"
                     :label="`${trans('users.labels.content')} #${i + 1}`" />
             </div>
             <div v-if="form.type == 'img'">
@@ -32,13 +32,16 @@
                             <button class="file-input__clear text-gray-300" type="button" @click="onClearImg(i, 'img')">
                                 <i class="fa fa-times"></i>
                             </button>
-                            <img :src="getImgVisual(image)" class="object-scale-down h-48 w-96" :alt="trans('users.labels.img')" />
+                            <img :src="getImgVisual(image)" class="object-scale-down h-48 w-96"
+                                :alt="trans('users.labels.img')" />
                         </div>
                         <div class="bg-gray-50 rounded p-1" v-for="(imgI, i) in form.inputImg" :key="`inputImg-${i}`">
-                            <button class="file-input__clear text-gray-300" type="button" @click="onClearImg(i, 'inputImg')">
+                            <button class="file-input__clear text-gray-300" type="button"
+                                @click="onClearImg(i, 'inputImg')">
                                 <i class="fa fa-times"></i>
                             </button>
-                            <img :src="getImgVisual(imgI)" class="object-scale-down h-48 w-96" :alt="trans('users.labels.img')" />
+                            <img :src="getImgVisual(imgI)" class="object-scale-down h-48 w-96"
+                                :alt="trans('users.labels.img')" />
                         </div>
                     </div>
                 </div>
@@ -90,7 +93,7 @@ export default defineComponent({
         let errorImg = ref(false);
 
         const numberContent = ref([
-        { id: 1, name: 1 },
+            { id: 1, name: 1 },
             { id: 2, name: 2 },
             { id: 3, name: 3 },
             { id: 4, name: 4 },

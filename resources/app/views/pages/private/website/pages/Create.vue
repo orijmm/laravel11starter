@@ -4,7 +4,7 @@
             <Form id="create-page" @submit.prevent="onSubmit">
                 <TextInput class="mb-4" type="text" :required="true" name="title" v-model="form.title"
                     :label="trans('users.labels.title')" :labelsmall="trans('global.pages.lowercase')" />
-                <TextInput class="mb-4" type="text" :required="true" name="slug" v-model="form.slug"
+                <TextInput class="mb-4" type="text" :readOnly="true" name="slug" v-model="form.slug"
                     :label="trans('users.labels.slug')" />
                 <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
                     :label="trans('users.labels.description')" />
@@ -17,7 +17,8 @@
 </template>
 
 <script>
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, watch } from "vue";
+import _ from 'lodash';
 import { trans } from "@/helpers/i18n";
 import { useAuthStore } from "@/stores/auth";
 import Button from "@/views/components/input/Button";
@@ -74,6 +75,15 @@ export default defineComponent({
                 }
             ]
         });
+
+        watch(
+            () => form.title,
+            (title) => {
+                if (title) {
+                    form.slug = _.kebabCase(title);
+                }
+            }
+        )
 
         const service = new PagesService('page');
 
