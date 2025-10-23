@@ -28,8 +28,11 @@ class ContactFormMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address($this->data['email'], $this->data['name'] ?? 'Usuario del sitio'),
-            subject: $this->data['subject'] ?? 'Mensaje de Contacto sitio ' . env('APP_NAME'),
+            from: new Address(env('MAIL_FROM_ADDRESS'), env('APP_NAME', 'Sitio Web')),
+            replyTo: [
+                new Address($this->data['email'], $this->data['name'] ?? 'Usuario del sitio'),
+            ],
+            subject: $this->data['subject'] ?? 'Contacto desde Web de ' . env('APP_NAME'),
         );
     }
 

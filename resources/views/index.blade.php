@@ -25,7 +25,7 @@
     <script>
         window.AppConfig = {
             name: '{{ env('APP_NAME') }}',
-            logo: '{{ url('/assets/panel/images/logo.png') }}',
+            logo: '{{ App\Models\Setting::where("id", 1)->first()["logo_url"], url("/assets/panel/images/logo.png") }}',//'{{ url('/assets/panel/images/logo.png') }}',
             url: '{{ env('APP_URL') }}',
             csrf: '{{ csrf_token() }}',
             defaultLocale: '{{ App\Models\Setting::where('id', 1)->first()['locale'], env('APP_LOCALE') }}',

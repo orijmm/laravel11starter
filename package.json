@@ -20,7 +20,9 @@
         "prettier": "^3.1.1",
         "resolve-url-loader": "^5.0.0",
         "sweetalert2": "^11.6.13",
+        "three": "^0.137.5",
         "v-smooth-scroll": "^2.0.0-beta.2",
+        "vanta": "^0.5.24",
         "vite-plugin-resolve-extension-vue": "^0.1.0",
         "vue": "^3.4.27",
         "vue-i18n": "^9.13.1",
@@ -29,6 +31,7 @@
         "vue-multiselect": "^3.0.0",
         "vue-router": "^4.3.2",
         "vue3-quill": "^0.3.1",
+        "vue3-recaptcha-v2": "^2.1.0",
         "vuedraggable": "^4.1.0"
     },
     "devDependencies": {

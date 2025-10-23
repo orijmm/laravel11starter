@@ -8,8 +8,16 @@
                     :label="trans('users.labels.label')" />
                 <TextInput class="mb-4" type="text" :required="true" name="description" v-model="form.description"
                     :label="trans('users.labels.description')" />
-                <TextInput class="mb-4" type="text" name="icon" v-model="form.icon" :label="trans('users.labels.icon')"
-                    :labelsmall="trans('global.phrases.add_path_icon')" />
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <!-- Columna 1: Dropdown -->
+                    <TextInput class="mb-4" type="text" name="icon" v-model="form.icon"
+                        :label="trans('users.labels.icon')" :labelsmall="trans('global.phrases.add_path_icon')" />
+                    <!-- Columna 2: Color preview alineado abajo -->
+                    <div class="flex flex-col justify-end mb-4">
+                        <a target="_blank" href="/panel/pages/list/iconsvg"><Button type="button"
+                                :label="trans('global.pages.icon_gallery_svg')" /></a>
+                    </div>
+                </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                     <!-- Columna 1: Dropdown -->
                     <Dropdown class="mb-4" :options="textcolor" name="icon_color_class"
