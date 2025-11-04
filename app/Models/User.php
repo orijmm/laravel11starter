@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Shop\Product;
+use App\Models\Shop\Wishlist;
 use App\Traits\Filterable;
 use App\Traits\Searchable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -163,5 +165,15 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         $this->addMediaConversion('large_thumb')->performOnCollections('images')
             ->fit(Fit::Crop, 1200, 1200)
             ->nonQueued();
+    }
+
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
+    public function wishedProducts()
+    {
+        return $this->belongsToMany(Product::class, 'wishlists');
     }
 }
