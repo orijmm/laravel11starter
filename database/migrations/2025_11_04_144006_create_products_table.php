@@ -28,14 +28,15 @@ return new class extends Migration
             $table->decimal('sale_percentage', 5, 2)->nullable();
             $table->decimal('rating_avg', 3, 2)->default(0);
             $table->integer('rating_count')->default(0);
-            $table->jsonb('specs')->nullable(); // Ej: {"color":"rojo","peso":"200g"}
-            $table->jsonb('metadata')->nullable(); // Información adicional
+            $table->json('specs')->nullable(); // Ej: {"color":"rojo","peso":"200g"}
+            $table->json('metadata')->nullable(); // Información adicional
             $table->timestamps();
         });
 
         Schema::table('products', function (Blueprint $table) {
             $table->index('category_id');
         });
+
     }
 
     /**

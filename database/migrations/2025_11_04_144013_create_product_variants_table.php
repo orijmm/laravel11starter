@@ -22,13 +22,15 @@ return new class extends Migration
             $table->integer('stock')->default(0);
             $table->boolean('is_active')->default(true);
             $table->boolean('is_default')->default(false);
-            $table->jsonb('specs')->nullable(); // Ej: {"color":"rojo","talla":"M"}
+            $table->json('specs')->nullable(); // Ej: {"color":"rojo","talla":"M"}
             $table->timestamps();
         });
 
         Schema::table('product_variants', function (Blueprint $table) {
             $table->index('product_id');
         });
+
+
     }
 
     /**
