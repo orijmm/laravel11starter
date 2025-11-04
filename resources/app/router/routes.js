@@ -62,7 +62,11 @@ import { default as PagesSite } from "@/views/pages/public/home/PagesSite";
 import { default as PageWebProject } from "@/views/pages/public/home/PageProject";
 import { default as PageNotFoundSite } from "@/views/pages/public/template/components/not-found/404";
 
+/* Shop */
+import { default as ShopIndex } from "@/views/pages/private/ecommerce/shop/ShopIndex";
+
 import abilities from "@/stub/abilities";
+import { pathToString } from "resolve-url-loader/lib/join-function/debug";
 
 const routes = [
     {
@@ -285,6 +289,7 @@ const routes = [
             {
                 name: "manteiners",
                 path: "manteiners",
+                meta: { requiresAuth: true },
                 children: [
                     {
                         name: "services.list",
@@ -339,6 +344,18 @@ const routes = [
                         path: "projects/:id",
                         meta: { requiresAuth: true },
                         component: PageProjectEdit,
+                    }
+                ]
+            },
+            {
+                name: "ecommerce",
+                path: "ecommerce",
+                meta: { requiresAuth: true },
+                children: [
+                    {
+                        name: "ecommerce.shop",
+                        path: "shop",
+                        component: ShopIndex
                     }
                 ]
             }

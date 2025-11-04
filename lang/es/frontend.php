@@ -121,7 +121,9 @@ return [
             'component' => 'Component',
             'components' => 'Componentes',
             'componenttype' => 'Tipo de Componente',
-            'maintainer' => 'Mantenedores'
+            'maintainer' => 'Mantenedores',
+            'shop' => 'Tienda',
+            'ecommerce' => 'Ecommerce'
         ],
         'pages' => [
             'home' => 'Panel de control',

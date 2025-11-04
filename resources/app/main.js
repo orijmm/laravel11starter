@@ -53,6 +53,7 @@ import HostingService from "./views/pages/public/components/customs/HostingServi
 import WebDevelopService from "./views/pages/public/components/customs/WebDevelopService";
 import ContactForm from "./views/pages/public/components/customs/ContactForm";
 import VideoPlayer from './views/pages/public/template/components/base/VideoPlayer';
+import ShopIndex from './views/pages/private/ecommerce/shop/ShopIndex';
 
 const app = createApp(App);
 
@@ -106,7 +107,8 @@ const components = {
     'LinkTreeService': LinkTreeService,
     'HostingService': HostingService,
     'WebDevelopService': WebDevelopService,
-    'ContactForm': ContactForm
+    'ContactForm': ContactForm,
+    'ShopIndex': ShopIndex
 };
 Object.entries(components).forEach(([name, component]) => {
     app.component(name, component);

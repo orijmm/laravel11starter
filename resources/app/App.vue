@@ -404,6 +404,24 @@ export default {
                     ]
                 },
                 {
+                    name: trans('global.menu.ecommerce'),
+                    icon: 'shopping-bag',
+                    showDesktop: true,
+                    showMobile: true,
+                    requiresAbility: false,
+                    to: '/panel/ecommerce',
+                    children: [
+                        {
+                            name: trans('global.menu.shop'),
+                            icon: 'shopping-bag',
+                            showDesktop: true,
+                            showMobile: true,
+                            requiresAbility: false,
+                            to: '/panel/ecommerce/shop',
+                        }
+                    ]
+                },
+                {
                     name: trans('global.phrases.sign_out'),
                     icon: 'sign-out',
                     showDesktop: false,
