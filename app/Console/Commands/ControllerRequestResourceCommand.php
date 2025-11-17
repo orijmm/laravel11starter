@@ -93,8 +93,10 @@ class ControllerRequestResourceCommand extends Command
                         $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "|date_format:Y-m-d H:i:s',\n            ";
                     } elseif ($type === 'timestamp') {
                         $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "|date_format:Y-m-d H:i:s',\n            ";
+                    } elseif ($type === 'float' || $type === 'double' || $type === 'decimal') {
+                        $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "|numeric',\n            ";
                     } else {
-                        $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "|string',\n            ";
+                        $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "',\n            ";
                     }
                 }
             }
@@ -151,7 +153,7 @@ class ControllerRequestResourceCommand extends Command
                     } elseif ($type === 'timestamp') {
                         $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "|date_format:Y-m-d H:i:s',\n            ";
                     } else {
-                        $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "'";
+                        $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "',\n            ";
                     }
                 }
             }
