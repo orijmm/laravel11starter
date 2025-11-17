@@ -58,6 +58,8 @@ class ControllerRequestResourceCommand extends Command
         try {
             $controllerName = $modelFolder ? "{$modelFolder}\\{$modelName}Controller" : "{$modelName}Controller";
             Artisan::call('make:controller', ['name' => $controllerName, '--resource' => true, '--model' => $modelFolder ? "{$modelFolder}/{$modelName}" : $modelName, '--requests' => true, '--api' => true]);
+            // Insertar método index custom
+            $this->insertCustomIndexMethod($controllerName, $modelName, $modelFolder);
             $this->info("Controller $controllerName created successfully.");
         } catch (\Exception $e) {
             $this->warn("Error: " . $e->getMessage());
@@ -77,7 +79,9 @@ class ControllerRequestResourceCommand extends Command
                 $type = DB::getSchemaBuilder()->getColumnType($tableName, $column['name']);
                 $isNullable = $column['nullable'];
                 if (!in_array($column['name'], ['id', 'created_at', 'updated_at', 'deleted_at'])) {
-                    if ($type === 'string' || $type === 'text') {
+                    if ($column['name'] === 'slug') {
+                        $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "|alpha_dash|unique:{$tableName}',\n            ";
+                    } elseif ($type === 'string' || $type === 'text') {
                         $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "|string',\n            ";
                     } elseif ($type === 'int' || $type === 'bigint' || $type === 'smallint') {
                         $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "|integer',\n            ";
@@ -129,6 +133,11 @@ class ControllerRequestResourceCommand extends Command
                 $type = DB::getSchemaBuilder()->getColumnType($tableName, $column['name']);
                 $isNullable = $column['nullable'];
                 if (!in_array($column['name'], ['id', 'created_at', 'updated_at', 'deleted_at'])) {
+                    if ($column['name'] === 'slug') {
+                        $fields .= "'{$column['name']}' => '"
+                            . ($isNullable ? 'nullable' : 'required')
+                            . "|alpha_dash|unique:{$tableName},slug,' . \$this->route('" . Str::snake($modelName) . "')->id,\n            ";
+                    }
                     if ($type === 'string' || $type === 'text') {
                         $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "|string',\n            ";
                     } elseif ($type === 'int' || $type === 'bigint' || $type === 'smallint') {
@@ -216,5 +225,62 @@ class ControllerRequestResourceCommand extends Command
         } catch (\Exception $e) {
             $this->error("Error: " . $e->getMessage());
         }
+    }
+
+    protected function insertCustomIndexMethod($controllerName, $modelName, $modelFolder)
+    {
+        // Ubicación real del archivo generado
+        $path = app_path('Http/Controllers/' . str_replace('\\', '/', $controllerName) . '.php');
+
+        if (! file_exists($path)) {
+            $this->warn("Controller file not found: $path");
+            return;
+        }
+
+        $snakeModel = \Str::camel($modelName);
+        $resourceName = $modelName . 'Resource';
+
+        // Método index personalizado
+        $indexMethod = <<<PHP
+
+    public function index(Request \$request)
+    {
+        \$query = {$modelName}::query();
+
+        if (!empty(\$request->search)) {
+            \$query = \$query->search(\$request->search);
+        }
+
+        if (!empty(\$request->filters)) {
+            filter(\$query, \$request->filters);
+        }
+
+        if (!empty(\$request->sort_by) && !empty(\$request->sort)) {
+            \$query = \$query->orderBy(\$request->sort_by, \$request->sort);
+        }
+
+        return {$resourceName}::collection(\$query->paginate(10));
+    }
+
+PHP;
+
+        // Leer el archivo
+        $controller = file_get_contents($path);
+
+        // Reemplazar el método vacío que genera Laravel
+        $controller = preg_replace(
+            '/public function index\(.*?\{.*?\}/s',
+            $indexMethod,
+            $controller
+        );
+
+        $controller = str_replace(
+                "use App\Http\Controllers\Controller;",
+                "use App\Http\Controllers\Controller;\nuse Illuminate\Http\Request;\nuse App\Http\Resources\{$resourceName};",
+                $controller
+            );
+
+        // Guardar cambios
+        file_put_contents($path, $controller);
     }
 }

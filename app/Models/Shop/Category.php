@@ -2,12 +2,14 @@
 
 namespace App\Models\Shop;
 
+use App\Traits\Filterable;
+use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Searchable, Filterable;
 
     protected $table = 'categories';
 
