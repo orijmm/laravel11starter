@@ -142,7 +142,7 @@ class ControllerRequestResourceCommand extends Command
                         $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "|string',\n            ";
                     } elseif ($type === 'int' || $type === 'bigint' || $type === 'smallint') {
                         $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "|integer',\n            ";
-                    } elseif ($type === 'boolean') {
+                    } elseif ($type === 'boolean' || $type === 'tinyint') {
                         $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "|boolean',\n            ";
                     } elseif ($type === 'date') {
                         $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "|date',\n            ";
@@ -151,7 +151,7 @@ class ControllerRequestResourceCommand extends Command
                     } elseif ($type === 'timestamp') {
                         $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "|date_format:Y-m-d H:i:s',\n            ";
                     } else {
-                        $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "|string',\n            ";
+                        $fields .= "'{$column['name']}' => '" . ($isNullable ? 'nullable' : 'required') . "'";
                     }
                 }
             }

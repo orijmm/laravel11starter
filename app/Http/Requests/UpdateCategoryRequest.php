@@ -29,7 +29,7 @@ class UpdateCategoryRequest extends FormRequest
             'type' => 'required|string',
             'description' => 'nullable|string',
             'position' => 'required|integer',
-            'is_active' => 'required|string',
+            'is_active' => 'required|boolean',
             
         ];
     }

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCategoryRequest extends FormRequest
+class StorePromotionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,13 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'parent_id' => 'nullable|integer',
-            'name' => 'required|string',
-            'slug' => 'required|alpha_dash|unique:categories',
-            'type' => 'required|string',
-            'description' => 'nullable|string',
-            'position' => 'required|integer',
+            'title' => 'nullable|string',
+            'product_id' => 'nullable|integer',
+            'variant_id' => 'nullable|integer',
+            'type' => 'nullable|string',
+            'value' => 'nullable|string',
+            'start_at' => 'nullable|date_format:Y-m-d H:i:s',
+            'end_at' => 'nullable|date_format:Y-m-d H:i:s',
             'is_active' => 'required|boolean',
             
         ];
