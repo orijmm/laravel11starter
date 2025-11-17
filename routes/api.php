@@ -134,6 +134,9 @@ Route::get('getpage/{slug?}', [PagesController::class, 'displayPageItems'])->nam
 Route::get('manteiners/projects/{project}', [ProjectController::class, 'show'])->name('project.show');
 Route::get('media/iconsvg', [MediaGalleryController::class, 'iconSvg'])->name('list.icons.svg');
 
+#SHOP API ROUTES
+
+
 ## Ubicaciones
 Route::get('languages', function (Request $request) {
     $languages = [];
