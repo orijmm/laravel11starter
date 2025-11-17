@@ -14,6 +14,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Pages\TemplateController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\Shop\CategoryController;
 use App\Http\Controllers\TestimonialController;
 use App\Utilities\Data;
 use Illuminate\Http\Request;
@@ -123,6 +124,14 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
         #Project
         Route::apiResource('projects', ProjectController::class)->except('show');
     });
+
+    //SHOP ROUTES
+    #Categories
+    Route::prefix('shop')->group(function () {
+        Route::post('categories', [CategoryController::class, 'store'])->name('categories.store');
+        Route::put('categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+        Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    });
 });
 
 ### Website public routes ####
@@ -135,6 +144,10 @@ Route::get('manteiners/projects/{project}', [ProjectController::class, 'show'])-
 Route::get('media/iconsvg', [MediaGalleryController::class, 'iconSvg'])->name('list.icons.svg');
 
 #SHOP API ROUTES
+Route::prefix('shop')->group(function () {
+    //Categories
+    Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
+});
 
 
 ## Ubicaciones

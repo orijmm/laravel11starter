@@ -17,7 +17,7 @@ class CategoryController extends Controller
     
     public function index(Request $request)
     {
-        $query = Category::query();
+        $query = Category::query()->with(['parent', 'children']);
 
         if (!empty($request->search)) {
             $query = $query->search($request->search);
@@ -40,7 +40,18 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        $this->authorize('edit_shop');
+
+        $data = $request->validated();
+        //plantilla
+        $data['parent_id'] = $data['parent_id'] ? $data['parent_id']['id'] : null;
+        $newcategory = Category::query()->create($data);
+
+        if ($newcategory) {
+            return $this->responseStoreSuccess(['record' => $newcategory]);
+        } else {
+            return $this->responseStoreFail();
+        }
     }
 
     /**
@@ -48,7 +59,8 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        $model = new CategoryResource($category->loadMissing(['parent', 'children']));
+        return $this->responseDataSuccess(['model' => $model]);
     }
 
     /**
