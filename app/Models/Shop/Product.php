@@ -2,6 +2,8 @@
 
 namespace App\Models\Shop;
 
+use App\Traits\Filterable;
+use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -12,7 +14,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class Product extends Model implements HasMedia
 {
     use SoftDeletes,
-        InteractsWithMedia;
+        InteractsWithMedia, Searchable, Filterable;
 
     protected $table = 'products';
 
