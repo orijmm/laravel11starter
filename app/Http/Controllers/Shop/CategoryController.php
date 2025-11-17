@@ -68,7 +68,22 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        try {
+            $this->authorize('edit_shop');
+
+            $data = $request->validated();
+            $data['parent_id'] = $data['parent_id'] ? $data['parent_id'] : null;
+
+            $updated = $category->update($data);
+
+            if ($updated) {
+                return $this->responseUpdateSuccess(['record' => $category]);
+            } else {
+                return $this->responseUpdateFail();
+            }
+        } catch (\Exception $e) {
+            return $this->responseFail($e);
+        }
     }
 
     /**
@@ -76,6 +91,22 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        try {
+            $this->authorize('edit_shop');
+
+            if ($category->children()->count() > 0) {
+                return $this->responseFail(trans('frontend.global.phrases.cannot_delete_record_with_relations'));
+            }
+
+            $deleted = $category->delete();
+
+            if ($deleted) {
+                return $this->responseDeleteSuccess();
+            } else {
+                return $this->responseDeleteFail();
+            }
+        } catch (\Exception $e) {
+            return $this->responseFail($e);
+        }
     }
 }

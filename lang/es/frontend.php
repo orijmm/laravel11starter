@@ -299,7 +299,8 @@ return [
             'bussiness_system' => '¿Tu empresa cuenta con sistemas transaccionales?',
             'why_visualcore' => '¿Por qué Visual Core?',
             'about_us' => '¿Quiénes Somos?',
-            'error_recaptcha' => 'Debe resolver el Captcha'
+            'error_recaptcha' => 'Debe resolver el Captcha',
+            'cannot_delete_record_with_relations' => 'No se puede eliminar el registro porque tiene relaciones con otros registros.',
         ],
         'buttons' => [
             'add_new' => 'Añadir nuevo',
