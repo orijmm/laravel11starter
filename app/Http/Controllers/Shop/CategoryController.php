@@ -95,6 +95,10 @@ class CategoryController extends Controller
             $this->authorize('edit_shop');
 
             if ($category->children()->count() > 0) {
+                return $this->responseFail(trans('frontend.global.phrases.cannot_delete_record_with_relations'), [trans('frontend.global.pages.related_records') => $category->children]);
+            }
+
+            if ($category->products()->count() > 0) {
                 return $this->responseFail(trans('frontend.global.phrases.cannot_delete_record_with_relations'));
             }
 

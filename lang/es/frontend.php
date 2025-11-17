@@ -225,7 +225,8 @@ return [
             'service' => 'Servicio',
             'icon_gallery_svg' => 'Galería de iconos svg',
             'copied' => 'Copiado',
-            'blog' => 'Blog'
+            'blog' => 'Blog',
+            'related_records' => 'registros_relacionados',
         ],
         'phrases' => [
             'required_field' => 'Campo obligatorio',
