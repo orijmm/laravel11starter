@@ -44,7 +44,7 @@ class CategoryController extends Controller
 
         $data = $request->validated();
         //plantilla
-        $data['parent_id'] = $data['parent_id'] ? $data['parent_id']['id'] : null;
+        $data['parent_id'] = $data['parent_id'] ? $data['parent_id'] : null;
         $newcategory = Category::query()->create($data);
 
         if ($newcategory) {
