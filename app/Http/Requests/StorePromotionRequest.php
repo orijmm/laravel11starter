@@ -23,8 +23,6 @@ class StorePromotionRequest extends FormRequest
     {
         return [
             'title' => 'nullable|string',
-            'product_id' => 'nullable|integer',
-            'variant_id' => 'nullable|integer',
             'type' => 'nullable|string',
             'value' => 'nullable|string',
             'start_at' => 'nullable|date_format:Y-m-d H:i:s',

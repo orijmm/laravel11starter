@@ -8,13 +8,14 @@ use App\Http\Resources\{PromotionResource};
 use App\Http\Requests\StorePromotionRequest;
 use App\Http\Requests\UpdatePromotionRequest;
 use App\Models\Shop\Promotion;
+use Illuminate\Support\Facades\DB;
 
 class PromotionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    
+
     public function index(Request $request)
     {
         $query = Promotion::query();
@@ -40,7 +41,53 @@ class PromotionController extends Controller
      */
     public function store(StorePromotionRequest $request)
     {
-        //
+        $this->authorize('edit_shop');
+
+        try {
+            DB::beginTransaction();
+
+            // 1) Datos validados
+            $data = $request->validated();
+
+            // 2) Crear la promoción
+            $promotion = Promotion::create([
+                'title'      => $data['title'] ?? null,
+                'type'       => $data['type'] ?? null,
+                'value'      => $data['value'] ?? null,
+                'start_at'   => $data['start_at'] ?? null,
+                'end_at'     => $data['end_at'] ?? null,
+                'is_active'  => $data['is_active'] ?? true,
+            ]);
+
+            // 3) Guardar targets si vienen
+            if (!empty($data['targets'])) {
+                foreach ($data['targets'] as $item) {
+                    $promotion->targets()->create([
+                        'target_type' => $item['type'],   // product, variant, category, brand
+                        'target_id'   => $item['id'],
+                    ]);
+                }
+            }
+
+            // 4) Guardar exclusiones si vienen (opcional)
+            if (!empty($data['exclusions'])) {
+                foreach ($data['exclusions'] as $item) {
+                    $promotion->exclusions()->create([
+                        'target_type' => $item['type'],
+                        'target_id'   => $item['id'],
+                    ]);
+                }
+            }
+
+            DB::commit();
+
+            return $this->responseStoreSuccess([
+                'record' => $promotion->load(['targets', 'exclusions'])
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $this->responseFail($e->getMessage(), [], 500);
+        }
     }
 
     /**
@@ -66,4 +113,23 @@ class PromotionController extends Controller
     {
         //
     }
+
+    #json
+    //     {
+    //     "title": "Promo 30% Poleras",
+    //     "type": "percent",
+    //     "value": 30,
+    //     "start_at": "2025-01-01 00:00:00",
+    //     "end_at": "2025-01-10 23:59:59",
+    //     "is_active": true,
+    //     "targets": [
+    //         { "type": "category", "id": 5 },
+    //         { "type": "brand", "id": 3 },
+    //         { "type": "product", "id": 25 }
+    //     ],
+    //     "exclusions": [
+    //         { "type": "brand", "id": 99 }
+    //     ]
+    // }
+
 }

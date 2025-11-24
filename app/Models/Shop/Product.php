@@ -24,7 +24,6 @@ class Product extends Model implements HasMedia
         'slug',
         'short_description',
         'description',
-        'sku',
         'brand',
         'model',
         'is_featured',
@@ -34,15 +33,10 @@ class Product extends Model implements HasMedia
         'sale_percentage',
         'rating_avg',
         'rating_count',
-        'specs',
-        'metadata',
-        'color',
-        'size',
-        'brand_name'
+        'metadata'
     ];
 
-    protected $casts = ['specs' => 'array', 'metadata' => 'array', 'is_featured' => 'boolean',];
-
+    protected $casts = ['metadata' => 'array', 'is_featured' => 'boolean'];
 
     public function category()
     {

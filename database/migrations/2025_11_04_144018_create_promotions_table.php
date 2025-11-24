@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('promotions', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
-            $table->foreignId('product_id')->nullable()->constrained('products')->cascadeOnDelete();
-            $table->foreignId('variant_id')->nullable()->constrained('product_variants')->cascadeOnDelete();
-            $table->string('type', 50)->nullable(); // percentage, fixed_price, flash, etc
+            // Tipo de promoción ("percent", "fixed", "2x1", "free_shipping", etc.)
+            $table->string('type', 50)->nullable();
+            // Valor del descuento (30 = 30%, 5000 = $5000)
             $table->decimal('value', 12, 2)->nullable();
-            $table->timestampTz('start_at')->nullable();
-            $table->timestampTz('end_at')->nullable();
+            $table->timestamp('start_at')->nullable();
+            $table->timestamp('end_at')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

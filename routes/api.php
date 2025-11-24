@@ -15,6 +15,7 @@ use App\Http\Controllers\Pages\TemplateController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\Shop\CategoryController;
+use App\Http\Controllers\Shop\ProductController;
 use App\Http\Controllers\TestimonialController;
 use App\Utilities\Data;
 use Illuminate\Http\Request;
@@ -126,11 +127,15 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
     });
 
     //SHOP ROUTES
-    #Categories
     Route::prefix('shop')->group(function () {
+        #Categories
         Route::post('categories', [CategoryController::class, 'store'])->name('categories.store');
         Route::put('categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
         Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+        #Products
+        Route::post('products', [ProductController::class, 'store'])->name('products.store');
+        Route::put('products/{product}', [ProductController::class, 'update'])->name('products.update');
+        Route::delete('products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
     });
 });
 

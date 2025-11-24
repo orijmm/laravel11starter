@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('short_description')->nullable();
             $table->longText('description')->nullable(); // HTML completo
-            $table->string('sku', 100)->nullable();
             $table->string('brand', 255)->nullable();
             $table->string('model', 255)->nullable();
             $table->boolean('is_featured')->default(false);
@@ -26,9 +25,8 @@ return new class extends Migration
             $table->boolean('has_stock')->default(true);
             $table->boolean('is_on_sale')->default(false);
             $table->decimal('sale_percentage', 5, 2)->nullable();
-            $table->decimal('rating_avg', 3, 2)->default(0);
-            $table->integer('rating_count')->default(0);
-            $table->json('specs')->nullable(); // Ej: {"color":"rojo","peso":"200g"}
+            $table->decimal('rating_avg', 3, 2)->nullable();
+            $table->integer('rating_count')->nullable();
             $table->json('metadata')->nullable(); // Información adicional
             $table->timestamps();
         });

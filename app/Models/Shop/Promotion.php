@@ -16,8 +16,6 @@ class Promotion extends Model
 
     protected $fillable = [
         'title',
-        'product_id',
-        'variant_id',
         'type',
         'value',
         'start_at',
@@ -27,13 +25,17 @@ class Promotion extends Model
 
     protected $casts = [
         'is_active' => 'boolean',
-        'discount_percentage' => 'decimal:2',
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
+        'start_at' => 'datetime',
+        'end_at' => 'datetime',
     ];
 
-    public function products(): HasMany
+    public function targets()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(PromotionTarget::class);
+    }
+
+    public function exclusions()
+    {
+        return $this->hasMany(PromotionExclusion::class);
     }
 }
