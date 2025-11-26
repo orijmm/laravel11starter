@@ -16,6 +16,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\Shop\CategoryController;
 use App\Http\Controllers\Shop\ProductController;
+use App\Http\Controllers\Shop\PromotionController;
 use App\Http\Controllers\TestimonialController;
 use App\Utilities\Data;
 use Illuminate\Http\Request;
@@ -136,6 +137,10 @@ Route::middleware(['auth:sanctum', 'apply_locale'])->group(function () {
         Route::post('products', [ProductController::class, 'store'])->name('products.store');
         Route::put('products/{product}', [ProductController::class, 'update'])->name('products.update');
         Route::delete('products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+        #Promo
+        Route::post('promotions', [PromotionController::class, 'store'])->name('promotions.store');
+        Route::put('promotions/{promotion}', [PromotionController::class, 'update'])->name('promotions.update');
+        Route::delete('promotions/{promotion}', [PromotionController::class, 'destroy'])->name('promotions.destroy');
     });
 });
 

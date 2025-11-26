@@ -22,6 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('target_id');
 
             $table->timestamps();
+            $table->softDeletes();
 
             $table->index(['target_type', 'target_id']);
         });

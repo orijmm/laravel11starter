@@ -23,14 +23,13 @@ class UpdatePromotionRequest extends FormRequest
     {
         return [
             'title' => 'nullable|string',
-            'product_id' => 'nullable|integer',
-            'variant_id' => 'nullable|integer',
-            'type' => 'nullable|string',
-            'value' => 'nullable|string',
+            'type' => 'string',
+            'value' => 'nullable',
             'start_at' => 'nullable|date_format:Y-m-d H:i:s',
             'end_at' => 'nullable|date_format:Y-m-d H:i:s',
             'is_active' => 'required|boolean',
-            
+            'targets' => 'nullable|array',
+            'exclusions' => 'nullable|array',
         ];
     }
 }

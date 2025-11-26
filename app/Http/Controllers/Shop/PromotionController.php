@@ -50,14 +50,7 @@ class PromotionController extends Controller
             $data = $request->validated();
 
             // 2) Crear la promoción
-            $promotion = Promotion::create([
-                'title'      => $data['title'] ?? null,
-                'type'       => $data['type'] ?? null,
-                'value'      => $data['value'] ?? null,
-                'start_at'   => $data['start_at'] ?? null,
-                'end_at'     => $data['end_at'] ?? null,
-                'is_active'  => $data['is_active'] ?? true,
-            ]);
+            $promotion = Promotion::create($data);
 
             // 3) Guardar targets si vienen
             if (!empty($data['targets'])) {
@@ -120,7 +113,7 @@ class PromotionController extends Controller
     //     "type": "percent",
     //     "value": 30,
     //     "start_at": "2025-01-01 00:00:00",
-    //     "end_at": "2025-01-10 23:59:59",
+    //     "end_at": "2025-06-10 23:59:59",
     //     "is_active": true,
     //     "targets": [
     //         { "type": "category", "id": 5 },

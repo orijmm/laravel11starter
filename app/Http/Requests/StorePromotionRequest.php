@@ -23,12 +23,13 @@ class StorePromotionRequest extends FormRequest
     {
         return [
             'title' => 'nullable|string',
-            'type' => 'nullable|string',
-            'value' => 'nullable|string',
+            'type' => 'string',
+            'value' => 'nullable',
             'start_at' => 'nullable|date_format:Y-m-d H:i:s',
             'end_at' => 'nullable|date_format:Y-m-d H:i:s',
             'is_active' => 'required|boolean',
-            
+            'targets' => 'nullable|array',
+            'exclusions' => 'nullable|array',
         ];
     }
 }
