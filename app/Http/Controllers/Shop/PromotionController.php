@@ -88,7 +88,7 @@ class PromotionController extends Controller
      */
     public function show(Promotion $promotion)
     {
-        //
+        return new PromotionResource($promotion->load(['targets', 'exclusions']));
     }
 
     /**
@@ -96,7 +96,48 @@ class PromotionController extends Controller
      */
     public function update(UpdatePromotionRequest $request, Promotion $promotion)
     {
-        //
+        $this->authorize('edit_shop');
+
+        try {
+            DB::beginTransaction();
+
+            // 1) Datos validados
+            $data = $request->validated();
+
+            // 2) Actualizar la promoción
+            $promotion->update($data);
+
+            // 3) Actualizar targets
+            if (isset($data['targets'])) {
+                $promotion->targets()->delete();
+                foreach ($data['targets'] as $item) {
+                    $promotion->targets()->create([
+                        'target_type' => $item['type'],   // product, variant, category, brand
+                        'target_id'   => $item['id'],
+                    ]);
+                }
+            }
+
+            // 4) Actualizar exclusiones
+            if (isset($data['exclusions'])) {
+                $promotion->exclusions()->delete();
+                foreach ($data['exclusions'] as $item) {
+                    $promotion->exclusions()->create([
+                        'target_type' => $item['type'],
+                        'target_id'   => $item['id'],
+                    ]);
+                }
+            }
+
+            DB::commit();
+
+            return $this->responseUpdateSuccess([
+                'record' => $promotion->load(['targets', 'exclusions'])
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $this->responseFail($e->getMessage(), [], 500);
+        }
     }
 
     /**
@@ -104,7 +145,14 @@ class PromotionController extends Controller
      */
     public function destroy(Promotion $promotion)
     {
-        //
+        $this->authorize('edit_shop');
+
+        try {
+            $promotion->delete();
+            return $this->responseDeleteSuccess();
+        } catch (\Exception $e) {
+            return $this->responseFail($e->getMessage(), [], 500);
+        }
     }
 
     #json

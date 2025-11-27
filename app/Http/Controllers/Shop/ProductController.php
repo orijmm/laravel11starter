@@ -131,21 +131,46 @@ class ProductController extends Controller
 
             // Actualizar variantes (si vienen)
             if ($request->has('variants') && is_array($data['variants'])) {
-                collect($data['variants'])
-                    ->filter(fn($var) => is_array($var) && isset($var['id']))
-                    ->each(function ($varData) use ($product) {
-                        $product->variants()->where('id', $varData['id'])->update([
-                            'title'         => $varData['title'],
-                            'sku'           => $varData['sku'],
-                            'price'         => $varData['price'],
-                            'compare_price' => $varData['compare_price'] ?? null,
-                            'currency'      => $varData['currency'] ?? 'CLP',
-                            'stock'         => $varData['stock'],
-                            'is_active'     => $varData['is_active'] ?? 1,
-                            'is_default'    => $varData['is_default'] ?? 0,
-                            'specs'         => $varData['specs']
+                // Eliminar variantes que no estén en el request
+                $variantIds = collect($data['variants'])
+                    ->filter(fn($var) => isset($var['id']))
+                    ->pluck('id')
+                    ->toArray();
+                $product->variants()->whereNotIn('id', $variantIds)->delete();
+
+                // Actualizar o crear variantes
+                foreach ($data['variants'] as $var) {
+                    if (isset($var['id'])) {
+                        // Actualizar variante existente
+                        $variant = $product->variants()->find($var['id']);
+                        if ($variant) {
+                            $variant->update([
+                                'title'         => $var['title'],
+                                'sku'           => $var['sku'],
+                                'price'         => $var['price'],
+                                'compare_price' => $var['compare_price'] ?? null,
+                                'currency'      => $var['currency'] ?? 'CLP',
+                                'stock'         => $var['stock'],
+                                'is_active'     => $var['is_active'] ?? 1,
+                                'is_default'    => $var['is_default'] ?? 0,
+                                'specs'         => $var['specs']
+                            ]);
+                        }
+                    } else {
+                        // Crear nueva variante
+                        $product->variants()->create([
+                            'title'         => $var['title'],
+                            'sku'           => $var['sku'],
+                            'price'         => $var['price'],
+                            'compare_price' => $var['compare_price'] ?? null,
+                            'currency'      => $var['currency'] ?? 'CLP',
+                            'stock'         => $var['stock'],
+                            'is_active'     => $var['is_active'] ?? 1,
+                            'is_default'    => $var['is_default'] ?? 0,
+                            'specs'         => $var['specs']
                         ]);
-                    });
+                    }
+                }
             }
 
             // Actualizar has_stock según variantes
@@ -166,6 +191,13 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $this->authorize('edit_shop');
+
+        try {
+            $product->delete();
+            return $this->responseDeleteSuccess();
+        } catch (\Exception $e) {
+            return $this->responseFail($e->getMessage(), [], 500);
+        }
     }
 }
