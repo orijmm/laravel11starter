@@ -32,7 +32,7 @@ class MenuItem extends Model
 
     public function childrenRecursive()
     {
-        return $this->children()->with('childrenRecursive');
+        return $this->children()->with(['childrenRecursive', 'page']);
     }
 
     public function page(): BelongsTo

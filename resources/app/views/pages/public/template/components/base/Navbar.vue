@@ -1,7 +1,7 @@
 <template>
   <div class="w-100 order-1 order-lg-0 d-lg-flex offcanvas-body">
     <ul v-if="menus.data" class="navbar-nav ms-lg-auto">
-      <div v-if="route.params.id" class="d-flex align-items-center">
+      <div v-if="route.params.slug" class="d-flex align-items-center">
         <li class="nav-item">
         <router-link to="/" class="text-light">
             {{ trans('global.menu.home') }}
@@ -10,36 +10,38 @@
         </div>
       <div v-for="menu in menus.data">
         <!-- |||||||| Si es un menu sin padre y sin hijos |||||| -->
-        <li class="nav-item" v-if="!menu.parent_id && menu.children.length == 0">
+        <li class="nav-item" v-if="!menu.parent_id && menu.children_recursive.length == 0">
           <!-- Si tiene página asignada router-link -->
-          <router-link v-if="menu.page_id" :class="`${isActiveMenu([], menu.page_id) ? 'active nav-link' : 'nav-link'
+          <router-link v-if="menu.page_id && menu.page && menu.page.slug" :class="`${isActiveMenu(menu) ? 'active nav-link' : 'nav-link'
             }`" :to="generateUrl(menu)">{{ menu.label }}
           </router-link>
           <!-- Si no tiene página pero si url/seccion asignada -->
-          <a v-else-if="!menu.page_id && menu.url && isDesktop && !route.params.id" v-smooth-scroll data-aos="flip-down" data-aos-delay="150" class="nav-link"
+          <a v-else-if="!menu.page_id && menu.url && isDesktop && !route.params.slug" v-smooth-scroll data-aos="flip-down" data-aos-delay="150" class="nav-link"
             :href="menu.url || '#'">
             {{ menu.label }}
           </a>
           <!-- Si no tiene página ni url/seccion asignada solo imprima sin link -->
-          <div v-else-if="!route.params.id" class="nav-link">{{ menu.label }}</div>
+          <div v-else-if="!route.params.slug" class="nav-link">{{ menu.label }}</div>
         </li>
         <!-- |||||||| Si es un menu sin padre y con  hijos |||||| -->
-        <li v-if="!menu.parent_id && menu.children.length > 0" class="nav-item dropdown">
+        <li v-if="!menu.parent_id && menu.children_recursive.length > 0" class="nav-item dropdown">
           <a :class="`nav-link dropdown-toggle ${isActiveMenu(menus.data) ? 'active' : ''}`" href="#"
             data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">{{ menu.label }}
           </a>
           <!-- Imprimir hijos,  Solo aceptan páginas no secciones ni url -->
-          <ul class="dropdown-menu" v-if="menu.children && menu.children.length">
-            <li v-for="item in menu.children" :key="item.id" :class="`${menu.children ? 'dropdown dropdown-submenu dropend' : 'nav-item'
+          <ul class="dropdown-menu" v-if="menu.children_recursive && menu.children_recursive.length">
+            <li v-for="item in menu.children_recursive" :key="item.id" :class="`${item.children_recursive && item.children_recursive.length > 0 ? 'dropdown dropdown-submenu dropend' : 'nav-item'
               }`">
-              <a :class="`dropdown-item dropdown-toggle  ${isActiveMenu(item.children ? item.children : [], item.page_id)
+              <a :class="`dropdown-item dropdown-toggle  ${isActiveMenu(item.children_recursive)
                 ? 'active'
                 : ''
-                }`" v-if="item.children" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                }`" v-if="item.children_recursive && item.children_recursive.length > 0" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
                 href="#">{{ item.label }}</a>
-              <router-link v-else :class="`dropdown-item   ${isActiveMenu([], item.page_id) ? 'active' : ''
+                
+              <router-link v-else-if="item.page_id && item.page && item.page.slug" :class="`dropdown-item   ${isActiveMenu(item) ? 'active' : ''
                 }`" :to="generateUrl(item)">{{ item.label }}
               </router-link>
+              <span v-else class="dropdown-item">{{ item.label }}</span>
             </li>
           </ul>
         </li>
@@ -68,32 +70,36 @@ export default {
     const router = useRouter();
     const isActiveMenu = (menu, page_id) => {
       let isActive = false;
-      const currentPageId = route.params.id || null; // Extrae el pageId de la URL si existe
+      const currentSlug = route.params.slug || null; // Extrae el slug de la URL si existe
       if (Array.isArray(menu)) {
         menu.forEach((elm) => {
-          if (elm.page_id && elm.page_id == currentPageId) {
+          if (elm.page && elm.page.slug && elm.page.slug == currentSlug) {
             isActive = true;
           }
-          if (elm.children) {
-            elm.children.forEach((elm2) => {
-              if (elm2.page_id && elm2.page_id == currentPageId) {
+          if (elm.children_recursive) {
+            elm.children_recursive.forEach((elm2) => {
+              if (elm2.page && elm2.page.slug && elm2.page.slug == currentSlug) {
                 isActive = true;
               }
             });
           }
         });
       } else {
-        return page_id == currentPageId;
+        // Para items individuales, necesita tener la página cargada
+        if (menu && menu.page && menu.page.slug) {
+          return menu.page.slug == currentSlug;
+        }
+        return false;
       }
 
       return isActive;
     };
 
     const generateUrl = (menu) => {
-      if (menu.page_id) {
-        return router.resolve({ name: "webpages", params: { id: menu.page_id } }).href;
+      if (menu.page_id && menu.page && menu.page.slug) {
+        return { name: "webpages", params: { slug: menu.page.slug } };
       }
-      return menu.url || "#";
+      return "#";
     };
 
     const navigateTo = (menu) => {

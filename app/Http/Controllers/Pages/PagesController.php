@@ -133,8 +133,7 @@ class PagesController extends Controller
             'sections' => function ($q) {
                 $q->where('active', 1)
                     ->with([
-                        'rows.columns.components.componenttype.services',
-                        'rows.columns.components.componenttype.services'
+                        'rows.columns.components.componenttype.services.page', // Carga la relación de servicios y su página
                     ]);
             }
         ]);

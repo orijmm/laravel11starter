@@ -42,7 +42,7 @@ export default {
 
     //metodos
     function fetchPage() {
-      let page_id = typeof route.params.id != 'undefined' ? route.params.id : '';
+      let slug = typeof route.params.slug != 'undefined' ? route.params.slug : '';
       //Colocar menu-top como menu principal
       let query = prepareQuery({ search: 'menu-top' });
       service
@@ -57,7 +57,7 @@ export default {
 
       //page
       service
-        .find(page_id, 'getpage')
+        .find(slug, 'getpage')
         .then((response) => {
           page.sections = response.data.page.sections ?? [];
           page.extradata = response.data.extradata ?? [];

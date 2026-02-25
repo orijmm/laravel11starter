@@ -22,7 +22,9 @@
                         <div :class="['post-category', item.link_color_class]">
                             {{ item.description }}
                         </div>
-                        <router-link :to="generateUrl(item)"><h3 class="post-title">{{ item.title }}</h3></router-link>
+                        <router-link :to="generateUrl(item)">
+                            <h3 class="post-title">{{ item.title }}</h3>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -74,10 +76,10 @@ export default {
             initIsotop();
         });
         const generateUrl = (item) => {
-            if (item.page_id) {
-                return router.resolve({ name: "webpages", params: { id: item.page_id } }).href;
+            if (item.page_id && item.page && item.page.slug) {
+                return { name: "webpages", params: { slug: item.page.slug } };
             }
-            return item.url || "#";
+            return "#";
         };
         return {
             trans,
