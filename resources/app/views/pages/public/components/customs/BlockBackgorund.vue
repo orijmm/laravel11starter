@@ -9,7 +9,8 @@
                 <div class="fs-lg" data-aos="flip-down" data-aos-once="true" data-aos-delay="400">
                     {{ content[1]?.text ?? trans('global.phrases.hasto_add_content') }}
                 </div>
-                <a data-aos="flip-down" data-aos-once="true" data-aos-delay="500" href="/page/5" class="btn btn-outline-gradient gradient-7 rounded-pill mt-3"><span>{{ content[2]?.text ??
+                <a data-aos="flip-down" data-aos-once="true" data-aos-delay="500" :href="content[3]?.text ??
+                    trans('global.phrases.hasto_add_content')" class="btn btn-outline-gradient gradient-7 rounded-pill mt-3"><span>{{ content[2]?.text ??
                     trans('global.phrases.hasto_add_content') }}</span></a>
                 <!-- /.swiper-container -->
             </div>
