@@ -29,6 +29,7 @@ return new class extends Migration
             $table->integer('rating_count')->nullable();
             $table->json('metadata')->nullable(); // Información adicional
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('products', function (Blueprint $table) {

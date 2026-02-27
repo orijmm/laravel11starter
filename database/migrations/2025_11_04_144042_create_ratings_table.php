@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
-            $table->foreignId('variant_id')->nullable()->constrained('product_variants');
             $table->unsignedTinyInteger('rating'); // 1–5
             $table->text('comment')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('ratings', function (Blueprint $table) {

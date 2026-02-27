@@ -2,6 +2,7 @@
 
 namespace App\Models\Shop;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,10 +13,15 @@ class Rating extends Model
 
     protected $table = 'ratings';
 
-    protected $fillable = ['user_id', 'product_id', 'variant_id', 'rating', 'comment'];
+    protected $fillable = ['user_id', 'product_id', 'rating', 'comment'];
 
-    public function products(): HasMany
+    public function product()
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsTo(Product::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

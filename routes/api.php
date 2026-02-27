@@ -157,6 +157,7 @@ Route::get('media/iconsvg', [MediaGalleryController::class, 'iconSvg'])->name('l
 Route::prefix('shop')->group(function () {
     //Categories
     Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
+    Route::post('rating/productid/{product}/userid/{user}', [ProductController::class, 'ratings'])->name('products.ratings');
 });
 
 

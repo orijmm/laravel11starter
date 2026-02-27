@@ -8,6 +8,7 @@ use App\Http\Resources\{ProductResource};
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Shop\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
@@ -57,7 +58,7 @@ class ProductController extends Controller
                         $attr['attribute_id'] => ['product_attribute_option_id' => $attr['option_id']]
                     ])
                     ->toArray();
-                
+
                 $product->attributes()->attach($syncData);
             }
 
@@ -77,7 +78,7 @@ class ProductController extends Controller
                         'specs'         => $var['specs']
                     ])
                     ->toArray();
-                
+
                 $product->variants()->createMany($variantsData);
             }
 
@@ -125,7 +126,7 @@ class ProductController extends Controller
                         $attr['attribute_id'] => ['product_attribute_option_id' => $attr['option_id']]
                     ])
                     ->toArray();
-                
+
                 $product->attributes()->sync($syncData);
             }
 
@@ -199,5 +200,18 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             return $this->responseFail($e->getMessage(), [], 500);
         }
+    }
+
+    /*
+    * Add Rating to product
+    */
+    public function ratings(Product $product, User $user, Request $request)
+    {
+        //Create or update rating
+        $rating = $product->ratings()->updateOrCreate(
+            ['user_id' => $user->id],
+            ['rating' => $request->rating, 'comment' => $request->comment]
+        );
+        return $this->responseDataSuccess($rating->toArray(), trans('frontend.global.phrases.record_updated'));
     }
 }
