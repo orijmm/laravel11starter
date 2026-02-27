@@ -16,7 +16,6 @@ class PromotionResource extends JsonResource
      */
     public function toArray($request): array
     {
-        $data = $this->resource->toArray();
-        return $data;
+        return $this->resource->toArray();
     }
 }
