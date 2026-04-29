@@ -148,7 +148,7 @@ class PagesController extends Controller
         $extradata = [
             'testimonials' => $testimonials ?? null,
             'projects' => $projects ?? null,
-            'page_name' => $page->slug
+            'page_name' => $page?->slug ?? 'home',
         ];
 
         return $this->responseDataSuccess(

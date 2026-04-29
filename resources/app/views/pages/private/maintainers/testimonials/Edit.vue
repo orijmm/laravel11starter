@@ -99,6 +99,7 @@ export default defineComponent({
         function fetchItems() {
             service.find(route.params.id, 'manteiners/testimonials').then((response) => {
                 fillObject(form, response.data.model);
+                form.bg_class = { name: form.bg_class, id: form.bg_class };
                 page.loading = false;
             });
         }
@@ -116,7 +117,7 @@ export default defineComponent({
         }
 
         function onSubmit() {
-            service.handleUpdate('edit-testimonial', route.params.id, reduceProperties(form, ['roles'], 'id'));
+            service.handleUpdate('edit-testimonial', route.params.id, reduceProperties(form, ['bg_class'], 'id'));
             return false;
         }
 
