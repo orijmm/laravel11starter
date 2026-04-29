@@ -8,5 +8,8 @@ return [
         'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
         'scheme' => 'https',
     ],
-
+    'github' => [
+        'token' => env('GITHUB_TOKEN'),
+        'repo'  => env('GITHUB_REPO'),
+    ],
 ];
