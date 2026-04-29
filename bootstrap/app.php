@@ -27,13 +27,19 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->report(function (Throwable $e) {
-            // Opcional: filtra excepciones que no quieras reportar
-            if ($e instanceof \Illuminate\Validation\ValidationException) {
-                return;
-            }
-            if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
-                return;
-            }
-            ReportExceptionToGithub::dispatch($e);
+                // Ignorar validaciones, 404 y ViteException (deprecado: ViteManifestNotFoundException)
+                if ($e instanceof \Illuminate\Validation\ValidationException) {
+                    return;
+                };
+                if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+                    return;
+                };
+                if ($e instanceof \Illuminate\Foundation\ViteException) {
+                    return;
+                };
+                if ($e instanceof \Spatie\LaravelIgnition\Exceptions\ViewException && $e->getPrevious() instanceof \Illuminate\Foundation\ViteException) {
+                    return;
+                };
+                \App\Jobs\ReportExceptionToGithub::dispatch($e);
         });
     })->create();
